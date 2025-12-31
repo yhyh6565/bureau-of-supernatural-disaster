@@ -1,96 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* 해태(Hae-Tae) 시스템 디자인 시스템
+   초자연 재난관리국 인트라넷 - 정부 표준 UI/UX 기반
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Primary - GOV Blue */
+    --primary: 217 54% 38%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Background & Foreground - 밝은 정부 스타일 */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 20%;
+    
+    /* Cards - 흰색 카드 */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 20%;
+    
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --popover-foreground: 0 0% 20%;
+    
+    /* Secondary - Light Grey */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
+    
+    /* Muted - 테이블 헤더 등 */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    /* Accent - 활성화 상태 */
+    --accent: 217 54% 95%;
+    --accent-foreground: 217 54% 38%;
+    
+    /* Destructive - 위험/금지 (Danger Red) */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Border - 정부 스타일 테두리 */
+    --border: 0 0% 87%;
+    --input: 0 0% 87%;
+    --ring: 217 54% 38%;
+    
+    /* 관공서 스타일 라운딩 - 매우 작음 */
+    --radius: 0.125rem;
+    
+    /* === 기능색 (Functional Colors) === */
+    
+    /* 안전/승인 (Safe Green) */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    /* 주의/경고 (Alert Orange) */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    /* 초자연/미확인 (Abyssal Violet) */
+    --abyssal: 270 50% 40%;
+    --abyssal-foreground: 0 0% 100%;
+    
+    /* === 부서별 색상 === */
+    
+    /* 백호 (신규조사반) - 하늘색 */
+    --baekho: 200 80% 50%;
+    --baekho-foreground: 0 0% 100%;
+    
+    /* 현무 (출동구조반) - 진한 녹색 */
+    --hyunmu: 160 60% 40%;
+    --hyunmu-foreground: 0 0% 100%;
+    
+    /* 주작 (현장정리반) - 붉은 계열 */
+    --jujak: 15 80% 50%;
+    --jujak-foreground: 0 0% 100%;
+    
+    /* Sidebar */
+    --sidebar-background: 217 54% 20%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 217 54% 20%;
+    --sidebar-accent: 217 54% 30%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 217 54% 35%;
+    --sidebar-ring: 217 54% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --primary: 210 50% 60%;
+    --primary-foreground: 0 0% 5%;
+    
+    /* 다크 모드 - 짙은 남색 기반 */
+    --background: 220 20% 7%;
+    --foreground: 0 0% 90%;
+    
+    --card: 220 20% 10%;
+    --card-foreground: 0 0% 90%;
+    
+    --popover: 220 20% 10%;
+    --popover-foreground: 0 0% 90%;
+    
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 90%;
+    
+    --muted: 220 15% 18%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 220 20% 20%;
+    --accent-foreground: 210 50% 70%;
+    
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 210 50% 60%;
+    
+    --success: 142 60% 50%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 80% 55%;
+    --warning-foreground: 0 0% 100%;
+    
+    --abyssal: 270 60% 60%;
+    --abyssal-foreground: 0 0% 100%;
+    
+    --baekho: 200 70% 60%;
+    --baekho-foreground: 0 0% 100%;
+    
+    --hyunmu: 160 50% 50%;
+    --hyunmu-foreground: 0 0% 100%;
+    
+    --jujak: 15 70% 55%;
+    --jujak-foreground: 0 0% 100%;
+    
+    --sidebar-background: 220 20% 5%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 210 50% 70%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 220 20% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 210 50% 60%;
   }
 }
 
@@ -99,7 +154,86 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  html {
+    font-family: 'Noto Sans KR', sans-serif;
   }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* 숫자 및 코드 - 고정폭 폰트 */
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* 정부 스타일 버튼 기본형 */
+  .btn-gov {
+    @apply px-4 py-2 text-sm font-medium transition-colors;
+    @apply border border-border rounded-sm;
+    @apply hover:bg-accent;
+  }
+
+  /* 정부 스타일 카드 */
+  .card-gov {
+    @apply bg-card border border-border rounded-sm;
+    @apply shadow-sm;
+  }
+
+  /* 테이블 헤더 스타일 */
+  .table-header-gov {
+    @apply bg-muted text-muted-foreground font-medium text-sm;
+    @apply border-b border-border;
+  }
+
+  /* 재난 등급 뱃지 */
+  .badge-danger {
+    @apply bg-destructive text-destructive-foreground;
+    @apply px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .badge-warning {
+    @apply bg-warning text-warning-foreground;
+    @apply px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .badge-success {
+    @apply bg-success text-success-foreground;
+    @apply px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .badge-abyssal {
+    @apply bg-abyssal text-abyssal-foreground;
+    @apply px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  /* 대외비 워터마크 */
+  .watermark-confidential {
+    @apply fixed inset-0 pointer-events-none z-50 flex items-center justify-center;
+  }
+
+  .watermark-confidential::after {
+    content: '대외비';
+    @apply text-6xl font-bold text-foreground/5 rotate-[-30deg];
+  }
+}
+
+/* 정부 스타일 스크롤바 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-sm;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
 }
