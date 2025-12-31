@@ -1,0 +1,184 @@
+import { Notification } from '@/types/haetae';
+
+// 더미 쪽지 데이터
+export interface Message {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderDepartment: string;
+  receiverId: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  isRead: boolean;
+}
+
+export const MOCK_MESSAGES: Message[] = [
+  {
+    id: 'msg-001',
+    senderId: 'agent-002',
+    senderName: '박현무',
+    senderDepartment: '현무팀',
+    receiverId: 'agent-001',
+    title: '파주 현장 관련 협조 요청',
+    content: '김솔음 주무관님, 파주 A구역 조사 건 관련하여 현장 진입 전 브리핑 부탁드립니다. 어둠의 종류가 시간의 틈이라고 들었는데, 주의사항 상세히 알려주시면 감사하겠습니다.',
+    createdAt: new Date('2025-12-31T08:30:00'),
+    isRead: false,
+  },
+  {
+    id: 'msg-002',
+    senderId: 'agent-003',
+    senderName: '이주작',
+    senderDepartment: '주작팀',
+    receiverId: 'agent-001',
+    title: '담양 현장 정리 완료 보고',
+    content: '담양 죽녹원 현장 정리 완료했습니다. 메아리 안정화 확인되었고, 정기 순찰로 전환 예정입니다. 조사 보고서 참고 감사했습니다.',
+    createdAt: new Date('2025-12-30T16:00:00'),
+    isRead: true,
+  },
+  {
+    id: 'msg-003',
+    senderId: 'system',
+    senderName: '시스템',
+    senderDepartment: '관리자',
+    receiverId: 'agent-001',
+    title: '[자동알림] 결재 승인 완료',
+    content: '귀하가 기안한 "20251229-001 조사보고서"가 최종 승인되었습니다.',
+    createdAt: new Date('2025-12-29T14:30:00'),
+    isRead: true,
+  },
+];
+
+// 장비 데이터
+export interface Equipment {
+  id: string;
+  name: string;
+  category: '대여' | '지급';
+  requiresApproval: boolean;
+  description: string;
+  totalStock: number;
+  availableStock: number;
+  imageEmoji: string;
+}
+
+export const MOCK_EQUIPMENT: Equipment[] = [
+  { id: 'eq-001', name: '자전거', category: '대여', requiresApproval: false, description: '순찰용 일반 자전거', totalStock: 20, availableStock: 15, imageEmoji: '🚲' },
+  { id: 'eq-002', name: '도깨비불', category: '대여', requiresApproval: true, description: '어둠 속 길 안내용 도깨비불. 취급 주의.', totalStock: 10, availableStock: 3, imageEmoji: '🔥' },
+  { id: 'eq-003', name: '악의 저울', category: '대여', requiresApproval: true, description: '오염도 측정 장비. 정신 오염 위험.', totalStock: 5, availableStock: 2, imageEmoji: '⚖️' },
+  { id: 'eq-004', name: '간이 유리감옥', category: '대여', requiresApproval: true, description: '소형 개체 임시 봉인용', totalStock: 8, availableStock: 4, imageEmoji: '🏺' },
+  { id: 'eq-005', name: '해태상(소형)', category: '대여', requiresApproval: true, description: '결계 설치용 소형 해태상', totalStock: 12, availableStock: 7, imageEmoji: '🦁' },
+  { id: 'eq-006', name: '유리 손포', category: '지급', requiresApproval: false, description: '일회용 보호 장갑. 오염 물질 취급용.', totalStock: 500, availableStock: 423, imageEmoji: '🧤' },
+  { id: 'eq-007', name: '포승줄', category: '지급', requiresApproval: false, description: '봉인 문양이 새겨진 특수 포승줄', totalStock: 200, availableStock: 156, imageEmoji: '🪢' },
+  { id: 'eq-008', name: '신발끈', category: '지급', requiresApproval: false, description: '결계 이탈 방지용 특수 신발끈', totalStock: 300, availableStock: 245, imageEmoji: '👟' },
+  { id: 'eq-009', name: '시큼달큼', category: '지급', requiresApproval: false, description: '정신 오염 해독용 사탕', totalStock: 1000, availableStock: 876, imageEmoji: '🍬' },
+  { id: 'eq-010', name: '메모리얼 그립톡', category: '지급', requiresApproval: false, description: '기억 고정용 휴대폰 액세서리', totalStock: 150, availableStock: 98, imageEmoji: '📱' },
+];
+
+// 방문 장소 데이터
+export interface VisitLocation {
+  id: string;
+  name: string;
+  description: string;
+  requiresApproval: boolean;
+  operatingHours: string;
+  imageEmoji: string;
+}
+
+export const MOCK_LOCATIONS: VisitLocation[] = [
+  { id: 'loc-001', name: '도깨비 공방', description: '특수 장비 제작 및 수리', requiresApproval: false, operatingHours: '09:00 - 18:00', imageEmoji: '🔧' },
+  { id: 'loc-002', name: '바리데기 세공소', description: '봉인 장치 및 부적 제작', requiresApproval: false, operatingHours: '10:00 - 17:00', imageEmoji: '📿' },
+  { id: 'loc-003', name: '이정 책방', description: '고문서 열람 및 연구', requiresApproval: false, operatingHours: '08:00 - 20:00', imageEmoji: '📚' },
+  { id: 'loc-004', name: '용천 선녀탕', description: '정신 오염 정화 시설', requiresApproval: true, operatingHours: '06:00 - 22:00', imageEmoji: '♨️' },
+];
+
+// 예약 슬롯 데이터
+export interface ReservationSlot {
+  id: string;
+  locationId: string;
+  date: Date;
+  time: string;
+  isAvailable: boolean;
+  reservedBy?: string;
+}
+
+// 결재 문서 데이터
+export interface ApprovalDocument {
+  id: string;
+  type: '조사보고서' | '출동일지' | '순찰일지' | '현장정리보고서' | '시말서' | '장비품의서' | '방문품의서';
+  title: string;
+  content: string;
+  status: '작성중' | '결재대기' | '승인' | '반려';
+  createdBy: string;
+  createdByName: string;
+  approver: string;
+  approverName: string;
+  createdAt: Date;
+  processedAt?: Date;
+  relatedIncidentId?: string;
+  rejectReason?: string;
+}
+
+export const MOCK_APPROVALS: ApprovalDocument[] = [
+  {
+    id: 'appr-001',
+    type: '조사보고서',
+    title: '20251230-003 파주 접경지역 조사보고서',
+    content: '시간 왜곡 현상 확인. 멸형급 판정. 해태상 배치 권고.',
+    status: '결재대기',
+    createdBy: 'agent-001',
+    createdByName: '김솔음',
+    approver: 'agent-team-lead',
+    approverName: '백호팀장',
+    createdAt: new Date('2025-12-31T07:00:00'),
+    relatedIncidentId: 'inc-002',
+  },
+  {
+    id: 'appr-002',
+    type: '출동일지',
+    title: '20251229-001 해운대 구조 출동일지',
+    content: '물의 기억 개체 안정화. 실종자 3명 구조 완료.',
+    status: '승인',
+    createdBy: 'agent-002',
+    createdByName: '박현무',
+    approver: 'agent-team-lead',
+    approverName: '현무팀장',
+    createdAt: new Date('2025-12-30T18:00:00'),
+    processedAt: new Date('2025-12-31T09:00:00'),
+    relatedIncidentId: 'inc-003',
+  },
+  {
+    id: 'appr-003',
+    type: '장비품의서',
+    title: '도깨비불 대여 신청',
+    content: '파주 현장 진입을 위한 도깨비불 2개 대여 요청',
+    status: '결재대기',
+    createdBy: 'agent-001',
+    createdByName: '김솔음',
+    approver: 'agent-team-lead',
+    approverName: '백호팀장',
+    createdAt: new Date('2025-12-31T06:00:00'),
+  },
+  {
+    id: 'appr-004',
+    type: '방문품의서',
+    title: '용천 선녀탕 방문 신청',
+    content: '정신 오염도 경미 - 정화 처리 요청',
+    status: '반려',
+    createdBy: 'agent-001',
+    createdByName: '김솔음',
+    approver: 'agent-team-lead',
+    approverName: '백호팀장',
+    createdAt: new Date('2025-12-28T10:00:00'),
+    processedAt: new Date('2025-12-28T14:00:00'),
+    rejectReason: '오염도 수치 미달. 일반 휴식으로 회복 가능.',
+  },
+];
+
+// 장례법 옵션
+export const FUNERAL_OPTIONS = [
+  { id: 'funeral-001', name: '화장', description: '일반적인 화장 절차' },
+  { id: 'funeral-002', name: '매장', description: '일반적인 매장 절차' },
+  { id: 'funeral-003', name: '수목장', description: '자연 친화적 수목장' },
+  { id: 'funeral-004', name: '데이터 소각', description: '모든 개인 기록 영구 삭제' },
+  { id: 'funeral-005', name: '기억 소거 후 방생', description: '관련자 기억 소거 후 신원 재설정' },
+];
