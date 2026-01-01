@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MOCK_STATS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/types/haetae';
 import { TrendingUp, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -31,16 +31,17 @@ function StatCard({ label, value, icon: Icon, variant = 'default' }: StatCardPro
 
 export function DepartmentStats() {
   const { agent } = useAuth();
-  
+
   if (!agent) return null;
 
   const department = agent.department;
   const deptInfo = DEPARTMENT_INFO[department];
+  const allStats = DataManager.getStats();
 
   const renderStats = () => {
     switch (department) {
       case 'baekho': {
-        const stats = MOCK_STATS.baekho;
+        const stats = allStats.baekho;
         return (
           <>
             <StatCard 
@@ -65,7 +66,7 @@ export function DepartmentStats() {
         );
       }
       case 'hyunmu': {
-        const stats = MOCK_STATS.hyunmu;
+        const stats = allStats.hyunmu;
         return (
           <>
             <StatCard 
@@ -90,7 +91,7 @@ export function DepartmentStats() {
         );
       }
       case 'jujak': {
-        const stats = MOCK_STATS.jujak;
+        const stats = allStats.jujak;
         return (
           <>
             <StatCard 

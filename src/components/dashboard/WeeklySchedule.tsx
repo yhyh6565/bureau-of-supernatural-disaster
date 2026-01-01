@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MOCK_SCHEDULES } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { Calendar, Clock, MapPin, FileCheck, UserCheck, Dumbbell } from 'lucide-react';
 import { format, isToday, isTomorrow, addDays, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useAuth } from '@/contexts/AuthContext';
 
 const SCHEDULE_ICONS: Record<string, React.ElementType> = {
   '작전': MapPin,
@@ -21,11 +22,13 @@ const SCHEDULE_COLORS: Record<string, string> = {
 };
 
 export function WeeklySchedule() {
+  const { agent } = useAuth();
+  const schedules = DataManager.getSchedules(agent);
   const today = new Date();
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(today, i - 3));
 
   const getSchedulesForDate = (date: Date) => {
-    return MOCK_SCHEDULES.filter(s => isSameDay(new Date(s.date), date))
+    return schedules.filter(s => isSameDay(new Date(s.date), date))
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   };
 

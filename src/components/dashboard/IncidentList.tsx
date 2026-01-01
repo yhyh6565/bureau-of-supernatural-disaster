@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MOCK_INCIDENTS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { Incident, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/types/haetae';
 import { AlertTriangle, MapPin, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useAuth } from '@/contexts/AuthContext';
 
 function DangerBadge({ level }: { level: Incident['dangerLevel'] }) {
   const style = DANGER_LEVEL_STYLE[level];
@@ -25,8 +26,10 @@ function StatusBadge({ status }: { status: Incident['status'] }) {
 }
 
 export function IncidentList() {
+  const { agent } = useAuth();
+  const incidents = DataManager.getIncidents(agent);
   // 종결되지 않은 사건만 표시
-  const activeIncidents = MOCK_INCIDENTS.filter(inc => inc.status !== '종결');
+  const activeIncidents = incidents.filter(inc => inc.status !== '종결');
 
   return (
     <Card className="card-gov">

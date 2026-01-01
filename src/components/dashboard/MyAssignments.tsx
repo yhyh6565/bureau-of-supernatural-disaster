@@ -2,30 +2,31 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/types/haetae';
-import { MOCK_INCIDENTS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 
 export function MyAssignments() {
   const { agent } = useAuth();
-  
+
   if (!agent) return null;
 
   const department = agent.department;
   const deptInfo = DEPARTMENT_INFO[department];
+  const incidents = DataManager.getIncidents(agent);
 
   // 부서별 할당 업무 필터링
   const getMyIncidents = () => {
     switch (department) {
       case 'baekho':
-        return MOCK_INCIDENTS.filter(inc => 
+        return incidents.filter(inc =>
           inc.status === '접수' || inc.status === '조사중'
         ).slice(0, 3);
       case 'hyunmu':
-        return MOCK_INCIDENTS.filter(inc => 
+        return incidents.filter(inc =>
           inc.status === '구조대기' || inc.status === '구조중'
         ).slice(0, 3);
       case 'jujak':
-        return MOCK_INCIDENTS.filter(inc => 
+        return incidents.filter(inc =>
           inc.status === '정리대기' || inc.status === '정리중'
         ).slice(0, 3);
       default:

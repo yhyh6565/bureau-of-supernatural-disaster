@@ -1,0 +1,29 @@
+import { ApprovalDocument } from '@/data/extendedMockData';
+
+export const HAEGEUM_APPROVALS: ApprovalDocument[] = [
+    {
+        id: 'appr-009',
+        type: '조사보고서',
+        title: '파주 A구역 멸형급 재난 1차 조사 보고',
+        content: '파주시 접경지역 A구역 시간 왜곡 현상에 대한 1차 조사를 완료했습니다. 은심장을 활용해 민간인 대피를 완료했으며, 군 통제선 설정을 요청했습니다. 6급 이상 요원만 진입 가능하도록 제한합니다.',
+        status: '승인',
+        createdBy: 'agent-005',
+        createdByName: '해금',
+        approver: 'system',
+        approverName: '본부장',
+        createdAt: new Date('2025-12-31T10:00:00'),
+        relatedIncidentId: 'inc-008',
+    },
+    {
+        id: 'appr-010',
+        type: '장비품의서',
+        title: '은심장 대여 신청',
+        content: '파주 A구역 멸형급 재난 대응을 위해 은심장 대여를 신청합니다. 집단 대피 유도에 필수적입니다.',
+        status: '승인',
+        createdBy: 'agent-005',
+        createdByName: '해금',
+        approver: 'system',
+        approverName: '본부장',
+        createdAt: new Date('2025-12-30T17:00:00'),
+    },
+];

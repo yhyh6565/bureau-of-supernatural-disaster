@@ -209,15 +209,7 @@
     @apply px-2 py-0.5 text-xs font-medium rounded-full;
   }
 
-  /* 대외비 워터마크 */
-  .watermark-confidential {
-    @apply fixed inset-0 pointer-events-none z-50 flex items-center justify-center;
-  }
-
-  .watermark-confidential::after {
-    content: '대외비';
-    @apply text-6xl font-bold text-foreground/5 rotate-[-30deg];
-  }
+  /* 대외비 워터마크 스타일 제거됨 */
 }
 
 /* 정부 스타일 스크롤바 */

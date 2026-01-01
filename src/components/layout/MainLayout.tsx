@@ -13,8 +13,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     <div className="min-h-screen bg-background">
       <GNBHeader />
       
-      {/* 대외비 워터마크 */}
-      <div className="watermark-confidential" />
+      {/* 워터마크 제거됨 */}
       
       {/* 메인 콘텐츠 */}
       <main className="p-4 lg:p-6 max-w-[1920px] mx-auto">

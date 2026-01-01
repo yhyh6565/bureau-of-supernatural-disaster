@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { AlertCircle, Shield, Eye, EyeOff } from 'lucide-react';
 
+import { Logo } from '@/components/ui/Logo';
+
 export function LoginPage() {
   const { login } = useAuth();
   const [personaKey, setPersonaKey] = useState('');
@@ -45,14 +47,13 @@ export function LoginPage() {
       </div>
 
       {/* 로고 영역 */}
-      <div className="mb-8 text-center">
-        <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary flex items-center justify-center">
-          <span className="text-4xl">🦁</span>
+      <div className="mb-8 text-center flex flex-col items-center">
+        <div className="w-20 h-20 mb-6">
+          <Logo />
         </div>
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">환경부 초자연재난관리국</p>
-          <h1 className="text-2xl font-bold text-foreground">통합 행정 시스템</h1>
-          <p className="text-3xl font-black text-primary tracking-wider">해태</p>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-black text-foreground tracking-tight">초자연재난관리국</h1>
+          <p className="text-lg font-bold text-muted-foreground">통합 행정 시스템</p>
         </div>
       </div>
 
@@ -66,24 +67,21 @@ export function LoginPage() {
         </CardHeader>
         <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 페르소나 키 입력 */}
+            {/* 아이디 입력 */}
             <div className="space-y-2">
               <Label htmlFor="persona" className="text-sm font-medium">
-                페르소나 키 (이름) <span className="text-destructive">*</span>
+                아이디 <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="persona"
                 type="text"
-                placeholder="한글 이름 석 자 입력"
+                placeholder="아이디 입력"
                 value={personaKey}
                 onChange={(e) => setPersonaKey(e.target.value)}
                 className="h-11 rounded-sm"
-                maxLength={10}
+                maxLength={20}
                 required
               />
-              <p className="text-xs text-muted-foreground">
-                예시: 김솔음, 박현무, 이주작
-              </p>
             </div>
 
             {/* 비밀번호 입력 */}
@@ -108,9 +106,6 @@ export function LoginPage() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                ※ 형식적 절차입니다. 페르소나 권한으로 접속됩니다.
-              </p>
             </div>
 
             {/* 에러 메시지 */}
@@ -122,8 +117,8 @@ export function LoginPage() {
             )}
 
             {/* 로그인 버튼 */}
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full h-11 rounded-sm font-medium"
               disabled={isLoading || !personaKey}
             >
@@ -143,8 +138,7 @@ export function LoginPage() {
 
       {/* 하단 정보 */}
       <div className="mt-8 text-center text-xs text-muted-foreground space-y-1">
-        <p>© 2025 환경부 초자연재난관리국</p>
-        <p className="font-mono">v1.0.0-CLASSIFIED</p>
+        <p>© 2025 초자연재난관리국</p>
       </div>
     </div>
   );

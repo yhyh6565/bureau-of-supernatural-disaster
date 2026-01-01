@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE, Incident } from '@/types/haetae';
-import { MOCK_INCIDENTS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { Briefcase, MapPin, AlertTriangle, Clock, CheckCircle, ArrowRight, FileText, Truck } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -29,28 +29,29 @@ export function TasksPage() {
 
   const department = agent.department;
   const deptInfo = DEPARTMENT_INFO[department];
+  const incidents = DataManager.getIncidents(agent);
 
   // 부서별 업무 필터링
   const getTasksByDepartment = () => {
     switch (department) {
       case 'baekho':
         return {
-          list: MOCK_INCIDENTS.filter(inc => inc.status === '접수'),
-          assigned: MOCK_INCIDENTS.filter(inc => inc.status === '조사중'),
+          list: incidents.filter(inc => inc.status === '접수'),
+          assigned: incidents.filter(inc => inc.status === '조사중'),
           listLabel: '접수된 조사 요청',
           assignedLabel: '나의 조사 업무',
         };
       case 'hyunmu':
         return {
-          list: MOCK_INCIDENTS.filter(inc => inc.status === '구조대기'),
-          assigned: MOCK_INCIDENTS.filter(inc => inc.status === '구조중'),
+          list: incidents.filter(inc => inc.status === '구조대기'),
+          assigned: incidents.filter(inc => inc.status === '구조중'),
           listLabel: '구조 요청 목록',
           assignedLabel: '나의 구조 업무',
         };
       case 'jujak':
         return {
-          list: MOCK_INCIDENTS.filter(inc => inc.status === '정리대기'),
-          assigned: MOCK_INCIDENTS.filter(inc => inc.status === '정리중'),
+          list: incidents.filter(inc => inc.status === '정리대기'),
+          assigned: incidents.filter(inc => inc.status === '정리중'),
           listLabel: '정리 요청 목록',
           assignedLabel: '나의 정리 업무',
         };

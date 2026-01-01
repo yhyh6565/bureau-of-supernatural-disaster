@@ -1,0 +1,37 @@
+import { Message } from '@/data/extendedMockData';
+
+export const JANGHYEOWOON_MESSAGES: Message[] = [
+    {
+        id: 'msg-017',
+        senderId: 'system',
+        senderName: '시스템',
+        senderDepartment: '주작팀 운영국',
+        receiverId: 'agent-007',
+        title: '현장정리 일정 안내',
+        content: '성북구 주택가 재난 현장 정리 작업이 12월 24일 14시로 배정되었습니다.',
+        createdAt: new Date('2025-12-23T09:00:00'),
+        isRead: true,
+    },
+    {
+        id: 'msg-018',
+        senderId: 'agent-007',
+        senderName: '장허운',
+        senderDepartment: '주작2팀',
+        receiverId: 'agent-004',
+        title: '힘들 때 연락해',
+        content: '솔음씨, 힘든 일 있으면 언제든 연락해요. 제가 도울 수 있는 게 있다면 돕고 싶어요.',
+        createdAt: new Date('2025-12-22T20:00:00'),
+        isRead: true,
+    },
+    {
+        id: 'msg-019',
+        senderId: 'agent-004',
+        senderName: '김솔음',
+        senderDepartment: '현무1팀',
+        receiverId: 'agent-007',
+        title: 'Re: 힘들 때 연락해',
+        content: '고마워요, 허운씨. 덕분에 힘이 나네요.',
+        createdAt: new Date('2025-12-22T21:00:00'),
+        isRead: true,
+    },
+];

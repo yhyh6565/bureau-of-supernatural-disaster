@@ -1,13 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MOCK_NOTIFICATIONS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
 import { Bell, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function NoticeWidget() {
-  const recentNotices = MOCK_NOTIFICATIONS.slice(0, 4);
-  const unreadCount = MOCK_NOTIFICATIONS.filter(n => !n.isRead).length;
+  const { agent } = useAuth();
+  const notifications = DataManager.getNotifications(agent);
+  const recentNotices = notifications.slice(0, 4);
+  const unreadCount = notifications.filter(n => !n.isRead).length;
 
   return (
     <Card className="card-gov">

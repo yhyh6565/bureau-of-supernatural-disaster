@@ -1,0 +1,31 @@
+import { Incident } from '@/types/haetae';
+
+export const RYUJAEGWAN_INCIDENTS: Incident[] = [
+    {
+        id: 'inc-004',
+        caseNumber: '20251225-001',
+        registrationNumber: '0004PSYA.2025.가04',
+        location: '전라북도 전주시 한옥마을',
+        dangerLevel: '고형',
+        status: '종결',
+        reportContent: '고택에서 부적 손상 발견. 류재관 요원의 부적 재시공으로 안정화.',
+        requiresPatrol: true,
+        countermeasure: '봉인 부적 재설치',
+        createdAt: new Date('2025-12-25T10:00:00'),
+        updatedAt: new Date('2025-12-26T16:00:00'),
+    },
+    {
+        id: 'inc-005',
+        caseNumber: '20251218-002',
+        registrationNumber: '0005PSYA.2025.가05',
+        location: '충청남도 공주시 고분군',
+        dangerLevel: '뇌형',
+        status: '조사중',
+        reportContent: '고분 내부 봉인 약화 감지. 류재관 요원 정밀 조사 중.',
+        requiresPatrol: false,
+        countermeasure: '경문 강화',
+        entryRestrictions: '전문가 동반 필수',
+        createdAt: new Date('2025-12-18T08:00:00'),
+        updatedAt: new Date('2025-12-30T11:00:00'),
+    },
+];

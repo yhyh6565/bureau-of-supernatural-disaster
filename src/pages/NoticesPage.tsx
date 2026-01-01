@@ -4,7 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { MOCK_NOTIFICATIONS } from '@/data/mockData';
+import { DataManager } from '@/data/dataManager';
+import { useAuth } from '@/contexts/AuthContext';
+import { Notification } from '@/types/haetae';
 import { Bell, AlertTriangle, Search, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -16,10 +18,16 @@ import {
 } from '@/components/ui/dialog';
 
 export function NoticesPage() {
+  const { agent } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedNotice, setSelectedNotice] = useState<typeof MOCK_NOTIFICATIONS[0] | null>(null);
+  const [selectedNotice, setSelectedNotice] = useState<Notification | null>(null);
 
-  const filteredNotices = MOCK_NOTIFICATIONS.filter(notice =>
+  // 공지사항 데이터 통합 (DataManager 사용)
+  const allNotices = DataManager.getNotifications(agent).sort((a, b) =>
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  const filteredNotices = allNotices.filter(notice =>
     notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     notice.content.toLowerCase().includes(searchTerm.toLowerCase())
   );

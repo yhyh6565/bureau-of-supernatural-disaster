@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MOCK_MESSAGES } from '@/data/extendedMockData';
+import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { Mail, Send, Inbox, ArrowLeft, Reply, User } from 'lucide-react';
 import { format } from 'date-fns';
@@ -28,8 +29,14 @@ export function MessagesPage() {
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [newMessage, setNewMessage] = useState({ recipient: '', title: '', content: '' });
 
-  const receivedMessages = MOCK_MESSAGES.filter(m => m.receiverId === agent?.id);
-  const sentMessages = MOCK_MESSAGES.filter(m => m.senderId === agent?.id);
+  // DataManager를 통해 메시지 로드
+  const ALL_MESSAGES = DataManager.getMessages(agent);
+
+  const receivedMessages = ALL_MESSAGES.filter(m =>
+    m.receiverId === agent?.id || m.receiverId === 'me'
+  ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const sentMessages = ALL_MESSAGES.filter(m => m.senderId === agent?.id);
   const unreadCount = receivedMessages.filter(m => !m.isRead).length;
 
   const handleSendMessage = () => {
@@ -54,8 +61,8 @@ export function MessagesPage() {
     return (
       <MainLayout>
         <div className="mb-6">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => setSelectedMessage(null)}
             className="gap-2 mb-4"
           >

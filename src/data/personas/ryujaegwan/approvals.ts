@@ -1,0 +1,42 @@
+import { ApprovalDocument } from '@/data/extendedMockData';
+
+export const RYUJAEGWAN_APPROVALS: ApprovalDocument[] = [
+    {
+        id: 'appr-004',
+        type: '조사보고서',
+        title: '전주 한옥마을 부적 재시공 보고',
+        content: '전주시 한옥마을 고택의 봉인 부적 손상을 확인하고 재시공을 완료했습니다. 기존 부적은 약 15년 경과로 효력이 약화되었으며, 신규 부적은 황지에 주사로 제작하여 설치했습니다. 향후 10년간 유효할 것으로 판단됩니다.',
+        status: '승인',
+        createdBy: 'agent-003',
+        createdByName: '류재관',
+        approver: 'agent-001',
+        approverName: '박홍림',
+        createdAt: new Date('2025-12-27T09:00:00'),
+        relatedIncidentId: 'inc-004',
+    },
+    {
+        id: 'appr-005',
+        type: '장비품의서',
+        title: '황지 추가 신청',
+        content: '부적 제작용 황지 100매 추가 신청합니다. 현재 재고 부족으로 긴급 작업 시 차질이 예상됩니다.',
+        status: '승인',
+        createdBy: 'agent-003',
+        createdByName: '류재관',
+        approver: 'agent-001',
+        approverName: '박홍림',
+        createdAt: new Date('2025-12-18T10:00:00'),
+    },
+    {
+        id: 'appr-006',
+        type: '순찰일지',
+        title: '공주 고분군 정밀 조사 일지',
+        content: '공주 고분군 내부 봉인 상태를 정밀 조사했습니다. 일부 경문의 기력이 약화되어 보강 작업이 필요합니다. 다음 주 재방문 예정입니다.',
+        status: '작성중',
+        createdBy: 'agent-003',
+        createdByName: '류재관',
+        approver: 'agent-001',
+        approverName: '박홍림',
+        createdAt: new Date('2025-12-30T15:00:00'),
+        relatedIncidentId: 'inc-005',
+    },
+];

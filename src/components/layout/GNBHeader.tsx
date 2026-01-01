@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Logo } from '@/components/ui/Logo';
 
 const NAV_ITEMS = [
   { path: '/', label: '대시보드', icon: Home },
@@ -34,16 +35,12 @@ export function GNBHeader() {
       <div className="h-full px-4 flex items-center justify-between max-w-[1920px] mx-auto">
         {/* 좌측: 로고 */}
         <div className="flex items-center gap-3">
-          {/* 태극 문양 대체 */}
-          <div className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center text-xl">
-            🦁
+          {/* 태극 문양 */}
+          <div className="w-8 h-8">
+            <Logo />
           </div>
-          <div className="flex flex-col">
-            <span className="text-xs opacity-80">환경부</span>
-            <span className="font-bold text-sm">초자연재난관리국</span>
-          </div>
-          <div className="ml-2 px-2 py-0.5 bg-primary-foreground/20 rounded text-xs font-mono">
-            해태 v1.0
+          <div className="flex flex-col justify-center">
+            <span className="font-black text-lg leading-tight tracking-tight">초자연재난관리국</span>
           </div>
         </div>
 
@@ -57,8 +54,8 @@ export function GNBHeader() {
                 to={item.path}
                 className={`
                   px-3 py-2 text-sm font-medium rounded-sm transition-colors
-                  ${isActive 
-                    ? 'bg-primary-foreground/20 text-primary-foreground' 
+                  ${isActive
+                    ? 'bg-primary-foreground/20 text-primary-foreground'
                     : 'text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10'
                   }
                 `}
@@ -78,8 +75,8 @@ export function GNBHeader() {
           </div>
 
           {/* 알림 */}
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="icon"
             className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10"
           >
@@ -90,8 +87,8 @@ export function GNBHeader() {
           {/* 사용자 드롭다운 */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2"
               >
                 <User className="w-4 h-4" />
