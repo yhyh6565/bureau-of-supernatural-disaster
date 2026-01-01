@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Message } from '@/data/extendedMockData';
+import { Message } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { Mail, Send, Inbox, ArrowLeft, Reply, User } from 'lucide-react';

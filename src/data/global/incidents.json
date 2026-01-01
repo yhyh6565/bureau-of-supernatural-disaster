@@ -1,0 +1,72 @@
+[
+    {
+        "id": "inc-003",
+        "caseNumber": "20260101-001",
+        "registrationNumber": "0003PSYA.2026.가01",
+        "location": "서울시 마포구 망원동 놀이터",
+        "dangerLevel": "고형",
+        "status": "접수",
+        "reportContent": "그네가 혼자 움직인다는 민원. 아이들이 그림자와 대화한다는 제보.",
+        "requiresPatrol": false,
+        "entryRestrictions": "야간 진입 금지",
+        "createdAt": "2026-01-01T09:00:00",
+        "updatedAt": "2026-01-01T09:00:00"
+    },
+    {
+        "id": "inc-004",
+        "caseNumber": "20251230-005",
+        "registrationNumber": "0005PSYA.2025.가99",
+        "location": "경기도 고양시 덕양구 지하차도",
+        "dangerLevel": "뇌형",
+        "status": "조사중",
+        "reportContent": "터널 진입 시 라디오에서 알 수 없는 소리 송출. 운전자 1명 일시적 기억 상실.",
+        "requiresPatrol": true,
+        "darknessType": "소리의 잔재",
+        "countermeasure": "방음 장비 착용",
+        "createdAt": "2025-12-30T22:30:00",
+        "updatedAt": "2025-12-31T10:00:00"
+    },
+    {
+        "id": "inc-005",
+        "caseNumber": "20251228-002",
+        "registrationNumber": "0002PSYA.2025.나05",
+        "location": "서울시 종로구 청운동 폐가",
+        "dangerLevel": "멸형",
+        "status": "종결",
+        "reportContent": "시간 왜곡 현상 발생. 민간인 노화 피해.",
+        "requiresPatrol": false,
+        "darknessType": "시간의 틈",
+        "countermeasure": "은심장 사용",
+        "entryRestrictions": "8급 미만 접근 금지",
+        "createdAt": "2025-12-28T14:20:00",
+        "updatedAt": "2025-12-31T18:00:00"
+    },
+    {
+        "id": "inc-006",
+        "caseNumber": "20251225-001",
+        "registrationNumber": "0001PSYA.2025.다12",
+        "location": "부산시 해운대구 달맞이길",
+        "dangerLevel": "파형",
+        "status": "구조대기",
+        "reportContent": "바다에서 걸어나오는 그림자 목격. 관광객 2명 실종.",
+        "requiresPatrol": true,
+        "darknessType": "물의 기억",
+        "entryRestrictions": "해태상 필수",
+        "createdAt": "2025-12-25T03:00:00",
+        "updatedAt": "2025-12-26T09:00:00"
+    },
+    {
+        "id": "inc-007",
+        "caseNumber": "20251231-010",
+        "registrationNumber": "0010PSYA.2025.라01",
+        "location": "강원도 인제군 자작나무숲",
+        "dangerLevel": "고형",
+        "status": "정리중",
+        "reportContent": "나무들이 밤마다 위치를 바꿈. 인명피해 없음.",
+        "requiresPatrol": false,
+        "darknessType": "숲의 장난",
+        "entryRestrictions": "단독 진입 금지",
+        "createdAt": "2025-12-31T16:45:00",
+        "updatedAt": "2026-01-01T08:30:00"
+    }
+]

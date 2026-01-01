@@ -1,0 +1,46 @@
+[
+    {
+        "id": "msg-308",
+        "senderId": "agent-002",
+        "senderName": "최요원",
+        "senderDepartment": "현무1팀",
+        "receiverId": "agent-004",
+        "title": "현무1팀 회식 안내",
+        "content": "솔음씨, 이번 주 금요일 저녁 7시 팀 회식입니다. 참석 가능하시죠?",
+        "createdAt": "2025-12-30T11:00:00",
+        "isRead": false
+    },
+    {
+        "id": "msg-309",
+        "senderId": "agent-003",
+        "senderName": "류재관",
+        "senderDepartment": "현무1팀",
+        "receiverId": "agent-004",
+        "title": "북촌 사건 협조 감사",
+        "content": "어제 북촌 사건에서 신속한 판단 덕분에 민간인 피해를 최소화했습니다. 수고하셨습니다.",
+        "createdAt": "2025-12-23T10:00:00",
+        "isRead": true
+    },
+    {
+        "id": "msg-310",
+        "senderId": "system",
+        "senderName": "시스템",
+        "senderDepartment": "장비관리반",
+        "receiverId": "agent-004",
+        "title": "메모리얼 그립톡 업데이트",
+        "content": "귀하의 메모리얼 그립톡에 새로운 펌웨어가 적용되었습니다. 재부팅해주세요.",
+        "createdAt": "2025-12-25T09:00:00",
+        "isRead": true
+    },
+    {
+        "id": "msg-311",
+        "senderId": "agent-006",
+        "senderName": "고영은",
+        "senderDepartment": "백호2팀",
+        "receiverId": "agent-004",
+        "title": "점심 같이?",
+        "content": "솔음씨, 오늘 점심 같이 먹을래요? 구내식당 비빔냉면 괜찮다던데.",
+        "createdAt": "2025-12-30T11:30:00",
+        "isRead": false
+    }
+]

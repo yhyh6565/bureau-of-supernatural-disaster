@@ -206,3 +206,66 @@ export const NOTICE_CATEGORY_STYLE: Record<NoticeCategory, {
   '규정': { bgClass: 'bg-slate-500/10', textClass: 'text-slate-500', icon: '📋' },
   '공지': { bgClass: 'bg-gray-500/10', textClass: 'text-gray-500', icon: '📣' },
 };
+
+// 메세지/쪽지 데이터
+export interface Message {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderDepartment: string;
+  receiverId: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  isRead: boolean;
+}
+
+// 장비 데이터
+export interface Equipment {
+  id: string;
+  name: string;
+  category: '대여' | '지급';
+  requiresApproval: boolean;
+  description: string;
+  totalStock: number;
+  availableStock: number;
+  // imageEmoji removed as per v4.0 requirements, using icon mapping or just name
+  imageEmoji?: string; // Optional for backward compatibility or removal
+}
+
+// 방문 장소 데이터
+export interface VisitLocation {
+  id: string;
+  name: string;
+  description: string;
+  requiresApproval: boolean;
+  operatingHours: string;
+  imageEmoji?: string; // Optional for backward compatibility
+}
+
+// 예약 슬롯 데이터
+export interface ReservationSlot {
+  id: string;
+  locationId: string;
+  date: Date;
+  time: string;
+  isAvailable: boolean;
+  reservedBy?: string;
+}
+
+// 결재 문서 데이터
+export interface ApprovalDocument {
+  id: string;
+  type: '조사보고서' | '출동일지' | '순찰일지' | '현장정리보고서' | '시말서' | '장비품의서' | '방문품의서' | '휴가신청서';
+  title: string;
+  content: string;
+  status: '작성중' | '결재대기' | '승인' | '반려';
+  createdBy: string;
+  createdByName: string;
+  approver: string;
+  approverName: string;
+  createdAt: Date;
+  processedAt?: Date;
+  relatedIncidentId?: string;
+  rejectReason?: string;
+}

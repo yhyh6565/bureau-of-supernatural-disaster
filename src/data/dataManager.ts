@@ -1,65 +1,127 @@
-import { Agent } from '@/types/haetae';
+import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message } from '@/types/haetae';
+import { VisitLocation, Equipment } from '@/types/haetae';
 
-// Import Global Data (same for all users)
-import { GLOBAL_NOTIFICATIONS } from './global/notifications';
-import { GLOBAL_EQUIPMENT } from './global/equipment';
-import { GLOBAL_LOCATIONS } from './global/locations';
-import { GLOBAL_INCIDENTS } from './global/incidents';
+import { INTERACTION_MESSAGES, TriggerSystem } from '@/data/interactions';
 
-// Import Ordinary User Data
-import { ORDINARY_MESSAGES } from './ordinary/messages';
-import { ORDINARY_APPROVALS } from './ordinary/approvals';
-import { ORDINARY_SCHEDULES } from './ordinary/schedules';
-import { ORDINARY_INCIDENTS } from './ordinary/incidents';
+// Import Global JSON Data
+import GLOBAL_NOTIFICATIONS_JSON from './global/notifications.json';
+import GLOBAL_EQUIPMENT_JSON from './global/equipment.json';
+import GLOBAL_LOCATIONS_JSON from './global/locations.json';
+import GLOBAL_INCIDENTS_JSON from './global/incidents.json';
 
-// Import Persona Data - 박홍림
-import { PARKHONGLIM_INCIDENTS } from './personas/parkhonglim/incidents';
-import { PARKHONGLIM_MESSAGES } from './personas/parkhonglim/messages';
-import { PARKHONGLIM_NOTIFICATIONS } from './personas/parkhonglim/notifications';
-import { PARKHONGLIM_APPROVALS } from './personas/parkhonglim/approvals';
-import { PARKHONGLIM_SCHEDULES } from './personas/parkhonglim/schedules';
+// Import Ordinary JSON Data
+import ORDINARY_MESSAGES_JSON from './ordinary/messages.json';
+import ORDINARY_APPROVALS_JSON from './ordinary/approvals.json';
+import ORDINARY_SCHEDULES_JSON from './ordinary/schedules.json';
+import ORDINARY_INCIDENTS_JSON from './ordinary/incidents.json';
 
-// Import Persona Data - 최요원
-import { CHOIYOWON_INCIDENTS } from './personas/choiyowon/incidents';
-import { CHOIYOWON_MESSAGES } from './personas/choiyowon/messages';
-import { CHOIYOWON_NOTIFICATIONS } from './personas/choiyowon/notifications';
-import { CHOIYOWON_APPROVALS } from './personas/choiyowon/approvals';
-import { CHOIYOWON_SCHEDULES } from './personas/choiyowon/schedules';
+// Import Persona JSON Data
+import PARKHONGLIM_INCIDENTS_JSON from './personas/parkhonglim/incidents.json';
+import PARKHONGLIM_MESSAGES_JSON from './personas/parkhonglim/messages.json';
+import PARKHONGLIM_NOTIFICATIONS_JSON from './personas/parkhonglim/notifications.json';
+import PARKHONGLIM_APPROVALS_JSON from './personas/parkhonglim/approvals.json';
+import PARKHONGLIM_SCHEDULES_JSON from './personas/parkhonglim/schedules.json';
 
-// Import Persona Data - 류재관
-import { RYUJAEGWAN_INCIDENTS } from './personas/ryujaegwan/incidents';
-import { RYUJAEGWAN_MESSAGES } from './personas/ryujaegwan/messages';
-import { RYUJAEGWAN_NOTIFICATIONS } from './personas/ryujaegwan/notifications';
-import { RYUJAEGWAN_APPROVALS } from './personas/ryujaegwan/approvals';
-import { RYUJAEGWAN_SCHEDULES } from './personas/ryujaegwan/schedules';
+import CHOIYOWON_INCIDENTS_JSON from './personas/choiyowon/incidents.json';
+import CHOIYOWON_MESSAGES_JSON from './personas/choiyowon/messages.json';
+import CHOIYOWON_NOTIFICATIONS_JSON from './personas/choiyowon/notifications.json';
+import CHOIYOWON_APPROVALS_JSON from './personas/choiyowon/approvals.json';
+import CHOIYOWON_SCHEDULES_JSON from './personas/choiyowon/schedules.json';
 
-// Import Persona Data - 김솔음
-import { SOLUM_INCIDENTS } from './personas/solum/incidents';
-import { SOLUM_MESSAGES } from './personas/solum/messages';
-import { SOLUM_NOTIFICATIONS } from './personas/solum/notifications';
-import { SOLUM_APPROVALS } from './personas/solum/approvals';
-import { SOLUM_SCHEDULES } from './personas/solum/schedules';
+import RYUJAEGWAN_INCIDENTS_JSON from './personas/ryujaegwan/incidents.json';
+import RYUJAEGWAN_MESSAGES_JSON from './personas/ryujaegwan/messages.json';
+import RYUJAEGWAN_NOTIFICATIONS_JSON from './personas/ryujaegwan/notifications.json';
+import RYUJAEGWAN_APPROVALS_JSON from './personas/ryujaegwan/approvals.json';
+import RYUJAEGWAN_SCHEDULES_JSON from './personas/ryujaegwan/schedules.json';
 
-// Import Persona Data - 해금
-import { HAEGEUM_INCIDENTS } from './personas/haegeum/incidents';
-import { HAEGEUM_MESSAGES } from './personas/haegeum/messages';
-import { HAEGEUM_NOTIFICATIONS } from './personas/haegeum/notifications';
-import { HAEGEUM_APPROVALS } from './personas/haegeum/approvals';
-import { HAEGEUM_SCHEDULES } from './personas/haegeum/schedules';
+import SOLUM_INCIDENTS_JSON from './personas/solum/incidents.json';
+import SOLUM_MESSAGES_JSON from './personas/solum/messages.json';
+import SOLUM_NOTIFICATIONS_JSON from './personas/solum/notifications.json';
+import SOLUM_APPROVALS_JSON from './personas/solum/approvals.json';
+import SOLUM_SCHEDULES_JSON from './personas/solum/schedules.json';
 
-// Import Persona Data - 고영은
-import { KOYOUNGEUN_INCIDENTS } from './personas/koyoungeun/incidents';
-import { KOYOUNGEUN_MESSAGES } from './personas/koyoungeun/messages';
-import { KOYOUNGEUN_NOTIFICATIONS } from './personas/koyoungeun/notifications';
-import { KOYOUNGEUN_APPROVALS } from './personas/koyoungeun/approvals';
-import { KOYOUNGEUN_SCHEDULES } from './personas/koyoungeun/schedules';
+import HAEGEUM_INCIDENTS_JSON from './personas/haegeum/incidents.json';
+import HAEGEUM_MESSAGES_JSON from './personas/haegeum/messages.json';
+import HAEGEUM_NOTIFICATIONS_JSON from './personas/haegeum/notifications.json';
+import HAEGEUM_APPROVALS_JSON from './personas/haegeum/approvals.json';
+import HAEGEUM_SCHEDULES_JSON from './personas/haegeum/schedules.json';
 
-// Import Persona Data - 장허운
-import { JANGHYEOWOON_INCIDENTS } from './personas/janghyeowoon/incidents';
-import { JANGHYEOWOON_MESSAGES } from './personas/janghyeowoon/messages';
-import { JANGHYEOWOON_NOTIFICATIONS } from './personas/janghyeowoon/notifications';
-import { JANGHYEOWOON_APPROVALS } from './personas/janghyeowoon/approvals';
-import { JANGHYEOWOON_SCHEDULES } from './personas/janghyeowoon/schedules';
+import KOYOUNGEUN_INCIDENTS_JSON from './personas/koyoungeun/incidents.json';
+import KOYOUNGEUN_MESSAGES_JSON from './personas/koyoungeun/messages.json';
+import KOYOUNGEUN_NOTIFICATIONS_JSON from './personas/koyoungeun/notifications.json';
+import KOYOUNGEUN_APPROVALS_JSON from './personas/koyoungeun/approvals.json';
+import KOYOUNGEUN_SCHEDULES_JSON from './personas/koyoungeun/schedules.json';
+
+import JANGHYEOWOON_INCIDENTS_JSON from './personas/janghyeowoon/incidents.json';
+import JANGHYEOWOON_MESSAGES_JSON from './personas/janghyeowoon/messages.json';
+import JANGHYEOWOON_NOTIFICATIONS_JSON from './personas/janghyeowoon/notifications.json';
+import JANGHYEOWOON_APPROVALS_JSON from './personas/janghyeowoon/approvals.json';
+import JANGHYEOWOON_SCHEDULES_JSON from './personas/janghyeowoon/schedules.json';
+
+// Helper to revive dates from JSON
+const parseDates = <T>(items: any[]): T[] => {
+    return items.map(item => {
+        const newItem = { ...item };
+        if (newItem.createdAt) newItem.createdAt = new Date(newItem.createdAt);
+        if (newItem.updatedAt) newItem.updatedAt = new Date(newItem.updatedAt);
+        if (newItem.processedAt) newItem.processedAt = new Date(newItem.processedAt);
+        if (newItem.date) newItem.date = new Date(newItem.date);
+        return newItem as T;
+    });
+};
+
+// Processed Data
+const GLOBAL_INCIDENTS = parseDates<Incident>(GLOBAL_INCIDENTS_JSON);
+const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
+const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
+const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
+
+const ORDINARY_INCIDENTS = parseDates<Incident>(ORDINARY_INCIDENTS_JSON);
+const ORDINARY_MESSAGES = parseDates<Message>(ORDINARY_MESSAGES_JSON);
+const ORDINARY_APPROVALS = parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON);
+const ORDINARY_SCHEDULES = parseDates<Schedule>(ORDINARY_SCHEDULES_JSON);
+
+const PARKHONGLIM_INCIDENTS = parseDates<Incident>(PARKHONGLIM_INCIDENTS_JSON);
+const PARKHONGLIM_MESSAGES = parseDates<Message>(PARKHONGLIM_MESSAGES_JSON);
+const PARKHONGLIM_NOTIFICATIONS = parseDates<Notification>(PARKHONGLIM_NOTIFICATIONS_JSON);
+const PARKHONGLIM_APPROVALS = parseDates<ApprovalDocument>(PARKHONGLIM_APPROVALS_JSON);
+const PARKHONGLIM_SCHEDULES = parseDates<Schedule>(PARKHONGLIM_SCHEDULES_JSON);
+
+const CHOIYOWON_INCIDENTS = parseDates<Incident>(CHOIYOWON_INCIDENTS_JSON);
+const CHOIYOWON_MESSAGES = parseDates<Message>(CHOIYOWON_MESSAGES_JSON);
+const CHOIYOWON_NOTIFICATIONS = parseDates<Notification>(CHOIYOWON_NOTIFICATIONS_JSON);
+const CHOIYOWON_APPROVALS = parseDates<ApprovalDocument>(CHOIYOWON_APPROVALS_JSON);
+const CHOIYOWON_SCHEDULES = parseDates<Schedule>(CHOIYOWON_SCHEDULES_JSON);
+
+const RYUJAEGWAN_INCIDENTS = parseDates<Incident>(RYUJAEGWAN_INCIDENTS_JSON);
+const RYUJAEGWAN_MESSAGES = parseDates<Message>(RYUJAEGWAN_MESSAGES_JSON);
+const RYUJAEGWAN_NOTIFICATIONS = parseDates<Notification>(RYUJAEGWAN_NOTIFICATIONS_JSON);
+const RYUJAEGWAN_APPROVALS = parseDates<ApprovalDocument>(RYUJAEGWAN_APPROVALS_JSON);
+const RYUJAEGWAN_SCHEDULES = parseDates<Schedule>(RYUJAEGWAN_SCHEDULES_JSON);
+
+const SOLUM_INCIDENTS = parseDates<Incident>(SOLUM_INCIDENTS_JSON);
+const SOLUM_MESSAGES = parseDates<Message>(SOLUM_MESSAGES_JSON);
+const SOLUM_NOTIFICATIONS = parseDates<Notification>(SOLUM_NOTIFICATIONS_JSON);
+const SOLUM_APPROVALS = parseDates<ApprovalDocument>(SOLUM_APPROVALS_JSON);
+const SOLUM_SCHEDULES = parseDates<Schedule>(SOLUM_SCHEDULES_JSON);
+
+const HAEGEUM_INCIDENTS = parseDates<Incident>(HAEGEUM_INCIDENTS_JSON);
+const HAEGEUM_MESSAGES = parseDates<Message>(HAEGEUM_MESSAGES_JSON);
+const HAEGEUM_NOTIFICATIONS = parseDates<Notification>(HAEGEUM_NOTIFICATIONS_JSON);
+const HAEGEUM_APPROVALS = parseDates<ApprovalDocument>(HAEGEUM_APPROVALS_JSON);
+const HAEGEUM_SCHEDULES = parseDates<Schedule>(HAEGEUM_SCHEDULES_JSON);
+
+const KOYOUNGEUN_INCIDENTS = parseDates<Incident>(KOYOUNGEUN_INCIDENTS_JSON);
+const KOYOUNGEUN_MESSAGES = parseDates<Message>(KOYOUNGEUN_MESSAGES_JSON);
+const KOYOUNGEUN_NOTIFICATIONS = parseDates<Notification>(KOYOUNGEUN_NOTIFICATIONS_JSON);
+const KOYOUNGEUN_APPROVALS = parseDates<ApprovalDocument>(KOYOUNGEUN_APPROVALS_JSON);
+const KOYOUNGEUN_SCHEDULES = parseDates<Schedule>(KOYOUNGEUN_SCHEDULES_JSON);
+
+const JANGHYEOWOON_INCIDENTS = parseDates<Incident>(JANGHYEOWOON_INCIDENTS_JSON);
+const JANGHYEOWOON_MESSAGES = parseDates<Message>(JANGHYEOWOON_MESSAGES_JSON);
+const JANGHYEOWOON_NOTIFICATIONS = parseDates<Notification>(JANGHYEOWOON_NOTIFICATIONS_JSON);
+const JANGHYEOWOON_APPROVALS = parseDates<ApprovalDocument>(JANGHYEOWOON_APPROVALS_JSON);
+const JANGHYEOWOON_SCHEDULES = parseDates<Schedule>(JANGHYEOWOON_SCHEDULES_JSON);
 
 export const DataManager = {
     // Incidents: Global base + Persona/Ordinary additional incidents

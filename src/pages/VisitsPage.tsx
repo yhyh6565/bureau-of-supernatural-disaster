@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
-import { MOCK_LOCATIONS } from '@/data/extendedMockData';
+import { VisitLocation, ReservationSlot } from '@/types/haetae';
+import { DataManager } from '@/data/dataManager';
 import { MapPin, Clock, AlertCircle, CalendarIcon } from 'lucide-react';
 import { format, addDays, isBefore, startOfDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -44,7 +45,8 @@ const RESERVED_SLOTS: Record<string, string[]> = {
 };
 
 export function VisitsPage() {
-  const [selectedLocation, setSelectedLocation] = useState<typeof MOCK_LOCATIONS[0] | null>(null);
+  const locations = DataManager.getLocations();
+  const [selectedLocation, setSelectedLocation] = useState<VisitLocation | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [reason, setReason] = useState('');
@@ -70,7 +72,7 @@ export function VisitsPage() {
         description: `${format(selectedDate, 'M월 d일', { locale: ko })} ${selectedTime} "${selectedLocation?.name}" 방문이 예약되었습니다.`,
       });
     }
-    
+
     setSelectedLocation(null);
     setSelectedDate(undefined);
     setSelectedTime('');
@@ -104,7 +106,7 @@ export function VisitsPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {MOCK_LOCATIONS.map((location) => (
+            {locations.map((location) => (
               <div
                 key={location.id}
                 className="p-4 border border-border rounded-sm hover:bg-accent/50 transition-colors cursor-pointer"

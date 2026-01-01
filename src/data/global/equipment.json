@@ -1,0 +1,137 @@
+[
+    {
+        "id": "eq-001",
+        "name": "도깨비불",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "어둠 속 길 안내용 조명 장비",
+        "totalStock": 10,
+        "availableStock": 8
+    },
+    {
+        "id": "eq-002",
+        "name": "악의 저울",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "오염도 측정 장비",
+        "totalStock": 5,
+        "availableStock": 3
+    },
+    {
+        "id": "eq-003",
+        "name": "간이 유리감옥",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "소형 개체 봉인용 감금 장치",
+        "totalStock": 8,
+        "availableStock": 6
+    },
+    {
+        "id": "eq-004",
+        "name": "해태상(소형)",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "결계 설치용 해태 조각상",
+        "totalStock": 12,
+        "availableStock": 10
+    },
+    {
+        "id": "eq-005",
+        "name": "줄잡이",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "괴담 존재 포획 및 제어용 특수 밧줄",
+        "totalStock": 15,
+        "availableStock": 12
+    },
+    {
+        "id": "eq-006",
+        "name": "신발끈",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "빠른 이동 및 긴급 탈출용 신발",
+        "totalStock": 20,
+        "availableStock": 18
+    },
+    {
+        "id": "eq-007",
+        "name": "은심장",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "착용자를 선한 사람으로 인정받게 하여 집단 영향력 행사 (탐라행 급행열차 사건 이후 대여만 가능)",
+        "totalStock": 3,
+        "availableStock": 2
+    },
+    {
+        "id": "eq-008",
+        "name": "도깨비 초롱",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "특수 조명 및 탐사용 초롱 (3일 후 재충전 필요)",
+        "totalStock": 5,
+        "availableStock": 3
+    },
+    {
+        "id": "eq-009",
+        "name": "도깨비 감투",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "착용 시 투명화 능력 부여 (특별 승인 필요)",
+        "totalStock": 2,
+        "availableStock": 1
+    },
+    {
+        "id": "eq-010",
+        "name": "유리 손포",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "오염 물질 취급용 특수 장갑 (소모품, 현장정리반 필수)",
+        "totalStock": 500,
+        "availableStock": 450
+    },
+    {
+        "id": "eq-011",
+        "name": "포승줄",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "봉인 문양이 새겨진 특수 포승줄 (소모품)",
+        "totalStock": 200,
+        "availableStock": 180
+    },
+    {
+        "id": "eq-012",
+        "name": "시큼달큼",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "정신 오염 해독 및 안정화용 사탕 (복용 후 30분 효과 지속)",
+        "totalStock": 1000,
+        "availableStock": 950
+    },
+    {
+        "id": "eq-013",
+        "name": "메모리얼 그립톡",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "기억 고정 및 정신 보호용 휴대폰 액세서리 (도깨비공방 제작, 분실 시 즉시 보고)",
+        "totalStock": 150,
+        "availableStock": 120
+    },
+    {
+        "id": "eq-014",
+        "name": "일반 손전등",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "일반적인 LED 손전등",
+        "totalStock": 50,
+        "availableStock": 42
+    },
+    {
+        "id": "eq-015",
+        "name": "3색 볼펜",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "공공기관 납품용 볼펜",
+        "totalStock": 1000,
+        "availableStock": 850
+    }
+]

@@ -54,20 +54,20 @@
 #### 1. 전사 공통 데이터 (Global Data) - `src/data/global/`
 - **대상**: 모든 사용자에게 동일하게 표시
 - **데이터 종류**:
-  - **공지사항** (notifications.ts) - 전사 공지
-  - **장비 목록** (equipment.ts) - 전체 장비 종류 및 재고
-  - **방문 장소** (locations.ts) - 방문 가능한 시설 목록
-  - **기본 재난** (incidents.ts) - 전사 차원에서 관리되는 기본 재난 5건
+  - **공지사항** (notifications.json) - 전사 공지
+  - **장비 목록** (equipment.json) - 전체 장비 종류 및 재고
+  - **방문 장소** (locations.json) - 방문 가능한 시설 목록
+  - **기본 재난** (incidents.json) - 전사 차원에서 관리되는 기본 재난 5건
 - **특징**: 초자연재난관리국의 **공통 인프라 정보**로, 누가 로그인하든 동일하게 표시됩니다.
 
 #### 2. 평범한 요원 개인 데이터 (Ordinary Personal Data) - `src/data/ordinary/`
 - **대상**: 네임드 요원이 아닌 ID로 로그인한 모든 유저
 - **신분**: **9급 실무관** (직급 고정), 부서는 랜덤 배정
 - **데이터 종류**:
-  - **쪽지함** (messages.ts) - 일상적인 업무 협조 메시지
-  - **결재 문서** (approvals.ts) - 평범한 보고서 및 신청서
-  - **일정** (schedules.ts) - 일반적인 업무 스케줄
-  - **추가 재난** (incidents.ts) - 현재 비어있음 (향후 확장 가능)
+  - **쪽지함** (messages.json) - 일상적인 업무 협조 메시지
+  - **결재 문서** (approvals.json) - 평범한 보고서 및 신청서
+  - **일정** (schedules.json) - 일반적인 업무 스케줄
+  - **추가 재난** (incidents.json) - 현재 비어있음 (향후 확장 가능)
 - **특징**: "초자연재난관리국의 평범한 공무원으로서의 삶" 체험. 일상적이고 반복적인 업무 데이터만 제공됩니다.
 
 #### 3. 페르소나 개인 데이터 (Persona Personal Data) - `src/data/personas/{캐릭터명}/`
@@ -77,11 +77,11 @@
   ```
   personas/
   ├── parkhonglim/
-  │   ├── incidents.ts      # 캐릭터 전용 재난
-  │   ├── messages.ts       # 캐릭터 전용 쪽지
-  │   ├── notifications.ts  # 캐릭터 전용 공지
-  │   ├── approvals.ts      # 캐릭터 전용 결재
-  │   └── schedules.ts      # 캐릭터 전용 일정
+  │   ├── incidents.json      # 캐릭터 전용 재난
+  │   ├── messages.json       # 캐릭터 전용 쪽지
+  │   ├── notifications.json  # 캐릭터 전용 공지
+  │   ├── approvals.json      # 캐릭터 전용 결재
+  │   └── schedules.json      # 캐릭터 전용 일정
   ├── choiyowon/
   ├── ryujaegwan/
   ├── solum/
@@ -638,6 +638,11 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 ### 데이터 분류 체계
 
+> **참고**: 상세한 데이터 스키마 및 관리 규칙은 **[DATA_SPECIFICATION.md](./DATA_SPECIFICATION.md)**를 참고하십시오.
+> - **타입 정의**: `src/types/haetae.ts`
+> - **상수 정의**: `src/constants/haetae.ts`
+> - **데이터 접근**: `src/data/dataManager.ts`
+
 초자연재난관리국 인트라넷 시스템은 **데이터의 성격(Nature)**에 따라 3계층 구조로 설계되었습니다.
 
 #### 계층 1: 전사 공통 데이터 (Global Data)
@@ -646,10 +651,10 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 | 파일 | 데이터 타입 | 설명 |
 |------|------------|------|
-| incidents.ts | GLOBAL_INCIDENTS | 전사 차원에서 관리되는 기본 재난 5건 |
-| notifications.ts | GLOBAL_NOTIFICATIONS | 전사 공지사항 (모든 요원이 확인) |
-| equipment.ts | GLOBAL_EQUIPMENT | 장비 목록 및 재고 현황 |
-| locations.ts | GLOBAL_LOCATIONS | 방문 가능한 시설 목록 |
+| incidents.json | GLOBAL_INCIDENTS | 전사 차원에서 관리되는 기본 재난 5건 |
+| notifications.json | GLOBAL_NOTIFICATIONS | 전사 공지사항 (모든 요원이 확인) |
+| equipment.json | GLOBAL_EQUIPMENT | 장비 목록 및 재고 현황 |
+| locations.json | GLOBAL_LOCATIONS | 방문 가능한 시설 목록 |
 
 **병합 로직**:
 - 재난/공지사항: 개인 데이터와 병합하여 제공
@@ -661,10 +666,10 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 | 파일 | 데이터 타입 | 설명 |
 |------|------------|------|
-| incidents.ts | ORDINARY_INCIDENTS | 추가 재난 (현재 비어있음, 향후 확장 가능) |
-| messages.ts | ORDINARY_MESSAGES | 일상적인 업무 협조 쪽지 5건 |
-| approvals.ts | ORDINARY_APPROVALS | 평범한 보고서 및 신청서 5건 |
-| schedules.ts | ORDINARY_SCHEDULES | 일반 업무 일정 6건 |
+| incidents.json | ORDINARY_INCIDENTS | 추가 재난 (현재 비어있음, 향후 확장 가능) |
+| messages.json | ORDINARY_MESSAGES | 일상적인 업무 협조 쪽지 5건 |
+| approvals.json | ORDINARY_APPROVALS | 평범한 보고서 및 신청서 5건 |
+| schedules.json | ORDINARY_SCHEDULES | 일반 업무 일정 6건 |
 
 **병합 로직**:
 - 재난: GLOBAL_INCIDENTS + ORDINARY_INCIDENTS
@@ -676,11 +681,11 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 **특징**: 7명의 주요 캐릭터별 맞춤형 스토리 데이터
 
 각 페르소나 폴더는 5개 파일로 구성:
-- **incidents.ts**: 캐릭터 전용 재난 사건 (0~3건)
-- **messages.ts**: 캐릭터 관련 쪽지 (1~4건)
-- **notifications.ts**: 캐릭터 전용 공지 (0~2건)
-- **approvals.ts**: 캐릭터 전용 결재 문서 (0~3건)
-- **schedules.ts**: 캐릭터 전용 일정 (0~5건)
+- **incidents.json**: 캐릭터 전용 재난 사건 (0~3건)
+- **messages.json**: 캐릭터 관련 쪽지 (1~4건)
+- **notifications.json**: 캐릭터 전용 공지 (0~2건)
+- **approvals.json**: 캐릭터 전용 결재 문서 (0~3건)
+- **schedules.json**: 캐릭터 전용 일정 (0~5건)
 
 **병합 로직**:
 - 재난: GLOBAL_INCIDENTS + {캐릭터}_INCIDENTS

@@ -1,7 +1,0 @@
-import { Schedule } from '@/types/haetae';
-
-export const KOYOUNGEUN_SCHEDULES: Schedule[] = [
-    { id: 'sch-017', title: '폐병원 조사', type: '작전', date: new Date('2026-01-03T10:00:00'), relatedId: 'inc-010' },
-    { id: 'sch-018', title: '백호2팀 주간 회의', type: '훈련', date: new Date('2026-01-06T09:00:00') },
-    { id: 'sch-019', title: '용천 선녀탕 방문', type: '방문예약', date: new Date('2026-01-08T16:00:00'), relatedId: 'loc-004' },
-];

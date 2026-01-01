@@ -1,0 +1,46 @@
+[
+    {
+        "id": "msg-101",
+        "senderId": "system",
+        "senderName": "시스템",
+        "senderDepartment": "의료국",
+        "receiverId": "agent-002",
+        "title": "오염도 주의 안내",
+        "content": "귀하의 현재 오염도가 28%입니다. 다음 주 정기 검진을 반드시 받으시기 바랍니다.",
+        "createdAt": "2025-12-29T09:00:00",
+        "isRead": false
+    },
+    {
+        "id": "msg-102",
+        "senderId": "agent-001",
+        "senderName": "박홍림",
+        "senderDepartment": "현무1팀",
+        "receiverId": "agent-002",
+        "title": "단독 출동 금지 경고",
+        "content": "강남구 폐건물 사건 관련하여, 향후 단독 출동은 금지됩니다. 팀 동반 필수.",
+        "createdAt": "2025-12-28T19:00:00",
+        "isRead": true
+    },
+    {
+        "id": "msg-103",
+        "senderId": "system",
+        "senderName": "시스템",
+        "senderDepartment": "장비관리반",
+        "receiverId": "agent-002",
+        "title": "장비 반납 안내",
+        "content": "대여 중인 도깨비 초롱(eq-008)의 반납 기한이 내일입니다.",
+        "createdAt": "2025-12-30T10:00:00",
+        "isRead": false
+    },
+    {
+        "id": "msg-104",
+        "senderId": "agent-002",
+        "senderName": "최요원",
+        "senderDepartment": "현무1팀",
+        "receiverId": "agent-003",
+        "title": "강남 사건 지원 요청",
+        "content": "재관이, 강남 폐건물 사건 부적 좀 확인해줄 수 있어? 뭔가 봉인이 풀린 것 같은데.",
+        "createdAt": "2025-12-28T15:30:00",
+        "isRead": true
+    }
+]

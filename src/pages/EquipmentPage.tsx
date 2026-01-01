@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MOCK_EQUIPMENT } from '@/data/extendedMockData';
+import { Equipment } from '@/types/haetae';
+import { DataManager } from '@/data/dataManager';
 import { Package, Key, ShoppingCart, AlertCircle, CheckCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import {
@@ -27,13 +28,14 @@ import {
 } from '@/components/ui/select';
 
 export function EquipmentPage() {
-  const [selectedEquipment, setSelectedEquipment] = useState<typeof MOCK_EQUIPMENT[0] | null>(null);
+  const allEquipment = DataManager.getEquipment();
+  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
   const [rentalDays, setRentalDays] = useState('1');
   const [quantity, setQuantity] = useState('1');
   const [reason, setReason] = useState('');
 
-  const rentalEquipment = MOCK_EQUIPMENT.filter(e => e.category === '대여');
-  const supplyEquipment = MOCK_EQUIPMENT.filter(e => e.category === '지급');
+  const rentalEquipment = allEquipment.filter(e => e.category === '대여');
+  const supplyEquipment = allEquipment.filter(e => e.category === '지급');
 
   const handleSubmit = () => {
     if (!reason.trim()) {
@@ -60,8 +62,8 @@ export function EquipmentPage() {
     setReason('');
   };
 
-  const EquipmentCard = ({ item }: { item: typeof MOCK_EQUIPMENT[0] }) => (
-    <div 
+  const EquipmentCard = ({ item }: { item: Equipment }) => (
+    <div
       className="p-4 border border-border rounded-sm hover:bg-accent/50 transition-colors cursor-pointer"
       onClick={() => setSelectedEquipment(item)}
     >

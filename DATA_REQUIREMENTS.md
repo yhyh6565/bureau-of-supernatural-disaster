@@ -2,16 +2,22 @@
 
 현재 시스템의 테스트를 위해 필요한 핵심 데이터 카테고리와 각 항목별 필요 필드를 정리했습니다.
 
+**v5.0 변경사항** (2026-01-01):
+- **데이터 저장 형식 변경**: TypeScript(`.ts`) -> JSON(`.json`) 파일로 전면 교체
+- **JSON 데이터 관리**: 모든 데이터는 `src/data` 내부의 JSON 파일에서 로드되며, 날짜 문자열은 자동으로 변환됩니다.
+
 **v4.0 변경사항** (2026-01-01):
-- **데이터 이원화 구조 확립**: `src/data/common/` (공통 데이터) + `src/data/personas/` (7명 맞춤형 데이터)
+- **데이터 이원화 구조 확립**: `src/data/common/` (공통 데이터) -> `src/data/global/`로 변경됨
 - **code vs codename 구분**: `code` = 부서-숫자 (HMU-001), `codename` = 별명 (청동, 포도)
 - **장비/방문장소**: `imageEmoji` 필드 완전 제거 ✓
 - **재난 등급**: 멸형/파형/뇌형/고형으로 통일 ✓
 - **7명 페르소나 구현**: 박홍림, 최요원, 류재관, 김솔음, 해금, 고영은, 장허운
 
 **데이터 소스 경로**:
-- 공통 데이터: `src/data/common/` (incidents.ts, messages.ts, notifications.ts, approvals.ts, equipment.ts, locations.ts, schedules.ts)
-- 페르소나 데이터: `src/data/personas/{캐릭터명}.ts` (parkhonglim.ts, choiyowon.ts, ryujaegwan.ts, solum.ts, haegeum.ts, koyoungeun.ts, janghyeowoon.ts)
+**데이터 소스 경로**:
+- 공통 데이터: `src/data/global/` (incidents.json, notifications.json, equipment.json, locations.json)
+- 평범한 데이터: `src/data/ordinary/` (messages.json, approvals.json, schedules.json, incidents.json)
+- 페르소나 데이터: `src/data/personas/{캐릭터명}/` (incidents.json, messages.json, notifications.json, approvals.json, schedules.json)
 - 병합 로직: `src/data/dataManager.ts`
 
 ---
@@ -251,31 +257,39 @@ noti-004, [현무팀] 도깨비 시련 발동 사고 재발 방지 안내, 최�
 
 ---
 
-## 📋 CSV 파일 형식 가이드
+## 📋 JSON 파일 형식 가이드 (변경됨)
 
-각 데이터는 별도의 CSV 파일로 작성해주세요:
+각 데이터는 `src/data` 내부의 적절한 위치에 JSON 파일로 작성되어야 합니다.
 
-1. **agents.csv** - 요원 데이터 (3~5명 정도)
-2. **incidents.csv** - 재난 데이터 (멸형/파형/뇌형/고형 각각 최소 1개씩, 총 8~10건)
-3. **approvals.csv** - 결재 문서 (5~7건)
-4. **messages.csv** - 쪽지 (5~10건)
-5. **equipment.csv** - 장비 (위에 나열된 13개 전부)
-6. **locations.csv** - 방문 장소 (위에 나열된 4개 전부)
-7. **schedules.csv** - 일정 (7~10개)
-8. **notifications.csv** - 공지사항 (5~8개)
+**파일 구조**:
+1. `src/data/global/`: incidents.json, notifications.json, equipment.json, locations.json
+2. `src/data/ordinary/`: messages.json, approvals.json, schedules.json, incidents.json
+3. `src/data/personas/{name}/`: incidents.json, messages.json, notifications.json, approvals.json, schedules.json
 
-**헤더 행 필수**: 각 CSV 첫 줄에는 필드명을 영문으로 작성해주세요.
-
-예시:
-```csv
-id,name,codename,department,team,rank,extension,status,contamination,totalIncidents,specialCases,equipmentInUse,purificationHistory,funeralPreference
-agent-001,박홍림,HMU-001,출동구조반,현무1팀,팀장,3401,정상,12,45,8,[],[2025-11-20;2025-10-15;2025-09-10],화장
+**작성 예시 (incidents.json)**:
+```json
+[
+  {
+    "id": "inc-001",
+    "caseNumber": "20251231-001",
+    "registrationNumber": "0001PSYA.2025.가01",
+    "location": "서울특별시 종로구 청운동 폐가",
+    "dangerLevel": "뇌형",
+    "status": "접수",
+    "reportContent": "야간 산책 중 폐가에서 인간이 아닌 것으로 추정되는 그림자 목격",
+    "requiresPatrol": false,
+    "createdAt": "2025-12-31T02:30:00",
+    "updatedAt": "2025-12-31T02:30:00"
+  }
+]
 ```
 
 ---
 
+## v5.0 변경 로그
+
 **데이터 작성 시 주의사항**:
-- 날짜는 ISO 형식 사용 (`2025-12-31T10:00:00`)
-- 배열은 세미콜론(;)으로 구분 (예: `[2025-11-20;2025-10-15]`)
-- 빈 값은 빈칸으로 두기
+- 날짜는 ISO 형식 문자열 사용 (`"2025-12-31T10:00:00"`)
+- JSON 형식이므로 모든 키와 문자열 값은 큰따옴표(`"`)로 감싸야 합니다.
+- 마지막 항목 뒤에는 쉼표(`,`)를 붙이지 않습니다.
 - 한글 인코딩은 UTF-8 사용

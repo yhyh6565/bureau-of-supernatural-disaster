@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/types/haetae';
-import { FUNERAL_OPTIONS } from '@/data/extendedMockData';
+import { FUNERAL_OPTIONS } from '@/constants/haetae';
 import { User, Phone, Building2, Shield, Heart, AlertTriangle } from 'lucide-react';
 import {
   Dialog,
@@ -99,10 +99,10 @@ export function MyPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">근무 상태</span>
-                <Badge 
+                <Badge
                   className={
-                    agent.status === '정상' 
-                      ? 'bg-success text-success-foreground' 
+                    agent.status === '정상'
+                      ? 'bg-success text-success-foreground'
                       : 'bg-destructive text-destructive-foreground'
                   }
                 >

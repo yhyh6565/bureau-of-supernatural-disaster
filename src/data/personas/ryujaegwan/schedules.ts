@@ -1,8 +1,0 @@
-import { Schedule } from '@/types/haetae';
-
-export const RYUJAEGWAN_SCHEDULES: Schedule[] = [
-    { id: 'sch-006', title: '전주 한옥마을 순찰', type: '작전', date: new Date('2026-01-04T10:00:00'), relatedId: 'inc-004' },
-    { id: 'sch-007', title: '공주 고분군 조사', type: '작전', date: new Date('2026-01-06T08:00:00'), relatedId: 'inc-005' },
-    { id: 'sch-008', title: '바리데기 세공소 방문', type: '방문예약', date: new Date('2026-01-07T14:00:00'), relatedId: 'loc-002' },
-    { id: 'sch-009', title: '월간 보고서 작성', type: '결재마감', date: new Date('2026-01-05T18:00:00') },
-];

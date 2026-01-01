@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MOCK_APPROVALS } from '@/data/extendedMockData';
+import { ApprovalDocument } from '@/types/haetae';
+import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { ClipboardCheck, FileText, Clock, CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
@@ -21,9 +22,10 @@ const STATUS_STYLE: Record<ApprovalStatus, { bg: string; text: string; icon: Rea
 
 export function ApprovalsPage() {
   const { agent } = useAuth();
-  const [selectedApproval, setSelectedApproval] = useState<typeof MOCK_APPROVALS[0] | null>(null);
+  const approvals = DataManager.getApprovals(agent);
+  const [selectedApproval, setSelectedApproval] = useState<ApprovalDocument | null>(null);
 
-  const myDocuments = MOCK_APPROVALS.filter(a => a.createdBy === agent?.id);
+  const myDocuments = approvals.filter(a => a.createdBy === agent?.id);
   const pendingCount = myDocuments.filter(a => a.status === '결재대기').length;
 
   if (selectedApproval) {
@@ -33,8 +35,8 @@ export function ApprovalsPage() {
     return (
       <MainLayout>
         <div className="mb-6">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => setSelectedApproval(null)}
             className="gap-2 mb-4"
           >
