@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 
 export const HAEGEUM_INCIDENTS: Incident[] = [
     {
-        id: 'inc-008',
+        id: 'inc-501',
         caseNumber: '20251230-001',
         registrationNumber: '0008PSYA.2025.가08',
         location: '경기도 파주시 접경지역 A구역',
@@ -16,7 +16,7 @@ export const HAEGEUM_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-31T09:00:00'),
     },
     {
-        id: 'inc-009',
+        id: 'inc-502',
         caseNumber: '20251201-002',
         registrationNumber: '0009PSYA.2025.가09',
         location: '강원도 철원군 폐터널',

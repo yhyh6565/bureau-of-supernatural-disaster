@@ -54,7 +54,7 @@ export const ORDINARY_APPROVALS: ApprovalDocument[] = [
     },
     {
         id: 'appr-009',
-        type: '휴가신청서', // Type update required if '휴가신청서' is not in ApprovalDocument type
+        type: '휴가신청서',
         title: '1월 연차 사용 신청',
         content: '개인 사정으로 인한 연차 신청 (1/15)',
         status: '승인',
@@ -63,5 +63,5 @@ export const ORDINARY_APPROVALS: ApprovalDocument[] = [
         approver: 'agent-001',
         approverName: '박홍림',
         createdAt: new Date('2025-12-28T15:00:00'),
-    } as any, // Cast to any temporary if type mismatch
+    },
 ];

@@ -2,7 +2,7 @@ import { Notification } from '@/types/haetae';
 
 export const KOYOUNGEUN_NOTIFICATIONS: Notification[] = [
     {
-        id: 'noti-009',
+        id: 'noti-609',
         title: '[백호2팀] 의료 관련 재난 우선 배정',
         content: '의료 지식을 보유한 박하 요원께 의료 관련 재난을 우선 배정하겠습니다.',
         isUrgent: false,

@@ -2,7 +2,7 @@ import { Message } from '@/data/extendedMockData';
 
 export const JANGHYEOWOON_MESSAGES: Message[] = [
     {
-        id: 'msg-017',
+        id: 'msg-717',
         senderId: 'system',
         senderName: '시스템',
         senderDepartment: '주작팀 운영국',
@@ -13,7 +13,7 @@ export const JANGHYEOWOON_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-018',
+        id: 'msg-718',
         senderId: 'agent-007',
         senderName: '장허운',
         senderDepartment: '주작2팀',
@@ -24,7 +24,7 @@ export const JANGHYEOWOON_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-019',
+        id: 'msg-719',
         senderId: 'agent-004',
         senderName: '김솔음',
         senderDepartment: '현무1팀',

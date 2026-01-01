@@ -2,7 +2,7 @@ import { Message } from '@/data/extendedMockData';
 
 export const PARKHONGLIM_MESSAGES: Message[] = [
     {
-        id: 'msg-012-rev',
+        id: 'msg-812',
         senderId: 'agent-005',
         senderName: '해금',
         senderDepartment: '현무3팀',

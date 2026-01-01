@@ -2,7 +2,7 @@ import { Message } from '@/data/extendedMockData';
 
 export const HAEGEUM_MESSAGES: Message[] = [
     {
-        id: 'msg-012',
+        id: 'msg-512',
         senderId: 'system',
         senderName: '시스템',
         senderDepartment: '긴급재난국',
@@ -13,7 +13,7 @@ export const HAEGEUM_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-013',
+        id: 'msg-513',
         senderId: 'agent-005',
         senderName: '해금',
         senderDepartment: '현무3팀',

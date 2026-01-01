@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 
 export const KOYOUNGEUN_INCIDENTS: Incident[] = [
     {
-        id: 'inc-010',
+        id: 'inc-601',
         caseNumber: '20251226-001',
         registrationNumber: '0010PSYA.2025.가10',
         location: '대전광역시 유성구 폐병원',
@@ -15,7 +15,7 @@ export const KOYOUNGEUN_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-30T14:00:00'),
     },
     {
-        id: 'inc-011',
+        id: 'inc-602',
         caseNumber: '20251212-003',
         registrationNumber: '0011PSYA.2025.가11',
         location: '광주광역시 동구 약국',

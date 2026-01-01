@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 
 export const SOLUM_INCIDENTS: Incident[] = [
     {
-        id: 'inc-006',
+        id: 'inc-301',
         caseNumber: '20251222-003',
         registrationNumber: '0006PSYA.2025.가06',
         location: '서울특별시 종로구 북촌 한옥',
@@ -15,7 +15,7 @@ export const SOLUM_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-23T09:00:00'),
     },
     {
-        id: 'inc-007',
+        id: 'inc-302',
         caseNumber: '20251210-001',
         registrationNumber: '0007PSYA.2025.가07',
         location: '부산광역시 해운대구 해변',

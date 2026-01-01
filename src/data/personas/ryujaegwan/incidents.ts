@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 
 export const RYUJAEGWAN_INCIDENTS: Incident[] = [
     {
-        id: 'inc-004',
+        id: 'inc-201',
         caseNumber: '20251225-001',
         registrationNumber: '0004PSYA.2025.가04',
         location: '전라북도 전주시 한옥마을',
@@ -15,7 +15,7 @@ export const RYUJAEGWAN_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-26T16:00:00'),
     },
     {
-        id: 'inc-005',
+        id: 'inc-202',
         caseNumber: '20251218-002',
         registrationNumber: '0005PSYA.2025.가05',
         location: '충청남도 공주시 고분군',

@@ -2,7 +2,7 @@ import { Message } from '@/data/extendedMockData';
 
 export const SOLUM_MESSAGES: Message[] = [
     {
-        id: 'msg-008',
+        id: 'msg-308',
         senderId: 'agent-002',
         senderName: '최요원',
         senderDepartment: '현무1팀',
@@ -13,7 +13,7 @@ export const SOLUM_MESSAGES: Message[] = [
         isRead: false,
     },
     {
-        id: 'msg-009',
+        id: 'msg-309',
         senderId: 'agent-003',
         senderName: '류재관',
         senderDepartment: '현무1팀',
@@ -24,7 +24,7 @@ export const SOLUM_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-010',
+        id: 'msg-310',
         senderId: 'system',
         senderName: '시스템',
         senderDepartment: '장비관리반',
@@ -35,7 +35,7 @@ export const SOLUM_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-011',
+        id: 'msg-311',
         senderId: 'agent-006',
         senderName: '고영은',
         senderDepartment: '백호2팀',

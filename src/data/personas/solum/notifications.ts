@@ -2,7 +2,7 @@ import { Notification } from '@/types/haetae';
 
 export const SOLUM_NOTIFICATIONS: Notification[] = [
     {
-        id: 'noti-007',
+        id: 'noti-307',
         title: '신입 요원 교육 일정 안내',
         content: '2026년 1월 8일 신입 요원 교육에 선배 요원으로 참석해주시기 바랍니다.',
         isUrgent: false,

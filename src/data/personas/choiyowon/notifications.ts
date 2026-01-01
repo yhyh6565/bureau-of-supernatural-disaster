@@ -2,7 +2,7 @@ import { Notification } from '@/types/haetae';
 
 export const CHOIYOWON_NOTIFICATIONS: Notification[] = [
     {
-        id: 'noti-004',
+        id: 'noti-104',
         title: '[현무1팀] 단독 출동 금지 안내',
         content: '최 요원의 잦은 단독 출동 사고로 인해, 향후 모든 출동은 2인 이상 팀 동반을 의무화합니다.',
         isUrgent: true,
@@ -10,7 +10,7 @@ export const CHOIYOWON_NOTIFICATIONS: Notification[] = [
         isRead: false,
     },
     {
-        id: 'noti-005',
+        id: 'noti-105',
         title: '오염도 관리 안내',
         content: '일주일에 한 번 정기 검진을 받고 계신 요원들께 감사드립니다. 지속적인 자가 관리 부탁드립니다.',
         isUrgent: false,

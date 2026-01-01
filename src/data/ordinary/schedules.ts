@@ -4,9 +4,9 @@ export const ORDINARY_SCHEDULES: Schedule[] = [
     {
         id: 'sch-010',
         title: '신년 시무식',
-        type: '행사', // Type definition might need update if '행사' not in ScheduleType
+        type: '행사',
         date: new Date('2026-01-02T10:00:00'),
-    } as any,
+    },
     {
         id: 'sch-011',
         title: '백호2팀 회식',

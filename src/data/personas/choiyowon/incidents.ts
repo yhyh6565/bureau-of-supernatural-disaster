@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 
 export const CHOIYOWON_INCIDENTS: Incident[] = [
     {
-        id: 'inc-001',
+        id: 'inc-101',
         caseNumber: '20251228-003',
         registrationNumber: '0001PSYA.2025.가01',
         location: '서울특별시 강남구 폐건물',
@@ -16,7 +16,7 @@ export const CHOIYOWON_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-28T18:00:00'),
     },
     {
-        id: 'inc-002',
+        id: 'inc-102',
         caseNumber: '20251220-001',
         registrationNumber: '0002PSYA.2025.가02',
         location: '인천광역시 중구 항구',
@@ -29,7 +29,7 @@ export const CHOIYOWON_INCIDENTS: Incident[] = [
         updatedAt: new Date('2025-12-21T14:00:00'),
     },
     {
-        id: 'inc-003',
+        id: 'inc-103',
         caseNumber: '20251215-005',
         registrationNumber: '0003PSYA.2025.가03',
         location: '경기도 고양시 일산 호수공원',

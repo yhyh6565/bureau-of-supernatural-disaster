@@ -55,7 +55,7 @@ export interface Assignment {
 export interface Schedule {
   id: string;
   title: string;
-  type: '작전' | '방문예약' | '결재마감' | '당직' | '훈련';
+  type: '작전' | '방문예약' | '결재마감' | '당직' | '훈련' | '행사';
   date: Date;
   relatedId?: string;
 }

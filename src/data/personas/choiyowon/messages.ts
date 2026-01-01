@@ -2,7 +2,7 @@ import { Message } from '@/data/extendedMockData';
 
 export const CHOIYOWON_MESSAGES: Message[] = [
     {
-        id: 'msg-001',
+        id: 'msg-101',
         senderId: 'system',
         senderName: '시스템',
         senderDepartment: '의료국',
@@ -13,7 +13,7 @@ export const CHOIYOWON_MESSAGES: Message[] = [
         isRead: false,
     },
     {
-        id: 'msg-002',
+        id: 'msg-102',
         senderId: 'agent-001',
         senderName: '박홍림',
         senderDepartment: '현무1팀',
@@ -24,7 +24,7 @@ export const CHOIYOWON_MESSAGES: Message[] = [
         isRead: true,
     },
     {
-        id: 'msg-003',
+        id: 'msg-103',
         senderId: 'system',
         senderName: '시스템',
         senderDepartment: '장비관리반',
@@ -35,7 +35,7 @@ export const CHOIYOWON_MESSAGES: Message[] = [
         isRead: false,
     },
     {
-        id: 'msg-004',
+        id: 'msg-104',
         senderId: 'agent-002',
         senderName: '최요원',
         senderDepartment: '현무1팀',
