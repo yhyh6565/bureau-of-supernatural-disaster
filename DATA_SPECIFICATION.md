@@ -73,7 +73,10 @@ src/data/
     status: IncidentStatus;     // "접수" -> "조사중" -> "구조대기" ... -> "종결"
     reportContent: string;      // 제보 내용
     requiresPatrol: boolean;    // 정기 순찰 필요 여부
-    // ...
+    countermeasure?: string;    // [특수] 파훼법 (조사 완료 시)
+    entryRestrictions?: string; // [특수] 진입 제한 사항
+    createdAt: Date;
+    updatedAt: Date;
   }
   ```
 
@@ -138,6 +141,35 @@ src/data/
       "description": "string",
       "requiresApproval": boolean,
       "operatingHours": "string"
+    }
+    ```
+
+### 5. RentalRecord (대여/지급 기록)
+*   **설명**: `Agent` 객체 내부에 포함되는 개인 자산 현황
+*   **구조**:
+    ```typescript
+    interface RentalRecord {
+      id: string;
+      equipmentName: string;
+      category: '대여' | '지급';
+      rentalDate: Date;
+      dueDate?: Date;
+      status: '정상' | '연체' | '반납완료';
+    }
+    ```
+
+### 6. InspectionRequest (오염 검사)
+*   **설명**: `ResourcesPage` 오염 검사 탭에서 생성되는 데이터
+*   **구조**:
+    ```typescript
+    interface InspectionRequest {
+        id: string;
+        agentId: string;
+        type: '정기검사' | '정밀검사' | '긴급검사';
+        status: '신청' | '접수' | '완료';
+        scheduledDate: Date;
+        symptoms?: string;
+        result?: string;
     }
     ```
 

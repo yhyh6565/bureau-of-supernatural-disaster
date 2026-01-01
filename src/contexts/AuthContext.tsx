@@ -14,7 +14,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 5,
     totalIncidents: 52,
     specialCases: 15,
-    equipmentInUse: [],
+    rentals: [],
     purificationHistory: [new Date('2025-12-15')],
     funeralPreference: '매장',
     grade: 6
@@ -30,7 +30,23 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 35,
     totalIncidents: 28,
     specialCases: 8,
-    equipmentInUse: [],
+    rentals: [
+      {
+        id: 'rent-001',
+        equipmentName: 'EMF 탐지기 (Pro)',
+        category: '대여',
+        rentalDate: new Date('2025-12-01'),
+        dueDate: new Date('2025-12-15'),
+        status: '연체'
+      },
+      {
+        id: 'rent-002',
+        equipmentName: '기본 보급품 세트',
+        category: '지급',
+        rentalDate: new Date('2025-11-20'),
+        status: '정상'
+      }
+    ],
     purificationHistory: [new Date('2025-12-20'), new Date('2025-12-10')],
     funeralPreference: '화장',
     grade: 7
@@ -46,7 +62,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 18,
     totalIncidents: 35,
     specialCases: 10,
-    equipmentInUse: [],
+    rentals: [],
     purificationHistory: [new Date('2025-12-05')],
     funeralPreference: '매장',
     grade: 8
@@ -62,7 +78,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 22,
     totalIncidents: 24,
     specialCases: 7,
-    equipmentInUse: [],
+    rentals: [],
     purificationHistory: [new Date('2025-11-28')],
     funeralPreference: '수목장',
     grade: 7
@@ -78,7 +94,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 12,
     totalIncidents: 48,
     specialCases: 18,
-    equipmentInUse: [],
+    rentals: [],
     purificationHistory: [new Date('2025-12-01')],
     funeralPreference: '데이터 소각',
     grade: 6
@@ -94,7 +110,16 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 15,
     totalIncidents: 31,
     specialCases: 6,
-    equipmentInUse: [],
+    rentals: [
+      {
+        id: 'rent-003',
+        equipmentName: '야간 투시경',
+        category: '대여',
+        rentalDate: new Date('2025-12-28'),
+        dueDate: new Date('2026-01-04'),
+        status: '정상'
+      }
+    ],
     purificationHistory: [new Date('2025-11-20')],
     funeralPreference: '화장',
     grade: 7
@@ -110,7 +135,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     contamination: 28,
     totalIncidents: 26,
     specialCases: 4,
-    equipmentInUse: [],
+    rentals: [],
     purificationHistory: [new Date('2025-12-18'), new Date('2025-11-25')],
     funeralPreference: '기억 소거 후 방생',
     grade: 7
@@ -155,7 +180,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       contamination: Math.floor(Math.random() * 40), // 0~40 랜덤 오염도
       totalIncidents: Math.floor(Math.random() * 50),
       specialCases: Math.floor(Math.random() * 5),
-      equipmentInUse: [],
+      rentals: [],
       purificationHistory: [],
     };
   };

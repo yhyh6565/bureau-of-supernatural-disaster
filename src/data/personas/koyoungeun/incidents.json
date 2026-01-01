@@ -9,6 +9,7 @@
         "reportContent": "폐병원에서 환자 목격 신고. 박하 요원 의료 지식 활용 조사 중.",
         "requiresPatrol": false,
         "countermeasure": "의료 기록 분석",
+        "entryRestrictions": "방호복 착용 필수",
         "createdAt": "2025-12-26T10:00:00",
         "updatedAt": "2025-12-30T14:00:00"
     },

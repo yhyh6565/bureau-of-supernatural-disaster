@@ -22,6 +22,7 @@
         "reportContent": "현무팀 종결 후 정리 대기. 화각 요원 출동 예정.",
         "requiresPatrol": true,
         "countermeasure": "공장 폐쇄 및 봉인",
+        "entryRestrictions": "야간 진입 금지",
         "createdAt": "2025-12-05T11:00:00",
         "updatedAt": "2025-12-30T09:00:00"
     }

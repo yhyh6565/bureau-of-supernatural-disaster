@@ -1,4 +1,4 @@
-import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message } from '@/types/haetae';
+import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message, InspectionRequest } from '@/types/haetae';
 import { VisitLocation, Equipment } from '@/types/haetae';
 
 import { INTERACTION_MESSAGES, TriggerSystem } from '@/data/interactions';
@@ -76,136 +76,104 @@ const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON)
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
 const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
 
-const ORDINARY_INCIDENTS = parseDates<Incident>(ORDINARY_INCIDENTS_JSON);
-const ORDINARY_MESSAGES = parseDates<Message>(ORDINARY_MESSAGES_JSON);
-const ORDINARY_APPROVALS = parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON);
-const ORDINARY_SCHEDULES = parseDates<Schedule>(ORDINARY_SCHEDULES_JSON);
+const ORDINARY_DATA = {
+    incidents: parseDates<Incident>(ORDINARY_INCIDENTS_JSON),
+    messages: parseDates<Message>(ORDINARY_MESSAGES_JSON),
+    approvals: parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON),
+    schedules: parseDates<Schedule>(ORDINARY_SCHEDULES_JSON),
+};
 
-const PARKHONGLIM_INCIDENTS = parseDates<Incident>(PARKHONGLIM_INCIDENTS_JSON);
-const PARKHONGLIM_MESSAGES = parseDates<Message>(PARKHONGLIM_MESSAGES_JSON);
-const PARKHONGLIM_NOTIFICATIONS = parseDates<Notification>(PARKHONGLIM_NOTIFICATIONS_JSON);
-const PARKHONGLIM_APPROVALS = parseDates<ApprovalDocument>(PARKHONGLIM_APPROVALS_JSON);
-const PARKHONGLIM_SCHEDULES = parseDates<Schedule>(PARKHONGLIM_SCHEDULES_JSON);
-
-const CHOIYOWON_INCIDENTS = parseDates<Incident>(CHOIYOWON_INCIDENTS_JSON);
-const CHOIYOWON_MESSAGES = parseDates<Message>(CHOIYOWON_MESSAGES_JSON);
-const CHOIYOWON_NOTIFICATIONS = parseDates<Notification>(CHOIYOWON_NOTIFICATIONS_JSON);
-const CHOIYOWON_APPROVALS = parseDates<ApprovalDocument>(CHOIYOWON_APPROVALS_JSON);
-const CHOIYOWON_SCHEDULES = parseDates<Schedule>(CHOIYOWON_SCHEDULES_JSON);
-
-const RYUJAEGWAN_INCIDENTS = parseDates<Incident>(RYUJAEGWAN_INCIDENTS_JSON);
-const RYUJAEGWAN_MESSAGES = parseDates<Message>(RYUJAEGWAN_MESSAGES_JSON);
-const RYUJAEGWAN_NOTIFICATIONS = parseDates<Notification>(RYUJAEGWAN_NOTIFICATIONS_JSON);
-const RYUJAEGWAN_APPROVALS = parseDates<ApprovalDocument>(RYUJAEGWAN_APPROVALS_JSON);
-const RYUJAEGWAN_SCHEDULES = parseDates<Schedule>(RYUJAEGWAN_SCHEDULES_JSON);
-
-const SOLUM_INCIDENTS = parseDates<Incident>(SOLUM_INCIDENTS_JSON);
-const SOLUM_MESSAGES = parseDates<Message>(SOLUM_MESSAGES_JSON);
-const SOLUM_NOTIFICATIONS = parseDates<Notification>(SOLUM_NOTIFICATIONS_JSON);
-const SOLUM_APPROVALS = parseDates<ApprovalDocument>(SOLUM_APPROVALS_JSON);
-const SOLUM_SCHEDULES = parseDates<Schedule>(SOLUM_SCHEDULES_JSON);
-
-const HAEGEUM_INCIDENTS = parseDates<Incident>(HAEGEUM_INCIDENTS_JSON);
-const HAEGEUM_MESSAGES = parseDates<Message>(HAEGEUM_MESSAGES_JSON);
-const HAEGEUM_NOTIFICATIONS = parseDates<Notification>(HAEGEUM_NOTIFICATIONS_JSON);
-const HAEGEUM_APPROVALS = parseDates<ApprovalDocument>(HAEGEUM_APPROVALS_JSON);
-const HAEGEUM_SCHEDULES = parseDates<Schedule>(HAEGEUM_SCHEDULES_JSON);
-
-const KOYOUNGEUN_INCIDENTS = parseDates<Incident>(KOYOUNGEUN_INCIDENTS_JSON);
-const KOYOUNGEUN_MESSAGES = parseDates<Message>(KOYOUNGEUN_MESSAGES_JSON);
-const KOYOUNGEUN_NOTIFICATIONS = parseDates<Notification>(KOYOUNGEUN_NOTIFICATIONS_JSON);
-const KOYOUNGEUN_APPROVALS = parseDates<ApprovalDocument>(KOYOUNGEUN_APPROVALS_JSON);
-const KOYOUNGEUN_SCHEDULES = parseDates<Schedule>(KOYOUNGEUN_SCHEDULES_JSON);
-
-const JANGHYEOWOON_INCIDENTS = parseDates<Incident>(JANGHYEOWOON_INCIDENTS_JSON);
-const JANGHYEOWOON_MESSAGES = parseDates<Message>(JANGHYEOWOON_MESSAGES_JSON);
-const JANGHYEOWOON_NOTIFICATIONS = parseDates<Notification>(JANGHYEOWOON_NOTIFICATIONS_JSON);
-const JANGHYEOWOON_APPROVALS = parseDates<ApprovalDocument>(JANGHYEOWOON_APPROVALS_JSON);
-const JANGHYEOWOON_SCHEDULES = parseDates<Schedule>(JANGHYEOWOON_SCHEDULES_JSON);
+const PERSONA_MAP: Record<string, {
+    incidents: Incident[];
+    messages: Message[];
+    notifications: Notification[];
+    approvals: ApprovalDocument[];
+    schedules: Schedule[];
+}> = {
+    '박홍림': {
+        incidents: parseDates<Incident>(PARKHONGLIM_INCIDENTS_JSON),
+        messages: parseDates<Message>(PARKHONGLIM_MESSAGES_JSON),
+        notifications: parseDates<Notification>(PARKHONGLIM_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(PARKHONGLIM_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(PARKHONGLIM_SCHEDULES_JSON),
+    },
+    '최요원': {
+        incidents: parseDates<Incident>(CHOIYOWON_INCIDENTS_JSON),
+        messages: parseDates<Message>(CHOIYOWON_MESSAGES_JSON),
+        notifications: parseDates<Notification>(CHOIYOWON_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(CHOIYOWON_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(CHOIYOWON_SCHEDULES_JSON),
+    },
+    '류재관': {
+        incidents: parseDates<Incident>(RYUJAEGWAN_INCIDENTS_JSON),
+        messages: parseDates<Message>(RYUJAEGWAN_MESSAGES_JSON),
+        notifications: parseDates<Notification>(RYUJAEGWAN_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(RYUJAEGWAN_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(RYUJAEGWAN_SCHEDULES_JSON),
+    },
+    '김솔음': {
+        incidents: parseDates<Incident>(SOLUM_INCIDENTS_JSON),
+        messages: parseDates<Message>(SOLUM_MESSAGES_JSON),
+        notifications: parseDates<Notification>(SOLUM_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(SOLUM_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(SOLUM_SCHEDULES_JSON),
+    },
+    '해금': {
+        incidents: parseDates<Incident>(HAEGEUM_INCIDENTS_JSON),
+        messages: parseDates<Message>(HAEGEUM_MESSAGES_JSON),
+        notifications: parseDates<Notification>(HAEGEUM_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(HAEGEUM_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(HAEGEUM_SCHEDULES_JSON),
+    },
+    '고영은': {
+        incidents: parseDates<Incident>(KOYOUNGEUN_INCIDENTS_JSON),
+        messages: parseDates<Message>(KOYOUNGEUN_MESSAGES_JSON),
+        notifications: parseDates<Notification>(KOYOUNGEUN_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(KOYOUNGEUN_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(KOYOUNGEUN_SCHEDULES_JSON),
+    },
+    '장허운': {
+        incidents: parseDates<Incident>(JANGHYEOWOON_INCIDENTS_JSON),
+        messages: parseDates<Message>(JANGHYEOWOON_MESSAGES_JSON),
+        notifications: parseDates<Notification>(JANGHYEOWOON_NOTIFICATIONS_JSON),
+        approvals: parseDates<ApprovalDocument>(JANGHYEOWOON_APPROVALS_JSON),
+        schedules: parseDates<Schedule>(JANGHYEOWOON_SCHEDULES_JSON),
+    },
+};
 
 export const DataManager = {
     // Incidents: Global base + Persona/Ordinary additional incidents
     getIncidents: (agent: Agent | null) => {
         const global = GLOBAL_INCIDENTS;
-
-        if (!agent) return [...ORDINARY_INCIDENTS, ...global];
-
-        switch (agent.name) {
-            case '박홍림': return [...PARKHONGLIM_INCIDENTS, ...global];
-            case '최요원': return [...CHOIYOWON_INCIDENTS, ...global];
-            case '류재관': return [...RYUJAEGWAN_INCIDENTS, ...global];
-            case '김솔음': return [...SOLUM_INCIDENTS, ...global];
-            case '해금': return [...HAEGEUM_INCIDENTS, ...global];
-            case '고영은': return [...KOYOUNGEUN_INCIDENTS, ...global];
-            case '장허운': return [...JANGHYEOWOON_INCIDENTS, ...global];
-            default: return [...ORDINARY_INCIDENTS, ...global];
-        }
+        if (!agent) return [...ORDINARY_DATA.incidents, ...global];
+        const personaData = PERSONA_MAP[agent.name];
+        return [...(personaData?.incidents || ORDINARY_DATA.incidents), ...global];
     },
 
     // Messages: Personal data only (no global)
     getMessages: (agent: Agent | null) => {
-        if (!agent) return ORDINARY_MESSAGES;
-
-        switch (agent.name) {
-            case '박홍림': return PARKHONGLIM_MESSAGES;
-            case '최요원': return CHOIYOWON_MESSAGES;
-            case '류재관': return RYUJAEGWAN_MESSAGES;
-            case '김솔음': return SOLUM_MESSAGES;
-            case '해금': return HAEGEUM_MESSAGES;
-            case '고영은': return KOYOUNGEUN_MESSAGES;
-            case '장허운': return JANGHYEOWOON_MESSAGES;
-            default: return ORDINARY_MESSAGES;
-        }
+        if (!agent) return ORDINARY_DATA.messages;
+        return PERSONA_MAP[agent.name]?.messages || ORDINARY_DATA.messages;
     },
 
     // Notifications: Global base + Persona personal notifications
     getNotifications: (agent: Agent | null) => {
         const global = GLOBAL_NOTIFICATIONS;
-
         if (!agent) return global;
-
-        switch (agent.name) {
-            case '박홍림': return [...PARKHONGLIM_NOTIFICATIONS, ...global];
-            case '최요원': return [...CHOIYOWON_NOTIFICATIONS, ...global];
-            case '류재관': return [...RYUJAEGWAN_NOTIFICATIONS, ...global];
-            case '김솔음': return [...SOLUM_NOTIFICATIONS, ...global];
-            case '해금': return [...HAEGEUM_NOTIFICATIONS, ...global];
-            case '고영은': return [...KOYOUNGEUN_NOTIFICATIONS, ...global];
-            case '장허운': return [...JANGHYEOWOON_NOTIFICATIONS, ...global];
-            default: return global;
-        }
+        const personaData = PERSONA_MAP[agent.name];
+        return [...(personaData?.notifications || []), ...global];
     },
 
     // Approvals: Personal data only (no global)
     getApprovals: (agent: Agent | null) => {
-        if (!agent) return ORDINARY_APPROVALS;
-
-        switch (agent.name) {
-            case '박홍림': return PARKHONGLIM_APPROVALS;
-            case '최요원': return CHOIYOWON_APPROVALS;
-            case '류재관': return RYUJAEGWAN_APPROVALS;
-            case '김솔음': return SOLUM_APPROVALS;
-            case '해금': return HAEGEUM_APPROVALS;
-            case '고영은': return KOYOUNGEUN_APPROVALS;
-            case '장허운': return JANGHYEOWOON_APPROVALS;
-            default: return ORDINARY_APPROVALS;
-        }
+        if (!agent) return ORDINARY_DATA.approvals;
+        return PERSONA_MAP[agent.name]?.approvals || ORDINARY_DATA.approvals;
     },
 
     // Schedules: Personal data only (no global)
     getSchedules: (agent: Agent | null) => {
-        if (!agent) return ORDINARY_SCHEDULES;
-
-        switch (agent.name) {
-            case '박홍림': return PARKHONGLIM_SCHEDULES;
-            case '최요원': return CHOIYOWON_SCHEDULES;
-            case '류재관': return RYUJAEGWAN_SCHEDULES;
-            case '김솔음': return SOLUM_SCHEDULES;
-            case '해금': return HAEGEUM_SCHEDULES;
-            case '고영은': return KOYOUNGEUN_SCHEDULES;
-            case '장허운': return JANGHYEOWOON_SCHEDULES;
-            default: return ORDINARY_SCHEDULES;
-        }
+        if (!agent) return ORDINARY_DATA.schedules;
+        return PERSONA_MAP[agent.name]?.schedules || ORDINARY_DATA.schedules;
     },
 
     // Equipment: Global only (same for everyone)
@@ -218,14 +186,8 @@ export const DataManager = {
         // Use all incidents from all sources for stats calculation
         const allIncidents = [
             ...GLOBAL_INCIDENTS,
-            ...PARKHONGLIM_INCIDENTS,
-            ...CHOIYOWON_INCIDENTS,
-            ...RYUJAEGWAN_INCIDENTS,
-            ...SOLUM_INCIDENTS,
-            ...HAEGEUM_INCIDENTS,
-            ...KOYOUNGEUN_INCIDENTS,
-            ...JANGHYEOWOON_INCIDENTS,
-            ...ORDINARY_INCIDENTS,
+            ...ORDINARY_DATA.incidents,
+            ...Object.values(PERSONA_MAP).flatMap(d => d.incidents)
         ];
 
         // Get current month start date
@@ -263,4 +225,48 @@ export const DataManager = {
             },
         };
     },
+
+    // Inspection Requests (Mock Data for now)
+    getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
+        if (!agent) return [];
+
+        // Mock data for demo
+        const requests: InspectionRequest[] = [
+            {
+                id: 'insp-001',
+                agentId: agent.id,
+                type: '정기검사',
+                status: '완료',
+                scheduledDate: new Date('2024-12-01T10:00:00'),
+                result: '정상 (오염도 5%)',
+                createdAt: new Date('2024-11-25')
+            }
+        ];
+
+        // Agent Choi gets more inspections
+        if (agent.name === '최요원') {
+            requests.push(
+                {
+                    id: 'insp-002',
+                    agentId: agent.id,
+                    type: '정밀검사',
+                    status: '완료',
+                    scheduledDate: new Date('2024-12-15T14:00:00'),
+                    symptoms: '지속적인 두통 및 환청',
+                    result: '경미한 정신 오염 확인, 정화 치료 요망',
+                    createdAt: new Date('2024-12-10')
+                },
+                {
+                    id: 'insp-003',
+                    agentId: agent.id,
+                    type: '정기검사',
+                    status: '접수',
+                    scheduledDate: new Date('2025-01-05T09:00:00'),
+                    createdAt: new Date('2024-12-28')
+                }
+            );
+        }
+
+        return requests.sort((a, b) => b.scheduledDate.getTime() - a.scheduledDate.getTime());
+    }
 };

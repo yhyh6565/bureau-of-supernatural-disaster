@@ -7,6 +7,12 @@ export const FUNERAL_OPTIONS = [
     { id: 'funeral-004', name: '데이터 소각', description: '모든 개인 기록 영구 삭제' },
     { id: 'funeral-005', name: '기억 소거 후 방생', description: '관련자 기억 소거 후 신원 재설정' },
 ];
+
+export const INSPECTION_TYPES = [
+    { id: 'inspection-001', name: '정기검사', description: '매월 진행되는 정기 오염도 검사' },
+    { id: 'inspection-002', name: '정밀검사', description: '오염도 30% 이상 시 권장되는 상세 검사' },
+    { id: 'inspection-003', name: '긴급검사', description: '작전 직후 또는 이상 징후 발생 시 즉시 검사' },
+];
 import {
     Users,
     Shield,

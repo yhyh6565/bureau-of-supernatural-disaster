@@ -6,7 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
-import { User, Phone, Building2, Shield, Heart, AlertTriangle } from 'lucide-react';
+import { User, Phone, Building2, Shield, Heart, AlertTriangle, Package, Calendar } from 'lucide-react';
+import { format, differenceInDays } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import {
   Dialog,
   DialogContent,
@@ -192,6 +194,72 @@ export function MyPage() {
                 </DialogContent>
               </Dialog>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* 장비 현황 카드 */}
+        <Card className="card-gov lg:col-span-2">
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Package className="w-4 h-4" />
+              보유 장비 현황
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {agent.rentals.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {agent.rentals.map((item) => {
+                  const daysLeft = item.dueDate ? differenceInDays(item.dueDate, new Date()) : 0;
+                  const isOverdue = item.status === '연체' || (item.dueDate && daysLeft < 0);
+
+                  return (
+                    <div
+                      key={item.id}
+                      className={`p-4 border rounded-sm flex items-start justify-between ${isOverdue ? 'border-destructive/50 bg-destructive/5' : 'border-border'
+                        }`}
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Badge variant={item.category === '대여' ? 'outline' : 'secondary'} className="text-xs">
+                            {item.category}
+                          </Badge>
+                          <span className="font-medium">{item.equipmentName}</span>
+                          {isOverdue && (
+                            <Badge variant="destructive" className="text-[10px] h-5 px-1.5">
+                              연체
+                            </Badge>
+                          )}
+                        </div>
+
+                        <div className="text-xs text-muted-foreground space-y-0.5 mt-2">
+                          <div className="flex items-center gap-1">
+                            <span>대여일:</span>
+                            <span className="font-mono">
+                              {format(new Date(item.rentalDate), 'yyyy.MM.dd', { locale: ko })}
+                            </span>
+                          </div>
+                          {item.category === '대여' && item.dueDate && (
+                            <div className={`flex items-center gap-1 ${isOverdue ? 'text-destructive font-medium' : ''}`}>
+                              <span>반납예정:</span>
+                              <span className="font-mono">
+                                {format(new Date(item.dueDate), 'yyyy.MM.dd', { locale: ko })}
+                              </span>
+                              <span className="ml-1">
+                                {daysLeft < 0 ? `(${Math.abs(daysLeft)}일 지남)` : `(${daysLeft}일 남음)`}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground text-sm">
+                보유 중인 장비가 없습니다.
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

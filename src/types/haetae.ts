@@ -21,7 +21,7 @@ export interface Agent {
   contamination: number; // 오염도 (0~100)
   totalIncidents: number; // 총 처리 재난 수
   specialCases: number; // 특수 케이스 수
-  equipmentInUse: string[]; // 현재 대여 중인 장비
+  rentals: RentalRecord[]; // 현재 대여/지급 장비 목록
   purificationHistory: Date[]; // 용천 선녀탕 방문 기록
   funeralPreference?: string;
 }
@@ -35,7 +35,6 @@ export interface Incident {
   dangerLevel: DangerLevel;
   status: IncidentStatus;
   reportContent: string;
-  darknessType?: string;
   countermeasure?: string;
   entryRestrictions?: string;
   requiresPatrol: boolean;
@@ -116,6 +115,16 @@ export interface Equipment {
   // imageEmoji removed
 }
 
+// 대여/지급 기록 데이터
+export interface RentalRecord {
+  id: string;
+  equipmentName: string;
+  category: '대여' | '지급';
+  rentalDate: Date;
+  dueDate?: Date;
+  status: '정상' | '연체' | '반납완료';
+}
+
 // 방문 장소 데이터
 export interface VisitLocation {
   id: string;
@@ -151,4 +160,16 @@ export interface ApprovalDocument {
   processedAt?: Date;
   relatedIncidentId?: string;
   rejectReason?: string;
+}
+
+// 오염 검사 요청 데이터
+export interface InspectionRequest {
+  id: string;
+  agentId: string;
+  type: '정기검사' | '정밀검사' | '긴급검사';
+  status: '신청' | '접수' | '완료';
+  scheduledDate: Date;
+  symptoms?: string;
+  result?: string;
+  createdAt: Date;
 }

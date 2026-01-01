@@ -20,7 +20,9 @@ import {
   DialogFooter,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { Shield, Ban } from 'lucide-react';
+import { Shield, Ban, List, Calendar as CalendarIcon } from 'lucide-react';
+import { TasksCalendar } from '@/components/work/TasksCalendar';
+import { IncidentCard } from '@/components/work/IncidentCard';
 
 export function TasksPage() {
   const { agent } = useAuth();
@@ -89,76 +91,7 @@ export function TasksPage() {
 
   const action = getActionButton();
 
-  const IncidentCard = ({ incident, showAction = false }: { incident: Incident; showAction?: boolean }) => {
-    const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel];
-    const statusStyle = STATUS_STYLE[incident.status];
 
-    return (
-      <div className="p-4 border border-border rounded-sm hover:bg-accent/50 transition-colors">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-sm text-muted-foreground">{incident.caseNumber}</span>
-            <Badge className={`${dangerStyle.bgClass} ${dangerStyle.textClass}`}>
-              {incident.dangerLevel}
-            </Badge>
-            <Badge className={`${statusStyle.bgClass} ${statusStyle.textClass}`}>
-              {incident.status}
-            </Badge>
-          </div>
-          {showAction && (
-            <Button
-              size="sm"
-              className="gap-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedIncident(incident);
-                setShowAcceptDialog(true);
-              }}
-            >
-              <action.icon className="w-3.5 h-3.5" />
-              {action.label}
-            </Button>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-sm">
-            <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
-            <span>{incident.location}</span>
-          </div>
-
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {incident.reportContent}
-          </p>
-
-          {incident.darknessType && (
-            <div className="flex flex-wrap gap-2 mt-2">
-              <Badge variant="outline" className="text-abyssal border-abyssal/30">
-                어둠: {incident.darknessType}
-              </Badge>
-              {incident.countermeasure && (
-                <Badge variant="outline" className="text-success border-success/30">
-                  파훼법: {incident.countermeasure}
-                </Badge>
-              )}
-            </div>
-          )}
-
-          {incident.entryRestrictions && (
-            <div className="mt-2 p-2 bg-destructive/10 border border-destructive/20 rounded text-xs text-destructive">
-              <AlertTriangle className="w-3 h-3 inline-block mr-1" />
-              진입 제한: {incident.entryRestrictions}
-            </div>
-          )}
-
-          <div className="flex items-center gap-1 text-xs text-muted-foreground pt-2">
-            <Clock className="w-3 h-3" />
-            <span>접수: {format(new Date(incident.createdAt), 'M/d HH:mm', { locale: ko })}</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <MainLayout>
@@ -177,85 +110,110 @@ export function TasksPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
-        {/* 업무 목록 */}
-        <Card className="card-gov">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Briefcase className="w-4 h-4" />
-              {tasks.listLabel}
-              <Badge variant="secondary" className="ml-auto">{tasks.list.length}건</Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {tasks.list.length > 0 ? (
-              tasks.list.map((incident) => (
-                <IncidentCard
-                  key={incident.id}
-                  incident={incident}
-                  showAction={department === 'hyunmu'} // 현무팀은 자율 배정
-                />
-              ))
-            ) : (
-              <div className="p-8 text-center text-muted-foreground">
-                <Briefcase className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>대기 중인 업무가 없습니다.</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="list" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="list" className="flex items-center gap-2">
+            <List className="w-4 h-4" />
+            목록 보기
+          </TabsTrigger>
+          <TabsTrigger value="calendar" className="flex items-center gap-2">
+            <CalendarIcon className="w-4 h-4" />
+            캘린더 보기
+          </TabsTrigger>
+        </TabsList>
 
-        {/* 나의 배정 업무 */}
-        <Card className="card-gov">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-success" />
-              {tasks.assignedLabel}
-              <Badge variant="secondary" className="ml-auto">{tasks.assigned.length}건</Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {tasks.assigned.length > 0 ? (
-              tasks.assigned.map((incident) => (
-                <div key={incident.id}>
-                  <IncidentCard incident={incident} />
-                  <div className="flex gap-2 mt-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => {
-                        setSelectedIncident(incident);
-                        setShowDetailDialog(true);
+        <TabsContent value="list" className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
+            {/* 업무 목록 */}
+            <Card className="card-gov">
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Briefcase className="w-4 h-4" />
+                  {tasks.listLabel}
+                  <Badge variant="secondary" className="ml-auto">{tasks.list.length}건</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {tasks.list.length > 0 ? (
+                  tasks.list.map((incident) => (
+                    <IncidentCard
+                      key={incident.id}
+                      incident={incident}
+                      showAction={department === 'hyunmu'} // 현무팀은 자율 배정
+                      onActionClick={(inc) => {
+                        setSelectedIncident(inc);
+                        setShowAcceptDialog(true);
                       }}
-                    >
-                      상세 보기
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => {
-                        toast({
-                          title: '보고서 작성 페이지로 이동',
-                          description: '결재 페이지에서 보고서를 작성할 수 있습니다.',
-                        });
-                        window.location.href = '/approvals';
-                      }}
-                    >
-                      보고서 작성
-                    </Button>
+                      actionLabel={action.label}
+                      department={department}
+                    />
+                  ))
+                ) : (
+                  <div className="p-8 text-center text-muted-foreground">
+                    <Briefcase className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p>대기 중인 업무가 없습니다.</p>
                   </div>
-                </div>
-              ))
-            ) : (
-              <div className="p-8 text-center text-muted-foreground">
-                <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>배정된 업무가 없습니다.</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* 나의 배정 업무 */}
+            <Card className="card-gov">
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-success" />
+                  {tasks.assignedLabel}
+                  <Badge variant="secondary" className="ml-auto">{tasks.assigned.length}건</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {tasks.assigned.length > 0 ? (
+                  tasks.assigned.map((incident) => (
+                    <div key={incident.id}>
+                      <IncidentCard incident={incident} />
+                      <div className="flex gap-2 mt-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1"
+                          onClick={() => {
+                            setSelectedIncident(incident);
+                            setShowDetailDialog(true);
+                          }}
+                        >
+                          상세 보기
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1"
+                          onClick={() => {
+                            toast({
+                              title: '보고서 작성 페이지로 이동',
+                              description: '결재 페이지에서 보고서를 작성할 수 있습니다.',
+                            });
+                            window.location.href = '/approvals';
+                          }}
+                        >
+                          보고서 작성
+                        </Button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-8 text-center text-muted-foreground">
+                    <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p>배정된 업무가 없습니다.</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="calendar">
+          <TasksCalendar />
+        </TabsContent>
+      </Tabs>
 
       {/* 업무 승낙 다이얼로그 (현무팀) */}
       <Dialog open={showAcceptDialog} onOpenChange={setShowAcceptDialog}>
@@ -276,11 +234,6 @@ export function TasksPage() {
                   <Badge className={DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].bgClass}>
                     {selectedIncident.dangerLevel}
                   </Badge>
-                  {selectedIncident.darknessType && (
-                    <Badge variant="outline" className="text-abyssal">
-                      {selectedIncident.darknessType}
-                    </Badge>
-                  )}
                 </div>
               </div>
 
@@ -343,25 +296,14 @@ export function TasksPage() {
                 <p className="text-sm text-muted-foreground">{selectedIncident.reportContent}</p>
               </div>
 
-              {/* 어둠 정보 */}
-              {selectedIncident.darknessType && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 border border-abyssal/30 rounded-sm">
-                    <div className="flex items-center gap-1 text-sm font-medium text-abyssal mb-1">
-                      <Shield className="w-3.5 h-3.5" />
-                      어둠 종류
-                    </div>
-                    <p className="text-sm">{selectedIncident.darknessType}</p>
+              {/* 파훼법 (어둠 정보 대신 독립 표시) */}
+              {selectedIncident.countermeasure && (
+                <div className="p-3 border border-success/30 rounded-sm">
+                  <div className="flex items-center gap-1 text-sm font-medium text-success mb-1">
+                    <Shield className="w-3.5 h-3.5" />
+                    파훼법
                   </div>
-                  {selectedIncident.countermeasure && (
-                    <div className="p-3 border border-success/30 rounded-sm">
-                      <div className="flex items-center gap-1 text-sm font-medium text-success mb-1">
-                        <Shield className="w-3.5 h-3.5" />
-                        파훼법
-                      </div>
-                      <p className="text-sm">{selectedIncident.countermeasure}</p>
-                    </div>
-                  )}
+                  <p className="text-sm">{selectedIncident.countermeasure}</p>
                 </div>
               )}
 

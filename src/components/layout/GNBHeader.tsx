@@ -1,6 +1,6 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
-import { Bell, LogOut, User, Home, FileText, Mail, MapPin, Package, ClipboardCheck, Briefcase } from 'lucide-react';
+import { Bell, LogOut, User, Home, FileText, Mail, Package, ClipboardCheck, Briefcase } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,8 +16,7 @@ const NAV_ITEMS = [
   { path: '/mypage', label: '개인정보', icon: User },
   { path: '/notices', label: '공지사항', icon: FileText },
   { path: '/messages', label: '쪽지함', icon: Mail },
-  { path: '/visits', label: '방문신청', icon: MapPin },
-  { path: '/equipment', label: '장비/서비스', icon: Package },
+  { path: '/resources', label: '업무지원', icon: Package },
   { path: '/approvals', label: '결재', icon: ClipboardCheck },
   { path: '/tasks', label: '담당업무', icon: Briefcase },
 ];
