@@ -197,13 +197,13 @@ export function TasksCalendar() {
                     {isMobile ? (
                         <div className="space-y-4">
                             <div className="flex items-center justify-between px-4 pt-4">
-                                <Button variant="ghost" size="icon" onClick={() => setViewDate(subDays(viewDate, 7))}>
+                                <Button variant="ghost" size="icon" onClick={() => setViewDate(subDays(viewDate, 7))} aria-label="이전 주">
                                     <ChevronLeft className="w-4 h-4" />
                                 </Button>
                                 <span className="font-semibold">
                                     {format(viewDate, 'yyyy년 M월', { locale: ko })} {Math.ceil(viewDate.getDate() / 7)}주차
                                 </span>
-                                <Button variant="ghost" size="icon" onClick={() => setViewDate(addDays(viewDate, 7))}>
+                                <Button variant="ghost" size="icon" onClick={() => setViewDate(addDays(viewDate, 7))} aria-label="다음 주">
                                     <ChevronRight className="w-4 h-4" />
                                 </Button>
                             </div>

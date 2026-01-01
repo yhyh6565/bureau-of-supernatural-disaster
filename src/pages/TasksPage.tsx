@@ -24,11 +24,17 @@ import { Shield, Ban, List, Calendar as CalendarIcon } from 'lucide-react';
 import { TasksCalendar } from '@/components/work/TasksCalendar';
 import { IncidentCard } from '@/components/work/IncidentCard';
 
+import { ManualViewer } from '@/components/work/ManualViewer';
+
 export function TasksPage() {
   const { agent } = useAuth();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
   const [showDetailDialog, setShowDetailDialog] = useState(false);
+
+  // Manual View State
+  const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
+  const [showManualDialog, setShowManualDialog] = useState(false);
 
   if (!agent) return null;
 
@@ -76,6 +82,11 @@ export function TasksPage() {
     setSelectedIncident(null);
   };
 
+  const handleManualClick = (manualId: string) => {
+    setSelectedManualId(manualId);
+    setShowManualDialog(true);
+  };
+
   const getActionButton = () => {
     switch (department) {
       case 'baekho':
@@ -95,20 +106,7 @@ export function TasksPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-xl font-bold">담당업무</h1>
-          <Badge className={`bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
-            <deptInfo.icon className="w-3.5 h-3.5" />
-            <span>{deptInfo.name} ({deptInfo.fullName})</span>
-          </Badge>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {department === 'baekho' && '접수된 초자연 재난을 조사하고 보고서를 작성합니다.'}
-          {department === 'hyunmu' && '구조 요청에 출동하고 구조 활동을 수행합니다.'}
-          {department === 'jujak' && '현장 정리 및 사후 처리, 은폐 업무를 수행합니다.'}
-        </p>
-      </div>
+
 
       <Tabs defaultValue="list" className="w-full">
         <TabsList className="mb-4">
@@ -146,6 +144,7 @@ export function TasksPage() {
                       }}
                       actionLabel={action.label}
                       department={department}
+                      onManualClick={handleManualClick}
                     />
                   ))
                 ) : (
@@ -170,7 +169,10 @@ export function TasksPage() {
                 {tasks.assigned.length > 0 ? (
                   tasks.assigned.map((incident) => (
                     <div key={incident.id}>
-                      <IncidentCard incident={incident} />
+                      <IncidentCard
+                        incident={incident}
+                        onManualClick={handleManualClick}
+                      />
                       <div className="flex gap-2 mt-2">
                         <Button
                           size="sm"
@@ -339,6 +341,13 @@ export function TasksPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* 매뉴얼 뷰어 */}
+      <ManualViewer
+        manualId={selectedManualId}
+        open={showManualDialog}
+        onOpenChange={setShowManualDialog}
+      />
     </MainLayout>
   );
 }

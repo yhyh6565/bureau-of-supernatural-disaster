@@ -48,12 +48,12 @@ export function LoginPage() {
 
       {/* 로고 영역 */}
       <div className="mb-8 text-center flex flex-col items-center">
-        <div className="w-20 h-20 mb-6">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 mb-4 sm:mb-6">
           <Logo />
         </div>
         <div className="space-y-2">
-          <h1 className="text-3xl font-black text-foreground tracking-tight">초자연재난관리국</h1>
-          <p className="text-lg font-bold text-muted-foreground">통합 행정 시스템</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight">초자연재난관리국</h1>
+          <p className="text-base sm:text-lg font-bold text-muted-foreground">통합 행정 시스템</p>
         </div>
       </div>
 
@@ -102,6 +102,7 @@ export function LoginPage() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>

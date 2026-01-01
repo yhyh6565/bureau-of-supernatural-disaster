@@ -28,6 +28,7 @@ export interface Agent {
 
 export interface Incident {
   id: string;
+  title: string;
   caseNumber: string; // YYYYMMDD-001 형식 (내부 사용)
   registrationNumber: string; // 0000PSYA.연도.가00 형식 (공식 등록번호)
   location: string;
@@ -40,6 +41,25 @@ export interface Incident {
   requiresPatrol: boolean;
   createdAt: Date;
   updatedAt: Date;
+  manualId?: string;
+}
+
+export interface ManualContent {
+  identification: string;
+  immediateAction: string[];
+  taboo: string[];
+}
+
+export interface Manual {
+  id: string;
+  title: string;
+  severity: DangerLevel;
+  clearanceLevel: number;
+  lastUpdated: Date;
+  content: ManualContent;
+  containmentMethod?: string;
+  aftermath?: string;
+  relatedIncidentIds?: string[];
 }
 
 export interface Assignment {

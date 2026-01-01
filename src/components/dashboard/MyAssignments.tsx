@@ -61,10 +61,12 @@ export function MyAssignments() {
   return (
     <Card className="card-gov">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium flex items-center gap-2">
-          <DeptIcon className="w-4 h-4" />
-          나의 배정 업무
-          <span className={`ml-auto text-sm px-2 py-0.5 rounded bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
+        <CardTitle className="text-sm md:text-base font-medium flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <div className="flex items-center gap-2">
+            <DeptIcon className="w-4 h-4" />
+            나의 배정 업무
+          </div>
+          <span className={`text-xs sm:text-sm px-2 py-0.5 rounded bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5 sm:ml-auto`}>
             <deptInfo.icon className="w-3.5 h-3.5" /> {deptInfo.name}
           </span>
         </CardTitle>
@@ -77,14 +79,14 @@ export function MyAssignments() {
                 key={incident.id}
                 className="p-3 border border-border rounded-sm hover:bg-accent/50 transition-colors"
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-2 mb-2">
                   <span className="font-mono text-xs text-muted-foreground">
                     {incident.caseNumber}
                   </span>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 text-xs gap-1"
+                    className="h-7 text-xs gap-1 w-full sm:w-auto"
                     onClick={() => navigate('/tasks')}
                   >
                     {getActionLabel()}

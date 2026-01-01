@@ -64,7 +64,7 @@ export function WeeklySchedule() {
   return (
     <Card className="card-gov">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium flex items-center gap-2">
+        <CardTitle className="text-sm md:text-base font-medium flex items-center gap-2">
           <Calendar className="w-4 h-4" />
           주 단위 일정
         </CardTitle>
@@ -87,11 +87,11 @@ export function WeeklySchedule() {
                 `}
               >
                 {/* 날짜 */}
-                <div className="w-16 flex-shrink-0 text-center">
+                <div className="w-12 sm:w-16 flex-shrink-0 text-center">
                   <div className={`text-xs ${isCurrentDay ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
                     {formatDateLabel(date)}
                   </div>
-                  <div className={`text-lg font-bold ${isCurrentDay ? 'text-primary' : 'text-foreground'}`}>
+                  <div className={`text-base sm:text-lg font-bold ${isCurrentDay ? 'text-primary' : 'text-foreground'}`}>
                     {format(date, 'd')}
                   </div>
                 </div>
@@ -108,13 +108,13 @@ export function WeeklySchedule() {
                           <div
                             key={schedule.id}
                             onClick={() => handleScheduleClick(schedule.type)}
-                            className="flex items-center gap-2 text-sm cursor-pointer hover:bg-accent/50 -mx-1 px-1 py-0.5 rounded transition-colors"
+                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm cursor-pointer hover:bg-accent/50 -mx-1 px-1 py-0.5 rounded transition-colors"
                           >
-                            <Icon className={`w-3.5 h-3.5 ${colorClass}`} />
-                            <span className="font-mono text-xs text-muted-foreground">
+                            <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0 ${colorClass}`} />
+                            <span className="font-mono text-xs text-muted-foreground flex-shrink-0">
                               {format(new Date(schedule.date), 'HH:mm')}
                             </span>
-                            <span className="truncate">{schedule.title}</span>
+                            <span className="truncate min-w-0">{schedule.title}</span>
                           </div>
                         );
                       })}

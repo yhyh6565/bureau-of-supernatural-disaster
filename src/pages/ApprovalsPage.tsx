@@ -103,12 +103,8 @@ export function ApprovalsPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold">결재</h1>
-          <p className="text-sm text-muted-foreground">보고서 및 품의서를 기안하고 결재 현황을 확인합니다.</p>
-        </div>
-        <Button className="gap-2">
+      <div className="mb-6 flex justify-end">
+        <Button className="gap-2 w-full sm:w-auto">
           <FileText className="w-4 h-4" />
           새 문서 작성
         </Button>
@@ -136,7 +132,8 @@ export function ApprovalsPage() {
             </CardHeader>
             <CardContent>
               <div className="border border-border rounded-sm overflow-hidden">
-                <div className="table-header-gov grid grid-cols-12 gap-2 p-3">
+                {/* Desktop Table Header - Hidden on mobile */}
+                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3">
                   <div className="col-span-2 text-center">문서유형</div>
                   <div className="col-span-5">제목</div>
                   <div className="col-span-2 text-center">결재자</div>
@@ -152,23 +149,45 @@ export function ApprovalsPage() {
                     return (
                       <div
                         key={doc.id}
-                        className="grid grid-cols-12 gap-2 p-3 border-t border-border cursor-pointer hover:bg-accent/50 transition-colors"
+                        className="border-t border-border cursor-pointer hover:bg-accent/50 transition-colors"
                         onClick={() => setSelectedApproval(doc)}
                       >
-                        <div className="col-span-2 text-center">
-                          <Badge variant="outline" className="text-xs">{doc.type}</Badge>
+                        {/* Mobile Card Layout */}
+                        <div className="md:hidden p-4 space-y-3">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 space-y-1">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">{doc.type}</Badge>
+                                <Badge className={`${style.bg} ${style.text} text-xs`}>
+                                  {doc.status}
+                                </Badge>
+                              </div>
+                              <h3 className="font-medium text-sm">{doc.title}</h3>
+                            </div>
+                          </div>
+                          <div className="text-sm text-muted-foreground space-y-1">
+                            <div>결재자: {doc.approverName}</div>
+                            <div>기안일: {format(new Date(doc.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</div>
+                          </div>
                         </div>
-                        <div className="col-span-5 truncate">{doc.title}</div>
-                        <div className="col-span-2 text-center text-sm text-muted-foreground">
-                          {doc.approverName}
-                        </div>
-                        <div className="col-span-2 text-center text-sm text-muted-foreground">
-                          {format(new Date(doc.createdAt), 'M/d HH:mm', { locale: ko })}
-                        </div>
-                        <div className="col-span-1 text-center">
-                          <Badge className={`${style.bg} ${style.text} text-xs`}>
-                            {doc.status}
-                          </Badge>
+
+                        {/* Desktop Grid Layout */}
+                        <div className="hidden md:grid grid-cols-12 gap-2 p-3">
+                          <div className="col-span-2 text-center">
+                            <Badge variant="outline" className="text-xs">{doc.type}</Badge>
+                          </div>
+                          <div className="col-span-5 truncate">{doc.title}</div>
+                          <div className="col-span-2 text-center text-sm text-muted-foreground">
+                            {doc.approverName}
+                          </div>
+                          <div className="col-span-2 text-center text-sm text-muted-foreground">
+                            {format(new Date(doc.createdAt), 'M/d HH:mm', { locale: ko })}
+                          </div>
+                          <div className="col-span-1 text-center">
+                            <Badge className={`${style.bg} ${style.text} text-xs`}>
+                              {doc.status}
+                            </Badge>
+                          </div>
                         </div>
                       </div>
                     );

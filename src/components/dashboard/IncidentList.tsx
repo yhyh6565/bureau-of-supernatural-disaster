@@ -47,10 +47,10 @@ export function IncidentList() {
   return (
     <Card className="card-gov">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium flex items-center gap-2">
+        <CardTitle className="text-sm md:text-base font-medium flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-destructive" />
           재난 현황
-          <Badge variant="secondary" className="ml-auto">
+          <Badge variant="secondary" className="ml-auto text-xs">
             {activeIncidents.length}건 진행 중
           </Badge>
         </CardTitle>
@@ -149,7 +149,7 @@ export function IncidentList() {
 
               {/* 어둠 정보 */}
               {selectedIncident.darknessType && (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 border border-abyssal/30 rounded-sm">
                     <div className="flex items-center gap-1 text-sm font-medium text-abyssal mb-1">
                       <Shield className="w-3.5 h-3.5" />

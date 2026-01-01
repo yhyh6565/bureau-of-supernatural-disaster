@@ -22,7 +22,8 @@ src/data/
 │   ├── incidents.json
 │   ├── notifications.json
 │   ├── equipment.json
-│   └── locations.json
+│   ├── locations.json
+│   └── manuals.json     # 재난 대응 매뉴얼
 ├── ordinary/        # [일반 요원] 네임드 페르소나가 아닌 경우 사용
 │   ├── messages.json
 │   ├── approvals.json
@@ -53,6 +54,8 @@ src/data/
 | `getSchedules(agent)` | 일정 조회 | (페르소나 전용 OR 일반 요원용) **단독** |
 | `getEquipment()` | 장비 목록 조회 | 전사 공통 **단독** |
 | `getLocations()` | 방문 장소 조회 | 전사 공통 **단독** |
+| `getManuals()` | 매뉴얼 목록 조회 | 전사 공통 **단독** |
+| `getManualById(id)` | 특정 매뉴얼 조회 | 전사 공통 **단독** |
 
 ---
 
@@ -68,13 +71,17 @@ src/data/
   ```typescript
   interface Incident {
     id: string;                 // 예: "inc-001"
+    title: string;              // 재난 명칭 (예: "시간의 틈")
     caseNumber: string;         // 내부 관리 번호 "20251231-001"
+    registrationNumber: string; // 공식 등록번호 "0000PSYA.연도.가00"
+    location: string;           // 발생 위치
     dangerLevel: DangerLevel;   // "멸형" | "파형" | "뇌형" | "고형"
     status: IncidentStatus;     // "접수" -> "조사중" -> "구조대기" ... -> "종결"
     reportContent: string;      // 제보 내용
     requiresPatrol: boolean;    // 정기 순찰 필요 여부
     countermeasure?: string;    // [특수] 파훼법 (조사 완료 시)
     entryRestrictions?: string; // [특수] 진입 제한 사항
+    manualId?: string;          // 연결된 대응 매뉴얼 ID
     createdAt: Date;
     updatedAt: Date;
   }
@@ -170,6 +177,33 @@ src/data/
         scheduledDate: Date;
         symptoms?: string;
         result?: string;
+    }
+    ```
+
+    ```
+
+### 7. Manual (재난 대응 매뉴얼)
+*   **파일**: `src/data/global/manuals.json`
+*   **설명**: 특정 재난에 대한 상세 대응 수칙 및 금기 사항
+*   **연동**: `Incident.manualId`와 `Manual.id`로 연결
+*   **구조**:
+    ```typescript
+    interface ManualContent {
+      identification: string;       // 식별 징후
+      immediateAction: string[];    // 즉각 대응 행동
+      taboo: string[];              // 금기 사항
+    }
+
+    interface Manual {
+      id: string;
+      title: string;
+      severity: DangerLevel;
+      clearanceLevel: number;       // 열람 등급
+      lastUpdated: Date;
+      content: ManualContent;
+      containmentMethod?: string;   // 봉인법
+      aftermath?: string;           // 사후 처리
+      relatedIncidentIds?: string[]; // 관련 과거 사례
     }
     ```
 

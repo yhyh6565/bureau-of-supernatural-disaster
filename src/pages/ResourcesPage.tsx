@@ -51,7 +51,8 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
-import { format, isBefore, startOfDay } from 'date-fns';
+import { format, isBefore } from 'date-fns';
+import { startOfDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -261,30 +262,29 @@ export function ResourcesPage() {
 
     return (
         <MainLayout>
-            <div className="mb-6">
-                <h1 className="text-xl font-bold">업무지원</h1>
-                <p className="text-sm text-muted-foreground">
-                    장비 대여, 시설 예약, 오염 검사 등 다양한 지원 업무를 통합 관리합니다.
-                </p>
-            </div>
+
 
             <Tabs defaultValue="equipment" className="pb-12" onValueChange={setActiveTab}>
-                <TabsList className="mb-6">
-                    <TabsTrigger value="equipment" className="gap-2">
-                        <Package className="w-4 h-4" />
-                        장비 관리
+                <TabsList className="mb-4 sm:mb-6 grid grid-cols-2 sm:grid-cols-4 w-full">
+                    <TabsTrigger value="equipment" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+                        <Package className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">장비 관리</span>
+                        <span className="sm:hidden">장비</span>
                     </TabsTrigger>
-                    <TabsTrigger value="facilities" className="gap-2">
-                        <MapPin className="w-4 h-4" />
-                        시설 예약
+                    <TabsTrigger value="facilities" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+                        <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">시설 예약</span>
+                        <span className="sm:hidden">시설</span>
                     </TabsTrigger>
-                    <TabsTrigger value="inspection" className="gap-2">
-                        <Stethoscope className="w-4 h-4" />
-                        오염 검사
+                    <TabsTrigger value="inspection" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+                        <Stethoscope className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">오염 검사</span>
+                        <span className="sm:hidden">검사</span>
                     </TabsTrigger>
-                    <TabsTrigger value="dormitory" className="gap-2" disabled>
-                        <Home className="w-4 h-4" />
-                        기숙사 (준비중)
+                    <TabsTrigger value="dormitory" className="gap-1 sm:gap-2 text-xs sm:text-sm" disabled>
+                        <Home className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">기숙사</span>
+                        <span className="sm:hidden">기숙사</span>
                     </TabsTrigger>
                 </TabsList>
 
@@ -300,12 +300,14 @@ export function ResourcesPage() {
                         />
                     </div>
 
-                    <div className="grid gap-8">
+                    <div className="grid gap-6 sm:gap-8">
                         <section>
-                            <h2 className="text-lg font-bold flex items-center gap-2 mb-4">
-                                <Key className="w-5 h-5 text-primary" />
-                                대여 장비
-                                <span className="text-xs font-normal text-muted-foreground ml-2">
+                            <h2 className="text-base sm:text-lg font-bold flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-3 sm:mb-4">
+                                <div className="flex items-center gap-2">
+                                    <Key className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                                    대여 장비
+                                </div>
+                                <span className="text-xs font-normal text-muted-foreground">
                                     작전 종료 후 반드시 반납해야 합니다.
                                 </span>
                             </h2>
@@ -317,10 +319,12 @@ export function ResourcesPage() {
                         </section>
 
                         <section>
-                            <h2 className="text-lg font-bold flex items-center gap-2 mb-4">
-                                <ShoppingCart className="w-5 h-5 text-primary" />
-                                지급 물품
-                                <span className="text-xs font-normal text-muted-foreground ml-2">
+                            <h2 className="text-base sm:text-lg font-bold flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-3 sm:mb-4">
+                                <div className="flex items-center gap-2">
+                                    <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                                    지급 물품
+                                </div>
+                                <span className="text-xs font-normal text-muted-foreground">
                                     소모품으로 별도 반납 절차가 없습니다.
                                 </span>
                             </h2>
@@ -369,16 +373,16 @@ export function ResourcesPage() {
 
                 {/* --- Inspection Tab --- */}
                 <TabsContent value="inspection">
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
                         <div>
-                            <h2 className="text-lg font-bold">오염 검사 내역</h2>
-                            <p className="text-sm text-muted-foreground">
+                            <h2 className="text-base sm:text-lg font-bold">오염 검사 내역</h2>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
                                 정기 및 필요에 따른 수시 오염도 검사 내역입니다.
                             </p>
                         </div>
                         <Dialog open={isInspectionOpen} onOpenChange={setIsInspectionOpen}>
                             <DialogTrigger asChild>
-                                <Button className="gap-2">
+                                <Button className="gap-2 w-full sm:w-auto">
                                     <Plus className="w-4 h-4" />
                                     검사 신청
                                 </Button>
@@ -398,7 +402,8 @@ export function ResourcesPage() {
                     <Card className="card-gov">
                         <CardContent className="p-0">
                             <div className="border border-border rounded-sm overflow-hidden min-h-[200px]">
-                                <div className="table-header-gov grid grid-cols-12 gap-2 p-3 text-xs md:text-sm">
+                                {/* Desktop Table Header */}
+                                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-sm">
                                     <div className="col-span-2 text-center">유형</div>
                                     <div className="col-span-2 text-center">상태</div>
                                     <div className="col-span-3 text-center">예정일</div>
@@ -408,24 +413,56 @@ export function ResourcesPage() {
 
                                 {inspections.length > 0 ? (
                                     inspections.map((insp) => (
-                                        <div key={insp.id} className="grid grid-cols-12 gap-2 p-3 border-t border-border hover:bg-accent/50 items-center text-sm">
-                                            <div className="col-span-2 text-center font-medium">{insp.type}</div>
-                                            <div className="col-span-2 text-center">
-                                                <Badge variant={
-                                                    insp.status === '완료' ? 'default' :
-                                                        insp.status === '접수' ? 'secondary' : 'outline'
-                                                }>
-                                                    {insp.status}
-                                                </Badge>
+                                        <div key={insp.id} className="border-t border-border hover:bg-accent/50">
+                                            {/* Mobile Card Layout */}
+                                            <div className="md:hidden p-3 space-y-2">
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <span className="font-medium text-sm">{insp.type}</span>
+                                                    <Badge variant={
+                                                        insp.status === '완료' ? 'default' :
+                                                            insp.status === '접수' ? 'secondary' : 'outline'
+                                                    } className="text-xs">
+                                                        {insp.status}
+                                                    </Badge>
+                                                </div>
+                                                <div className="text-xs space-y-1">
+                                                    <div className="flex justify-between">
+                                                        <span className="text-muted-foreground">예정일</span>
+                                                        <span>{format(new Date(insp.scheduledDate), 'yyyy.MM.dd HH:mm', { locale: ko })}</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-muted-foreground">접수일</span>
+                                                        <span>{format(new Date(insp.createdAt), 'MM.dd', { locale: ko })}</span>
+                                                    </div>
+                                                    {insp.result && (
+                                                        <div className="flex justify-between">
+                                                            <span className="text-muted-foreground">결과</span>
+                                                            <span>{insp.result}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div className="col-span-3 text-center">
-                                                {format(new Date(insp.scheduledDate), 'yyyy.MM.dd HH:mm', { locale: ko })}
-                                            </div>
-                                            <div className="col-span-2 text-center text-muted-foreground">
-                                                {format(new Date(insp.createdAt), 'MM.dd', { locale: ko })}
-                                            </div>
-                                            <div className="col-span-3 truncate text-muted-foreground">
-                                                {insp.result || '-'}
+
+                                            {/* Desktop Grid Layout */}
+                                            <div className="hidden md:grid grid-cols-12 gap-2 p-3 items-center text-sm">
+                                                <div className="col-span-2 text-center font-medium">{insp.type}</div>
+                                                <div className="col-span-2 text-center">
+                                                    <Badge variant={
+                                                        insp.status === '완료' ? 'default' :
+                                                            insp.status === '접수' ? 'secondary' : 'outline'
+                                                    }>
+                                                        {insp.status}
+                                                    </Badge>
+                                                </div>
+                                                <div className="col-span-3 text-center">
+                                                    {format(new Date(insp.scheduledDate), 'yyyy.MM.dd HH:mm', { locale: ko })}
+                                                </div>
+                                                <div className="col-span-2 text-center text-muted-foreground">
+                                                    {format(new Date(insp.createdAt), 'MM.dd', { locale: ko })}
+                                                </div>
+                                                <div className="col-span-3 truncate text-muted-foreground">
+                                                    {insp.result || '-'}
+                                                </div>
                                             </div>
                                         </div>
                                     ))

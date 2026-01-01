@@ -1,52 +1,46 @@
 import { MainLayout } from '@/components/layout/MainLayout';
-import { WeeklySchedule } from '@/components/dashboard/WeeklySchedule';
 import { IncidentList } from '@/components/dashboard/IncidentList';
-import { DepartmentStats } from '@/components/dashboard/DepartmentStats';
-import { NoticeWidget } from '@/components/dashboard/NoticeWidget';
 import { MyAssignments } from '@/components/dashboard/MyAssignments';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/constants/haetae';
+import { DisasterTicker } from '@/components/dashboard/DisasterTicker';
+import { AgentStatusWidget } from '@/components/dashboard/AgentStatusWidget';
+import { AdminAlertWidget } from '@/components/dashboard/AdminAlertWidget';
+import { MiniWeeklySchedule } from '@/components/dashboard/MiniWeeklySchedule';
 
 export function Dashboard() {
   const { agent } = useAuth();
 
   if (!agent) return null;
 
-  const deptInfo = DEPARTMENT_INFO[agent.department];
-
   return (
     <MainLayout>
-      {/* 페이지 타이틀 */}
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-xl font-bold">대시보드</h1>
-          <span className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
-            <deptInfo.icon className="w-4 h-4" />
-            <span>{deptInfo.name} ({deptInfo.fullName})</span>
-          </span>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {agent.name} {agent.rank}님, 환영합니다. 오늘도 안전한 하루 되세요.
-        </p>
-      </div>
+      <div className="flex flex-col gap-4 pb-12">
+        {/* 상단: 재난 경보 티커 */}
+        <DisasterTicker />
 
-      {/* 대시보드 그리드 */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-12">
-        {/* 좌측: 일정 + 공지 */}
-        <div className="space-y-4">
-          <WeeklySchedule />
-          <NoticeWidget />
-        </div>
+        {/* 메인 레이아웃 (2:1 비율) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-        {/* 중앙: 재난 현황 */}
-        <div className="space-y-4">
-          <IncidentList />
-        </div>
+          {/* 좌측/중앙: 통합 작전 영역 (66%) */}
+          <div className="lg:col-span-8 space-y-4">
+            {/* 1. 배정 업무 (최우선) */}
+            <MyAssignments />
 
-        {/* 우측: 통계 + 배정 업무 */}
-        <div className="space-y-4">
-          <DepartmentStats />
-          <MyAssignments />
+            {/* 2. 전체 재난 현황 리스트 */}
+            <IncidentList />
+          </div>
+
+          {/* 우측: 상태 및 행정 (33%) */}
+          <div className="lg:col-span-4 space-y-4">
+            {/* 1. 요원 상태 */}
+            <AgentStatusWidget />
+
+            {/* 2. 행정 알림 */}
+            <AdminAlertWidget />
+
+            {/* 3. 주간 일정 (간소화) */}
+            <MiniWeeklySchedule />
+          </div>
         </div>
       </div>
     </MainLayout>

@@ -79,6 +79,7 @@ export function GNBHeader() {
             variant="ghost"
             size="icon"
             className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10"
+            aria-label="알림"
           >
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />

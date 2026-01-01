@@ -1,4 +1,4 @@
-import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message, InspectionRequest } from '@/types/haetae';
+import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message, InspectionRequest, Manual } from '@/types/haetae';
 import { VisitLocation, Equipment } from '@/types/haetae';
 
 import { INTERACTION_MESSAGES, TriggerSystem } from '@/data/interactions';
@@ -8,6 +8,7 @@ import GLOBAL_NOTIFICATIONS_JSON from './global/notifications.json';
 import GLOBAL_EQUIPMENT_JSON from './global/equipment.json';
 import GLOBAL_LOCATIONS_JSON from './global/locations.json';
 import GLOBAL_INCIDENTS_JSON from './global/incidents.json';
+import GLOBAL_MANUALS_JSON from './global/manuals.json';
 
 // Import Ordinary JSON Data
 import ORDINARY_MESSAGES_JSON from './ordinary/messages.json';
@@ -66,6 +67,7 @@ const parseDates = <T>(items: any[]): T[] => {
         if (newItem.updatedAt) newItem.updatedAt = new Date(newItem.updatedAt);
         if (newItem.processedAt) newItem.processedAt = new Date(newItem.processedAt);
         if (newItem.date) newItem.date = new Date(newItem.date);
+        if (newItem.lastUpdated) newItem.lastUpdated = new Date(newItem.lastUpdated);
         return newItem as T;
     });
 };
@@ -75,6 +77,7 @@ const GLOBAL_INCIDENTS = parseDates<Incident>(GLOBAL_INCIDENTS_JSON);
 const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
 const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
+const GLOBAL_MANUALS = parseDates<Manual>(GLOBAL_MANUALS_JSON);
 
 const ORDINARY_DATA = {
     incidents: parseDates<Incident>(ORDINARY_INCIDENTS_JSON),
@@ -181,6 +184,11 @@ export const DataManager = {
 
     // Locations: Global only (same for everyone)
     getLocations: () => GLOBAL_LOCATIONS,
+
+    // Manuals: Global only
+    getManuals: () => GLOBAL_MANUALS,
+
+    getManual: (id: string) => GLOBAL_MANUALS.find(m => m.id === id),
 
     getStats: () => {
         // Use all incidents from all sources for stats calculation

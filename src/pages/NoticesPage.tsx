@@ -111,12 +111,7 @@ export function NoticesPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6">
-        <h1 className="text-xl font-bold">공지사항</h1>
-        <p className="text-sm text-muted-foreground">
-          전체 공지 및 부서별 필독 지침을 확인합니다.
-        </p>
-      </div>
+
 
       {/* 검색 및 필터 */}
       <Card className="card-gov mb-4">
@@ -271,8 +266,8 @@ export function NoticesPage() {
         </CardHeader>
         <CardContent>
           <div className="border border-border rounded-sm overflow-hidden">
-            {/* 테이블 헤더 */}
-            <div className="table-header-gov grid grid-cols-12 gap-2 p-3 text-xs">
+            {/* 테이블 헤더 - Desktop only */}
+            <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-xs">
               <div className="col-span-1 text-center">번호</div>
               <div className="col-span-1 text-center">긴급도</div>
               <div className="col-span-1 text-center">분류</div>
@@ -293,41 +288,69 @@ export function NoticesPage() {
                     key={notice.id}
                     onClick={() => navigate(`/notices/${notice.id}`)}
                     className={`
-                      grid grid-cols-12 gap-2 p-3 border-t border-border cursor-pointer transition-colors text-sm
+                      border-t border-border cursor-pointer transition-colors
                       ${notice.isPinned ? 'bg-accent/50' : ''}
                       ${!notice.isRead ? 'bg-primary/5 hover:bg-primary/10' : 'hover:bg-accent/50'}
                     `}
                   >
-                    <div className="col-span-1 text-center flex items-center justify-center">
-                      {notice.isPinned ? (
-                        <Pin className="w-3.5 h-3.5 text-primary" />
-                      ) : (
-                        <span className="text-muted-foreground">{idx + 1}</span>
-                      )}
+                    {/* Mobile Card Layout */}
+                    <div className="md:hidden p-4 space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2">
+                            {notice.isPinned && <Pin className="w-3.5 h-3.5 text-primary" />}
+                            <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs`}>
+                              {notice.priority}
+                            </Badge>
+                            <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
+                              <categoryStyle.icon className="w-3 h-3" />
+                            </Badge>
+                            {isNew && <Badge className="bg-success text-xs">NEW</Badge>}
+                          </div>
+                          <h3 className={`text-sm ${!notice.isRead ? 'font-medium' : ''}`}>
+                            {notice.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground space-y-1">
+                        <div>발신: {notice.sourceDepartment}</div>
+                        <div>{format(new Date(notice.createdAt), 'yyyy.MM.dd', { locale: ko })}</div>
+                      </div>
                     </div>
-                    <div className="col-span-1 text-center flex items-center justify-center">
-                      <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs`}>
-                        {notice.priority}
-                      </Badge>
-                    </div>
-                    <div className="col-span-1 text-center flex items-center justify-center">
-                      <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
-                        <categoryStyle.icon className="w-3 h-3" />
-                      </Badge>
-                    </div>
-                    <div className="col-span-5 flex items-center gap-2">
-                      <span className={`truncate ${!notice.isRead ? 'font-medium' : ''}`}>
-                        {notice.title}
-                      </span>
-                      {isNew && (
-                        <Badge className="bg-success text-xs h-4 px-1.5">NEW</Badge>
-                      )}
-                    </div>
-                    <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
-                      {notice.sourceDepartment}
-                    </div>
-                    <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
-                      {format(new Date(notice.createdAt), 'yyyy.MM.dd', { locale: ko })}
+
+                    {/* Desktop Grid Layout */}
+                    <div className="hidden md:grid grid-cols-12 gap-2 p-3 text-sm">
+                      <div className="col-span-1 text-center flex items-center justify-center">
+                        {notice.isPinned ? (
+                          <Pin className="w-3.5 h-3.5 text-primary" />
+                        ) : (
+                          <span className="text-muted-foreground">{idx + 1}</span>
+                        )}
+                      </div>
+                      <div className="col-span-1 text-center flex items-center justify-center">
+                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs`}>
+                          {notice.priority}
+                        </Badge>
+                      </div>
+                      <div className="col-span-1 text-center flex items-center justify-center">
+                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
+                          <categoryStyle.icon className="w-3 h-3" />
+                        </Badge>
+                      </div>
+                      <div className="col-span-5 flex items-center gap-2">
+                        <span className={`truncate ${!notice.isRead ? 'font-medium' : ''}`}>
+                          {notice.title}
+                        </span>
+                        {isNew && (
+                          <Badge className="bg-success text-xs h-4 px-1.5">NEW</Badge>
+                        )}
+                      </div>
+                      <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
+                        {notice.sourceDepartment}
+                      </div>
+                      <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
+                        {format(new Date(notice.createdAt), 'yyyy.MM.dd', { locale: ko })}
+                      </div>
                     </div>
                   </div>
                 );

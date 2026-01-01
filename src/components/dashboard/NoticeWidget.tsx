@@ -17,11 +17,11 @@ export function NoticeWidget() {
   return (
     <Card className="card-gov">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium flex items-center gap-2">
+        <CardTitle className="text-sm md:text-base font-medium flex items-center gap-2">
           <Bell className="w-4 h-4" />
           공지사항
           {unreadCount > 0 && (
-            <Badge variant="destructive" className="ml-auto">
+            <Badge variant="destructive" className="ml-auto text-xs">
               {unreadCount} 새 글
             </Badge>
           )}
@@ -41,11 +41,11 @@ export function NoticeWidget() {
                 }
               `}
             >
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-start gap-2 mb-1">
                 {notice.isUrgent && (
-                  <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                  <AlertTriangle className="w-3.5 h-3.5 text-destructive flex-shrink-0 mt-0.5" />
                 )}
-                <span className={`text-sm truncate ${!notice.isRead ? 'font-medium' : ''}`}>
+                <span className={`text-xs sm:text-sm truncate ${!notice.isRead ? 'font-medium' : ''}`}>
                   {notice.title}
                 </span>
               </div>

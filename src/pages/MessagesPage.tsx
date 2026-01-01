@@ -104,15 +104,11 @@ export function MessagesPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold">쪽지함</h1>
-          <p className="text-sm text-muted-foreground">사내 메신저를 통해 업무 협조 및 정보를 교류합니다.</p>
-        </div>
+      <div className="mb-6 flex justify-end">
 
         <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button className="gap-2 w-full sm:w-auto">
               <Send className="w-4 h-4" />
               쪽지 쓰기
             </Button>
@@ -159,7 +155,7 @@ export function MessagesPage() {
       <Card className="card-gov pb-12">
         <Tabs defaultValue="received">
           <CardHeader>
-            <TabsList className="grid w-full grid-cols-2 max-w-xs">
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 max-w-full sm:max-w-xs">
               <TabsTrigger value="received" className="gap-2">
                 <Inbox className="w-4 h-4" />
                 받은 쪽지
@@ -177,7 +173,8 @@ export function MessagesPage() {
           <CardContent>
             <TabsContent value="received" className="mt-0">
               <div className="border border-border rounded-sm overflow-hidden">
-                <div className="table-header-gov grid grid-cols-12 gap-2 p-3">
+                {/* Desktop Table Header */}
+                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3">
                   <div className="col-span-2">발신자</div>
                   <div className="col-span-7">제목</div>
                   <div className="col-span-3 text-center">수신일</div>
@@ -188,23 +185,46 @@ export function MessagesPage() {
                     <div
                       key={message.id}
                       className={`
-                        grid grid-cols-12 gap-2 p-3 border-t border-border cursor-pointer transition-colors
+                        border-t border-border cursor-pointer transition-colors
                         ${!message.isRead ? 'bg-accent/30' : 'hover:bg-accent/50'}
                       `}
                       onClick={() => setSelectedMessage(message)}
                     >
-                      <div className="col-span-2 text-sm">
-                        {message.senderName}
-                        <div className="text-xs text-muted-foreground">{message.senderDepartment}</div>
+                      {/* Mobile Card Layout */}
+                      <div className="md:hidden p-4 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              {!message.isRead && <Badge className="bg-primary text-xs">NEW</Badge>}
+                              <span className={`text-sm ${!message.isRead ? 'font-medium' : ''}`}>
+                                {message.title}
+                              </span>
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {message.senderName} ({message.senderDepartment})
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {format(new Date(message.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}
+                        </div>
                       </div>
-                      <div className="col-span-7 flex items-center gap-2">
-                        {!message.isRead && <Badge className="bg-primary text-xs">NEW</Badge>}
-                        <span className={`truncate ${!message.isRead ? 'font-medium' : ''}`}>
-                          {message.title}
-                        </span>
-                      </div>
-                      <div className="col-span-3 text-center text-sm text-muted-foreground">
-                        {format(new Date(message.createdAt), 'M/d HH:mm', { locale: ko })}
+
+                      {/* Desktop Grid Layout */}
+                      <div className="hidden md:grid grid-cols-12 gap-2 p-3">
+                        <div className="col-span-2 text-sm">
+                          {message.senderName}
+                          <div className="text-xs text-muted-foreground">{message.senderDepartment}</div>
+                        </div>
+                        <div className="col-span-7 flex items-center gap-2">
+                          {!message.isRead && <Badge className="bg-primary text-xs">NEW</Badge>}
+                          <span className={`truncate ${!message.isRead ? 'font-medium' : ''}`}>
+                            {message.title}
+                          </span>
+                        </div>
+                        <div className="col-span-3 text-center text-sm text-muted-foreground">
+                          {format(new Date(message.createdAt), 'M/d HH:mm', { locale: ko })}
+                        </div>
                       </div>
                     </div>
                   ))
@@ -218,7 +238,8 @@ export function MessagesPage() {
 
             <TabsContent value="sent" className="mt-0">
               <div className="border border-border rounded-sm overflow-hidden">
-                <div className="table-header-gov grid grid-cols-12 gap-2 p-3">
+                {/* Desktop Table Header */}
+                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3">
                   <div className="col-span-2">수신자</div>
                   <div className="col-span-7">제목</div>
                   <div className="col-span-3 text-center">발신일</div>

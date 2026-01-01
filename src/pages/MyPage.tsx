@@ -42,10 +42,7 @@ export function MyPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6">
-        <h1 className="text-xl font-bold">개인정보</h1>
-        <p className="text-sm text-muted-foreground">나의 신원 정보 및 설정을 관리합니다.</p>
-      </div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
         {/* 기본 정보 카드 */}

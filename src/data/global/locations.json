@@ -27,25 +27,4 @@
         "requiresApproval": true,
         "operatingHours": "06:00-22:00"
     },
-    {
-        "id": "loc-005",
-        "name": "구내식당",
-        "description": "직원 식당 (석식은 17:30부터)",
-        "requiresApproval": false,
-        "operatingHours": "11:30-13:30"
-    },
-    {
-        "id": "loc-006",
-        "name": "체력단련실",
-        "description": "지하 1층 헬스장 (실내운동화 지참 필수)",
-        "requiresApproval": false,
-        "operatingHours": "06:00-23:00"
-    },
-    {
-        "id": "loc-007",
-        "name": "수면실",
-        "description": "당직자용 휴게실 (남녀 구분)",
-        "requiresApproval": false,
-        "operatingHours": "24시간"
-    }
 ]
