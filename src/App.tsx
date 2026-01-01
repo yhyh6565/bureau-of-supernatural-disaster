@@ -8,6 +8,7 @@ import { LoginPage } from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
 import MyPage from "@/pages/MyPage";
 import NoticesPage from "@/pages/NoticesPage";
+import NoticeDetailPage from "@/pages/NoticeDetailPage";
 import MessagesPage from "@/pages/MessagesPage";
 import EquipmentPage from "@/pages/EquipmentPage";
 import VisitsPage from "@/pages/VisitsPage";
@@ -36,6 +37,7 @@ function AppRoutes() {
       <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/mypage" element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
       <Route path="/notices" element={<ProtectedRoute><NoticesPage /></ProtectedRoute>} />
+      <Route path="/notices/:id" element={<ProtectedRoute><NoticeDetailPage /></ProtectedRoute>} />
       <Route path="/messages" element={<ProtectedRoute><MessagesPage /></ProtectedRoute>} />
       <Route path="/equipment" element={<ProtectedRoute><EquipmentPage /></ProtectedRoute>} />
       <Route path="/visits" element={<ProtectedRoute><VisitsPage /></ProtectedRoute>} />

@@ -5,9 +5,11 @@ import { Bell, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export function NoticeWidget() {
   const { agent } = useAuth();
+  const navigate = useNavigate();
   const notifications = DataManager.getNotifications(agent);
   const recentNotices = notifications.slice(0, 4);
   const unreadCount = notifications.filter(n => !n.isRead).length;
@@ -28,12 +30,13 @@ export function NoticeWidget() {
       <CardContent>
         <div className="space-y-2">
           {recentNotices.map((notice) => (
-            <div 
+            <div
               key={notice.id}
+              onClick={() => navigate('/notices')}
               className={`
                 p-2 border rounded-sm cursor-pointer transition-colors
-                ${notice.isRead 
-                  ? 'border-border hover:bg-accent/50' 
+                ${notice.isRead
+                  ? 'border-border hover:bg-accent/50'
                   : 'border-primary/30 bg-accent/30 hover:bg-accent/50'
                 }
               `}
@@ -53,7 +56,10 @@ export function NoticeWidget() {
           ))}
         </div>
 
-        <button className="w-full mt-3 py-2 text-sm text-primary hover:underline">
+        <button
+          onClick={() => navigate('/notices')}
+          className="w-full mt-3 py-2 text-sm text-primary hover:underline"
+        >
           전체 보기 →
         </button>
       </CardContent>

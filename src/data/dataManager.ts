@@ -152,21 +152,53 @@ export const DataManager = {
     // Locations: Global only (same for everyone)
     getLocations: () => GLOBAL_LOCATIONS,
 
-    getStats: () => ({
-        baekho: {
-            received: 12,
-            investigating: 3,
-            completed: 9,
-        },
-        hyunmu: {
-            requests: 28,
-            rescuing: 2,
-            completed: 26,
-        },
-        jujak: {
-            requests: 15,
-            cleaning: 1,
-            completed: 14,
-        },
-    }),
+    getStats: () => {
+        // Use all incidents from all sources for stats calculation
+        const allIncidents = [
+            ...GLOBAL_INCIDENTS,
+            ...PARKHONGLIM_INCIDENTS,
+            ...CHOIYOWON_INCIDENTS,
+            ...RYUJAEGWAN_INCIDENTS,
+            ...SOLUM_INCIDENTS,
+            ...HAEGEUM_INCIDENTS,
+            ...KOYOUNGEUN_INCIDENTS,
+            ...JANGHYEOWOON_INCIDENTS,
+            ...ORDINARY_INCIDENTS,
+        ];
+
+        // Get current month start date
+        const now = new Date();
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        // Filter incidents created this month
+        const thisMonthIncidents = allIncidents.filter(inc =>
+            new Date(inc.createdAt) >= monthStart
+        );
+
+        return {
+            baekho: {
+                received: thisMonthIncidents.filter(inc => inc.status === '접수').length,
+                investigating: allIncidents.filter(inc => inc.status === '조사중').length,
+                completed: allIncidents.filter(inc =>
+                    inc.status !== '접수' && inc.status !== '조사중'
+                ).length,
+            },
+            hyunmu: {
+                requests: thisMonthIncidents.filter(inc =>
+                    inc.status === '구조대기' || inc.status === '구조중'
+                ).length,
+                rescuing: allIncidents.filter(inc => inc.status === '구조중').length,
+                completed: allIncidents.filter(inc =>
+                    inc.status === '정리대기' || inc.status === '정리중' || inc.status === '종결'
+                ).length,
+            },
+            jujak: {
+                requests: thisMonthIncidents.filter(inc =>
+                    inc.status === '정리대기' || inc.status === '정리중'
+                ).length,
+                cleaning: allIncidents.filter(inc => inc.status === '정리중').length,
+                completed: allIncidents.filter(inc => inc.status === '종결').length,
+            },
+        };
+    },
 };

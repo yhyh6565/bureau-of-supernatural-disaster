@@ -4,6 +4,7 @@ import { Calendar, Clock, MapPin, FileCheck, UserCheck, Dumbbell } from 'lucide-
 import { format, isToday, isTomorrow, addDays, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const SCHEDULE_ICONS: Record<string, React.ElementType> = {
   '작전': MapPin,
@@ -23,9 +24,31 @@ const SCHEDULE_COLORS: Record<string, string> = {
 
 export function WeeklySchedule() {
   const { agent } = useAuth();
+  const navigate = useNavigate();
   const schedules = DataManager.getSchedules(agent);
   const today = new Date();
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(today, i - 3));
+
+  const handleScheduleClick = (type: string) => {
+    switch (type) {
+      case '작전':
+        navigate('/tasks');
+        break;
+      case '방문예약':
+        navigate('/visits');
+        break;
+      case '결재마감':
+        navigate('/approvals');
+        break;
+      case '당직':
+      case '훈련':
+      case '행사':
+        // 일정 상세는 현재 페이지에서 처리 (향후 모달 구현 가능)
+        break;
+      default:
+        break;
+    }
+  };
 
   const getSchedulesForDate = (date: Date) => {
     return schedules.filter(s => isSameDay(new Date(s.date), date))
@@ -82,9 +105,10 @@ export function WeeklySchedule() {
                         const colorClass = SCHEDULE_COLORS[schedule.type] || 'text-foreground';
 
                         return (
-                          <div 
+                          <div
                             key={schedule.id}
-                            className="flex items-center gap-2 text-sm"
+                            onClick={() => handleScheduleClick(schedule.type)}
+                            className="flex items-center gap-2 text-sm cursor-pointer hover:bg-accent/50 -mx-1 px-1 py-0.5 rounded transition-colors"
                           >
                             <Icon className={`w-3.5 h-3.5 ${colorClass}`} />
                             <span className="font-mono text-xs text-muted-foreground">

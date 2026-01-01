@@ -4,9 +4,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function MyAssignments() {
   const { agent } = useAuth();
+  const navigate = useNavigate();
 
   if (!agent) return null;
 
@@ -79,7 +81,12 @@ export function MyAssignments() {
                   <span className="font-mono text-xs text-muted-foreground">
                     {incident.caseNumber}
                   </span>
-                  <Button size="sm" variant="outline" className="h-7 text-xs gap-1">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-xs gap-1"
+                    onClick={() => navigate('/tasks')}
+                  >
                     {getActionLabel()}
                     <ArrowRight className="w-3 h-3" />
                   </Button>
@@ -100,7 +107,12 @@ export function MyAssignments() {
           </div>
         )}
 
-        <Button variant="outline" className="w-full mt-3" size="sm">
+        <Button
+          variant="outline"
+          className="w-full mt-3"
+          size="sm"
+          onClick={() => navigate('/tasks')}
+        >
           담당업무 전체 보기
         </Button>
       </CardContent>

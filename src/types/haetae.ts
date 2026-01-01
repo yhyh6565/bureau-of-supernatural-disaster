@@ -60,14 +60,33 @@ export interface Schedule {
   relatedId?: string;
 }
 
+// 공지사항 긴급도
+export type NoticePriority = '긴급' | '필독' | '일반';
+
+// 발신 부서
+export type NoticeDepartment =
+  | '백호반' | '현무반' | '주작반'
+  | '본부' | '인사팀' | '보안팀' | '총무팀' | '전산팀' | '법무팀';
+
+// 내용 분류
+export type NoticeCategory =
+  | '인사' | '보안' | '복지' | '안전' | '교육'
+  | '행사' | '시스템' | '장비' | '규정' | '공지';
+
 export interface Notification {
   id: string;
   title: string;
-  content: string;
-  isUrgent: boolean;
-  department?: Department;
+  content: string; // 요약 내용 (목록에 표시)
+  fullContent: string; // 전체 본문 내용
+  priority: NoticePriority; // 긴급도
+  sourceDepartment: NoticeDepartment; // 발신 부서
+  category: NoticeCategory; // 내용 분류
+  author?: string; // 작성자
+  isUrgent: boolean; // 하위 호환성 유지
+  department?: Department; // 하위 호환성 유지
   createdAt: Date;
   isRead: boolean;
+  isPinned?: boolean; // 상단 고정 여부
 }
 
 // 부서별 표시 정보
@@ -145,4 +164,45 @@ export const STATUS_STYLE: Record<IncidentStatus, {
   '정리대기': { bgClass: 'bg-jujak', textClass: 'text-jujak-foreground' },
   '정리중': { bgClass: 'bg-jujak/80', textClass: 'text-jujak-foreground' },
   '종결': { bgClass: 'bg-success', textClass: 'text-success-foreground' },
+};
+
+// 공지사항 긴급도별 스타일
+export const NOTICE_PRIORITY_STYLE: Record<NoticePriority, {
+  bgClass: string;
+  textClass: string;
+  borderClass: string;
+}> = {
+  '긴급': {
+    bgClass: 'bg-destructive',
+    textClass: 'text-destructive-foreground',
+    borderClass: 'border-destructive',
+  },
+  '필독': {
+    bgClass: 'bg-warning',
+    textClass: 'text-warning-foreground',
+    borderClass: 'border-warning',
+  },
+  '일반': {
+    bgClass: 'bg-muted',
+    textClass: 'text-muted-foreground',
+    borderClass: 'border-muted',
+  },
+};
+
+// 공지사항 카테고리별 스타일
+export const NOTICE_CATEGORY_STYLE: Record<NoticeCategory, {
+  bgClass: string;
+  textClass: string;
+  icon: string;
+}> = {
+  '인사': { bgClass: 'bg-blue-500/10', textClass: 'text-blue-500', icon: '👥' },
+  '보안': { bgClass: 'bg-red-500/10', textClass: 'text-red-500', icon: '🔒' },
+  '복지': { bgClass: 'bg-green-500/10', textClass: 'text-green-500', icon: '🎁' },
+  '안전': { bgClass: 'bg-orange-500/10', textClass: 'text-orange-500', icon: '⚠️' },
+  '교육': { bgClass: 'bg-purple-500/10', textClass: 'text-purple-500', icon: '📚' },
+  '행사': { bgClass: 'bg-pink-500/10', textClass: 'text-pink-500', icon: '🎉' },
+  '시스템': { bgClass: 'bg-indigo-500/10', textClass: 'text-indigo-500', icon: '💻' },
+  '장비': { bgClass: 'bg-amber-500/10', textClass: 'text-amber-500', icon: '🔧' },
+  '규정': { bgClass: 'bg-slate-500/10', textClass: 'text-slate-500', icon: '📋' },
+  '공지': { bgClass: 'bg-gray-500/10', textClass: 'text-gray-500', icon: '📣' },
 };
