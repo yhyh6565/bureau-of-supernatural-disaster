@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/types/haetae';
+import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { TrendingUp, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface StatCardProps {
@@ -44,23 +44,23 @@ export function DepartmentStats() {
         const stats = allStats.baekho;
         return (
           <>
-            <StatCard 
-              label="접수 건수 (이번 달)" 
-              value={stats.received} 
-              icon={AlertCircle} 
-              variant="default" 
+            <StatCard
+              label="접수 건수 (이번 달)"
+              value={stats.received}
+              icon={AlertCircle}
+              variant="default"
             />
-            <StatCard 
-              label="조사 중" 
-              value={stats.investigating} 
-              icon={Clock} 
-              variant="active" 
+            <StatCard
+              label="조사 중"
+              value={stats.investigating}
+              icon={Clock}
+              variant="active"
             />
-            <StatCard 
-              label="조사 완료" 
-              value={stats.completed} 
-              icon={CheckCircle2} 
-              variant="complete" 
+            <StatCard
+              label="조사 완료"
+              value={stats.completed}
+              icon={CheckCircle2}
+              variant="complete"
             />
           </>
         );
@@ -69,23 +69,23 @@ export function DepartmentStats() {
         const stats = allStats.hyunmu;
         return (
           <>
-            <StatCard 
-              label="구조 요청 (이번 달)" 
-              value={stats.requests} 
-              icon={AlertCircle} 
-              variant="default" 
+            <StatCard
+              label="구조 요청 (이번 달)"
+              value={stats.requests}
+              icon={AlertCircle}
+              variant="default"
             />
-            <StatCard 
-              label="구조 중" 
-              value={stats.rescuing} 
-              icon={Clock} 
-              variant="active" 
+            <StatCard
+              label="구조 중"
+              value={stats.rescuing}
+              icon={Clock}
+              variant="active"
             />
-            <StatCard 
-              label="구조 완료" 
-              value={stats.completed} 
-              icon={CheckCircle2} 
-              variant="complete" 
+            <StatCard
+              label="구조 완료"
+              value={stats.completed}
+              icon={CheckCircle2}
+              variant="complete"
             />
           </>
         );
@@ -94,23 +94,23 @@ export function DepartmentStats() {
         const stats = allStats.jujak;
         return (
           <>
-            <StatCard 
-              label="정리 요청 (이번 달)" 
-              value={stats.requests} 
-              icon={AlertCircle} 
-              variant="default" 
+            <StatCard
+              label="정리 요청 (이번 달)"
+              value={stats.requests}
+              icon={AlertCircle}
+              variant="default"
             />
-            <StatCard 
-              label="정리 중" 
-              value={stats.cleaning} 
-              icon={Clock} 
-              variant="active" 
+            <StatCard
+              label="정리 중"
+              value={stats.cleaning}
+              icon={Clock}
+              variant="active"
             />
-            <StatCard 
-              label="정리 완료" 
-              value={stats.completed} 
-              icon={CheckCircle2} 
-              variant="complete" 
+            <StatCard
+              label="정리 완료"
+              value={stats.completed}
+              icon={CheckCircle2}
+              variant="complete"
             />
           </>
         );

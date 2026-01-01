@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE, Incident } from '@/types/haetae';
+import { Incident } from '@/types/haetae';
+import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { DataManager } from '@/data/dataManager';
 import { Briefcase, MapPin, AlertTriangle, Clock, CheckCircle, ArrowRight, FileText, Truck } from 'lucide-react';
 import { format } from 'date-fns';
@@ -105,8 +106,8 @@ export function TasksPage() {
             </Badge>
           </div>
           {showAction && (
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               className="gap-1"
               onClick={(e) => {
                 e.stopPropagation();
@@ -164,8 +165,9 @@ export function TasksPage() {
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-xl font-bold">담당업무</h1>
-          <Badge className={`bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass}`}>
-            {deptInfo.icon} {deptInfo.name} ({deptInfo.fullName})
+          <Badge className={`bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
+            <deptInfo.icon className="w-3.5 h-3.5" />
+            <span>{deptInfo.name} ({deptInfo.fullName})</span>
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -188,9 +190,9 @@ export function TasksPage() {
           <CardContent className="space-y-3">
             {tasks.list.length > 0 ? (
               tasks.list.map((incident) => (
-                <IncidentCard 
-                  key={incident.id} 
-                  incident={incident} 
+                <IncidentCard
+                  key={incident.id}
+                  incident={incident}
                   showAction={department === 'hyunmu'} // 현무팀은 자율 배정
                 />
               ))
@@ -264,7 +266,7 @@ export function TasksPage() {
               해당 업무를 승낙하시겠습니까?
             </DialogDescription>
           </DialogHeader>
-          
+
           {selectedIncident && (
             <div className="py-4 space-y-3">
               <div className="p-3 bg-muted/50 rounded-sm border border-border">
@@ -281,7 +283,7 @@ export function TasksPage() {
                   )}
                 </div>
               </div>
-              
+
               <p className="text-sm text-muted-foreground">
                 ※ 승낙 시 해당 업무가 본인에게 배정됩니다.
               </p>

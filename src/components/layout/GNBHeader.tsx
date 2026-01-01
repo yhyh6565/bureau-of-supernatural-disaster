@@ -1,5 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/types/haetae';
+import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { Bell, LogOut, User, Home, FileText, Mail, MapPin, Package, ClipboardCheck, Briefcase } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -70,8 +70,9 @@ export function GNBHeader() {
         {/* 우측: 사용자 정보 */}
         <div className="flex items-center gap-3">
           {/* 부서 표시 */}
-          <div className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/20`}>
-            {deptInfo.icon} {deptInfo.name} ({deptInfo.fullName})
+          <div className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/20 flex items-center gap-1.5`}>
+            <deptInfo.icon className="w-4 h-4" />
+            <span>{deptInfo.name} ({deptInfo.fullName})</span>
           </div>
 
           {/* 알림 */}

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/types/haetae';
+import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +64,8 @@ export function MyAssignments() {
         <CardTitle className="text-base font-medium flex items-center gap-2">
           <DeptIcon className="w-4 h-4" />
           나의 배정 업무
-          <span className={`ml-auto text-sm px-2 py-0.5 rounded bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass}`}>
-            {deptInfo.icon} {deptInfo.name}
+          <span className={`ml-auto text-sm px-2 py-0.5 rounded bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
+            <deptInfo.icon className="w-3.5 h-3.5" /> {deptInfo.name}
           </span>
         </CardTitle>
       </CardHeader>
@@ -73,7 +73,7 @@ export function MyAssignments() {
         {myIncidents.length > 0 ? (
           <div className="space-y-2">
             {myIncidents.map((incident) => (
-              <div 
+              <div
                 key={incident.id}
                 className="p-3 border border-border rounded-sm hover:bg-accent/50 transition-colors"
               >

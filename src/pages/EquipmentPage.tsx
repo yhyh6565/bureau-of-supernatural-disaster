@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Equipment } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
-import { Package, Key, ShoppingCart, AlertCircle, CheckCircle } from 'lucide-react';
+import { Package, Key, ShoppingCart, AlertCircle, CheckCircle, Home, Calendar } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import {
   Dialog,
@@ -68,7 +68,9 @@ export function EquipmentPage() {
       onClick={() => setSelectedEquipment(item)}
     >
       <div className="flex items-start gap-3">
-        <div className="text-3xl">{item.imageEmoji}</div>
+        <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-full">
+          {item.category === '대여' ? <Key className="w-6 h-6 text-muted-foreground" /> : <ShoppingCart className="w-6 h-6 text-muted-foreground" />}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <span className="font-medium">{item.name}</span>
@@ -161,7 +163,9 @@ export function EquipmentPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="p-4 border border-border rounded-sm hover:bg-accent/50 transition-colors cursor-pointer">
                   <div className="flex items-start gap-3">
-                    <div className="text-3xl">🏠</div>
+                    <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-full">
+                      <Home className="w-6 h-6 text-muted-foreground" />
+                    </div>
                     <div className="flex-1">
                       <span className="font-medium">기숙사 입주 신청</span>
                       <p className="text-sm text-muted-foreground mt-1">
@@ -172,7 +176,9 @@ export function EquipmentPage() {
                 </div>
                 <div className="p-4 border border-border rounded-sm hover:bg-accent/50 transition-colors cursor-pointer">
                   <div className="flex items-start gap-3">
-                    <div className="text-3xl">📅</div>
+                    <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-full">
+                      <Calendar className="w-6 h-6 text-muted-foreground" />
+                    </div>
                     <div className="flex-1">
                       <span className="font-medium">기숙사 연장 신청</span>
                       <p className="text-sm text-muted-foreground mt-1">
@@ -192,7 +198,9 @@ export function EquipmentPage() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <span className="text-2xl">{selectedEquipment?.imageEmoji}</span>
+              <span className="flex items-center justify-center w-8 h-8 bg-muted rounded-full">
+                {selectedEquipment?.category === '대여' ? <Key className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+              </span>
               {selectedEquipment?.name} {selectedEquipment?.category === '대여' ? '대여' : '지급'} 신청
             </DialogTitle>
             <DialogDescription>{selectedEquipment?.description}</DialogDescription>

@@ -89,123 +89,7 @@ export interface Notification {
   isPinned?: boolean; // 상단 고정 여부
 }
 
-// 부서별 표시 정보
-export const DEPARTMENT_INFO: Record<Department, {
-  name: string;
-  fullName: string;
-  colorClass: string;
-  icon: string;
-}> = {
-  baekho: {
-    name: '백호',
-    fullName: '신규조사반',
-    colorClass: 'baekho',
-    icon: '🐯',
-  },
-  hyunmu: {
-    name: '현무',
-    fullName: '출동구조반',
-    colorClass: 'hyunmu',
-    icon: '🐢',
-  },
-  jujak: {
-    name: '주작',
-    fullName: '현장정리반',
-    colorClass: 'jujak',
-    icon: '🐦',
-  },
-};
-
-// 위험 등급별 스타일 (형刑 시스템)
-export const DANGER_LEVEL_STYLE: Record<DangerLevel, {
-  bgClass: string;
-  textClass: string;
-  description: string;
-}> = {
-  '멸형': {
-    bgClass: 'bg-abyssal',
-    textClass: 'text-abyssal-foreground',
-    description: '사망처리자 오십만 명 이상'
-  },
-  '파형': {
-    bgClass: 'bg-destructive',
-    textClass: 'text-destructive-foreground',
-    description: '수십 년간 수백 명 실종, 종결 불가능'
-  },
-  '뇌형': {
-    bgClass: 'bg-warning',
-    textClass: 'text-warning-foreground',
-    description: '수십 년간 수십 명 피해, 봉인 가능'
-  },
-  '고형': {
-    bgClass: 'bg-muted',
-    textClass: 'text-muted-foreground',
-    description: '인명피해 없음'
-  },
-};
-
-// 오염도 레벨별 스타일
-export const CONTAMINATION_STYLE = {
-  normal: { range: [0, 30], color: 'bg-green-500', text: '정상' },
-  caution: { range: [31, 69], color: 'bg-yellow-500', text: '주의' },
-  warning: { range: [70, 89], color: 'bg-orange-500', text: '위험' },
-  critical: { range: [90, 100], color: 'bg-red-500', text: '심각' },
-} as const;
-
-// 상태별 스타일
-export const STATUS_STYLE: Record<IncidentStatus, {
-  bgClass: string;
-  textClass: string;
-}> = {
-  '접수': { bgClass: 'bg-baekho', textClass: 'text-baekho-foreground' },
-  '조사중': { bgClass: 'bg-baekho/80', textClass: 'text-baekho-foreground' },
-  '구조대기': { bgClass: 'bg-hyunmu', textClass: 'text-hyunmu-foreground' },
-  '구조중': { bgClass: 'bg-hyunmu/80', textClass: 'text-hyunmu-foreground' },
-  '정리대기': { bgClass: 'bg-jujak', textClass: 'text-jujak-foreground' },
-  '정리중': { bgClass: 'bg-jujak/80', textClass: 'text-jujak-foreground' },
-  '종결': { bgClass: 'bg-success', textClass: 'text-success-foreground' },
-};
-
-// 공지사항 긴급도별 스타일
-export const NOTICE_PRIORITY_STYLE: Record<NoticePriority, {
-  bgClass: string;
-  textClass: string;
-  borderClass: string;
-}> = {
-  '긴급': {
-    bgClass: 'bg-destructive',
-    textClass: 'text-destructive-foreground',
-    borderClass: 'border-destructive',
-  },
-  '필독': {
-    bgClass: 'bg-warning',
-    textClass: 'text-warning-foreground',
-    borderClass: 'border-warning',
-  },
-  '일반': {
-    bgClass: 'bg-muted',
-    textClass: 'text-muted-foreground',
-    borderClass: 'border-muted',
-  },
-};
-
-// 공지사항 카테고리별 스타일
-export const NOTICE_CATEGORY_STYLE: Record<NoticeCategory, {
-  bgClass: string;
-  textClass: string;
-  icon: string;
-}> = {
-  '인사': { bgClass: 'bg-blue-500/10', textClass: 'text-blue-500', icon: '👥' },
-  '보안': { bgClass: 'bg-red-500/10', textClass: 'text-red-500', icon: '🔒' },
-  '복지': { bgClass: 'bg-green-500/10', textClass: 'text-green-500', icon: '🎁' },
-  '안전': { bgClass: 'bg-orange-500/10', textClass: 'text-orange-500', icon: '⚠️' },
-  '교육': { bgClass: 'bg-purple-500/10', textClass: 'text-purple-500', icon: '📚' },
-  '행사': { bgClass: 'bg-pink-500/10', textClass: 'text-pink-500', icon: '🎉' },
-  '시스템': { bgClass: 'bg-indigo-500/10', textClass: 'text-indigo-500', icon: '💻' },
-  '장비': { bgClass: 'bg-amber-500/10', textClass: 'text-amber-500', icon: '🔧' },
-  '규정': { bgClass: 'bg-slate-500/10', textClass: 'text-slate-500', icon: '📋' },
-  '공지': { bgClass: 'bg-gray-500/10', textClass: 'text-gray-500', icon: '📣' },
-};
+// [REMOVED] Constants moved to src/constants/haetae.tsx
 
 // 메세지/쪽지 데이터
 export interface Message {
@@ -229,8 +113,7 @@ export interface Equipment {
   description: string;
   totalStock: number;
   availableStock: number;
-  // imageEmoji removed as per v4.0 requirements, using icon mapping or just name
-  imageEmoji?: string; // Optional for backward compatibility or removal
+  // imageEmoji removed
 }
 
 // 방문 장소 데이터
@@ -240,7 +123,7 @@ export interface VisitLocation {
   description: string;
   requiresApproval: boolean;
   operatingHours: string;
-  imageEmoji?: string; // Optional for backward compatibility
+  // imageEmoji removed
 }
 
 // 예약 슬롯 데이터

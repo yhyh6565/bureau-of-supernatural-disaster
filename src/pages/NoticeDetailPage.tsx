@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
-import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/types/haetae';
+import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { ArrowLeft, Calendar, Building2, User, Pin } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -67,8 +67,8 @@ export function NoticeDetailPage() {
               <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass}`}>
                 {notice.priority}
               </Badge>
-              <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass}`}>
-                {categoryStyle.icon} {notice.category}
+              <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} flex items-center gap-1`}>
+                <categoryStyle.icon className="w-3 h-3" /> {notice.category}
               </Badge>
             </div>
             <h1 className="text-2xl font-bold leading-tight">

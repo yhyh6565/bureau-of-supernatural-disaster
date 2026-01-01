@@ -5,11 +5,11 @@ import { DepartmentStats } from '@/components/dashboard/DepartmentStats';
 import { NoticeWidget } from '@/components/dashboard/NoticeWidget';
 import { MyAssignments } from '@/components/dashboard/MyAssignments';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/types/haetae';
+import { DEPARTMENT_INFO } from '@/constants/haetae';
 
 export function Dashboard() {
   const { agent } = useAuth();
-  
+
   if (!agent) return null;
 
   const deptInfo = DEPARTMENT_INFO[agent.department];
@@ -20,8 +20,9 @@ export function Dashboard() {
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-xl font-bold">대시보드</h1>
-          <span className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass}`}>
-            {deptInfo.icon} {deptInfo.name} ({deptInfo.fullName})
+          <span className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5`}>
+            <deptInfo.icon className="w-4 h-4" />
+            <span>{deptInfo.name} ({deptInfo.fullName})</span>
           </span>
         </div>
         <p className="text-sm text-muted-foreground">

@@ -12,9 +12,8 @@ import {
   NoticePriority,
   NoticeCategory,
   NoticeDepartment,
-  NOTICE_PRIORITY_STYLE,
-  NOTICE_CATEGORY_STYLE,
 } from '@/types/haetae';
+import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { Bell, Search, Pin, ChevronDown } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -180,15 +179,19 @@ export function NoticesPage() {
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuLabel>내용 분류</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {(['인사', '보안', '복지', '안전', '교육', '행사', '시스템', '장비', '규정', '공지'] as NoticeCategory[]).map(category => (
-                    <DropdownMenuCheckboxItem
-                      key={category}
-                      checked={selectedCategories.includes(category)}
-                      onCheckedChange={() => toggleCategory(category)}
-                    >
-                      {NOTICE_CATEGORY_STYLE[category].icon} {category}
-                    </DropdownMenuCheckboxItem>
-                  ))}
+                  {(['인사', '보안', '복지', '안전', '교육', '행사', '시스템', '장비', '규정', '공지'] as NoticeCategory[]).map(category => {
+                    const CategoryIcon = NOTICE_CATEGORY_STYLE[category].icon;
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={category}
+                        checked={selectedCategories.includes(category)}
+                        onCheckedChange={() => toggleCategory(category)}
+                      >
+                        <CategoryIcon className="w-3 h-3 mr-2 inline-block" />
+                        {category}
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -309,7 +312,7 @@ export function NoticesPage() {
                     </div>
                     <div className="col-span-1 text-center flex items-center justify-center">
                       <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
-                        {categoryStyle.icon}
+                        <categoryStyle.icon className="w-3 h-3" />
                       </Badge>
                     </div>
                     <div className="col-span-5 flex items-center gap-2">

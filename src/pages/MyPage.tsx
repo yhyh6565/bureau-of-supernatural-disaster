@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/types/haetae';
+import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
 import { User, Phone, Building2, Shield, Heart, AlertTriangle } from 'lucide-react';
 import {
@@ -71,7 +71,7 @@ export function MyPage() {
               <div className="space-y-1">
                 <span className="text-xs text-muted-foreground">소속</span>
                 <div className="flex items-center gap-2">
-                  <span>{deptInfo.icon}</span>
+                  <deptInfo.icon className="w-4 h-4" />
                   <span className="font-medium">{deptInfo.name} ({deptInfo.fullName})</span>
                 </div>
               </div>

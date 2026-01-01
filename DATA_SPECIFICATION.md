@@ -111,38 +111,35 @@ src/data/
   }
   ```
 
-### 3.4 🧰 장비 (Equipment)
-대여 및 지급 가능한 자산 정보입니다.
+### 3. Equipment (장비)
+*   **파일**: `src/data/global/equipment.json`
+*   **설명**: 대여 가능 장비 및 지급 물품
+*   **구조**:
+    ```json
+    {
+      "id": "string",
+      "name": "string",
+      "category": "대여" | "지급",
+      "requiresApproval": boolean,
+      "description": "string",
+      "totalStock": number,
+      "availableStock": number
+    }
+    ```
 
-- **JSON 파일**: `global/equipment.json`
-- **주요 필드**:
-  ```typescript
-  interface Equipment {
-    id: string;
-    name: string;
-    category: "대여" | "지급";
-    requiresApproval: boolean; // true면 대여 시 결재 문서 작성 필요
-    availableStock: number;    // 현재 재고
-    imageEmoji?: string;       // (Optional) 아이콘 표시용 이모지
-    // ...
-  }
-  ```
-
-### 3.5 📍 방문 장소 (VisitLocation)
-예약 가능한 사내/외 시설 정보입니다.
-
-- **JSON 파일**: `global/locations.json`
-- **주요 필드**:
-  ```typescript
-  interface VisitLocation {
-    id: string;
-    name: string;             // 장소명 (예: 도깨비 공방)
-    operatingHours: string;   // "09:00 - 18:00"
-    requiresApproval: boolean; // true면 예약 시 결재 필요
-    description: string;
-    // ...
-  }
-  ```
+### 4. VisitLocation (방문 장소)
+*   **파일**: `src/data/global/locations.json`
+*   **설명**: 예약 가능한 시설 정보
+*   **구조**:
+    ```json
+    {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "requiresApproval": boolean,
+      "operatingHours": "string"
+    }
+    ```
 
 ---
 

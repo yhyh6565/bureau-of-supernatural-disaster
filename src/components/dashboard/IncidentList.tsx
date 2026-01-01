@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataManager } from '@/data/dataManager';
-import { Incident, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/types/haetae';
+import { Incident } from '@/types/haetae';
+import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { AlertTriangle, MapPin, Clock, Shield, Ban } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -77,7 +78,7 @@ export function IncidentList() {
                   <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
                   <span className="truncate">{incident.location}</span>
                 </div>
-                
+
                 <p className="text-sm text-muted-foreground line-clamp-2">
                   {incident.reportContent}
                 </p>

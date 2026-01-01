@@ -113,7 +113,9 @@ export function VisitsPage() {
                 onClick={() => setSelectedLocation(location)}
               >
                 <div className="flex items-start gap-3">
-                  <div className="text-3xl">{location.imageEmoji}</div>
+                  <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-full">
+                    <MapPin className="w-6 h-6 text-muted-foreground" />
+                  </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium">{location.name}</span>
@@ -141,7 +143,9 @@ export function VisitsPage() {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <span className="text-2xl">{selectedLocation?.imageEmoji}</span>
+              <span className="flex items-center justify-center w-8 h-8 bg-muted rounded-full">
+                <MapPin className="w-4 h-4" />
+              </span>
               {selectedLocation?.name} 방문 신청
             </DialogTitle>
             <DialogDescription>{selectedLocation?.description}</DialogDescription>
