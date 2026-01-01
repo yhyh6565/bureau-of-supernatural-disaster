@@ -190,24 +190,33 @@ export const DataManager = {
 
     getManual: (id: string) => GLOBAL_MANUALS.find(m => m.id === id),
 
+    // 캐싱된 통계 데이터
+    _statsCache: null as ReturnType<typeof DataManager.getStats> | null,
+    _statsCacheTime: 0,
+
     getStats: () => {
-        // Use all incidents from all sources for stats calculation
-        const allIncidents = [
-            ...GLOBAL_INCIDENTS,
-            ...ORDINARY_DATA.incidents,
-            ...Object.values(PERSONA_MAP).flatMap(d => d.incidents)
-        ];
+        const now = Date.now();
+        const CACHE_DURATION = 60000; // 1분 캐싱
+
+        // 캐시가 유효하면 반환
+        if (DataManager._statsCache && (now - DataManager._statsCacheTime) < CACHE_DURATION) {
+            return DataManager._statsCache;
+        }
+
+        // Use only GLOBAL_INCIDENTS for consistent stats (persona incidents are additional views, not new data)
+        // This prevents duplicate counting and ensures consistent department statistics
+        const allIncidents = GLOBAL_INCIDENTS;
 
         // Get current month start date
-        const now = new Date();
-        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        const currentDate = new Date();
+        const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
         // Filter incidents created this month
         const thisMonthIncidents = allIncidents.filter(inc =>
             new Date(inc.createdAt) >= monthStart
         );
 
-        return {
+        const stats = {
             baekho: {
                 received: thisMonthIncidents.filter(inc => inc.status === '접수').length,
                 investigating: allIncidents.filter(inc => inc.status === '조사중').length,
@@ -221,7 +230,7 @@ export const DataManager = {
                 ).length,
                 rescuing: allIncidents.filter(inc => inc.status === '구조중').length,
                 completed: allIncidents.filter(inc =>
-                    inc.status === '정리대기' || inc.status === '정리중' || inc.status === '종결'
+                    inc.status === '정리대기' || inc.status === '정리중' || inc.status === '종결' || inc.status === '봉인'
                 ).length,
             },
             jujak: {
@@ -229,9 +238,15 @@ export const DataManager = {
                     inc.status === '정리대기' || inc.status === '정리중'
                 ).length,
                 cleaning: allIncidents.filter(inc => inc.status === '정리중').length,
-                completed: allIncidents.filter(inc => inc.status === '종결').length,
+                completed: allIncidents.filter(inc => inc.status === '종결' || inc.status === '봉인').length,
             },
         };
+
+        // 캐시 저장
+        DataManager._statsCache = stats;
+        DataManager._statsCacheTime = now;
+
+        return stats;
     },
 
     // Inspection Requests (Mock Data for now)

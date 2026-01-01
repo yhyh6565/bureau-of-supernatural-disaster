@@ -2,7 +2,6 @@
     {
         "id": "inc-101",
         "title": "강남 폐건물 지하 소음",
-        "caseNumber": "20251228-003",
         "registrationNumber": "0001PSYA.2025.가01",
         "location": "서울특별시 강남구 폐건물",
         "dangerLevel": "뇌형",
@@ -17,7 +16,6 @@
     {
         "id": "inc-102",
         "title": "인천항 안개 미아",
-        "caseNumber": "20251220-001",
         "registrationNumber": "0002PSYA.2025.가02",
         "location": "인천광역시 중구 항구",
         "dangerLevel": "고형",
@@ -31,7 +29,6 @@
     {
         "id": "inc-103",
         "title": "일산 호수공원 야간 산책로",
-        "caseNumber": "20251215-005",
         "registrationNumber": "0003PSYA.2025.가03",
         "location": "경기도 고양시 일산 호수공원",
         "dangerLevel": "뇌형",

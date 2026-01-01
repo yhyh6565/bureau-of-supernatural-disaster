@@ -165,13 +165,68 @@ function InspectionRequestForm({ onClose }: { onClose: () => void }) {
 
 // --- Visit Constants ---
 
-const TIME_SLOTS = [
-    '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'
-];
+// 운영시간 문자열에서 시간 슬롯 배열 생성
+const parseOperatingHours = (operatingHours: string): string[] => {
+    const match = operatingHours.match(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/);
+    if (!match) return [];
 
-const RESERVED_SLOTS: Record<string, string[]> = {
-    '2025-12-31': ['10:00', '14:00'],
-    '2026-01-02': ['09:00', '11:00', '15:00'],
+    const startHour = parseInt(match[1]);
+    const endHour = parseInt(match[3]);
+    const slots: string[] = [];
+
+    // 마지막 시간은 운영 종료 1시간 전까지만 예약 가능
+    for (let hour = startHour; hour < endHour; hour++) {
+        slots.push(`${hour.toString().padStart(2, '0')}:00`);
+    }
+    return slots;
+};
+
+// 세션 스토리지 키
+const RESERVATION_STORAGE_KEY = 'haetae_reservations';
+
+// 시설별 예약 슬롯 생성 (세션 스토리지에 캐싱)
+const getOrCreateReservedSlots = (locationId: string, availableSlots: string[]): Record<string, string[]> => {
+    const storageKey = `${RESERVATION_STORAGE_KEY}_${locationId}`;
+
+    // 세션 스토리지에서 기존 예약 확인
+    const stored = sessionStorage.getItem(storageKey);
+    if (stored) {
+        try {
+            return JSON.parse(stored);
+        } catch {
+            // 파싱 실패 시 새로 생성
+        }
+    }
+
+    // 새로 예약 슬롯 생성
+    const slots: Record<string, string[]> = {};
+    const today = new Date();
+
+    // 오늘부터 14일간 랜덤 예약 슬롯 생성
+    for (let i = 0; i < 14; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dateKey = date.toISOString().split('T')[0];
+
+        // 날짜별로 1~3개의 랜덤 시간대 예약 (운영시간 내에서만)
+        const numReserved = Math.floor(Math.random() * 3) + 1;
+        const reserved: string[] = [];
+        for (let j = 0; j < numReserved; j++) {
+            if (availableSlots.length > 0) {
+                const randomSlot = availableSlots[Math.floor(Math.random() * availableSlots.length)];
+                if (!reserved.includes(randomSlot)) {
+                    reserved.push(randomSlot);
+                }
+            }
+        }
+        if (reserved.length > 0) {
+            slots[dateKey] = reserved;
+        }
+    }
+
+    // 세션 스토리지에 저장
+    sessionStorage.setItem(storageKey, JSON.stringify(slots));
+    return slots;
 };
 
 
@@ -249,11 +304,33 @@ export function ResourcesPage() {
         setVisitReason('');
     };
 
+    // 선택된 시설의 운영시간 기반 슬롯 계산
+    const getLocationTimeSlots = () => {
+        if (!selectedLocation) return [];
+        return parseOperatingHours(selectedLocation.operatingHours);
+    };
+
     const getAvailableSlots = () => {
-        if (!visitDate) return TIME_SLOTS;
+        if (!selectedLocation) return [];
+        const locationSlots = getLocationTimeSlots();
+        if (!visitDate) return locationSlots;
+
         const dateKey = format(visitDate, 'yyyy-MM-dd');
-        const reserved = RESERVED_SLOTS[dateKey] || [];
-        return TIME_SLOTS.filter(slot => !reserved.includes(slot));
+        const reservedSlots = getOrCreateReservedSlots(selectedLocation.id, locationSlots);
+        const reserved = reservedSlots[dateKey] || [];
+
+        // 오늘인 경우 현재 시간 이전 슬롯 제외
+        const now = new Date();
+        const isToday = format(now, 'yyyy-MM-dd') === dateKey;
+
+        return locationSlots.filter(slot => {
+            if (reserved.includes(slot)) return false;
+            if (isToday) {
+                const [hour] = slot.split(':').map(Number);
+                if (hour <= now.getHours()) return false;
+            }
+            return true;
+        });
     };
 
     const isDateDisabled = (date: Date) => {

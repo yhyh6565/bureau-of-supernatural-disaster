@@ -1,5 +1,8 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Agent, Department } from '@/types/haetae';
+
+// 세션 스토리지 키
+const SESSION_STORAGE_KEY = 'haetae_agent_session';
 
 // 더미 요원 데이터
 const MOCK_AGENTS: Record<string, Agent> = {
@@ -152,7 +155,39 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [agent, setAgent] = useState<Agent | null>(null);
+  const [agent, setAgent] = useState<Agent | null>(() => {
+    // 초기 상태: sessionStorage에서 복원 시도
+    const stored = sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        // Date 필드 복원
+        if (parsed.purificationHistory) {
+          parsed.purificationHistory = parsed.purificationHistory.map((d: string) => new Date(d));
+        }
+        if (parsed.rentals) {
+          parsed.rentals = parsed.rentals.map((r: any) => ({
+            ...r,
+            rentalDate: r.rentalDate ? new Date(r.rentalDate) : undefined,
+            dueDate: r.dueDate ? new Date(r.dueDate) : undefined,
+          }));
+        }
+        return parsed as Agent;
+      } catch {
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      }
+    }
+    return null;
+  });
+
+  // agent 상태가 변경되면 sessionStorage에 저장
+  useEffect(() => {
+    if (agent) {
+      sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(agent));
+    } else {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+    }
+  }, [agent]);
 
   // 랜덤 요원 생성 유틸리티
   const createRandomAgent = (name: string): Agent => {

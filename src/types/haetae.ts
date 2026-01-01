@@ -4,7 +4,7 @@ export type Department = 'baekho' | 'hyunmu' | 'jujak';
 
 export type AgentStatus = '정상' | '부상' | '오염' | '실종' | '사망';
 
-export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결';
+export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결' | '봉인';
 
 // 재난 등급 체계 (형刑 시스템)
 export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형';
@@ -29,7 +29,6 @@ export interface Agent {
 export interface Incident {
   id: string;
   title: string;
-  caseNumber: string; // YYYYMMDD-001 형식 (내부 사용)
   registrationNumber: string; // 0000PSYA.연도.가00 형식 (공식 등록번호)
   location: string;
   gpsCoordinates?: { lat: number; lng: number };
