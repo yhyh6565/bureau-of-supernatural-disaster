@@ -1,30 +1,26 @@
 [
-    {
-        "id": "inc-501",
-        "title": "파주 접경지역 시공간 왜곡",
-        "registrationNumber": "0008PSYA.2025.가08",
-        "location": "경기도 파주시 접경지역 A구역",
-        "dangerLevel": "멸형",
-        "status": "조사중",
-        "reportContent": "시간 왜곡 현상 발생. 군 통제선 설정. 현무3팀 해금 팀장 지휘.",
-        "requiresPatrol": false,
-        "countermeasure": "은심장 + 해태상 배치",
-        "entryRestrictions": "6급 이상만 진입 가능",
-        "createdAt": "2025-12-30T18:00:00",
-        "updatedAt": "2025-12-31T09:00:00"
-    },
-    {
-        "id": "inc-502",
-        "title": "철원 폐터널 실종 사건",
-        "registrationNumber": "0009PSYA.2025.가09",
-        "location": "강원도 철원군 폐터널",
-        "dangerLevel": "파형",
-        "status": "정리대기",
-        "reportContent": "수십 년간 실종자 다수. 해금 팀장 봉인 작업 완료.",
-        "requiresPatrol": true,
-        "countermeasure": "특급 봉인",
-        "entryRestrictions": "월 1회 순찰 필수",
-        "createdAt": "2025-12-01T06:00:00",
-        "updatedAt": "2025-12-15T18:00:00"
-    }
+  {
+    "id": "inc-020",
+    "title": "D구역 그림자 확산",
+    "registrationNumber": "2026PSYA.0102.그04",
+    "location": "서울시 ■■구 D구역 지하철역",
+    "dangerLevel": "멸형",
+    "status": "조사중",
+    "reportContent": "지하철역 내부 그림자가 비정상적으로 길어지고 승객을 삼키는 현상 발생. 3호선 전 구간 통제 필요. 현무3팀 전원 투입.",
+    "requiresPatrol": true,
+    "createdAt": "relative:-1d",
+    "updatedAt": "today"
+  },
+  {
+    "id": "inc-021",
+    "title": "오래된 인형의 집",
+    "registrationNumber": "2026PSYA.1228.인09",
+    "location": "경기도 ■■시 폐가",
+    "dangerLevel": "고형",
+    "status": "처리중",
+    "reportContent": "버려진 저택에서 밤마다 파티 소리가 들린다는 신고. 진입 시도한 경찰관 2명 실종. 고등급 봉인구 필요.",
+    "requiresPatrol": false,
+    "createdAt": "relative:-5d",
+    "updatedAt": "relative:-2d"
+  }
 ]

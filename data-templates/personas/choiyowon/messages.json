@@ -1,46 +1,57 @@
 [
-    {
-        "id": "msg-101",
-        "senderId": "system",
-        "senderName": "시스템",
-        "senderDepartment": "의료국",
-        "receiverId": "agent-002",
-        "title": "오염도 주의 안내",
-        "content": "귀하의 현재 오염도가 28%입니다. 다음 주 정기 검진을 반드시 받으시기 바랍니다.",
-        "createdAt": "2025-12-29T09:00:00",
-        "isRead": false
-    },
-    {
-        "id": "msg-102",
-        "senderId": "agent-001",
-        "senderName": "박홍림",
-        "senderDepartment": "현무1팀",
-        "receiverId": "agent-002",
-        "title": "단독 출동 금지 경고",
-        "content": "강남구 폐건물 사건 관련하여, 향후 단독 출동은 금지됩니다. 팀 동반 필수.",
-        "createdAt": "2025-12-28T19:00:00",
-        "isRead": true
-    },
-    {
-        "id": "msg-103",
-        "senderId": "system",
-        "senderName": "시스템",
-        "senderDepartment": "장비관리반",
-        "receiverId": "agent-002",
-        "title": "장비 반납 안내",
-        "content": "대여 중인 도깨비 초롱(eq-008)의 반납 기한이 내일입니다.",
-        "createdAt": "2025-12-30T10:00:00",
-        "isRead": false
-    },
-    {
-        "id": "msg-104",
-        "senderId": "agent-002",
-        "senderName": "최요원",
-        "senderDepartment": "현무1팀",
-        "receiverId": "agent-003",
-        "title": "강남 사건 지원 요청",
-        "content": "재관이, 강남 폐건물 사건 부적 좀 확인해줄 수 있어? 뭔가 봉인이 풀린 것 같은데.",
-        "createdAt": "2025-12-28T15:30:00",
-        "isRead": true
-    }
+  {
+    "id": "msg-015",
+    "senderId": "system",
+    "senderName": "의료국",
+    "senderDepartment": "의료국",
+    "receiverId": "choiyowon",
+    "title": "오염 확인 일정 관련",
+    "content": "근시일 내의 오염 확인 일정 변동 부탁드립니다.",
+    "createdAt": "relative:-3h",
+    "isRead": false
+  },
+  {
+    "id": "msg-016",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무팀 3팀",
+    "receiverId": "choiyowon",
+    "title": "최씨",
+    "content": "최씨 우리 할 말 있지 않나?",
+    "createdAt": "2025-10-29T14:00",
+    "isRead": true
+  },
+  {
+    "id": "msg-017",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무팀 3팀",
+    "receiverId": "choiyowon",
+    "title": "업무 협조",
+    "content": "우리 팀 일 잘 처리해둬라",
+    "createdAt": "2025-12-17T10:00",
+    "isRead": true
+  },
+  {
+    "id": "msg-018",
+    "senderId": "choiyowon",
+    "senderName": "최요원",
+    "senderDepartment": "현장구조반",
+    "receiverId": "ryujaegwan",
+    "title": "FW: 업무 협조",
+    "content": "-----Original Message-----\nFrom: 해금\nSent: 2025-12-17\nContent: 우리 팀 일 잘 처리해둬라\n\n재관아 누님이 미쳤나보다",
+    "createdAt": "2025-12-17T10:05",
+    "isRead": true
+  },
+  {
+    "id": "msg-019",
+    "senderId": "agent-admin-002",
+    "senderName": "총무팀",
+    "senderDepartment": "총무팀",
+    "receiverId": "choiyowon",
+    "title": "자전거 점검 계획",
+    "content": "안녕하세요, 총무팀입니다. 금일 자전거 점검이 예정되어 있으니 지하 1층 보관소에 보관 중인 개인 자전거가 있다면 확인 부탁드립니다.",
+    "createdAt": "fixed:2026-01-02T09:00",
+    "isRead": false
+  }
 ]

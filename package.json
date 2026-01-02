@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "validate": "tsx scripts/validateAlignment.ts",
     "validate:ux": "tsx scripts/validateUXDesign.ts",
-    "generate-data": "node scripts/generateDynamicData.cjs"
+    "generate-data": "node scripts/generateDynamicData.cjs",
+    "import-excel": "node scripts/importFromExcel.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

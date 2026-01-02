@@ -1,43 +1,26 @@
 [
   {
-    "id": "inc-101",
-    "title": "강남 폐건물 지하 소음",
-    "registrationNumber": "0001PSYA.2025.가01",
-    "location": "서울특별시 강남구 폐건물",
-    "dangerLevel": "뇌형",
-    "status": "구조중",
-    "reportContent": "건물 지하에서 원인 불명의 소음 및 실종자 발생. 최요원 단독 출동.",
-    "requiresPatrol": false,
-    "countermeasure": "줄잡이 사용",
-    "entryRestrictions": "단독 진입 금지",
-    "createdAt": "2025-12-28T14:30:00",
-    "updatedAt": "2025-12-28T18:00:00"
-  },
-  {
-    "id": "inc-102",
-    "title": "인천항 안개 미아",
-    "registrationNumber": "0002PSYA.2025.가02",
-    "location": "인천광역시 중구 항구",
+    "id": "inc-003",
+    "title": "망원동 놀이터 이상 현상",
+    "registrationNumber": "2026PSYA.0101.망03",
+    "location": "서울시 마포구 망원동 ■■ 놀이터",
     "dangerLevel": "고형",
-    "status": "종결",
-    "reportContent": "안개 속에서 방향 감각 상실 신고. 최요원 신속 대응으로 조기 종결.",
+    "status": "조사중",
+    "reportContent": "야간 놀이터에서 어린이 웃음소리가 들린다는 민원 접수. 현장 확인 결과 잔류 영적 반응 감지됨.",
     "requiresPatrol": true,
-    "countermeasure": "도깨비불 배치",
-    "createdAt": "2025-12-20T09:00:00",
-    "updatedAt": "2025-12-21T14:00:00"
+    "createdAt": "2025-12-31T08:16:08.249Z",
+    "updatedAt": "2026-01-02T08:16:08.249Z"
   },
   {
-    "id": "inc-103",
-    "title": "일산 호수공원 야간 산책로",
-    "registrationNumber": "0003PSYA.2025.가03",
-    "location": "경기도 고양시 일산 호수공원",
-    "dangerLevel": "뇌형",
-    "status": "정리대기",
-    "reportContent": "야간 산책로에서 시간 왜곡 현상. 최요원 부상으로 후송.",
-    "requiresPatrol": true,
-    "countermeasure": "해태상 결계",
-    "entryRestrictions": "야간 진입 금지",
-    "createdAt": "2025-12-15T22:00:00",
-    "updatedAt": "2025-12-16T03:00:00"
+    "id": "inc-007",
+    "title": "자작나무숲 기운 이상",
+    "registrationNumber": "2026PSYA.0101.자07",
+    "location": "경기도 ■■시 ■■동 자작나무 산책로",
+    "dangerLevel": "저형",
+    "status": "처리중",
+    "reportContent": "등산객 어지럼증 호소. 현장 확인 결과 미약한 영적 오염 확인. 결계 설치로 안정화 진행중.",
+    "requiresPatrol": false,
+    "createdAt": "2025-12-30T08:16:08.249Z",
+    "updatedAt": "2026-01-01T08:30:00"
   }
 ]

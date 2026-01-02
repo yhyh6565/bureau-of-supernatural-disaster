@@ -1,35 +1,57 @@
 [
   {
-    "id": "msg-614",
-    "senderId": "agent-006",
-    "senderName": "고영은",
-    "senderDepartment": "백호2팀",
-    "receiverId": "agent-004",
-    "title": "Re: 점심 같이?",
-    "content": "좋아요! 12시 30분에 식당 앞에서 만나요.",
-    "createdAt": "2025-12-30T11:35:00",
-    "isRead": true
-  },
-  {
-    "id": "msg-615",
+    "id": "msg-010",
     "senderId": "system",
-    "senderName": "시스템",
-    "senderDepartment": "자료관리국",
-    "receiverId": "agent-006",
-    "title": "폐병원 조사 자료 전송",
-    "content": "대전 폐병원 사건 관련 과거 의료 기록을 전송합니다. 참고 바랍니다.",
-    "createdAt": "2025-12-27T10:00:00",
+    "senderName": "최사현",
+    "senderDepartment": "의료국",
+    "receiverId": "koyoungeun",
+    "title": "오염도 정기 검사 안내",
+    "content": "me님, 금월 정기 오염도 검사 기한 내 의료실 방문 바랍니다.",
+    "createdAt": "2026-01-01T09:00:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-011",
+    "senderId": "agent-006",
+    "senderName": "오수정",
+    "senderDepartment": "주작팀",
+    "receiverId": "koyoungeun",
+    "title": "Re: 구내식당 메뉴 관련",
+    "content": "뭔진 모르겠는데 우리 팀 선배님들도 다 출근하신거 보면 맛있을 듯? 점심 업무 끝나면 전화 ㄱㄱ",
+    "createdAt": "2026-01-01T11:20:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-012",
+    "senderId": "agent-001",
+    "senderName": "신수한",
+    "senderDepartment": "백호팀",
+    "receiverId": "koyoungeun",
+    "title": "재난 진입 관련",
+    "content": "현무에 파괴왕 신입 들어왔다던데 본 적 있음?",
+    "createdAt": "2026-01-01T08:45:00",
     "isRead": true
   },
   {
-    "id": "msg-616",
-    "senderId": "agent-006",
-    "senderName": "고영은",
-    "senderDepartment": "백호2팀",
-    "receiverId": "agent-004",
-    "title": "조사 협조 요청",
-    "content": "솔음씨, 폐병원 조사 때 현무팀 지원이 필요할 것 같아요. 가능하신가요?",
-    "createdAt": "2025-12-26T14:00:00",
+    "id": "msg-013",
+    "senderId": "agent-005",
+    "senderName": "강철민",
+    "senderDepartment": "총무팀",
+    "receiverId": "koyoungeun",
+    "title": "장비 반납 확인 부탁드립니다",
+    "content": "me님, 빌려가신 포승줄 반납 처리가 아직 안 된 것 같습니다. 확인 부탁드립니다!",
+    "createdAt": "2025-12-31T08:16:08.249Z",
+    "isRead": true
+  },
+  {
+    "id": "msg-014",
+    "senderId": "agent-admin",
+    "senderName": "이연경",
+    "senderDepartment": "총무팀",
+    "receiverId": "koyoungeun",
+    "title": "연말정산 안내",
+    "content": "안녕하세요 총무과입니다. me 님 연말정산 서류 미비된 부분이 있어 연락드립니다. 말일까지 필히 제출 부탁드립니다. ",
+    "createdAt": "2025-12-28T08:16:08.249Z",
     "isRead": true
   }
 ]

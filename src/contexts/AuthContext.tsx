@@ -48,6 +48,61 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '지급',
         rentalDate: new Date('2025-11-20'),
         status: '정상'
+      },
+      {
+        id: 'rent-cyw-003',
+        equipmentName: '행방 막대',
+        category: '대여',
+        rentalDate: new Date('2025-12-28'),
+        dueDate: new Date('2026-01-04'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-004',
+        equipmentName: '햇살잡이',
+        category: '대여',
+        rentalDate: new Date('2025-12-25'),
+        dueDate: new Date('2026-01-08'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-005',
+        equipmentName: '유리손포',
+        category: '지급',
+        rentalDate: new Date('2025-01-01'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-006',
+        equipmentName: '작두(의식용)',
+        category: '대여',
+        rentalDate: new Date('2025-12-30'),
+        dueDate: new Date('2026-01-06'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-007',
+        equipmentName: '도깨비 감투',
+        category: '대여',
+        rentalDate: new Date('2025-12-31'),
+        dueDate: new Date('2026-01-07'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-008',
+        equipmentName: '간이 유리 감옥',
+        category: '대여',
+        rentalDate: new Date('2025-12-20'),
+        dueDate: new Date('2026-01-10'),
+        status: '정상'
+      },
+      {
+        id: 'rent-cyw-009',
+        equipmentName: '신발끈',
+        category: '대여',
+        rentalDate: new Date('2025-11-01'),
+        dueDate: new Date('2026-02-01'),
+        status: '정상'
       }
     ],
     purificationHistory: [new Date('2025-12-20'), new Date('2025-12-10')],

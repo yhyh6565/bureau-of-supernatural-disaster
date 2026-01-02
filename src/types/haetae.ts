@@ -2,7 +2,7 @@
 
 export type Department = 'baekho' | 'hyunmu' | 'jujak';
 
-export type AgentStatus = '정상' | '부상' | '오염' | '실종' | '사망';
+export type AgentStatus = '정상' | '부상' | '오염' | '실종' | '사망' | '퇴사' | '휴직';
 
 export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결' | '봉인';
 

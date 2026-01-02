@@ -1,24 +1,68 @@
 [
-    {
-        "id": "msg-512",
-        "senderId": "system",
-        "senderName": "시스템",
-        "senderDepartment": "긴급재난국",
-        "receiverId": "agent-005",
-        "title": "멸형급 재난 발생 긴급 소집",
-        "content": "파주 A구역 멸형급 재난 발생. 현무3팀 긴급 소집. 즉시 출동 준비 바랍니다.",
-        "createdAt": "2025-12-30T18:05:00",
-        "isRead": true
-    },
-    {
-        "id": "msg-513",
-        "senderId": "agent-005",
-        "senderName": "해금",
-        "senderDepartment": "현무3팀",
-        "receiverId": "agent-001",
-        "title": "파주 사건 보고",
-        "content": "홍림 팀장님, 파주 A구역 1차 조사 완료했습니다. 은심장으로 민간인 대피 완료. 상세 보고서는 내일 제출하겠습니다.",
-        "createdAt": "2025-12-30T22:00:00",
-        "isRead": true
-    }
+  {
+    "id": "msg-020",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "choiyowon",
+    "title": "업무 협조",
+    "content": "우리 팀 일 잘 처리해둬라",
+    "createdAt": "fixed:2025-12-17T10:00",
+    "isRead": true
+  },
+  {
+    "id": "msg-021",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "choiyowon",
+    "title": "최씨",
+    "content": "최씨 우리 할 말 있지 않나?",
+    "createdAt": "fixed:2025-10-29T14:00",
+    "isRead": true
+  },
+  {
+    "id": "msg-030",
+    "senderId": "agent-admin-equip",
+    "senderName": "장비관리팀",
+    "senderDepartment": "총무팀",
+    "receiverId": "haegeum",
+    "title": "팀 공용 장비 점검 요청",
+    "content": "안녕하십니까, 해금 팀장님. 총무팀 장비관리 담당입니다. 현무3팀 공용 장비에 대한 정기 점검 시기가 도래하여 연락드립니다. 바쁘시겠지만 편하신 시간에 장비 점검 협조 부탁드리겠습니다.",
+    "createdAt": "relative:-2d",
+    "isRead": false
+  },
+  {
+    "id": "msg-031",
+    "senderId": "agent-admin-hr",
+    "senderName": "인사팀",
+    "senderDepartment": "경영지원",
+    "receiverId": "haegeum",
+    "title": "팀원 근태 관리 안내",
+    "content": "해금 팀장님, 금주 팀원 근태 마감 관련 안내드립니다. 전산 상 미처리된 건이 있는지 확인 바랍니다.",
+    "createdAt": "relative:-1d",
+    "isRead": true
+  },
+  {
+    "id": "msg-032",
+    "senderId": "agent-admin-security",
+    "senderName": "보안팀",
+    "senderDepartment": "경영지원",
+    "receiverId": "haegeum",
+    "title": "보안 등급 재설정 완료",
+    "content": "요청하신 현무3팀 작전 구역 보안 등급이 재설정되었습니다. 금일부터 적용됩니다.",
+    "createdAt": "relative:-3d",
+    "isRead": true
+  },
+  {
+    "id": "msg-033",
+    "senderId": "agent-admin-finance",
+    "senderName": "재무팀",
+    "senderDepartment": "경영지원",
+    "receiverId": "haegeum",
+    "title": "4/4분기 예산 집행 내역 송부",
+    "content": "안녕하십니까. 요청하신 4/4분기 팀 운영비 집행 내역 엑셀 파일을 송부드립니다. 확인 후 이상 있으시면 연락주세요.",
+    "createdAt": "relative:-7d",
+    "isRead": true
+  }
 ]

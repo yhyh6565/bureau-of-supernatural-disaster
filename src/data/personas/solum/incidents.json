@@ -1,29 +1,26 @@
 [
   {
-    "id": "inc-301",
-    "title": "북촌 한옥마을 시공간 왜곡",
-    "registrationNumber": "0006PSYA.2025.가06",
-    "location": "서울특별시 종로구 북촌 한옥",
-    "dangerLevel": "뇌형",
-    "status": "구조중",
-    "reportContent": "한옥 내부 시공간 왜곡. 포도 요원 임기응변으로 2명 구조.",
-    "requiresPatrol": false,
-    "countermeasure": "메모리얼 그립톡 활용",
-    "entryRestrictions": "정신 오염 주의",
-    "createdAt": "2025-12-22T15:00:00",
-    "updatedAt": "2025-12-23T09:00:00"
+    "id": "inc-003",
+    "title": "망원동 놀이터 이상 현상",
+    "registrationNumber": "2026PSYA.0101.망03",
+    "location": "서울시 마포구 망원동 ■■ 놀이터",
+    "dangerLevel": "고형",
+    "status": "조사중",
+    "reportContent": "야간 놀이터에서 어린이 웃음소리가 들린다는 민원 접수. 현장 확인 결과 잔류 영적 반응 감지됨.",
+    "requiresPatrol": true,
+    "createdAt": "2025-12-31T08:16:08.249Z",
+    "updatedAt": "2026-01-02T08:16:08.249Z"
   },
   {
-    "id": "inc-302",
-    "title": "해운대 모래성 불가사의",
-    "registrationNumber": "0007PSYA.2025.가07",
-    "location": "부산광역시 해운대구 해변",
-    "dangerLevel": "고형",
-    "status": "종결",
-    "reportContent": "해변 모래성에서 이상 현상. 포도 요원 창의적 대응으로 신속 해결.",
+    "id": "inc-007",
+    "title": "자작나무숲 기운 이상",
+    "registrationNumber": "2026PSYA.0101.자07",
+    "location": "경기도 ■■시 ■■동 자작나무 산책로",
+    "dangerLevel": "저형",
+    "status": "처리중",
+    "reportContent": "등산객 어지럼증 호소. 현장 확인 결과 미약한 영적 오염 확인. 결계 설치로 안정화 진행중.",
     "requiresPatrol": false,
-    "countermeasure": "소금 결계",
-    "createdAt": "2025-12-10T11:00:00",
-    "updatedAt": "2025-12-11T14:00:00"
+    "createdAt": "2025-12-30T08:16:08.249Z",
+    "updatedAt": "2026-01-01T08:30:00"
   }
 ]

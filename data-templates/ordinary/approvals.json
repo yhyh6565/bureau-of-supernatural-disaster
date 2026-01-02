@@ -1,65 +1,65 @@
 [
-    {
-        "id": "appr-005",
-        "type": "조사보고서",
-        "title": "망원동 놀이터 현장 조사 계획서",
-        "content": "민원인 접촉 및 야간 잠복 조사 계획입니다.",
-        "status": "결재대기",
-        "createdBy": "agent-004",
-        "createdByName": "한지성",
-        "approver": "agent-001",
-        "approverName": "박홍림",
-        "createdAt": "2026-01-01T09:30:00",
-        "relatedIncidentId": "inc-003"
-    },
-    {
-        "id": "appr-006",
-        "type": "장비품의서",
-        "title": "손전등 교체 요청",
-        "content": "기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.",
-        "status": "승인",
-        "createdBy": "agent-005",
-        "createdByName": "강철민",
-        "approver": "agent-001",
-        "approverName": "박홍림",
-        "createdAt": "2025-12-31T11:00:00"
-    },
-    {
-        "id": "appr-007",
-        "type": "현장정리보고서",
-        "title": "자작나무숲 결계 설치 결과",
-        "content": "1차 결계 설치 완료. 특이사항 없음.",
-        "status": "작성중",
-        "createdBy": "agent-006",
-        "createdByName": "오수정",
-        "approver": "agent-team-lead",
-        "approverName": "팀장",
-        "createdAt": "2026-01-01T08:00:00",
-        "relatedIncidentId": "inc-007"
-    },
-    {
-        "id": "appr-008",
-        "type": "시말서",
-        "title": "관용차 접촉 사고 시말서",
-        "content": "현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.",
-        "status": "반려",
-        "createdBy": "agent-005",
-        "createdByName": "강철민",
-        "approver": "agent-team-lead",
-        "approverName": "팀장",
-        "createdAt": "2025-12-30T09:00:00",
-        "rejectReason": "운전 연수 다시 받고 오세요."
-    },
-    {
-        "id": "appr-009",
-        "type": "휴가신청서",
-        "title": "1월 연차 사용 신청",
-        "content": "개인 사정으로 인한 연차 신청 (1/15)",
-        "status": "승인",
-        "createdBy": "agent-004",
-        "createdByName": "한지성",
-        "approver": "agent-001",
-        "approverName": "박홍림",
-        "createdAt": "2025-12-28T15:00:00"
-    }
+  {
+    "id": "appr-005",
+    "type": "조사보고서",
+    "title": "망원동 놀이터 현장 조사 계획서",
+    "content": "민원인 접촉 및 야간 잠복 조사 계획입니다.",
+    "status": "결재대기",
+    "createdBy": "me",
+    "createdByName": "me",
+    "approver": "agent-team-lead",
+    "approverName": "팀장",
+    "createdAt": "fixed:01-01T09:30",
+    "relatedIncidentId": "inc-003"
+  },
+  {
+    "id": "appr-006",
+    "type": "장비품의서",
+    "title": "손전등 교체 요청",
+    "content": "기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.",
+    "status": "승인",
+    "createdBy": "me",
+    "createdByName": "me",
+    "approver": "agent-admin-002",
+    "approverName": "총무",
+    "createdAt": "relative:-2d"
+  },
+  {
+    "id": "appr-007",
+    "type": "현장정리보고서",
+    "title": "자작나무숲 결계 설치 결과",
+    "content": "1차 결계 설치 완료. 특이사항 없음.",
+    "status": "작성중",
+    "createdBy": "me",
+    "createdByName": "me",
+    "approver": "agent-team-lead",
+    "approverName": "팀장",
+    "createdAt": "fixed:01-01T08:00",
+    "relatedIncidentId": "inc-007"
+  },
+  {
+    "id": "appr-008",
+    "type": "시말서",
+    "title": "관용차 접촉 사고 시말서",
+    "content": "현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.",
+    "status": "반려",
+    "createdBy": "me",
+    "createdByName": "me",
+    "approver": "agent-admin-003",
+    "approverName": "경영지원",
+    "createdAt": "relative:-3d",
+    "rejectReason": "운전 연수 다시 받고 오세요."
+  },
+  {
+    "id": "appr-009",
+    "type": "휴가신청서",
+    "title": "1월 연차 사용 신청",
+    "content": "개인 사정으로 인한 연차 신청 (1/15)",
+    "status": "승인",
+    "createdBy": "me",
+    "createdByName": "me",
+    "approver": "agent-team-lead",
+    "approverName": "팀장",
+    "createdAt": "relative:-5d"
+  }
 ]

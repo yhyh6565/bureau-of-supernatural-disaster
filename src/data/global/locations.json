@@ -25,9 +25,6 @@
     "name": "용천 선녀탕",
     "description": "정신 오염 정화 전문 시설. 방문 시 오염도 -30% 효과",
     "requiresApproval": true,
-    "operatingHours": "06:00-22:00",
-    "closedDates": [
-      "2026-01-15"
-    ]
+    "operatingHours": "06:00-22:00"
   }
 ]

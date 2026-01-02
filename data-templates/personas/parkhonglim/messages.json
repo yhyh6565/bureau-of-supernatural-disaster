@@ -1,13 +1,79 @@
 [
-    {
-        "id": "msg-812",
-        "senderId": "agent-005",
-        "senderName": "해금",
-        "senderDepartment": "현무3팀",
-        "receiverId": "agent-001",
-        "title": "파주 사건 보고",
-        "content": "홍림 팀장님, 파주 A구역 1차 조사 완료했습니다. 은심장으로 민간인 대피 완료. 상세 보고서는 내일 제출하겠습니다.",
-        "createdAt": "2025-12-30T22:00:00",
-        "isRead": true
-    }
+  {
+    "id": "msg-020",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "언니. 잘 자나? 갑자기 생각나서.",
+    "createdAt": "2025-04-12T23:30",
+    "isRead": false
+  },
+  {
+    "id": "msg-021",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "보고 싶네.",
+    "createdAt": "2025-06-25T01:15",
+    "isRead": false
+  },
+  {
+    "id": "msg-022",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "오늘 달이 참 밝다. 같이 봤으면 좋았을 텐데.",
+    "createdAt": "2025-08-15T22:45",
+    "isRead": false
+  },
+  {
+    "id": "msg-023",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "별일 없지?",
+    "createdAt": "2025-10-02T00:10",
+    "isRead": false
+  },
+  {
+    "id": "msg-024",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "현무3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "홍 언니. 꿈에 나왔어. 얼굴 보니까 좋더라.",
+    "createdAt": "2025-11-20T23:55",
+    "isRead": false
+  },
+  {
+    "id": "msg-025",
+    "senderId": "choiyowon",
+    "senderName": "최요원",
+    "senderDepartment": "현장구조반",
+    "receiverId": "parkhonglim",
+    "title": "",
+    "content": "",
+    "createdAt": "2025-05-30T10:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-026",
+    "senderId": "choiyowon",
+    "senderName": "최요원",
+    "senderDepartment": "현장구조반",
+    "receiverId": "parkhonglim",
+    "title": "",
+    "content": "",
+    "createdAt": "2025-09-10T14:30",
+    "isRead": false
+  }
 ]

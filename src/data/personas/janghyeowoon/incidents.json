@@ -1,29 +1,26 @@
 [
   {
-    "id": "inc-701",
-    "title": "성북구 주택가 사후 처리",
-    "registrationNumber": "0012PSYA.2025.가12",
-    "location": "서울특별시 성북구 주택가",
+    "id": "inc-003",
+    "title": "망원동 놀이터 이상 현상",
+    "registrationNumber": "2026PSYA.0101.망03",
+    "location": "서울시 마포구 망원동 ■■ 놀이터",
     "dangerLevel": "고형",
-    "status": "정리중",
-    "reportContent": "종결된 재난 현장 정리. 화각 요원 배정. 시신 처리 작업 진행.",
-    "requiresPatrol": false,
-    "countermeasure": "현장 소독 및 복구",
-    "createdAt": "2025-12-24T14:00:00",
-    "updatedAt": "2025-12-25T18:00:00"
+    "status": "조사중",
+    "reportContent": "야간 놀이터에서 어린이 웃음소리가 들린다는 민원 접수. 현장 확인 결과 잔류 영적 반응 감지됨.",
+    "requiresPatrol": true,
+    "createdAt": "2025-12-31T08:16:08.249Z",
+    "updatedAt": "2026-01-02T08:16:08.249Z"
   },
   {
-    "id": "inc-702",
-    "title": "성남 폐공장 봉인 작업",
-    "registrationNumber": "0013PSYA.2025.가13",
-    "location": "경기도 성남시 폐공장",
-    "dangerLevel": "뇌형",
-    "status": "정리대기",
-    "reportContent": "현무팀 종결 후 정리 대기. 화각 요원 출동 예정.",
-    "requiresPatrol": true,
-    "countermeasure": "공장 폐쇄 및 봉인",
-    "entryRestrictions": "야간 진입 금지",
-    "createdAt": "2025-12-05T11:00:00",
-    "updatedAt": "2025-12-30T09:00:00"
+    "id": "inc-007",
+    "title": "자작나무숲 기운 이상",
+    "registrationNumber": "2026PSYA.0101.자07",
+    "location": "경기도 ■■시 ■■동 자작나무 산책로",
+    "dangerLevel": "저형",
+    "status": "처리중",
+    "reportContent": "등산객 어지럼증 호소. 현장 확인 결과 미약한 영적 오염 확인. 결계 설치로 안정화 진행중.",
+    "requiresPatrol": false,
+    "createdAt": "2025-12-30T08:16:08.249Z",
+    "updatedAt": "2026-01-01T08:30:00"
   }
 ]

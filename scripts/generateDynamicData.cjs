@@ -45,9 +45,21 @@ function applyDateRule(rule, baseDate = new Date()) {
     return newDate.toISOString();
   }
 
-  // fixed 규칙: fixed:01-15, fixed:01-15T10:00
+  // fixed 규칙: fixed:01-15, fixed:01-15T10:00, fixed:2025-01-15
   if (rule.startsWith('fixed:')) {
     const dateStr = rule.replace('fixed:', '');
+
+    // 이미 연도가 포함된 경우 (YYYY-MM-DD 체크)
+    const hasYear = /^\d{4}-\d{2}-\d{2}/.test(dateStr);
+
+    if (hasYear) {
+      // 시간 포함 여부 체크
+      if (dateStr.includes('T')) {
+        return `${dateStr}:00`; // 초 단위 추가
+      }
+      return `${dateStr}T00:00:00`;
+    }
+
     const currentYear = baseDate.getFullYear();
 
     // fixed:01-15T10:00 형식
