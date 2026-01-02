@@ -24,3 +24,22 @@ export const createVisitSchedule = (
         relatedId: location.id
     };
 };
+
+
+// 오염 검사 요청 생성
+export const createInspectionRequest = (
+    type: '정기검사' | '정밀검사' | '긴급검사',
+    date: Date,
+    symptoms: string,
+    agentId: string
+): any => { // InspectionRequest type import required if strictly typed but relying on context to handle it
+    return {
+        id: `insp-${Date.now()}`,
+        agentId,
+        type,
+        status: '신청',
+        scheduledDate: date,
+        symptoms,
+        createdAt: new Date()
+    };
+};

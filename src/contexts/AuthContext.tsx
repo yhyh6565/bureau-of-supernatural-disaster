@@ -19,6 +19,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'parkhonglim',
     codename: '홍화',
     department: 'hyunmu',
+    team: '1팀',
     rank: '팀장',
     extension: '2101',
     status: '정상',
@@ -36,6 +37,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'choiyowon',
     codename: '미상',
     department: 'hyunmu',
+    team: '1팀',
     rank: '실무관',
     extension: '2102',
     status: '정상',
@@ -49,14 +51,16 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-01'),
         dueDate: new Date('2025-12-15'),
-        status: '연체'
+        status: '연체',
+        quantity: 1
       },
       {
         id: 'rent-002',
         equipmentName: '기본 보급품 세트',
         category: '지급',
         rentalDate: new Date('2025-11-20'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-003',
@@ -64,7 +68,8 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-28'),
         dueDate: new Date('2026-01-04'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-004',
@@ -72,14 +77,16 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-25'),
         dueDate: new Date('2026-01-08'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-005',
         equipmentName: '유리손포',
         category: '지급',
         rentalDate: new Date('2025-01-01'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-006',
@@ -87,7 +94,8 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-30'),
         dueDate: new Date('2026-01-06'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-007',
@@ -95,7 +103,8 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-31'),
         dueDate: new Date('2026-01-07'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-008',
@@ -103,7 +112,8 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-20'),
         dueDate: new Date('2026-01-10'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       },
       {
         id: 'rent-cyw-009',
@@ -124,6 +134,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'ryujaegwan',
     codename: '청동',
     department: 'hyunmu',
+    team: '1팀',
     rank: '실무관',
     extension: '2103',
     status: '정상',
@@ -141,6 +152,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'solum',
     codename: '포도',
     department: 'hyunmu',
+    team: '1팀',
     rank: '실무관',
     extension: '2104',
     status: '정상',
@@ -158,6 +170,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'haegeum',
     codename: '해금',
     department: 'hyunmu',
+    team: '3팀',
     rank: '팀장',
     extension: '2301',
     status: '정상',
@@ -175,6 +188,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'koyoungeun',
     codename: '박하',
     department: 'baekho',
+    team: '2팀',
     rank: '실무관',
     extension: '3201',
     status: '정상',
@@ -188,7 +202,8 @@ const MOCK_AGENTS: Record<string, Agent> = {
         category: '대여',
         rentalDate: new Date('2025-12-28'),
         dueDate: new Date('2026-01-04'),
-        status: '정상'
+        status: '정상',
+        quantity: 1
       }
     ],
     purificationHistory: [new Date('2025-11-20')],
@@ -201,6 +216,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
     personaKey: 'janghyeowoon',
     codename: '화각',
     department: 'jujak',
+    team: '2팀',
     rank: '실무관',
     extension: '4201',
     status: '정상',
@@ -277,6 +293,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       name: name,
       codename: `${deptCode}-${randomCodeNum}`,
       department: randomDept,
+      team: `${randomTeamNum}팀`,
       rank: fixedRank,
       grade: fixedGrade,
       extension: `${Math.floor(Math.random() * 8999) + 1000}`,

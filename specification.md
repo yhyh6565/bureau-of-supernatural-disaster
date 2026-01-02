@@ -107,7 +107,6 @@
   ```
   personas/
   ├── parkhonglim/
-  │   ├── incidents.json      # 캐릭터 전용 재난
   │   ├── messages.json       # 캐릭터 전용 쪽지
   │   ├── notifications.json  # 캐릭터 전용 공지
   │   ├── approvals.json      # 캐릭터 전용 결재
@@ -128,15 +127,8 @@
 **1) 재난 정보 (Incidents)**: 전사 공통 + 개인 전용
 ```typescript
 getIncidents: (agent) => {
-    const global = GLOBAL_INCIDENTS;
-    if (!agent) return [...ORDINARY_INCIDENTS, ...global];
-
-    switch (agent.name) {
-        case '박홍림': return [...PARKHONGLIM_INCIDENTS, ...global];
-        case '최요원': return [...CHOIYOWON_INCIDENTS, ...global];
-        // ... 나머지 페르소나
-        default: return [...ORDINARY_INCIDENTS, ...global];
-    }
+    // [v1.6] 모든 재난 데이터 통합 (Unified)
+    return GLOBAL_INCIDENTS;
 }
 ```
 
@@ -728,7 +720,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 | 파일 | 데이터 타입 | 설명 |
 |------|------------|------|
-| incidents.json | ORDINARY_INCIDENTS | 추가 재난 (현재 비어있음, 향후 확장 가능) |
+| messages.json | ORDINARY_MESSAGES | 일상적인 업무 협조 쪽지 5건 |
 | messages.json | ORDINARY_MESSAGES | 일상적인 업무 협조 쪽지 5건 |
 | approvals.json | ORDINARY_APPROVALS | 평범한 보고서 및 신청서 5건 |
 | schedules.json | ORDINARY_SCHEDULES | 일반 업무 일정 6건 |
@@ -742,15 +734,14 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 **위치**: `src/data/personas/{캐릭터명}/`
 **특징**: 7명의 주요 캐릭터별 맞춤형 스토리 데이터
 
-각 페르소나 폴더는 5개 파일로 구성:
-- **incidents.json**: 캐릭터 전용 재난 사건 (0~3건)
+각 페르소나 폴더는 4개 파일로 구성:
 - **messages.json**: 캐릭터 관련 쪽지 (1~4건)
 - **notifications.json**: 캐릭터 전용 공지 (0~2건)
 - **approvals.json**: 캐릭터 전용 결재 문서 (0~3건)
 - **schedules.json**: 캐릭터 전용 일정 (0~5건)
 
 **병합 로직**:
-- 재난: GLOBAL_INCIDENTS + {캐릭터}_INCIDENTS
+- 재난: GLOBAL_INCIDENTS (단일 소스)
 - 공지사항: GLOBAL_NOTIFICATIONS + {캐릭터}_NOTIFICATIONS
 - 쪽지/결재/일정: {캐릭터} 개인 데이터만 제공
 
@@ -775,13 +766,9 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 **데이터 소스 구조**:
 ```
-전사 기본 재난 (GLOBAL_INCIDENTS): 5건
-  ↓ (병합)
-+ 평범한 요원 추가 재난 (ORDINARY_INCIDENTS): 0건
-  또는
-+ 페르소나 전용 재난 ({캐릭터}_INCIDENTS): 0~3건
+전사 기본 재난 (GLOBAL_INCIDENTS)
   ↓
-= 사용자에게 표시되는 최종 재난 목록
+= 사용자에게 표시되는 최종 재난 목록 (통합됨)
 ```
 
 **주요 필드**:

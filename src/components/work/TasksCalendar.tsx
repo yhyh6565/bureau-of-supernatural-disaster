@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useResource } from '@/contexts/ResourceContext';
+import { useWork } from '@/contexts/WorkContext';
 import {
     format,
     isSameDay,
@@ -46,6 +48,9 @@ export interface CalendarEvent {
 
 export function TasksCalendar() {
     const { agent } = useAuth();
+    const { rentals } = useResource(); // Dynamic rentals
+    const { schedules, approvals, inspectionRequests } = useWork(); // Dynamic work data
+
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
     const [viewDate, setViewDate] = useState<Date>(new Date()); // For month navigation
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -77,8 +82,9 @@ export function TasksCalendar() {
         });
 
         // B. Rentals (Resources) -> DueDate
-        if (agent.rentals) {
-            agent.rentals.forEach(rental => {
+        // Use rentals from context which handles dynamic updates
+        if (rentals) {
+            rentals.forEach(rental => {
                 if (rental.dueDate) {
                     allEvents.push({
                         id: `rent-${rental.id}`,
@@ -94,8 +100,8 @@ export function TasksCalendar() {
         }
 
         // C. Inspections (Health) -> ScheduledDate
-        const inspections = DataManager.getInspectionRequests(agent);
-        inspections.forEach(insp => {
+        // Use inspectionRequests from context
+        inspectionRequests.forEach(insp => {
             allEvents.push({
                 id: `insp-${insp.id}`,
                 date: new Date(insp.scheduledDate),
@@ -123,7 +129,7 @@ export function TasksCalendar() {
         }
 
         // E. Approvals (Admin) -> CreatedAt
-        const approvals = DataManager.getApprovals(agent);
+        // Use approvals from context
         approvals.forEach(app => {
             allEvents.push({
                 id: `app-${app.id}`,
@@ -137,7 +143,7 @@ export function TasksCalendar() {
         });
 
         // F. Static Schedules -> Date
-        const schedules = DataManager.getSchedules(agent);
+        // Use schedules from context
         schedules.forEach(sch => {
             allEvents.push({
                 id: `sch-${sch.id}`,
@@ -151,7 +157,7 @@ export function TasksCalendar() {
         });
 
         return allEvents;
-    }, [agent]);
+    }, [agent, rentals, schedules, approvals, inspectionRequests]);
 
     // 3. Helper to get events for a date
     const getEventsForDate = (date: Date) => {

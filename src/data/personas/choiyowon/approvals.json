@@ -8,7 +8,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
+    "approverName": "출동구조반 부서장",
     "createdAt": "2026-01-01T09:30:00",
     "relatedIncidentId": "inc-003"
   },
@@ -22,7 +22,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-admin-002",
     "approverName": "총무팀",
-    "createdAt": "2025-12-31T15:17:37.486Z"
+    "createdAt": "2025-12-31T16:22:38.848Z"
   },
   {
     "id": "appr-007",
@@ -33,7 +33,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반장 부서장",
+    "approverName": "출동구조반장 부서장",
     "createdAt": "2026-01-01T08:00:00",
     "relatedIncidentId": "inc-007"
   },
@@ -46,8 +46,8 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
-    "createdAt": "2025-12-30T15:17:37.486Z",
+    "approverName": "출동구조반 부서장",
+    "createdAt": "2025-12-30T16:22:38.848Z",
     "rejectReason": "운전 연수 다시 받고 오세요."
   },
   {
@@ -59,7 +59,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
+    "approverName": "출동구조반 부서장",
     "createdAt": "2025-04-11T09:00"
   },
   {
@@ -71,7 +71,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
+    "approverName": "출동구조반 부서장",
     "createdAt": "2025-08-11T09:00"
   },
   {
@@ -83,7 +83,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
+    "approverName": "출동구조반 부서장",
     "createdAt": "2025-10-14T09:00"
   },
   {
@@ -95,8 +95,8 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
-    "createdAt": "2025-12-23T15:17:37.486Z"
+    "approverName": "출동구조반 부서장",
+    "createdAt": "2025-12-23T16:22:38.848Z"
   },
   {
     "id": "appr-013",
@@ -107,8 +107,8 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
-    "createdAt": "2025-12-13T15:17:37.486Z"
+    "approverName": "출동구조반 부서장",
+    "createdAt": "2025-12-13T16:22:38.848Z"
   },
   {
     "id": "appr-014",
@@ -119,7 +119,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "현장구조반 부서장",
-    "createdAt": "2025-12-03T15:17:37.486Z"
+    "approverName": "출동구조반 부서장",
+    "createdAt": "2025-12-03T16:22:38.848Z"
   }
 ]

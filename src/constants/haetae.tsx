@@ -93,6 +93,16 @@ export const DANGER_LEVEL_STYLE: Record<DangerLevel, {
         textClass: 'text-muted-foreground',
         description: '인명피해 없음'
     },
+    '소형': {
+        bgClass: 'bg-slate-200',
+        textClass: 'text-slate-700',
+        description: '재산 피해 경미'
+    },
+    '등급불명': {
+        bgClass: 'bg-indigo-500',
+        textClass: 'text-white',
+        description: '측정 불가'
+    },
 };
 
 // 오염도 레벨별 스타일

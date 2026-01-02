@@ -114,17 +114,23 @@ function EquipmentCard({ item, onSelect }: EquipmentCardProps) {
 
 // --- Inspection Form ---
 
-function InspectionRequestForm({ onClose }: { onClose: () => void }) {
+function InspectionRequestForm({ onClose, onSubmit }: {
+    onClose: () => void;
+    onSubmit: (type: '정기검사' | '정밀검사' | '긴급검사', date: Date, symptoms: string) => void;
+}) {
     const [selectedType, setSelectedType] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [symptoms, setSymptoms] = useState('');
 
     const handleSubmit = () => {
-        toast({
-            title: '검사 신청 완료',
-            description: '오염 검사 신청이 접수되었습니다. 의료팀의 승인 후 일정이 확정됩니다.',
-        });
-        onClose();
+        if (selectedType && date) {
+            onSubmit(selectedType as any, new Date(date), symptoms);
+            toast({
+                title: '검사 신청 완료',
+                description: '오염 검사 신청이 접수되었습니다. 의료팀의 승인 후 일정이 확정됩니다.',
+            });
+            onClose();
+        }
     };
 
     return (
@@ -251,7 +257,7 @@ export function ResourcesPage() {
     const { agent } = useAuth();
     const { addRental } = useResource();
     const resourceContext = useResource();
-    const { addVisitSchedule, addApproval } = useWork();
+    const { addVisitSchedule, addApproval, addInspectionRequest, inspectionRequests } = useWork();
 
     // Tabs
     const [activeTab, setActiveTab] = useState('equipment');
@@ -275,7 +281,7 @@ export function ResourcesPage() {
     // Data Loading
     const allEquipment = DataManager.getEquipment();
     const locations = DataManager.getLocations();
-    const inspections = DataManager.getInspectionRequests(agent);
+    // const inspections = DataManager.getInspectionRequests(agent); // Replaced by context
 
     // Equipment Logic
     const filteredEquipment = allEquipment.filter(item =>
@@ -551,7 +557,10 @@ export function ResourcesPage() {
                                         검사 목적과 희망 일정을 입력해 주세요.
                                     </DialogDescription>
                                 </DialogHeader>
-                                <InspectionRequestForm onClose={() => setIsInspectionOpen(false)} />
+                                <InspectionRequestForm
+                                    onClose={() => setIsInspectionOpen(false)}
+                                    onSubmit={addInspectionRequest}
+                                />
                             </DialogContent>
                         </Dialog>
                     </div>
@@ -568,8 +577,8 @@ export function ResourcesPage() {
                                     <div className="col-span-3">검사 결과</div>
                                 </div>
 
-                                {inspections.length > 0 ? (
-                                    inspections.map((insp) => (
+                                {inspectionRequests.length > 0 ? (
+                                    inspectionRequests.map((insp) => (
                                         <div key={insp.id} className="border-t border-border hover:bg-accent/50">
                                             {/* Mobile Card Layout */}
                                             <div className="md:hidden p-3 space-y-2">

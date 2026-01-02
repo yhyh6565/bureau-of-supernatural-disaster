@@ -7,7 +7,7 @@ export type AgentStatus = '정상' | '부상' | '오염' | '실종' | '사망' |
 export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결' | '봉인';
 
 // 재난 등급 체계 (형刑 시스템)
-export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형';
+export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형' | '소형' | '등급불명';
 
 export interface Agent {
   id: string;
@@ -15,6 +15,7 @@ export interface Agent {
   personaKey?: string; // 페르소나 고유 키 (메시지, 일정 등에서 사용)
   codename: string; // 작전명 (코드명)
   department: Department;
+  team?: string; // 소속 팀 (예: "1팀", "3팀")
   rank: string;
   grade?: number; // 급수 (1~9)
   extension: string;
@@ -56,7 +57,6 @@ export interface Manual {
   id: string;
   title: string;
   severity: DangerLevel;
-  clearanceLevel: number;
   lastUpdated: Date;
   content: ManualContent;
   containmentMethod?: string;

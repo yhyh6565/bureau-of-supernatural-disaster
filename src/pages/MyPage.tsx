@@ -120,10 +120,7 @@ export function MyPage() {
                 </Badge>
               </div>
 
-              <div className="flex items-center justify-between py-1 border-t border-border">
-                <span className="text-sm text-muted-foreground">보안 등급</span>
-                <span className="text-sm font-medium text-primary">2등급 (대외비)</span>
-              </div>
+
 
               <div className="flex items-center justify-between py-1 border-t border-border">
                 <span className="text-sm text-muted-foreground">정신 오염도</span>

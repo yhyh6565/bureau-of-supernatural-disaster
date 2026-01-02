@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
+import { useWork } from '@/contexts/WorkContext';
 import { Incident } from '@/types/haetae';
 import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { DataManager } from '@/data/dataManager';
@@ -30,13 +31,14 @@ import { useSearchParams } from 'react-router-dom';
 
 export function TasksPage() {
   const { agent } = useAuth();
+  const { acceptedIncidentIds, acceptIncident } = useWork(); // Use Context
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
 
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
   const [showDetailDialog, setShowDetailDialog] = useState(false);
-  const [acceptedIncidentIds, setAcceptedIncidentIds] = useState<string[]>([]);
+  // const [acceptedIncidentIds, setAcceptedIncidentIds] = useState<string[]>([]); // Removed local state
 
   // Manual View State
   const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
@@ -81,7 +83,7 @@ export function TasksPage() {
 
   const handleAcceptTask = () => {
     if (selectedIncident) {
-      setAcceptedIncidentIds(prev => [...prev, selectedIncident.id]);
+      acceptIncident(selectedIncident.id); // Use Context method
     }
     toast({
       title: '업무 승낙 완료',

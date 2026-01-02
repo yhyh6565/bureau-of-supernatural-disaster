@@ -3,6 +3,7 @@
 본 문서는 초자연재난관리국 인트라넷 시스템 '해태'의 데이터 구조, 저장 방식, 관리 규칙을 정의한 통합 명세서입니다.
 
 **변경 이력**:
+- **v1.6 (2026-01-03)**: 재난 데이터 통합(Global), `Agent.team` 필드 추가, 부서 명칭 변경('현장구조반'→'출동구조반')
 - **v1.1 (2026-01-02)**: Agent 타입에 `personaKey` 필드 추가, 페르소나 키 개념 및 데이터 필터링 규칙 명시
 - **v1.0 (2026-01-01)**: 초기 버전
 
@@ -23,7 +24,7 @@
 ```
 src/data/
 ├── global/          # [전사 공통] 모든 요원에게 동일하게 보임
-│   ├── incidents.json
+│   ├── incidents.json   # [통합] 모든 재난 데이터
 │   ├── notifications.json
 │   ├── equipment.json
 │   ├── locations.json
@@ -31,11 +32,9 @@ src/data/
 ├── ordinary/        # [일반 요원] 네임드 페르소나가 아닌 경우 사용
 │   ├── messages.json
 │   ├── approvals.json
-│   ├── schedules.json
-│   └── incidents.json (확장용)
+│   └── schedules.json
 └── personas/        # [페르소나] 특정 캐릭터(박홍림, 최요원 등) 전용
     └── {character_name}/
-        ├── incidents.json
         ├── messages.json
         ├── notifications.json
         ├── approvals.json
@@ -68,7 +67,7 @@ src/data/
 ### 주요 메서드
 | 메서드 | 설명 | 병합 로직 |
 |--------|------|-----------|
-| `getIncidents(agent)` | 재난 목록 조회 | 전사 공통 + (페르소나 전용 OR 일반 요원용) |
+| `getIncidents(agent)` | 재난 목록 조회 | **전사 공통(GLOBAL) 단독** (통합됨) |
 | `getNotifications(agent)` | 공지사항 조회 | 전사 공통 + (페르소나 전용) |
 | `getMessages(agent)` | 쪽지함 조회 | (페르소나 전용 OR 일반 요원용) **단독** |
 | `getApprovals(agent)` | 결재문서 조회 | (페르소나 전용 OR 일반 요원용) **단독** |
@@ -92,7 +91,7 @@ src/data/
 ### 3.1 ⚠️ 재난 (Incident)
 시스템의 핵심이 되는 초자연적 사건/재난 데이터입니다.
 
-- **JSON 파일**: `global/incidents.json`, `personas/*/incidents.json`
+- **JSON 파일**: `global/incidents.json` (단일 소스)
 - **주요 필드**:
   ```typescript
   interface Incident {
@@ -282,6 +281,7 @@ interface Agent {
   id: string;              // 공식 요원 ID (예: "HMU-004", "BKH-201")
   name: string;            // 요원 이름
   personaKey?: string;     // 페르소나 고유 키 (예: "solum", "choiyowon")
+  team?: string;           // 소속 팀 (예: "1팀", "3팀")
   // ... 기타 필드
 }
 ```
@@ -538,6 +538,7 @@ data-templates/
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| v1.6 | 2026-01-03 | 재난 데이터 통합, Agent.team 추가, 부서 명칭 확정 |
 | v1.5 | 2026-01-02 | 부서 표시명 변경 (백호→신규조사반, 현무→출동구조반, 주작→현장정리반) |
 | v1.4 | 2026-01-02 | 데이터 검증 시스템 추가 (`scripts/validateData.cjs`) |
 | v1.3 | 2026-01-02 | 데이터 템플릿 상속 시스템 추가 (`_base/` 디렉토리) |

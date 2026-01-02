@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { AlertTriangle, ShieldAlert, Ban, Info, BookOpen } from 'lucide-react';
 import { DataManager } from '@/data/dataManager';
@@ -27,7 +26,11 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
 
     if (!manual) return null;
 
-    const dangerStyle = DANGER_LEVEL_STYLE[manual.severity];
+    const dangerStyle = DANGER_LEVEL_STYLE[manual.severity] || {
+        bgClass: 'bg-gray-500',
+        textClass: 'text-white',
+        description: '정보 없음'
+    };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -37,7 +40,6 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
                         <Badge className={`${dangerStyle.bgClass} ${dangerStyle.textClass}`}>
                             {manual.severity}
                         </Badge>
-                        <Badge variant="outline">등급 {manual.clearanceLevel}</Badge>
                     </div>
                     <DialogTitle className="text-xl font-bold flex items-center gap-2">
                         <BookOpen className="w-5 h-5 text-primary" />
@@ -49,7 +51,7 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
                     </DialogDescription>
                 </DialogHeader>
 
-                <ScrollArea className="flex-1 pr-4">
+                <div className="flex-1 overflow-y-auto pr-4">
                     <div className="space-y-6 py-4">
                         {/* 식별 징후 */}
                         <section>
@@ -118,7 +120,7 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
                             )}
                         </div>
                     </div>
-                </ScrollArea>
+                </div>
             </DialogContent>
         </Dialog>
     );
