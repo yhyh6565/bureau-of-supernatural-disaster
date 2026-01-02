@@ -68,10 +68,10 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
                         <section>
                             <h4 className="text-sm font-semibold mb-2 flex items-center gap-2 text-success">
                                 <ShieldAlert className="w-4 h-4" />
-                                즉각 대응 행동 (Immediate Action)
+                                즉각 대응 행동
                             </h4>
                             <ul className="grid gap-2">
-                                {manual.content.immediateAction.map((action, idx) => (
+                                {(manual.content.immediateAction || []).map((action, idx) => (
                                     <li key={idx} className="flex items-start gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-md text-sm">
                                         <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center bg-green-500/20 rounded-full text-xs font-bold text-green-700 dark:text-green-400">
                                             {idx + 1}
@@ -86,11 +86,11 @@ export const ManualViewer = ({ manualId, open, onOpenChange }: ManualViewerProps
                         <section>
                             <h4 className="text-sm font-semibold mb-2 flex items-center gap-2 text-destructive">
                                 <Ban className="w-4 h-4" />
-                                금기 사항 (TABOO)
+                                금기 사항
                             </h4>
                             <div className="border border-destructive/50 bg-destructive/10 rounded-md p-4">
                                 <ul className="space-y-2">
-                                    {manual.content.taboo.map((item, idx) => (
+                                    {(manual.content.taboo || []).map((item, idx) => (
                                         <li key={idx} className="flex items-start gap-2 text-sm font-medium text-destructive dark:text-red-400">
                                             <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                                             <span>{item}</span>

@@ -1,26 +1,50 @@
 [
   {
-    "id": "inc-003",
-    "title": "망원동 놀이터 이상 현상",
-    "registrationNumber": "2026PSYA.0101.망03",
-    "location": "서울시 마포구 망원동 ■■ 놀이터",
-    "dangerLevel": "고형",
+    "id": "inc-040",
+    "title": "H-23 구역 이상 진동",
+    "registrationNumber": "2025PSYA.0420.진23",
+    "location": "서울시 ■■구 H-23 구역 지하",
+    "dangerLevel": "뇌형",
     "status": "조사중",
-    "reportContent": "야간 놀이터에서 어린이 웃음소리가 들린다는 민원 접수. 현장 확인 결과 잔류 영적 반응 감지됨.",
+    "reportContent": "심야 시간대 원인 불명의 지하 진동 발생. 지질학적 원인 배제됨. 영적 파동 분석 진행 중.",
     "requiresPatrol": true,
-    "createdAt": "2025-12-31T08:16:08.249Z",
-    "updatedAt": "2026-01-02T08:16:08.249Z"
+    "createdAt": "2025-04-20T23:00",
+    "updatedAt": "2025-04-21T09:00"
   },
   {
-    "id": "inc-007",
-    "title": "자작나무숲 기운 이상",
-    "registrationNumber": "2026PSYA.0101.자07",
-    "location": "경기도 ■■시 ■■동 자작나무 산책로",
-    "dangerLevel": "저형",
-    "status": "처리중",
-    "reportContent": "등산객 어지럼증 호소. 현장 확인 결과 미약한 영적 오염 확인. 결계 설치로 안정화 진행중.",
+    "id": "inc-041",
+    "title": "I-09 구역 그림자 비대화",
+    "registrationNumber": "2025PSYA.0415.그09",
+    "location": "경기도 ■■시 I-09 구역 골목길",
+    "dangerLevel": "고형",
+    "status": "정리중",
+    "reportContent": "가로등 아래 그림자가 비정상적으로 커지는 현상 목격. 실체화 징후는 없으나 지속적인 관찰 필요.",
+    "requiresPatrol": true,
+    "createdAt": "2025-04-15T20:30",
+    "updatedAt": "2025-04-16T10:00"
+  },
+  {
+    "id": "inc-042",
+    "title": "J-12 구역 기온 급강하",
+    "registrationNumber": "2025PSYA.0410.한12",
+    "location": "인천시 ■■구 J-12 구역 상가",
+    "dangerLevel": "고형",
+    "status": "조사중",
+    "reportContent": "특정 상가 건물 내부 기온이 영하 10도까지 급강하. 난방 장치 정상 작동 중. 냉기 원인 파악 필요.",
+    "requiresPatrol": true,
+    "createdAt": "2025-04-10T14:15",
+    "updatedAt": "2025-04-11T13:00"
+  },
+  {
+    "id": "inc-043",
+    "title": "K-05 구역 소음 공해",
+    "registrationNumber": "2025PSYA.0405.소05",
+    "location": "서울시 ■■구 K-05 구역 아파트",
+    "dangerLevel": "뇌형",
+    "status": "조사중",
+    "reportContent": "벽간 소음 민원 다수 발생. 소음 패턴 분석 결과 인위적인 소리가 아님을 확인. 정밀 청음 조사 예정.",
     "requiresPatrol": false,
-    "createdAt": "2025-12-30T08:16:08.249Z",
-    "updatedAt": "2026-01-01T08:30:00"
+    "createdAt": "2025-04-05T02:00",
+    "updatedAt": "2025-04-06T11:00"
   }
 ]

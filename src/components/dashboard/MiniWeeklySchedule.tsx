@@ -4,10 +4,13 @@ import { Calendar as CalendarIcon, MapPin } from 'lucide-react';
 import { format, isToday, isTomorrow, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useAuth } from '@/contexts/AuthContext';
+import { useWork } from '@/contexts/WorkContext';
+import { Link } from 'react-router-dom';
 
 export function MiniWeeklySchedule() {
     const { agent } = useAuth();
-    const schedules = DataManager.getSchedules(agent);
+    const { schedules } = useWork();
+    // const schedules = DataManager.getSchedules(agent); // Removed
     const today = new Date();
 
     // Get upcoming schedules (Today + Next 2 days) - Simplified for sidebar
@@ -25,9 +28,14 @@ export function MiniWeeklySchedule() {
     return (
         <Card className="card-gov h-full">
             <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium flex items-center gap-2">
+                <CardTitle className="text-sm font-medium flex items-center gap-2 group">
                     <CalendarIcon className="w-4 h-4" />
-                    주요 일정
+                    <Link to="/tasks?view=calendar" className="hover:underline cursor-pointer flex items-center gap-1">
+                        주요 일정
+                        <span className="text-xs font-normal text-muted-foreground group-hover:text-primary no-underline ml-1">
+                            (전체보기)
+                        </span>
+                    </Link>
                 </CardTitle>
             </CardHeader>
             <CardContent>

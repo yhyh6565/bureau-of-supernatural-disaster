@@ -226,7 +226,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 | `/messages` | MessagesPage | 쪽지함 | 사내 메신저 (업무 협조, 비공식 정보 교류) |
 | `/resources` | ResourcesPage | 업무지원 | 장비 대여, 시설 예약, 오염 검사 통합 페이지 |
 | `/approvals` | ApprovalsPage | 결재 | 보고서 작성 및 결재 문서 관리 |
-| `/tasks` | TasksPage | 담당업무 | 업무 배정 및 처리 (부서별 상이) |
+| `/tasks` | TasksPage | 담당업무 | 업무 배정 및 처리 (목록/캘린더 뷰 지원) |
 
 ---
 
@@ -698,6 +698,13 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 > - **상수 정의**: `src/constants/haetae.ts`
 > - **데이터 접근**: `src/data/dataManager.ts`
 
+### 데이터 지속성 정책 (Data Persistence Policy v1.4)
+시스템은 보안 등급 유지를 위해 **로컬 세션 기반의 임시 데이터 저장** 방식을 채택합니다.
+
+*   **정적 데이터 (Static)**: 재난 목록, 공지사항 등 기본 데이터는 JSON 파일에서 로드 (Read-only).
+*   **동적 데이터 (Dynamic)**: 사용자가 생성한 **신청(Rentals), 예약(Schedules), 결재(Approvals)** 데이터는 `sessionStorage` 및 메모리(`AuthContext`)에만 임시 저장됩니다.
+*   **초기화**: 브라우저 탭을 완전히 닫거나 로그아웃 시, 사용자가 생성한 데이터는 보안을 위해 **자동 소기(초기화)**됩니다.
+
 초자연재난관리국 인트라넷 시스템은 **데이터의 성격(Nature)**에 따라 3계층 구조로 설계되었습니다.
 
 #### 계층 1: 전사 공통 데이터 (Global Data)
@@ -1017,6 +1024,35 @@ npm run build
 - "철뱃지 확인 중..."
 - "등급 판정 중..."
 - "결재 라인 확인 중..."
+
+
+---
+
+## 🛠️ 시스템 아키텍처 및 유지보수 (System Architecture & DevOps)
+
+### 1. 정적 자산 및 저장소 관리 (Repository Diet)
+- **외부 라이브러리 정책**: `krds-uiux.zip` 등 대용량 외부 디자인 리소스는 저장소에 직접 포함시키지 않고, npm 패키지나 CDN을 통해 관리하거나 필요한 시점에 다운로드하는 방식을 지향합니다.
+- **Git 최적화**: 불필요한 대용량 바이너리 파일을 제거하고 `.gitignore`를 통해 엄격하게 관리하여 `git clone` 및 배포 속도를 최적화했습니다.
+
+### 2. 데이터 파이프라인 자동화 (Automated Pipeline)
+- **목적**: 빌드/배포 시 데이터 생성 과정을 망각하여 발생하는 "좀비 배포(텅 빈 데이터)" 방지
+- **구현**: `package.json`의 수명주기 스크립트(`prescript`)를 활용하여 빌드 전 항상 최신 데이터를 생성합니다.
+  - `dev` (개발 서버) 실행 시 → `generateDynamicData.cjs` 자동 실행
+  - `build` (프로덕션 빌드) 실행 시 → `generateDynamicData.cjs` 자동 실행
+- **명령어**:
+  ```bash
+  # 개발 모드 (데이터생성 -> Vite 실행)
+  npm run dev
+
+  # 빌드 (데이터생성 -> Vite 빌드)
+  npm run build
+  ```
+
+### 3. 데이터 상속 구조 (Data Inheritance)
+- **Base Template**: 공통적인 조직 일정, 전사 공지사항 등은 `data-templates/personas/_base/`에서 관리합니다.
+- **Merge Logic**: 스크립트가 각 페르소나 데이터를 생성할 때, `_base` 데이터를 먼저 로드하고 그 위에 개별 페르소나 데이터를 병합(Merge)합니다.
+  - **배열(Array)**: Base 항목 뒤에 개별 항목을 추가 (Concat)
+  - **객체(Object)**: Base 속성을 개별 속성이 덮어씀 (Override)
 
 ---
 

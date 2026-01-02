@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
+import { useResource } from '@/contexts/ResourceContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
-import { User, Phone, Building2, Shield, Heart, AlertTriangle, Package, Calendar } from 'lucide-react';
+import { User, Phone, Shield, Heart, AlertTriangle, Package, Calendar, Brain, Hash } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import {
@@ -24,7 +25,9 @@ import { toast } from '@/hooks/use-toast';
 
 export function MyPage() {
   const { agent } = useAuth();
+  const { rentals } = useResource();
   const [selectedFuneral, setSelectedFuneral] = useState('funeral-001');
+  const [currentFuneral, setCurrentFuneral] = useState('화장');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (!agent) return null;
@@ -33,6 +36,9 @@ export function MyPage() {
 
   const handleFuneralSave = () => {
     const selectedOption = FUNERAL_OPTIONS.find(f => f.id === selectedFuneral);
+    if (selectedOption) {
+      setCurrentFuneral(selectedOption.name);
+    }
     toast({
       title: '장례법 지정 완료',
       description: `"${selectedOption?.name}" 방식으로 저장되었습니다. 인사기록 DB에 반영됩니다.`,
@@ -40,63 +46,68 @@ export function MyPage() {
     setIsDialogOpen(false);
   };
 
+  // 장비 반납 스케줄용 데이터 (반납일 있는 것만 필터링 후 정렬)
+  const returnSchedule = rentals
+    .filter(item => item.category === '대여' && item.dueDate)
+    .sort((a, b) => new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime());
+
   return (
     <MainLayout>
+      <div className="space-y-4 pb-12">
 
+        {/* 상단 3열 레이아웃 */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
-        {/* 기본 정보 카드 */}
-        <Card className="card-gov">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <User className="w-4 h-4" />
-              기본 신원 정보
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">이름</span>
-                <p className="font-medium">{agent.name}</p>
-              </div>
-              <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">요원 ID</span>
-                <p className="font-mono text-sm">{agent.id}</p>
-              </div>
-              <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">직급</span>
-                <p className="font-medium">{agent.rank}</p>
-              </div>
-              <div className="space-y-1">
-                <span className="text-xs text-muted-foreground">소속</span>
-                <div className="flex items-center gap-2">
-                  <deptInfo.icon className="w-4 h-4" />
-                  <span className="font-medium">{deptInfo.name} ({deptInfo.fullName})</span>
+          {/* 1. 기본 신원 정보 */}
+          <Card className="card-gov h-full">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <User className="w-4 h-4" />
+                기본 신원 정보
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <span className="text-xs text-muted-foreground">이름</span>
+                  <p className="font-medium">{agent.name}</p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-xs text-muted-foreground">요원명</span>
+                  <p className="font-bold text-primary">{agent.codename}</p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-xs text-muted-foreground">직급</span>
+                  <p className="font-medium">{agent.rank}</p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-xs text-muted-foreground">내선번호</span>
+                  <p className="font-mono">{agent.extension}</p>
                 </div>
               </div>
-            </div>
 
-            <div className="pt-2 border-t border-border">
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm">내선번호:</span>
-                <span className="font-mono">{agent.extension}</span>
+              <div className="pt-3 border-t border-border">
+                <div className="space-y-1">
+                  <span className="text-xs text-muted-foreground">소속</span>
+                  <div className="flex items-center gap-2">
+                    <deptInfo.icon className="w-4 h-4" />
+                    <span className="font-medium">{deptInfo.name} ({deptInfo.fullName})</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* 상태 정보 카드 */}
-        <Card className="card-gov">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Shield className="w-4 h-4" />
-              상태 및 보안 정보
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
+          {/* 2. 상태 및 보안 정보 */}
+          <Card className="card-gov h-full">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                상태 및 보안 정보
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between py-1">
                 <span className="text-sm text-muted-foreground">근무 상태</span>
                 <Badge
                   className={
@@ -108,149 +119,172 @@ export function MyPage() {
                   {agent.status}
                 </Badge>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">페르소나 키</span>
-                <span className="font-mono text-sm bg-muted px-2 py-1 rounded">
-                  {agent.name} (활성)
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
+
+              <div className="flex items-center justify-between py-1 border-t border-border">
                 <span className="text-sm text-muted-foreground">보안 등급</span>
                 <span className="text-sm font-medium text-primary">2등급 (대외비)</span>
               </div>
-              <div className="flex items-center justify-between">
+
+              <div className="flex items-center justify-between py-1 border-t border-border">
                 <span className="text-sm text-muted-foreground">정신 오염도</span>
-                <span className="text-sm font-mono">12.4% (정상)</span>
+                <span className={`text-sm font-mono font-medium ${agent.contamination >= 80 ? 'text-destructive' : agent.contamination >= 50 ? 'text-warning' : 'text-success'}`}>
+                  {agent.contamination}%
+                </span>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* 특수 행정 정보 카드 */}
-        <Card className="card-gov lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Heart className="w-4 h-4" />
-              특수 행정 정보
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-sm border border-border">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-warning" />
-                  <span className="font-medium">장례법 지정</span>
+          {/* 3. 특수 행정 정보 */}
+          <Card className="card-gov h-full">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                특수 행정 정보
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-warning">
+                  <AlertTriangle className="w-4 h-4" />
+                  <span className="font-medium text-sm">장례법 지정</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  순직 시 희망하는 장례 절차를 미리 지정할 수 있습니다.
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  현재 지정: <span className="font-medium text-foreground">화장</span>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  순직 시 진행될 장례 절차를 지정합니다. 미지정 시 공용 데이터 소각장에서 처리됩니다.
                 </p>
               </div>
 
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" className="rounded-sm">
-                    장례법 지정 신청
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <Heart className="w-5 h-5" />
-                      장례법 지정 신청
-                    </DialogTitle>
-                    <DialogDescription>
-                      순직 시 희망하는 장례 절차를 선택하십시오.
-                    </DialogDescription>
-                  </DialogHeader>
+              <div className="pt-3 border-t border-border flex flex-col gap-2">
+                <div className="flex justify-between items-center bg-muted/30 p-2 rounded">
+                  <span className="text-xs text-muted-foreground">현재 지정</span>
+                  <span className="text-sm font-bold">{currentFuneral}</span>
+                </div>
 
-                  <div className="py-4">
-                    <RadioGroup value={selectedFuneral} onValueChange={setSelectedFuneral}>
-                      {FUNERAL_OPTIONS.map((option) => (
-                        <div key={option.id} className="flex items-start space-x-3 p-3 rounded-sm border border-border hover:bg-accent/50 transition-colors">
-                          <RadioGroupItem value={option.id} id={option.id} className="mt-1" />
-                          <Label htmlFor={option.id} className="flex-1 cursor-pointer">
-                            <div className="font-medium">{option.name}</div>
-                            <div className="text-sm text-muted-foreground">{option.description}</div>
-                          </Label>
-                        </div>
-                      ))}
-                    </RadioGroup>
-                  </div>
-
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                      취소
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="w-full mt-1">
+                      장례법 변경 신청
                     </Button>
-                    <Button onClick={handleFuneralSave}>
-                      저장
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </CardContent>
-        </Card>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2">
+                        <Heart className="w-5 h-5" />
+                        장례법 지정 신청
+                      </DialogTitle>
+                      <DialogDescription>
+                        순직 시 희망하는 장례 절차를 선택하십시오.
+                      </DialogDescription>
+                    </DialogHeader>
 
-        {/* 장비 현황 카드 */}
-        <Card className="card-gov lg:col-span-2">
-          <CardHeader>
+                    <div className="py-4">
+                      <RadioGroup value={selectedFuneral} onValueChange={setSelectedFuneral}>
+                        {FUNERAL_OPTIONS.map((option) => (
+                          <div key={option.id} className="flex items-start space-x-3 p-3 rounded-sm border border-border hover:bg-accent/50 transition-colors">
+                            <RadioGroupItem value={option.id} id={option.id} className="mt-1" />
+                            <Label htmlFor={option.id} className="flex-1 cursor-pointer">
+                              <div className="font-medium">{option.name}</div>
+                              <div className="text-sm text-muted-foreground">{option.description}</div>
+                            </Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
+
+                    <DialogFooter>
+                      <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                        취소
+                      </Button>
+                      <Button onClick={handleFuneralSave}>
+                        저장
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* 하단: 보유 장비 현황 (좌:리스트 / 우:스케줄) */}
+        <Card className="card-gov">
+          <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <Package className="w-4 h-4" />
               보유 장비 현황
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {agent.rentals.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {agent.rentals.map((item) => {
-                  const daysLeft = item.dueDate ? differenceInDays(item.dueDate, new Date()) : 0;
-                  const isOverdue = item.status === '연체' || (item.dueDate && daysLeft < 0);
+            {rentals.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-                  return (
-                    <div
-                      key={item.id}
-                      className={`p-4 border rounded-sm flex items-start justify-between ${isOverdue ? 'border-destructive/50 bg-destructive/5' : 'border-border'
-                        }`}
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <Badge variant={item.category === '대여' ? 'outline' : 'secondary'} className="text-xs">
-                            {item.category}
-                          </Badge>
-                          <span className="font-medium">{item.equipmentName}</span>
-                          {isOverdue && (
-                            <Badge variant="destructive" className="text-[10px] h-5 px-1.5">
-                              연체
+                {/* 왼쪽: 전체 장비 리스트 */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <Package className="w-3 h-3" />
+                    전체 보유 목록 ({rentals.length})
+                  </h4>
+                  <div className="space-y-2">
+                    {rentals.map((item) => {
+                      const daysLeft = item.dueDate ? differenceInDays(item.dueDate, new Date()) : 0;
+                      const isOverdue = item.status === '연체' || (item.dueDate && daysLeft < 0);
+
+                      return (
+                        <div key={item.id} className="flex items-center justify-between p-3 border border-border rounded-sm bg-muted/10">
+                          <div className="flex items-center gap-3">
+                            <Badge variant={item.category === '대여' ? 'outline' : 'secondary'} className="text-xs">
+                              {item.category}
                             </Badge>
-                          )}
-                        </div>
-
-                        <div className="text-xs text-muted-foreground space-y-0.5 mt-2">
-                          <div className="flex items-center gap-1">
-                            <span>대여일:</span>
-                            <span className="font-mono">
-                              {format(new Date(item.rentalDate), 'yyyy.MM.dd', { locale: ko })}
+                            <span className="font-medium text-sm">
+                              {item.equipmentName}
+                              {(item.quantity || 1) > 1 && <span className="text-muted-foreground ml-1">(x{item.quantity})</span>}
                             </span>
                           </div>
-                          {item.category === '대여' && item.dueDate && (
-                            <div className={`flex items-center gap-1 ${isOverdue ? 'text-destructive font-medium' : ''}`}>
-                              <span>반납예정:</span>
-                              <span className="font-mono">
-                                {format(new Date(item.dueDate), 'yyyy.MM.dd', { locale: ko })}
-                              </span>
-                              <span className="ml-1">
-                                {daysLeft < 0 ? `(${Math.abs(daysLeft)}일 지남)` : `(${daysLeft}일 남음)`}
-                              </span>
-                            </div>
+                          {isOverdue && (
+                            <Badge variant="destructive" className="text-[10px]">연체 중</Badge>
                           )}
                         </div>
-                      </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 오른쪽: 반납 스케줄 */}
+                <div className="space-y-3 pl-0 lg:pl-4 lg:border-l border-border">
+                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <Calendar className="w-3 h-3" />
+                    반납 예정 스케줄
+                  </h4>
+                  {returnSchedule.length > 0 ? (
+                    <div className="space-y-2">
+                      {returnSchedule.map((item) => {
+                        const daysLeft = differenceInDays(item.dueDate!, new Date());
+                        const isOverdue = daysLeft < 0;
+                        const dDayClass = isOverdue
+                          ? 'text-destructive font-bold'
+                          : daysLeft <= 3 ? 'text-warning font-bold' : 'text-success';
+
+                        return (
+                          <div key={`sched-${item.id}`} className="flex items-center justify-between p-3 border border-border rounded-sm">
+                            <div className="flex flex-col">
+                              <span className="text-sm font-medium">{item.equipmentName}</span>
+                              <span className="text-xs text-muted-foreground">
+                                반납일: {format(new Date(item.dueDate!), 'yyyy.MM.dd', { locale: ko })}
+                              </span>
+                            </div>
+                            <div className={`text-sm ${dDayClass}`}>
+                              {isOverdue ? `D+${Math.abs(daysLeft)}` : daysLeft === 0 ? 'D-Day' : `D-${daysLeft}`}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  ) : (
+                    <div className="text-center py-6 text-muted-foreground text-sm border border-dashed rounded-sm">
+                      반납 예정인 장비가 없습니다.
+                    </div>
+                  )}
+                </div>
+
               </div>
             ) : (
               <div className="text-center py-8 text-muted-foreground text-sm">
@@ -259,6 +293,7 @@ export function MyPage() {
             )}
           </CardContent>
         </Card>
+
       </div>
     </MainLayout>
   );

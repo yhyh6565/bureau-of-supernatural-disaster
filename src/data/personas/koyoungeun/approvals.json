@@ -1,65 +1,38 @@
 [
   {
-    "id": "appr-005",
+    "id": "appr-015",
     "type": "조사보고서",
-    "title": "망원동 놀이터 현장 조사 계획서",
-    "content": "민원인 접촉 및 야간 잠복 조사 계획입니다.",
-    "status": "결재대기",
-    "createdBy": "koyoungeun",
-    "createdByName": "koyoungeun",
-    "approver": "agent-team-lead",
-    "approverName": "팀장",
-    "createdAt": "2026-01-01T09:30:00",
-    "relatedIncidentId": "inc-003"
-  },
-  {
-    "id": "appr-006",
-    "type": "장비품의서",
-    "title": "손전등 교체 요청",
-    "content": "기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.",
+    "title": "F-04 구역 이상 징후 초기 조사 보고",
+    "content": "F-04 구역에서 감지된 이상 파동에 대한 초기 조사 결과입니다. 영적 반응이 미약하게 감지되어 추가 조사가 필요합니다.",
     "status": "승인",
     "createdBy": "koyoungeun",
-    "createdByName": "koyoungeun",
+    "createdByName": "고영은",
+    "approver": "agent-bh-2-leader",
+    "approverName": "신규조사반2팀장",
+    "createdAt": "2025-04-28T16:00"
+  },
+  {
+    "id": "appr-016",
+    "type": "조사보고서",
+    "title": "G-11 구역 민간인 목격담 분석",
+    "content": "G-11 구역 인근 민간인들의 목격담을 수집하여 분석한 결과입니다. 괴담 실체화 가능성이 있어 주의가 요구됩니다.",
+    "status": "승인",
+    "createdBy": "koyoungeun",
+    "createdByName": "고영은",
+    "approver": "agent-bh-2-leader",
+    "approverName": "신규조사반2팀장",
+    "createdAt": "2025-04-25T11:00"
+  },
+  {
+    "id": "appr-017",
+    "type": "장비품의서",
+    "title": "현장 기록용 태블릿 신청",
+    "content": "현장 조사 시 데이터 기록 효율화를 위해 업무용 태블릿 PC 지급을 요청합니다.",
+    "status": "승인",
+    "createdBy": "koyoungeun",
+    "createdByName": "고영은",
     "approver": "agent-admin-002",
     "approverName": "총무",
-    "createdAt": "2025-12-31T08:16:08.249Z"
-  },
-  {
-    "id": "appr-007",
-    "type": "현장정리보고서",
-    "title": "자작나무숲 결계 설치 결과",
-    "content": "1차 결계 설치 완료. 특이사항 없음.",
-    "status": "작성중",
-    "createdBy": "koyoungeun",
-    "createdByName": "koyoungeun",
-    "approver": "agent-team-lead",
-    "approverName": "팀장",
-    "createdAt": "2026-01-01T08:00:00",
-    "relatedIncidentId": "inc-007"
-  },
-  {
-    "id": "appr-008",
-    "type": "시말서",
-    "title": "관용차 접촉 사고 시말서",
-    "content": "현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.",
-    "status": "반려",
-    "createdBy": "koyoungeun",
-    "createdByName": "koyoungeun",
-    "approver": "agent-admin-003",
-    "approverName": "경영지원",
-    "createdAt": "2025-12-30T08:16:08.249Z",
-    "rejectReason": "운전 연수 다시 받고 오세요."
-  },
-  {
-    "id": "appr-009",
-    "type": "휴가신청서",
-    "title": "1월 연차 사용 신청",
-    "content": "개인 사정으로 인한 연차 신청 (1/15)",
-    "status": "승인",
-    "createdBy": "koyoungeun",
-    "createdByName": "koyoungeun",
-    "approver": "agent-team-lead",
-    "approverName": "팀장",
-    "createdAt": "2025-12-28T08:16:08.249Z"
+    "createdAt": "2025-04-24T10:00"
   }
 ]

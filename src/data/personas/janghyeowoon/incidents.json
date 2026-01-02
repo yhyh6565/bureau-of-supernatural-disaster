@@ -1,26 +1,38 @@
 [
   {
-    "id": "inc-003",
-    "title": "망원동 놀이터 이상 현상",
-    "registrationNumber": "2026PSYA.0101.망03",
-    "location": "서울시 마포구 망원동 ■■ 놀이터",
-    "dangerLevel": "고형",
-    "status": "조사중",
-    "reportContent": "야간 놀이터에서 어린이 웃음소리가 들린다는 민원 접수. 현장 확인 결과 잔류 영적 반응 감지됨.",
-    "requiresPatrol": true,
-    "createdAt": "2025-12-31T08:16:08.249Z",
-    "updatedAt": "2026-01-02T08:16:08.249Z"
+    "id": "inc-030",
+    "title": "C-09 구역 폐기물 이상 반응",
+    "registrationNumber": "2025PSYA.0320.폐09",
+    "location": "서울시 ■■구 폐기물 처리장",
+    "dangerLevel": "뇌형",
+    "status": "종결",
+    "reportContent": "수거된 오염 폐기물에서 간헐적 진동 발생. 추가 봉인 처리 후 안전하게 폐기됨.",
+    "requiresPatrol": false,
+    "createdAt": "2025-03-20T11:00",
+    "updatedAt": "2025-03-21T15:00"
   },
   {
-    "id": "inc-007",
-    "title": "자작나무숲 기운 이상",
-    "registrationNumber": "2026PSYA.0101.자07",
-    "location": "경기도 ■■시 ■■동 자작나무 산책로",
-    "dangerLevel": "저형",
-    "status": "처리중",
-    "reportContent": "등산객 어지럼증 호소. 현장 확인 결과 미약한 영적 오염 확인. 결계 설치로 안정화 진행중.",
+    "id": "inc-031",
+    "title": "D-02 구역 현장 잔류물 정리",
+    "registrationNumber": "2025PSYA.0315.잔02",
+    "location": "경기도 ■■시 D-02 구역 빈 집",
+    "dangerLevel": "고형",
+    "status": "종결",
+    "reportContent": "재난 종료 후 현장에 남은 생활 집기 및 오염 잔재물 수거 완료. 방역 소독 실시.",
     "requiresPatrol": false,
-    "createdAt": "2025-12-30T08:16:08.249Z",
-    "updatedAt": "2026-01-01T08:30:00"
+    "createdAt": "2025-03-15T09:30",
+    "updatedAt": "2025-03-15T18:00"
+  },
+  {
+    "id": "inc-032",
+    "title": "E-11 구역 토양 오염 정화",
+    "registrationNumber": "2025PSYA.0310.토11",
+    "location": "인천시 ■■구 공터",
+    "dangerLevel": "고형",
+    "status": "종결",
+    "reportContent": "재난 발생 지역 토양 오염 확인. 오염된 표토 제거 및 신규 토양 복토 작업 완료.",
+    "requiresPatrol": false,
+    "createdAt": "2025-03-10T13:00",
+    "updatedAt": "2025-03-12T16:00"
   }
 ]

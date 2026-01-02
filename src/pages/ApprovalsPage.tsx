@@ -7,9 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ApprovalDocument } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useWork } from '@/contexts/WorkContext';
 import { ClipboardCheck, FileText, Clock, CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { getPersonaName } from '@/constants/haetae';
 
 type ApprovalStatus = '작성중' | '결재대기' | '승인' | '반려';
 
@@ -22,10 +24,11 @@ const STATUS_STYLE: Record<ApprovalStatus, { bg: string; text: string; icon: Rea
 
 export function ApprovalsPage() {
   const { agent } = useAuth();
-  const approvals = DataManager.getApprovals(agent);
+  const { approvals } = useWork();
   const [selectedApproval, setSelectedApproval] = useState<ApprovalDocument | null>(null);
 
-  const myDocuments = approvals.filter(a => a.createdBy === agent?.id);
+  const myDocuments = approvals.filter(a => a.createdBy === agent?.personaKey || a.createdBy === agent?.id)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   const pendingCount = myDocuments.filter(a => a.status === '결재대기').length;
 
   if (selectedApproval) {
@@ -57,7 +60,7 @@ export function ApprovalsPage() {
               </div>
               <CardTitle className="text-lg">{selectedApproval.title}</CardTitle>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span>기안자: {selectedApproval.createdByName}</span>
+                <span>기안자: {getPersonaName(selectedApproval.createdByName) || selectedApproval.createdByName}</span>
                 <span>|</span>
                 <span>결재자: {selectedApproval.approverName}</span>
                 <span>|</span>
@@ -103,24 +106,24 @@ export function ApprovalsPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6 flex justify-end">
-        <Button className="gap-2 w-full sm:w-auto">
-          <FileText className="w-4 h-4" />
-          새 문서 작성
-        </Button>
-      </div>
-
       <Tabs defaultValue="my" className="pb-12">
-        <TabsList className="mb-4">
-          <TabsTrigger value="my" className="gap-2">
-            내 기안 문서
-            {pendingCount > 0 && (
-              <Badge variant="secondary" className="text-xs">{pendingCount}</Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="pending">결재 대기함</TabsTrigger>
-          <TabsTrigger value="completed">결재 완료함</TabsTrigger>
-        </TabsList>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+          <TabsList>
+            <TabsTrigger value="my" className="gap-2">
+              내 기안 문서
+              {pendingCount > 0 && (
+                <Badge variant="secondary" className="text-xs">{pendingCount}</Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="pending">결재 대기함</TabsTrigger>
+            <TabsTrigger value="completed">결재 완료함</TabsTrigger>
+          </TabsList>
+
+          <Button className="gap-2 w-full sm:w-auto">
+            <FileText className="w-4 h-4" />
+            새 문서 작성
+          </Button>
+        </div>
 
         <TabsContent value="my">
           <Card className="card-gov">
@@ -204,22 +207,111 @@ export function ApprovalsPage() {
 
         <TabsContent value="pending">
           <Card className="card-gov">
-            <CardContent className="pt-6">
-              <div className="p-8 text-center text-muted-foreground">
-                <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>결재 대기 중인 문서가 없습니다.</p>
-              </div>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                결재 대기함
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {(() => {
+                const pendingForMe = approvals.filter(
+                  a => a.status === '결재대기' && (a.approver === agent?.id || a.approver === agent?.personaKey)
+                );
+
+                if (pendingForMe.length === 0) {
+                  return (
+                    <div className="p-8 text-center text-muted-foreground">
+                      <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>결재 대기 중인 문서가 없습니다.</p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="border border-border rounded-sm overflow-hidden">
+                    {pendingForMe.map((doc) => {
+                      const style = STATUS_STYLE[doc.status];
+                      return (
+                        <div
+                          key={doc.id}
+                          className="border-b last:border-b-0 border-border cursor-pointer hover:bg-accent/50 transition-colors p-4"
+                          onClick={() => setSelectedApproval(doc)}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 space-y-1">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">{doc.type}</Badge>
+                                <Badge className={`${style.bg} ${style.text} text-xs`}>{doc.status}</Badge>
+                              </div>
+                              <h3 className="font-medium text-sm">{doc.title}</h3>
+                              <div className="text-sm text-muted-foreground">
+                                기안자: {getPersonaName(doc.createdByName) || doc.createdByName} | 기안일: {format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="completed">
           <Card className="card-gov">
-            <CardContent className="pt-6">
-              <div className="p-8 text-center text-muted-foreground">
-                <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>결재 완료된 문서가 없습니다.</p>
-              </div>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                결재 완료함
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {(() => {
+                const completedByMe = approvals.filter(
+                  a => (a.status === '승인' || a.status === '반려') &&
+                    (a.approver === agent?.id || a.approver === agent?.personaKey)
+                );
+
+                if (completedByMe.length === 0) {
+                  return (
+                    <div className="p-8 text-center text-muted-foreground">
+                      <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>결재 완료된 문서가 없습니다.</p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="border border-border rounded-sm overflow-hidden">
+                    {completedByMe.map((doc) => {
+                      const style = STATUS_STYLE[doc.status];
+                      return (
+                        <div
+                          key={doc.id}
+                          className="border-b last:border-b-0 border-border cursor-pointer hover:bg-accent/50 transition-colors p-4"
+                          onClick={() => setSelectedApproval(doc)}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 space-y-1">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">{doc.type}</Badge>
+                                <Badge className={`${style.bg} ${style.text} text-xs`}>{doc.status}</Badge>
+                              </div>
+                              <h3 className="font-medium text-sm">{doc.title}</h3>
+                              <div className="text-sm text-muted-foreground">
+                                기안자: {getPersonaName(doc.createdByName) || doc.createdByName} | 처리일: {doc.processedAt ? format(new Date(doc.processedAt), 'yyyy.MM.dd', { locale: ko }) : '-'}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </TabsContent>

@@ -4,11 +4,19 @@ import { Agent, Department } from '@/types/haetae';
 // 세션 스토리지 키
 const SESSION_STORAGE_KEY = 'haetae_agent_session';
 
-// 더미 요원 데이터
+// 더미 요원 데이터 (기존 데이터 유지)
+// 생략: MOCK_AGENTS 데이터는 너무 길어서 파일 크기 문제로 전체를 다시 쓰기보다는
+// replace_file_content를 사용할까 했지만, 구조가 많이 바뀌어 write_to_file이 안전함.
+// MOCK_AGENTS는 Step 731의 내용과 동일하게 사용.
+// 하지만 컨텍스트 윈도우 절약을 위해 MOCK_AGENTS 만 별도 파일 분리하는 것도 방법이나,
+// 지금은 전체 파일 작성을 요청 받았으므로 MOCK_AGENTS 포함하여 작성.
+// (아래 MOCK_AGENTS 내용은 Step 731에서 복사)
+
 const MOCK_AGENTS: Record<string, Agent> = {
   '박홍림': {
     id: 'HMU-001',
     name: '박홍림',
+    personaKey: 'parkhonglim',
     codename: '홍화',
     department: 'hyunmu',
     rank: '팀장',
@@ -25,6 +33,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '최요원': {
     id: 'HMU-002',
     name: '최요원',
+    personaKey: 'choiyowon',
     codename: '미상',
     department: 'hyunmu',
     rank: '실무관',
@@ -112,6 +121,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '류재관': {
     id: 'HMU-003',
     name: '류재관',
+    personaKey: 'ryujaegwan',
     codename: '청동',
     department: 'hyunmu',
     rank: '실무관',
@@ -128,6 +138,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '김솔음': {
     id: 'HMU-004',
     name: '김솔음',
+    personaKey: 'solum',
     codename: '포도',
     department: 'hyunmu',
     rank: '실무관',
@@ -144,6 +155,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '해금': {
     id: 'HMU-301',
     name: '해금',
+    personaKey: 'haegeum',
     codename: '해금',
     department: 'hyunmu',
     rank: '팀장',
@@ -160,6 +172,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '고영은': {
     id: 'BKH-201',
     name: '고영은',
+    personaKey: 'koyoungeun',
     codename: '박하',
     department: 'baekho',
     rank: '실무관',
@@ -185,6 +198,7 @@ const MOCK_AGENTS: Record<string, Agent> = {
   '장허운': {
     id: 'JJK-201',
     name: '장허운',
+    personaKey: 'janghyeowoon',
     codename: '화각',
     department: 'jujak',
     rank: '실무관',
@@ -277,7 +291,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (personaKey: string): boolean => {
     // 1. 네임드 요원 확인
-    const foundAgent = MOCK_AGENTS[personaKey];
+    const foundAgent = MOCK_AGENTS[personaKey.trim()];
     if (foundAgent) {
       setAgent(foundAgent);
       return true;

@@ -1,9 +1,9 @@
 import { MainLayout } from '@/components/layout/MainLayout';
-import { IncidentList } from '@/components/dashboard/IncidentList';
+import { IncidentSummary } from '@/components/dashboard/IncidentSummary';
 import { MyAssignments } from '@/components/dashboard/MyAssignments';
 import { useAuth } from '@/contexts/AuthContext';
 import { DisasterTicker } from '@/components/dashboard/DisasterTicker';
-import { AgentStatusWidget } from '@/components/dashboard/AgentStatusWidget';
+import { PersonalInfoWidget } from '@/components/dashboard/PersonalInfoWidget';
 import { AdminAlertWidget } from '@/components/dashboard/AdminAlertWidget';
 import { MiniWeeklySchedule } from '@/components/dashboard/MiniWeeklySchedule';
 
@@ -18,28 +18,24 @@ export function Dashboard() {
         {/* 상단: 재난 경보 티커 */}
         <DisasterTicker />
 
-        {/* 메인 레이아웃 (2:1 비율) */}
+        {/* 메인 레이아웃 (3열: 주요일정 | 배정업무+재난현황 | 개인정보+행정알림) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-          {/* 좌측/중앙: 통합 작전 영역 (66%) */}
-          <div className="lg:col-span-8 space-y-4">
-            {/* 1. 배정 업무 (최우선) */}
-            <MyAssignments />
-
-            {/* 2. 전체 재난 현황 리스트 */}
-            <IncidentList />
+          {/* 좌측: 주요 일정 (4) */}
+          <div className="lg:col-span-3">
+            <MiniWeeklySchedule />
           </div>
 
-          {/* 우측: 상태 및 행정 (33%) */}
+          {/* 중앙: 배정 업무 + 재난 현황 (5) */}
+          <div className="lg:col-span-5 space-y-4">
+            <MyAssignments />
+            <IncidentSummary />
+          </div>
+
+          {/* 우측: 개인정보 + 행정알림 (4) */}
           <div className="lg:col-span-4 space-y-4">
-            {/* 1. 요원 상태 */}
-            <AgentStatusWidget />
-
-            {/* 2. 행정 알림 */}
+            <PersonalInfoWidget />
             <AdminAlertWidget />
-
-            {/* 3. 주간 일정 (간소화) */}
-            <MiniWeeklySchedule />
           </div>
         </div>
       </div>

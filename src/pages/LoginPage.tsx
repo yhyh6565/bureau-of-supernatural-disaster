@@ -44,23 +44,26 @@ export function LoginPage() {
     setError('');
     setIsLoading(true);
 
+    const trimmedKey = personaKey.trim();
+
     // 시뮬레이션 딜레이
     await new Promise(resolve => setTimeout(resolve, 800));
 
     // 특수 페르소나 체크 (최요원, 해금)
-    if (SPECIAL_PERSONAS.includes(personaKey.trim())) {
+    if (SPECIAL_PERSONAS.includes(trimmedKey)) {
       setIsLoading(false);
-      setBlockedPersona(personaKey.trim());
+      setBlockedPersona(trimmedKey);
       setShowIdentityWarning(true);
       setShowEmergencyButton(true);  // 긴급 인증 버튼 표시
       return;
     }
 
-    const success = login(personaKey);
+    const success = login(trimmedKey);
     if (!success) {
       setError('등록되지 않은 페르소나입니다. 시스템 관리자에게 문의하세요.');
+      setIsLoading(false);
     }
-    setIsLoading(false);
+    // 성공 시 상태 업데이트 없이 리다이렉트를 기다림 (AuthContext -> PublicRoute)
   };
 
   const handleEmergencyLogin = () => {
@@ -89,8 +92,8 @@ export function LoginPage() {
     // 인증 성공 메시지 표시 후 로그인
     await new Promise(resolve => setTimeout(resolve, 1500));
 
+    // 성공 시 모달을 닫거나 상태를 변경하지 않고 바로 로그인 처리
     login(blockedPersona);
-    setShowEmergencyModal(false);
   };
 
   return (

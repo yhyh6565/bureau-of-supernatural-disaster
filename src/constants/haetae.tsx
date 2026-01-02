@@ -158,3 +158,20 @@ export const NOTICE_CATEGORY_STYLE: Record<NoticeCategory, {
     '규정': { bgClass: 'bg-slate-500/10', textClass: 'text-slate-500', icon: ClipboardList },
     '공지': { bgClass: 'bg-gray-500/10', textClass: 'text-gray-500', icon: Megaphone },
 };
+
+// 페르소나 키를 이름으로 매핑
+export const PERSONA_NAMES: Record<string, string> = {
+    'parkhonglim': '박홍림',
+    'choiyowon': '최요원',
+    'ryujaegwan': '류재관',
+    'solum': '김솔음',
+    'haegeum': '해금',
+    'koyoungeun': '고영은',
+    'janghyeowoon': '장허운',
+};
+
+// 페르소나 키를 이름으로 변환하는 유틸리티 함수
+export const getPersonaName = (personaKey: string | undefined): string => {
+    if (!personaKey) return '';
+    return PERSONA_NAMES[personaKey] || personaKey;
+};

@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dialog';
 
 function DangerBadge({ level }: { level: Incident['dangerLevel'] }) {
-  const style = DANGER_LEVEL_STYLE[level];
+  const style = DANGER_LEVEL_STYLE[level] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' };
   return (
     <span className={`${style.bgClass} ${style.textClass} px-2 py-0.5 text-xs font-medium rounded-full`}>
       {level}
@@ -28,7 +28,7 @@ function DangerBadge({ level }: { level: Incident['dangerLevel'] }) {
 }
 
 function StatusBadge({ status }: { status: Incident['status'] }) {
-  const style = STATUS_STYLE[status];
+  const style = STATUS_STYLE[status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' };
   return (
     <span className={`${style.bgClass} ${style.textClass} px-2 py-0.5 text-xs font-medium rounded-sm`}>
       {status}
@@ -109,10 +109,10 @@ export function IncidentList() {
               재난 상세 정보
               {selectedIncident && (
                 <>
-                  <Badge className={`${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].textClass}`}>
+                  <Badge className={`${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass}`}>
                     {selectedIncident.dangerLevel}
                   </Badge>
-                  <Badge className={`${STATUS_STYLE[selectedIncident.status].bgClass} ${STATUS_STYLE[selectedIncident.status].textClass}`}>
+                  <Badge className={`${(STATUS_STYLE[selectedIncident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(STATUS_STYLE[selectedIncident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass}`}>
                     {selectedIncident.status}
                   </Badge>
                 </>

@@ -8,7 +8,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
+    "approverName": "현장구조반 부서장",
     "createdAt": "2026-01-01T09:30:00",
     "relatedIncidentId": "inc-003"
   },
@@ -21,8 +21,8 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-admin-002",
-    "approverName": "총무",
-    "createdAt": "2025-12-31T08:16:08.249Z"
+    "approverName": "총무팀",
+    "createdAt": "2025-12-31T15:17:37.486Z"
   },
   {
     "id": "appr-007",
@@ -33,7 +33,7 @@
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
+    "approverName": "현장구조반장 부서장",
     "createdAt": "2026-01-01T08:00:00",
     "relatedIncidentId": "inc-007"
   },
@@ -45,21 +45,81 @@
     "status": "반려",
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
-    "approver": "agent-admin-003",
-    "approverName": "경영지원",
-    "createdAt": "2025-12-30T08:16:08.249Z",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-12-30T15:17:37.486Z",
     "rejectReason": "운전 연수 다시 받고 오세요."
   },
   {
     "id": "appr-009",
     "type": "휴가신청서",
-    "title": "1월 연차 사용 신청",
-    "content": "개인 사정으로 인한 연차 신청 (1/15)",
+    "title": "휴가(1일) 신청서",
+    "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "choiyowon",
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
-    "createdAt": "2025-12-28T08:16:08.249Z"
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-04-11T09:00"
+  },
+  {
+    "id": "appr-010",
+    "type": "휴가신청서",
+    "title": "휴가(1일) 신청서",
+    "content": "개인 사정으로 인한 연차 신청",
+    "status": "승인",
+    "createdBy": "choiyowon",
+    "createdByName": "choiyowon",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-08-11T09:00"
+  },
+  {
+    "id": "appr-011",
+    "type": "휴가신청서",
+    "title": "휴가(1일) 신청서",
+    "content": "개인 사정으로 인한 연차 신청",
+    "status": "승인",
+    "createdBy": "choiyowon",
+    "createdByName": "choiyowon",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-10-14T09:00"
+  },
+  {
+    "id": "appr-012",
+    "type": "시말서",
+    "title": "복장 규정 위반 시말서",
+    "content": "현장 출동 시 유니폼 착용을 준수하지 못했습니다. 급한 출동으로 인해 사복 상태로 현장에 도착하였으며, 향후에는 규정을 철저히 준수하겠습니다.",
+    "status": "승인",
+    "createdBy": "choiyowon",
+    "createdByName": "choiyowon",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-12-23T15:17:37.486Z"
+  },
+  {
+    "id": "appr-013",
+    "type": "시말서",
+    "title": "보고 누락 시말서",
+    "content": "지난주 금요일 야간 순찰 결과를 구두로만 보고하고 서면 보고를 누락하였습니다. 재발 방지를 위해 체크리스트를 활용하겠습니다.",
+    "status": "승인",
+    "createdBy": "choiyowon",
+    "createdByName": "choiyowon",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-12-13T15:17:37.486Z"
+  },
+  {
+    "id": "appr-014",
+    "type": "시말서",
+    "title": "공용 비품 파손 시말서",
+    "content": "사무실 내 커피 머신 사용 중 부주의로 인해 물통을 깨뜨렸습니다. 동일한 제품으로 배상 조치 완료하였으며, 물품 사용에 더욱 주의하겠습니다.",
+    "status": "승인",
+    "createdBy": "choiyowon",
+    "createdByName": "choiyowon",
+    "approver": "agent-team-lead",
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-12-03T15:17:37.486Z"
   }
 ]

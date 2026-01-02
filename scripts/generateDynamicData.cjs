@@ -137,14 +137,53 @@ function processTemplates(templateDir, outputDir, baseDate = new Date()) {
     const outputPath = path.join(outputDir, entry.name);
 
     if (entry.isDirectory()) {
+      // _base 디렉토리는 출력하지 않음
+      if (entry.name === '_base') continue;
+
       // 하위 디렉토리 재귀 처리
       processTemplates(templatePath, outputPath, baseDate);
     } else if (entry.isFile() && entry.name.endsWith('.json')) {
       // JSON 파일 처리
       try {
-        const templateContent = fs.readFileSync(templatePath, 'utf-8');
-        const templateData = JSON.parse(templateContent);
-        const transformedData = transformDates(templateData, baseDate);
+        let finalData;
+        const currentContent = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+
+        // 페르소나 디렉토리 내부인 경우 (경로에 'personas'가 포함되고, '_base'가 아닌 경우)
+        // 주의: templateDir 자체가 personas/choiyowon 형태일 수 있음.
+        const isInPersonas = templatePath.includes(`${path.sep}personas${path.sep}`) && !templatePath.includes(`${path.sep}_base${path.sep}`);
+
+        if (isInPersonas) {
+          // 해당 파일의 base 파일 경로 찾기
+          // 예: .../personas/choiyowon/schedules.json -> .../personas/_base/schedules.json
+          // 현재 디렉토리 구조상 templatePath에서 부모 디렉토리 이름(choiyowon)을 _base로 치환해야 함
+
+          const parentDir = path.dirname(templatePath);
+          const parentDirName = path.basename(parentDir); // choiyowon
+          const baseFilePath = templatePath.replace(
+            `${path.sep}${parentDirName}${path.sep}`,
+            `${path.sep}_base${path.sep}`
+          );
+
+          if (fs.existsSync(baseFilePath)) {
+            const baseContent = JSON.parse(fs.readFileSync(baseFilePath, 'utf-8'));
+
+            if (Array.isArray(baseContent) && Array.isArray(currentContent)) {
+              // 배열인 경우 합침 (Base + Specific)
+              finalData = [...baseContent, ...currentContent];
+            } else if (typeof baseContent === 'object' && typeof currentContent === 'object') {
+              // 객체인 경우 병합 (Specific이 Base를 덮어씀)
+              finalData = { ...baseContent, ...currentContent };
+            } else {
+              finalData = currentContent;
+            }
+          } else {
+            finalData = currentContent;
+          }
+        } else {
+          finalData = currentContent;
+        }
+
+        const transformedData = transformDates(finalData, baseDate);
 
         fs.writeFileSync(outputPath, JSON.stringify(transformedData, null, 2), 'utf-8');
         console.log(`✓ Generated: ${path.relative(process.cwd(), outputPath)}`);

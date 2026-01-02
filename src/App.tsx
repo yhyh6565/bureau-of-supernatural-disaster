@@ -2,8 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { UserProvider } from "@/contexts/UserContext";
+import { ResourceProvider } from "@/contexts/ResourceContext";
+import { WorkProvider } from "@/contexts/WorkContext";
 import { LoginPage } from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
 import MyPage from "@/pages/MyPage";
@@ -13,6 +16,7 @@ import MessagesPage from "@/pages/MessagesPage";
 import ResourcesPage from "@/pages/ResourcesPage";
 import ApprovalsPage from "@/pages/ApprovalsPage";
 import TasksPage from "@/pages/TasksPage";
+import IncidentsPage from "@/pages/IncidentsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +38,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
       <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/incidents" element={<ProtectedRoute><IncidentsPage /></ProtectedRoute>} />
       <Route path="/mypage" element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
       <Route path="/notices" element={<ProtectedRoute><NoticesPage /></ProtectedRoute>} />
       <Route path="/notices/:id" element={<ProtectedRoute><NoticeDetailPage /></ProtectedRoute>} />
@@ -51,11 +56,17 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
-          <AppRoutes />
+          <UserProvider>
+            <ResourceProvider>
+              <WorkProvider>
+                <AppRoutes />
+              </WorkProvider>
+            </ResourceProvider>
+          </UserProvider>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );

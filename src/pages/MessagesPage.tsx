@@ -14,6 +14,7 @@ import { Mail, Send, Inbox, ArrowLeft, Reply, User } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
+import { getPersonaName } from '@/constants/haetae';
 import {
   Dialog,
   DialogContent,
@@ -33,10 +34,11 @@ export function MessagesPage() {
   const ALL_MESSAGES = DataManager.getMessages(agent);
 
   const receivedMessages = ALL_MESSAGES.filter(m =>
-    m.receiverId === agent?.id || m.receiverId === 'me'
+    m.receiverId === agent?.personaKey || m.receiverId === agent?.id || m.receiverId === 'me'
   ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-  const sentMessages = ALL_MESSAGES.filter(m => m.senderId === agent?.id);
+  const sentMessages = ALL_MESSAGES.filter(m => m.senderId === agent?.personaKey || m.senderId === agent?.id)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   const unreadCount = receivedMessages.filter(m => !m.isRead).length;
 
   const handleSendMessage = () => {
@@ -104,70 +106,69 @@ export function MessagesPage() {
 
   return (
     <MainLayout>
-      <div className="mb-6 flex justify-end">
-
-        <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2 w-full sm:w-auto">
-              <Send className="w-4 h-4" />
-              쪽지 쓰기
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-lg">
-            <DialogHeader>
-              <DialogTitle>새 쪽지 작성</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label>받는 사람 <span className="text-destructive">*</span></Label>
-                <Input
-                  placeholder="수신자 이름 입력"
-                  value={newMessage.recipient}
-                  onChange={(e) => setNewMessage({ ...newMessage, recipient: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>제목 <span className="text-destructive">*</span></Label>
-                <Input
-                  placeholder="쪽지 제목"
-                  value={newMessage.title}
-                  onChange={(e) => setNewMessage({ ...newMessage, title: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>내용 <span className="text-destructive">*</span></Label>
-                <Textarea
-                  placeholder="쪽지 내용을 입력하세요..."
-                  rows={6}
-                  value={newMessage.content}
-                  onChange={(e) => setNewMessage({ ...newMessage, content: e.target.value })}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsComposeOpen(false)}>취소</Button>
-              <Button onClick={handleSendMessage}>발송</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-
       <Card className="card-gov pb-12">
         <Tabs defaultValue="received">
           <CardHeader>
-            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 max-w-full sm:max-w-xs">
-              <TabsTrigger value="received" className="gap-2">
-                <Inbox className="w-4 h-4" />
-                받은 쪽지
-                {unreadCount > 0 && (
-                  <Badge variant="destructive" className="text-xs">{unreadCount}</Badge>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="sent" className="gap-2">
-                <Send className="w-4 h-4" />
-                보낸 쪽지
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex items-center justify-between">
+              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 max-w-full sm:max-w-xs">
+                <TabsTrigger value="received" className="gap-2">
+                  <Inbox className="w-4 h-4" />
+                  받은 쪽지
+                  {unreadCount > 0 && (
+                    <Badge variant="destructive" className="text-xs">{unreadCount}</Badge>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="sent" className="gap-2">
+                  <Send className="w-4 h-4" />
+                  보낸 쪽지
+                </TabsTrigger>
+              </TabsList>
+
+              <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
+                <DialogTrigger asChild>
+                  <Button size="sm" className="gap-2">
+                    <Send className="w-4 h-4" />
+                    쪽지 쓰기
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle>새 쪽지 작성</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label>받는 사람 <span className="text-destructive">*</span></Label>
+                      <Input
+                        placeholder="수신자 이름 입력"
+                        value={newMessage.recipient}
+                        onChange={(e) => setNewMessage({ ...newMessage, recipient: e.target.value })}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>제목 <span className="text-destructive">*</span></Label>
+                      <Input
+                        placeholder="쪽지 제목"
+                        value={newMessage.title}
+                        onChange={(e) => setNewMessage({ ...newMessage, title: e.target.value })}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>내용 <span className="text-destructive">*</span></Label>
+                      <Textarea
+                        placeholder="쪽지 내용을 입력하세요..."
+                        rows={6}
+                        value={newMessage.content}
+                        onChange={(e) => setNewMessage({ ...newMessage, content: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setIsComposeOpen(false)}>취소</Button>
+                    <Button onClick={handleSendMessage}>발송</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
           </CardHeader>
 
           <CardContent>
@@ -223,7 +224,7 @@ export function MessagesPage() {
                           </span>
                         </div>
                         <div className="col-span-3 text-center text-sm text-muted-foreground">
-                          {format(new Date(message.createdAt), 'M/d HH:mm', { locale: ko })}
+                          {format(new Date(message.createdAt), 'yy/M/d HH:mm', { locale: ko })}
                         </div>
                       </div>
                     </div>
@@ -245,9 +246,49 @@ export function MessagesPage() {
                   <div className="col-span-3 text-center">발신일</div>
                 </div>
 
-                <div className="p-8 text-center text-muted-foreground">
-                  보낸 쪽지가 없습니다.
-                </div>
+                {sentMessages.length > 0 ? (
+                  sentMessages.map((message) => (
+                    <div
+                      key={message.id}
+                      className="border-t border-border cursor-pointer transition-colors hover:bg-accent/50"
+                      onClick={() => setSelectedMessage(message)}
+                    >
+                      {/* Mobile Card Layout */}
+                      <div className="md:hidden p-4 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <div className="text-sm font-medium mb-1">
+                              {message.title}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              수신: {getPersonaName(message.receiverId)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {format(new Date(message.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}
+                        </div>
+                      </div>
+
+                      {/* Desktop Grid Layout */}
+                      <div className="hidden md:grid grid-cols-12 gap-2 p-3">
+                        <div className="col-span-2 text-sm">
+                          {getPersonaName(message.receiverId)}
+                        </div>
+                        <div className="col-span-7 flex items-center">
+                          <span className="truncate">{message.title}</span>
+                        </div>
+                        <div className="col-span-3 text-center text-sm text-muted-foreground">
+                          {format(new Date(message.createdAt), 'yy/M/d HH:mm', { locale: ko })}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-8 text-center text-muted-foreground">
+                    보낸 쪽지가 없습니다.
+                  </div>
+                )}
               </div>
             </TabsContent>
           </CardContent>

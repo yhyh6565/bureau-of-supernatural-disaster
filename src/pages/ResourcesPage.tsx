@@ -15,6 +15,8 @@ import {
 } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useResource } from '@/contexts/ResourceContext';
+import { useWork } from '@/contexts/WorkContext';
 import { INSPECTION_TYPES } from '@/constants/haetae';
 import {
     Package,
@@ -65,6 +67,19 @@ interface EquipmentCardProps {
 }
 
 function EquipmentCard({ item, onSelect }: EquipmentCardProps) {
+    const { rentals } = useResource();
+
+    // 내가 빌린 같은 이름의 장비 개수 계산 (상태가 '정상'인 것만, 수량 합산)
+    const myRentalCount = rentals
+        .filter(r =>
+            r.equipmentName === item.name &&
+            (r.status === '정상' || r.status === '연체')
+        )
+        .reduce((sum, r) => sum + (r.quantity || 1), 0);
+
+    // 표시 재고 = 기본 재고 - 내가 빌린 수량
+    const displayStock = Math.max(0, item.availableStock - myRentalCount);
+
     const getIcon = (category: string) => {
         if (category === '대여') return <Key className="w-8 h-8 opacity-50 mb-2" />;
         return <ShoppingCart className="w-8 h-8 opacity-50 mb-2" />;
@@ -91,7 +106,7 @@ function EquipmentCard({ item, onSelect }: EquipmentCardProps) {
                 {item.description}
             </p>
             <div className="mt-auto text-xs font-mono text-muted-foreground">
-                재고: {item.availableStock} / {item.totalStock}
+                재고: {displayStock} / {item.totalStock}
             </div>
         </div>
     );
@@ -234,6 +249,9 @@ const getOrCreateReservedSlots = (locationId: string, availableSlots: string[]):
 
 export function ResourcesPage() {
     const { agent } = useAuth();
+    const { addRental } = useResource();
+    const resourceContext = useResource();
+    const { addVisitSchedule, addApproval } = useWork();
 
     // Tabs
     const [activeTab, setActiveTab] = useState('equipment');
@@ -273,11 +291,45 @@ export function ResourcesPage() {
             return;
         }
 
-        const action = selectedEquipment?.requiresApproval ? '결재 상신' : '신청';
-        toast({
-            title: `${action} 완료`,
-            description: `"${selectedEquipment?.name}" ${action}이 완료되었습니다.`,
-        });
+        if (!selectedEquipment) return;
+
+        const isApprovalRequired = selectedEquipment.requiresApproval;
+
+        if (isApprovalRequired) {
+            // 결재 문서 생성
+            addApproval({
+                type: '장비품의서',
+                title: `${selectedEquipment.name} ${selectedEquipment.category} 신청 건`,
+                content: `품목: ${selectedEquipment.name}\n수량/기간: ${selectedEquipment.category === '대여' ? rentalDays + '일' : quantity + '개'}\n사유: ${equipmentReason}`,
+                status: '결재대기',
+                createdBy: agent?.id || 'unknown',
+                createdByName: agent?.name || '알 수 없음',
+                approver: 'HMU-301', // 임시: 해금 팀장
+            });
+
+            toast({
+                title: '결재 상신 완료',
+                description: `"${selectedEquipment.name}" 신청에 대한 결재가 상신되었습니다.`,
+            });
+        } else {
+            // 즉시 대여/지급 처리
+            // 대여인 경우 rentalDays, 지급인 경우 quantity 사용 (단, addRental 3번째 인자로 수량 전달)
+            const qty = parseInt(quantity);
+            const days = parseInt(rentalDays);
+
+            if (selectedEquipment.category === '대여') {
+                // 대여는 수량 1 고정 (UI에 수량 선택이 없음) - 추후 필요시 UI 추가
+                addRental(selectedEquipment, days, 1);
+            } else {
+                // 지급은 기간 0, 수량 qty
+                addRental(selectedEquipment, 0, qty);
+            }
+
+            toast({
+                title: '신청 완료',
+                description: `"${selectedEquipment.name}" ${selectedEquipment.category === '대여' ? '대여' : '지급'} 신청이 완료되었습니다.`,
+            });
+        }
 
         setSelectedEquipment(null);
         setEquipmentReason('');
@@ -292,11 +344,39 @@ export function ResourcesPage() {
             return;
         }
 
-        const action = selectedLocation?.requiresApproval ? '결재 상신' : '예약';
-        toast({
-            title: `${action} 완료`,
-            description: `"${selectedLocation?.name}" ${action}이 완료되었습니다.`,
-        });
+        if (!selectedLocation) return;
+
+        const isApprovalRequired = selectedLocation.requiresApproval;
+
+        if (isApprovalRequired) {
+            addApproval({
+                type: '방문품의서',
+                title: `${selectedLocation.name} 방문 신청 건`,
+                content: `장소: ${selectedLocation.name}\n일시: ${format(visitDate, 'yyyy-MM-dd')} ${visitTime}\n사유: ${visitReason}`,
+                status: '결재대기',
+                createdBy: agent?.id || 'unknown',
+                createdByName: agent?.name || '알 수 없음',
+                approver: 'HMU-301', // 임시
+            });
+
+            toast({
+                title: '결재 상신 완료',
+                description: `"${selectedLocation.name}" 방문 신청에 대한 결재가 상신되었습니다.`,
+            });
+        } else {
+            // 즉시 예약 (일정 추가)
+            // 날짜와 시간을 합쳐서 Date 객체 생성
+            const [hours, minutes] = visitTime.split(':').map(Number);
+            const scheduleDate = new Date(visitDate);
+            scheduleDate.setHours(hours, minutes, 0, 0);
+
+            addVisitSchedule(selectedLocation, scheduleDate);
+
+            toast({
+                title: '예약 완료',
+                description: `"${selectedLocation.name}" 방문 예약이 완료되었습니다.`,
+            });
+        }
 
         setSelectedLocation(null);
         setVisitDate(undefined);
@@ -588,7 +668,18 @@ export function ResourcesPage() {
                         <div className="flex justify-between text-sm p-4 bg-muted/50 rounded-sm">
                             <span>남은 수량</span>
                             <span className="font-mono font-bold">
-                                {selectedEquipment?.availableStock} / {selectedEquipment?.totalStock}
+                                {(() => {
+                                    // Calculate stock dynamically based on current rentals in context
+                                    const myCount = resourceContext.rentals
+                                        .filter(r =>
+                                            r.equipmentName === selectedEquipment?.name &&
+                                            (r.status === '정상' || r.status === '연체')
+                                        )
+                                        .reduce((sum, r) => sum + (r.quantity || 1), 0);
+
+                                    const stock = Math.max(0, (selectedEquipment?.availableStock || 0) - myCount);
+                                    return `${stock} / ${selectedEquipment?.totalStock}`;
+                                })()}
                             </span>
                         </div>
 
@@ -705,22 +796,28 @@ export function ResourcesPage() {
                             <Label>방문 시간 <span className="text-destructive">*</span></Label>
                             <Select value={visitTime} onValueChange={setVisitTime}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="시간 선택" />
+                                    <SelectValue placeholder="방문 시간 선택" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {getAvailableSlots().map((slot) => (
-                                        <SelectItem key={slot} value={slot}>{slot}</SelectItem>
-                                    ))}
+                                    {getAvailableSlots().length > 0 ? (
+                                        getAvailableSlots().map((slot) => (
+                                            <SelectItem key={slot} value={slot}>
+                                                {slot}
+                                            </SelectItem>
+                                        ))
+                                    ) : (
+                                        <div className="p-2 text-sm text-muted-foreground text-center">
+                                            {visitDate ? "예약 가능한 시간이 없습니다." : "날짜를 먼저 선택해주세요."}
+                                        </div>
+                                    )}
                                 </SelectContent>
                             </Select>
                         </div>
 
-                        {/* Reason */}
                         <div className="space-y-2">
-                            <Label>방문 사유 <span className="text-destructive">*</span></Label>
+                            <Label>방문 목적 <span className="text-destructive">*</span></Label>
                             <Textarea
-                                placeholder="방문 사유를 입력하세요..."
-                                rows={3}
+                                placeholder="방문 목적을 구체적으로 입력하세요."
                                 value={visitReason}
                                 onChange={(e) => setVisitReason(e.target.value)}
                             />
@@ -730,7 +827,7 @@ export function ResourcesPage() {
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setSelectedLocation(null)}>취소</Button>
                         <Button onClick={handleVisitSubmit}>
-                            {selectedLocation?.requiresApproval ? '결재 요청' : '예약 신청'}
+                            {selectedLocation?.requiresApproval ? '결재 요청' : '예약하기'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

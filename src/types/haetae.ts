@@ -12,6 +12,7 @@ export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형';
 export interface Agent {
   id: string;
   name: string;
+  personaKey?: string; // 페르소나 고유 키 (메시지, 일정 등에서 사용)
   codename: string; // 작전명 (코드명)
   department: Department;
   rank: string;
@@ -29,12 +30,14 @@ export interface Agent {
 export interface Incident {
   id: string;
   title: string;
+  caseNumber: string; // UI표시용 사건 번호 (예: 1123)
   registrationNumber: string; // 0000PSYA.연도.가00 형식 (공식 등록번호)
   location: string;
   gpsCoordinates?: { lat: number; lng: number };
   dangerLevel: DangerLevel;
   status: IncidentStatus;
   reportContent: string;
+  darknessType?: string; // 어둠 종류 (예: 그림자, 기생수 등)
   countermeasure?: string;
   entryRestrictions?: string;
   requiresPatrol: boolean;
@@ -142,6 +145,7 @@ export interface RentalRecord {
   rentalDate: Date;
   dueDate?: Date;
   status: '정상' | '연체' | '반납완료';
+  quantity: number;
 }
 
 // 방문 장소 데이터

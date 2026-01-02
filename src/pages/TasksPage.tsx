@@ -26,11 +26,17 @@ import { IncidentCard } from '@/components/work/IncidentCard';
 
 import { ManualViewer } from '@/components/work/ManualViewer';
 
+import { useSearchParams } from 'react-router-dom';
+
 export function TasksPage() {
   const { agent } = useAuth();
+  const [searchParams] = useSearchParams();
+  const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
+
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
   const [showDetailDialog, setShowDetailDialog] = useState(false);
+  const [acceptedIncidentIds, setAcceptedIncidentIds] = useState<string[]>([]);
 
   // Manual View State
   const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
@@ -47,22 +53,22 @@ export function TasksPage() {
     switch (department) {
       case 'baekho':
         return {
-          list: incidents.filter(inc => inc.status === '접수'),
-          assigned: incidents.filter(inc => inc.status === '조사중'),
+          list: incidents.filter(inc => inc.status === '접수' && !acceptedIncidentIds.includes(inc.id)),
+          assigned: [...incidents.filter(inc => inc.status === '조사중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '접수')],
           listLabel: '접수된 조사 요청',
           assignedLabel: '나의 조사 업무',
         };
       case 'hyunmu':
         return {
-          list: incidents.filter(inc => inc.status === '구조대기'),
-          assigned: incidents.filter(inc => inc.status === '구조중'),
+          list: incidents.filter(inc => inc.status === '구조대기' && !acceptedIncidentIds.includes(inc.id)),
+          assigned: [...incidents.filter(inc => inc.status === '구조중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '구조대기')],
           listLabel: '구조 요청 목록',
           assignedLabel: '나의 구조 업무',
         };
       case 'jujak':
         return {
-          list: incidents.filter(inc => inc.status === '정리대기'),
-          assigned: incidents.filter(inc => inc.status === '정리중'),
+          list: incidents.filter(inc => inc.status === '정리대기' && !acceptedIncidentIds.includes(inc.id)),
+          assigned: [...incidents.filter(inc => inc.status === '정리중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '정리대기')],
           listLabel: '정리 요청 목록',
           assignedLabel: '나의 정리 업무',
         };
@@ -74,9 +80,12 @@ export function TasksPage() {
   const tasks = getTasksByDepartment();
 
   const handleAcceptTask = () => {
+    if (selectedIncident) {
+      setAcceptedIncidentIds(prev => [...prev, selectedIncident.id]);
+    }
     toast({
       title: '업무 승낙 완료',
-      description: `${selectedIncident?.caseNumber} 건이 배정되었습니다.`,
+      description: `${selectedIncident?.title || '재난'} 건이 배정되었습니다.`,
     });
     setShowAcceptDialog(false);
     setSelectedIncident(null);
@@ -102,13 +111,9 @@ export function TasksPage() {
 
   const action = getActionButton();
 
-
-
   return (
     <MainLayout>
-
-
-      <Tabs defaultValue="list" className="w-full">
+      <Tabs defaultValue={defaultTab} className="w-full">
         <TabsList className="mb-4">
           <TabsTrigger value="list" className="flex items-center gap-2">
             <List className="w-4 h-4" />

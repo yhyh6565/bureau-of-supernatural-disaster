@@ -22,7 +22,7 @@
     "createdByName": "ryujaegwan",
     "approver": "agent-admin-002",
     "approverName": "총무",
-    "createdAt": "2025-12-31T08:16:08.249Z"
+    "createdAt": "2025-12-31T15:17:37.486Z"
   },
   {
     "id": "appr-007",
@@ -38,28 +38,15 @@
     "relatedIncidentId": "inc-007"
   },
   {
-    "id": "appr-008",
-    "type": "시말서",
-    "title": "관용차 접촉 사고 시말서",
-    "content": "현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.",
-    "status": "반려",
-    "createdBy": "ryujaegwan",
-    "createdByName": "ryujaegwan",
-    "approver": "agent-admin-003",
-    "approverName": "경영지원",
-    "createdAt": "2025-12-30T08:16:08.249Z",
-    "rejectReason": "운전 연수 다시 받고 오세요."
-  },
-  {
-    "id": "appr-009",
+    "id": "appr-010",
     "type": "휴가신청서",
-    "title": "1월 연차 사용 신청",
-    "content": "개인 사정으로 인한 연차 신청 (1/15)",
+    "title": "휴가(1일) 신청서",
+    "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "ryujaegwan",
     "createdByName": "ryujaegwan",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
-    "createdAt": "2025-12-28T08:16:08.249Z"
+    "approverName": "현장구조반 부서장",
+    "createdAt": "2025-08-11T09:00"
   }
 ]

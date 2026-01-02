@@ -14,7 +14,7 @@
     "id": "msg-011",
     "senderId": "agent-006",
     "senderName": "오수정",
-    "senderDepartment": "주작팀",
+    "senderDepartment": "현장정리반",
     "receiverId": "me",
     "title": "Re: 구내식당 메뉴 관련",
     "content": "뭔진 모르겠는데 우리 팀 선배님들도 다 출근하신거 보면 맛있을 듯? 점심 업무 끝나면 전화 ㄱㄱ",
@@ -25,10 +25,10 @@
     "id": "msg-012",
     "senderId": "agent-001",
     "senderName": "신수한",
-    "senderDepartment": "백호팀",
+    "senderDepartment": "신규조사반",
     "receiverId": "me",
     "title": "재난 진입 관련",
-    "content": "현무에 파괴왕 신입 들어왔다던데 본 적 있음?",
+    "content": "출동구조반에 파괴왕 신입 들어왔다던데 본 적 있음?",
     "createdAt": "2026-01-01T08:45:00",
     "isRead": true
   },
@@ -40,7 +40,7 @@
     "receiverId": "me",
     "title": "장비 반납 확인 부탁드립니다",
     "content": "me님, 빌려가신 포승줄 반납 처리가 아직 안 된 것 같습니다. 확인 부탁드립니다!",
-    "createdAt": "2025-12-31T08:16:08.249Z",
+    "createdAt": "2025-12-31T15:17:37.486Z",
     "isRead": true
   },
   {
@@ -51,7 +51,7 @@
     "receiverId": "me",
     "title": "연말정산 안내",
     "content": "안녕하세요 총무과입니다. me 님 연말정산 서류 미비된 부분이 있어 연락드립니다. 말일까지 필히 제출 부탁드립니다. ",
-    "createdAt": "2025-12-28T08:16:08.249Z",
+    "createdAt": "2025-12-28T15:17:37.486Z",
     "isRead": true
   }
 ]
