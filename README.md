@@ -1,73 +1,65 @@
-# Welcome to your Lovable project
+⚠ 저작권 및 2차 창작 안내 (Disclaimer)
 
-## Project info
+이 프로젝트는 **백덕수 작가님의 웹소설 '괴담에 떨어져도 출근을 해야 하는구나'**를 기반으로 제작된 팬 메이드(Fan-made) 작품입니다.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+본 프로젝트는 비영리적 목적으로 제작되었으며, 원작의 저작권을 침해할 의도가 전혀 없음을 밝힙니다. 모든 세계관과 설정의 저작권은 원작자에게 있습니다.
 
-## How can I edit this code?
+📚 [원작 보러가기 (KakaoPage): 괴담에 떨어져도 출근을 해야 하는구나](https://page.kakao.com/content/60252575)
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+# 🦁 초자연재난관리국 인트라넷 시스템 "해태 (HAETAE)"
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+> **"괴담에 떨어져도 출근을 해야 하는구나"**
+> 초자연적 재난(어둠)에 대응하는 대한민국의 공무원들을 위한 가상의 인트라넷 시스템입니다.
 
-Changes made via Lovable will be committed automatically to this repo.
+본 프로젝트는 원작 소설 속에 등장하는 **환경부 산하 초자연재난관리국**의 업무 환경을 웹 애플리케이션으로 구현한 팬 작품입니다. 사용자는 관리국의 요원이 되어 재난을 조회하고, 보고서를 결재하고, 장비를 대여하는 등 실제 업무를 체험할 수 있습니다.
 
-**Use your preferred IDE**
+## 🌟 주요 기능 (Key Features)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 1. 전용 인트라넷 대시보드
+- **부서별 맞춤형 화면**: 백호(조사), 현무(구조), 주작(정리) 팀별로 다른 업무 흐름과 UI 제공
+- **재난 경보 티커**: 실시간으로 발생하는 고위험 재난 상황 전파
+- **상태 모니터링**: 요원의 정신 오염도 및 신체 상태 시각화
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 2. 페르소나 로그인 시스템
+- 원작의 주요 등장인물 이름으로 로그인 시, 해당 캐릭터의 **전용 시나리오 데이터** 로드
+- **지원 페르소나**: 박홍림, 최요원, 류재관, 김솔음, 해금, 고영은, 장허운
+- 일반 이름으로 로그인 시 **'평범한 9급 실무관'** 모드로 체험 가능
 
-Follow these steps:
+### 3. 초자연 재난 관리 (Incidents)
+- **위험 등급 체계**: 멸형(Abyssal) / 파형(Destructive) / 뇌형(Warning) / 고형(Muted)
+- **생명주기 관리**: 접수 → 조사 → 구조 → 정리 → 종결의 체계적인 워크플로우
+- **현장 대응**: 파훼법 확인, 진입 제한 구역 체크, 대응 매뉴얼 열람
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 4. 전자 결재 및 보고 (Approvals)
+- 조사보고서, 출동일지, 시말서 등 다양한 행정 문서 작성 및 결재
+- 도깨비 시련 발동, 장비 분실 시 제출해야 하는 **자동화된 시말서 양식** 제공
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 5. 업무 지원 (Resources)
+- **도깨비 공방 장비 대여**: 해태상, 도깨비불, 은심장 등 특수 장비 대여 신청
+- **시설 예약**: 도깨비 공방, 용천 선녀탕(정화 시설) 등 방문 예약 (운영시간 기반 동적 슬롯)
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🛠 기술 스택 (Tech Stack)
+- **Framework**: React 18, TypeScript
+- **Build**: Vite
+- **UI/Style**: Tailwind CSS, shadcn/ui, Radix UI
+- **State Management**: Context API, TanStack Query
+- **Data**: JSON-based Data Architecture (Global/Persona isolated)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🚀 실행 방법 (Getting Started)
+
+```bash
+# 프로젝트 클론
+git clone https://github.com/yhyh6565/bureau-of-supernatural-disaster.git
+
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+**System Version**: v1.3
+**Security Level**: Confidential (대외비)
