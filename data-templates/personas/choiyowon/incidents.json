@@ -1,0 +1,43 @@
+[
+    {
+        "id": "inc-101",
+        "title": "강남 폐건물 지하 소음",
+        "registrationNumber": "0001PSYA.2025.가01",
+        "location": "서울특별시 강남구 폐건물",
+        "dangerLevel": "뇌형",
+        "status": "구조중",
+        "reportContent": "건물 지하에서 원인 불명의 소음 및 실종자 발생. 최요원 단독 출동.",
+        "requiresPatrol": false,
+        "countermeasure": "줄잡이 사용",
+        "entryRestrictions": "단독 진입 금지",
+        "createdAt": "2025-12-28T14:30:00",
+        "updatedAt": "2025-12-28T18:00:00"
+    },
+    {
+        "id": "inc-102",
+        "title": "인천항 안개 미아",
+        "registrationNumber": "0002PSYA.2025.가02",
+        "location": "인천광역시 중구 항구",
+        "dangerLevel": "고형",
+        "status": "종결",
+        "reportContent": "안개 속에서 방향 감각 상실 신고. 최요원 신속 대응으로 조기 종결.",
+        "requiresPatrol": true,
+        "countermeasure": "도깨비불 배치",
+        "createdAt": "2025-12-20T09:00:00",
+        "updatedAt": "2025-12-21T14:00:00"
+    },
+    {
+        "id": "inc-103",
+        "title": "일산 호수공원 야간 산책로",
+        "registrationNumber": "0003PSYA.2025.가03",
+        "location": "경기도 고양시 일산 호수공원",
+        "dangerLevel": "뇌형",
+        "status": "정리대기",
+        "reportContent": "야간 산책로에서 시간 왜곡 현상. 최요원 부상으로 후송.",
+        "requiresPatrol": true,
+        "countermeasure": "해태상 결계",
+        "entryRestrictions": "야간 진입 금지",
+        "createdAt": "2025-12-15T22:00:00",
+        "updatedAt": "2025-12-16T03:00:00"
+    }
+]

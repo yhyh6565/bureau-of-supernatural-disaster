@@ -33,24 +33,36 @@ export const DEPARTMENT_INFO: Record<Department, {
     name: string;
     fullName: string;
     colorClass: string;
+    bgClass: string;
+    bgClassLight: string;
+    textClass: string;
     icon: React.ComponentType<{ className?: string }>;
 }> = {
     baekho: {
         name: '백호',
         fullName: '신규조사반',
         colorClass: 'baekho',
+        bgClass: 'bg-baekho/20',
+        bgClassLight: 'bg-baekho/10',
+        textClass: 'text-baekho',
         icon: BaekhoIcon,
     },
     hyunmu: {
         name: '현무',
         fullName: '출동구조반',
         colorClass: 'hyunmu',
+        bgClass: 'bg-hyunmu/20',
+        bgClassLight: 'bg-hyunmu/10',
+        textClass: 'text-hyunmu',
         icon: HyunmuIcon,
     },
     jujak: {
         name: '주작',
         fullName: '현장정리반',
         colorClass: 'jujak',
+        bgClass: 'bg-jujak/20',
+        bgClassLight: 'bg-jujak/10',
+        textClass: 'text-jujak',
         icon: JujakIcon,
     },
 };
@@ -103,6 +115,7 @@ export const STATUS_STYLE: Record<IncidentStatus, {
     '정리대기': { bgClass: 'bg-jujak', textClass: 'text-jujak-foreground' },
     '정리중': { bgClass: 'bg-jujak/80', textClass: 'text-jujak-foreground' },
     '종결': { bgClass: 'bg-success', textClass: 'text-success-foreground' },
+    '봉인': { bgClass: 'bg-abyssal', textClass: 'text-abyssal-foreground' },
 };
 
 // 공지사항 긴급도별 스타일

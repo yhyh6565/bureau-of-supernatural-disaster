@@ -1,27 +1,27 @@
 [
-    {
-        "id": "appr-011",
-        "type": "조사보고서",
-        "title": "대전 폐병원 조사 중간 보고",
-        "content": "대전 폐병원 재난 조사 중입니다. 과거 의료 기록을 분석한 결과, 환자 목격 현상은 1980년대 의료 사고와 연관된 것으로 추정됩니다. 추가 조사 필요.",
-        "status": "작성중",
-        "createdBy": "agent-006",
-        "createdByName": "고영은",
-        "approver": "system",
-        "approverName": "백호2팀장",
-        "createdAt": "2025-12-30T16:00:00",
-        "relatedIncidentId": "inc-010"
-    },
-    {
-        "id": "appr-012",
-        "type": "방문품의서",
-        "title": "용천 선녀탕 방문 신청",
-        "content": "오염도 10%이나 예방 차원에서 정화 방문을 신청합니다.",
-        "status": "승인",
-        "createdBy": "agent-006",
-        "createdByName": "고영은",
-        "approver": "system",
-        "approverName": "백호2팀장",
-        "createdAt": "2025-12-27T10:00:00"
-    }
+  {
+    "id": "appr-011",
+    "type": "조사보고서",
+    "title": "대전 폐병원 조사 중간 보고",
+    "content": "대전 폐병원 재난 조사 중입니다. 과거 의료 기록을 분석한 결과, 환자 목격 현상은 1980년대 의료 사고와 연관된 것으로 추정됩니다. 추가 조사 필요.",
+    "status": "작성중",
+    "createdBy": "agent-006",
+    "createdByName": "고영은",
+    "approver": "system",
+    "approverName": "백호2팀장",
+    "createdAt": "2025-12-30T16:00:00",
+    "relatedIncidentId": "inc-010"
+  },
+  {
+    "id": "appr-012",
+    "type": "방문품의서",
+    "title": "용천 선녀탕 방문 신청",
+    "content": "오염도 10%이나 예방 차원에서 정화 방문을 신청합니다.",
+    "status": "승인",
+    "createdBy": "agent-006",
+    "createdByName": "고영은",
+    "approver": "system",
+    "approverName": "백호2팀장",
+    "createdAt": "2025-12-27T10:00:00"
+  }
 ]

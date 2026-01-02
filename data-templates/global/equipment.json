@@ -1,0 +1,227 @@
+[
+    {
+        "id": "eq-001",
+        "name": "메모리얼 그립톡",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "스마트폰 부착 시 기억한 텍스트를 페이지로 구현하는 9급 기본 지급품. 도깨비공방 제작. 분실 시 즉시 보고 필요.",
+        "totalStock": 150,
+        "availableStock": 120
+    },
+    {
+        "id": "eq-002",
+        "name": "유리손포",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "특제 유리구슬 탄환 장전형 퇴마용 소형 권총. 요원 기본 지급품. 도깨비공방 제작.",
+        "totalStock": 200,
+        "availableStock": 180
+    },
+    {
+        "id": "eq-003",
+        "name": "포승줄",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "제압용 지급 장비. 봉인 문양이 새겨진 특수 포승줄.",
+        "totalStock": 200,
+        "availableStock": 180
+    },
+    {
+        "id": "eq-004",
+        "name": "하얀 그립톡",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "스마트폰 부착형 긴급 구조요청 발신 장비. 33글자 제한. 사용자가 구조대상일 경우에만 발신.",
+        "totalStock": 100,
+        "availableStock": 85
+    },
+    {
+        "id": "eq-005",
+        "name": "옥패",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "바리데기 세공소 제작. 괴담 내 화폐로 통용. 의식용 및 거래용.",
+        "totalStock": 300,
+        "availableStock": 250
+    },
+    {
+        "id": "eq-006",
+        "name": "시큼달큼",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "진실 유도용 캔디. 복용 시 거짓말 시 고통을 느껴 진실을 말하게 됨. 은박지 포장.",
+        "totalStock": 1000,
+        "availableStock": 950
+    },
+    {
+        "id": "eq-007",
+        "name": "줄잡이",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "검은 홀스터형 장비. 착용 시 고형급 이하 초자연적 정신이상에 반항력 부여. 8급 이상 대여 가능.",
+        "totalStock": 15,
+        "availableStock": 12
+    },
+    {
+        "id": "eq-008",
+        "name": "신발끈",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "오방색 색깔의 긴급탈출용 신발끈. 착용 후 세 걸음 걸으면 특정 등급 이하 괴담에서 탈출 가능.",
+        "totalStock": 20,
+        "availableStock": 18
+    },
+    {
+        "id": "eq-009",
+        "name": "미끼놀이",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "투명 낚싯줄과 붉은 미끼. 파형급 이하 초자연적 존재의 주의를 끌 수 있음. 7급 이상 대여 가능.",
+        "totalStock": 10,
+        "availableStock": 8
+    },
+    {
+        "id": "eq-010",
+        "name": "행방 막대",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "유리와 황동 제작 굽은 막대. 괴담 유래 물질 및 괴현상 매개체 위에서 회전하여 탐지.",
+        "totalStock": 8,
+        "availableStock": 6
+    },
+    {
+        "id": "eq-011",
+        "name": "도깨비불 초롱",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "100일 치성한 유리 초롱에 깃든 도깨비불. 동행하며 도깨비 장난 사용 가능. 사흘 후 재충전 필요.",
+        "totalStock": 5,
+        "availableStock": 3
+    },
+    {
+        "id": "eq-012",
+        "name": "도깨비불 호롱",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "도깨비가 깃든 호롱. 빛 색깔과 패턴으로 주변 위험 감지. 붉은 깜빡임은 비인간 존재 인근.",
+        "totalStock": 12,
+        "availableStock": 10
+    },
+    {
+        "id": "eq-013",
+        "name": "도깨비 감투",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "착용 시 투명화 능력 부여. 특별 승인 필요.",
+        "totalStock": 2,
+        "availableStock": 1
+    },
+    {
+        "id": "eq-014",
+        "name": "은심장",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "은빛 방패형 배지. 착용자의 이타적 행동에 따라 타인의 경외심 획득. 설득용 장비. 초자연 재난 12명 이상 구조 공로 필요. 탐라행 고속열차 사태 이후 대여만 가능.",
+        "totalStock": 3,
+        "availableStock": 2
+    },
+    {
+        "id": "eq-015",
+        "name": "공기누름돌",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "상서로운 공간을 만드는 장비. 현장 안정화 및 정화 용도.",
+        "totalStock": 6,
+        "availableStock": 4
+    },
+    {
+        "id": "eq-016",
+        "name": "햇살잡이",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "유리공예 썬캐처. 눈에 가져다 대면 진실이 보임. 조사용 장비.",
+        "totalStock": 4,
+        "availableStock": 3
+    },
+    {
+        "id": "eq-017",
+        "name": "사인검",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "사인시(寅年寅月寅日寅時) 제작 퇴마도검. 귀신 형태의 악한 존재가 직접 침입 시 최대 위력 발휘.",
+        "totalStock": 7,
+        "availableStock": 5
+    },
+    {
+        "id": "eq-018",
+        "name": "작두(악인제압용)",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "악인 제압 전용 무기. 악인일수록 큰 데미지, 선량한 사람에게는 경미한 피해.",
+        "totalStock": 8,
+        "availableStock": 6
+    },
+    {
+        "id": "eq-019",
+        "name": "작두(의식용)",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "사악한 존재 대적용 의식 무기. 화려한 솔과 방울 장식. 대인용 두 배 크기.",
+        "totalStock": 5,
+        "availableStock": 4
+    },
+    {
+        "id": "eq-020",
+        "name": "간이 유리 감옥",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "소형 개체 봉인용 간이 유리감옥. 바리데기 세공소 제작. 가로 30cm x 세로 30cm x 높이 40cm, 강화 영석 유리. 최대 72시간 봉인 가능. 고형급 이하 소형 개체 적용. 뇌형급 이상 사용 금지.",
+        "totalStock": 28,
+        "availableStock": 26
+    },
+    {
+        "id": "eq-021",
+        "name": "진실호흡기",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "병원용 산소호흡기 형태. 디스플레이에 착용자 속마음 표시. 거짓말 시 산소 외 물질 공급. 공채 면접 용도.",
+        "totalStock": 3,
+        "availableStock": 2
+    },
+    {
+        "id": "eq-022",
+        "name": "액운 삼키미",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "공업용 청소기 형태 현장정리반 전용 장비. 초자연적 오염 제거.",
+        "totalStock": 6,
+        "availableStock": 5
+    },
+    {
+        "id": "eq-023",
+        "name": "해태상(소형)",
+        "category": "대여",
+        "requiresApproval": true,
+        "description": "결계 설치용 해태 조각상. 현장 방어 및 경계 용도.",
+        "totalStock": 12,
+        "availableStock": 10
+    },
+    {
+        "id": "eq-024",
+        "name": "일반 손전등",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "일반적인 LED 손전등. 기본 지급품.",
+        "totalStock": 50,
+        "availableStock": 42
+    },
+    {
+        "id": "eq-025",
+        "name": "3색 볼펜",
+        "category": "지급",
+        "requiresApproval": false,
+        "description": "공공기관 납품용 볼펜. 사무용품.",
+        "totalStock": 1000,
+        "availableStock": 850
+    }
+]

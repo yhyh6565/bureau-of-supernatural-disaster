@@ -25,3 +25,6 @@ dist-ssr
 
 # QA Reports (local only)
 QA_reports/
+
+# Generated data (from templates)
+src/data/

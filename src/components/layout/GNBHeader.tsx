@@ -69,7 +69,7 @@ export function GNBHeader() {
         {/* 우측: 사용자 정보 */}
         <div className="flex items-center gap-3">
           {/* 부서 표시 */}
-          <div className={`px-2 py-1 rounded text-xs font-medium bg-${deptInfo.colorClass}/20 flex items-center gap-1.5`}>
+          <div className={`px-2 py-1 rounded text-xs font-medium flex items-center gap-1.5 ${deptInfo.bgClass}`}>
             <deptInfo.icon className="w-4 h-4" />
             <span>{deptInfo.name} ({deptInfo.fullName})</span>
           </div>

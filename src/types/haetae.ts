@@ -151,6 +151,7 @@ export interface VisitLocation {
   description: string;
   requiresApproval: boolean;
   operatingHours: string;
+  closedDates?: string[];  // 휴무일 (YYYY-MM-DD 형식)
   // imageEmoji removed
 }
 

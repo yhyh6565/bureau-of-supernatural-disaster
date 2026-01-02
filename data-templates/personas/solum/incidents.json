@@ -1,0 +1,29 @@
+[
+    {
+        "id": "inc-301",
+        "title": "북촌 한옥마을 시공간 왜곡",
+        "registrationNumber": "0006PSYA.2025.가06",
+        "location": "서울특별시 종로구 북촌 한옥",
+        "dangerLevel": "뇌형",
+        "status": "구조중",
+        "reportContent": "한옥 내부 시공간 왜곡. 포도 요원 임기응변으로 2명 구조.",
+        "requiresPatrol": false,
+        "countermeasure": "메모리얼 그립톡 활용",
+        "entryRestrictions": "정신 오염 주의",
+        "createdAt": "2025-12-22T15:00:00",
+        "updatedAt": "2025-12-23T09:00:00"
+    },
+    {
+        "id": "inc-302",
+        "title": "해운대 모래성 불가사의",
+        "registrationNumber": "0007PSYA.2025.가07",
+        "location": "부산광역시 해운대구 해변",
+        "dangerLevel": "고형",
+        "status": "종결",
+        "reportContent": "해변 모래성에서 이상 현상. 포도 요원 창의적 대응으로 신속 해결.",
+        "requiresPatrol": false,
+        "countermeasure": "소금 결계",
+        "createdAt": "2025-12-10T11:00:00",
+        "updatedAt": "2025-12-11T14:00:00"
+    }
+]

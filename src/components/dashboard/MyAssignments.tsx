@@ -66,7 +66,7 @@ export function MyAssignments() {
             <DeptIcon className="w-4 h-4" />
             나의 배정 업무
           </div>
-          <span className={`text-xs sm:text-sm px-2 py-0.5 rounded bg-${deptInfo.colorClass}/10 text-${deptInfo.colorClass} flex items-center gap-1.5 sm:ml-auto`}>
+          <span className={`text-xs sm:text-sm px-2 py-0.5 rounded flex items-center gap-1.5 sm:ml-auto ${deptInfo.bgClassLight} ${deptInfo.textClass}`}>
             <deptInfo.icon className="w-3.5 h-3.5" /> {deptInfo.name}
           </span>
         </CardTitle>

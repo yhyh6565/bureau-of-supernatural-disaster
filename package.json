@@ -4,13 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generateDynamicData.cjs",
     "dev": "vite",
+    "prebuild": "node scripts/generateDynamicData.cjs",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "validate": "tsx scripts/validateAlignment.ts",
-    "validate:ux": "tsx scripts/validateUXDesign.ts"
+    "validate:ux": "tsx scripts/validateUXDesign.ts",
+    "generate-data": "node scripts/generateDynamicData.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

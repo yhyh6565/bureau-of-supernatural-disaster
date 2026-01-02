@@ -1,29 +1,29 @@
 [
-    {
-        "id": "inc-601",
-        "title": "대전 유성구 폐병원 환자 목격",
-        "registrationNumber": "0010PSYA.2025.가10",
-        "location": "대전광역시 유성구 폐병원",
-        "dangerLevel": "뇌형",
-        "status": "조사중",
-        "reportContent": "폐병원에서 환자 목격 신고. 박하 요원 의료 지식 활용 조사 중.",
-        "requiresPatrol": false,
-        "countermeasure": "의료 기록 분석",
-        "entryRestrictions": "방호복 착용 필수",
-        "createdAt": "2025-12-26T10:00:00",
-        "updatedAt": "2025-12-30T14:00:00"
-    },
-    {
-        "id": "inc-602",
-        "title": "광주 동구 약국 약품 증식",
-        "registrationNumber": "0011PSYA.2025.가11",
-        "location": "광주광역시 동구 약국",
-        "dangerLevel": "고형",
-        "status": "종결",
-        "reportContent": "약국 내 약품 이상 증식. 박하 요원 약리 분석으로 원인 규명.",
-        "requiresPatrol": false,
-        "countermeasure": "약품 폐기",
-        "createdAt": "2025-12-12T09:00:00",
-        "updatedAt": "2025-12-13T16:00:00"
-    }
+  {
+    "id": "inc-601",
+    "title": "대전 유성구 폐병원 환자 목격",
+    "registrationNumber": "0010PSYA.2025.가10",
+    "location": "대전광역시 유성구 폐병원",
+    "dangerLevel": "뇌형",
+    "status": "조사중",
+    "reportContent": "폐병원에서 환자 목격 신고. 박하 요원 의료 지식 활용 조사 중.",
+    "requiresPatrol": false,
+    "countermeasure": "의료 기록 분석",
+    "entryRestrictions": "방호복 착용 필수",
+    "createdAt": "2025-12-26T10:00:00",
+    "updatedAt": "2025-12-30T14:00:00"
+  },
+  {
+    "id": "inc-602",
+    "title": "광주 동구 약국 약품 증식",
+    "registrationNumber": "0011PSYA.2025.가11",
+    "location": "광주광역시 동구 약국",
+    "dangerLevel": "고형",
+    "status": "종결",
+    "reportContent": "약국 내 약품 이상 증식. 박하 요원 약리 분석으로 원인 규명.",
+    "requiresPatrol": false,
+    "countermeasure": "약품 폐기",
+    "createdAt": "2025-12-12T09:00:00",
+    "updatedAt": "2025-12-13T16:00:00"
+  }
 ]
