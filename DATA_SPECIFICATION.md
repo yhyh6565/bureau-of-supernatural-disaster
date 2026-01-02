@@ -35,6 +35,7 @@ src/data/
 │   └── schedules.json
 └── personas/        # [페르소나] 특정 캐릭터(박홍림, 최요원 등) 전용
     └── {character_name}/
+        ├── profile.json     # [NEW] 요원 프로필 정보 (직급, 오염도, 장비 등)
         ├── messages.json
         ├── notifications.json
         ├── approvals.json
@@ -538,6 +539,7 @@ data-templates/
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| v1.7 | 2026-01-03 | 요원 프로필 데이터 분리(`profile.json`), AuthContext 리팩토링 |
 | v1.6 | 2026-01-03 | 재난 데이터 통합, Agent.team 추가, 부서 명칭 확정 |
 | v1.5 | 2026-01-02 | 부서 표시명 변경 (백호→신규조사반, 현무→출동구조반, 주작→현장정리반) |
 | v1.4 | 2026-01-02 | 데이터 검증 시스템 추가 (`scripts/validateData.cjs`) |

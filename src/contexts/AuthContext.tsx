@@ -1,234 +1,56 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Agent, Department } from '@/types/haetae';
 
+// Import Profile JSONs
+import PARKHONGLIM_PROFILE from '@/data/personas/parkhonglim/profile.json';
+import CHOIYOWON_PROFILE from '@/data/personas/choiyowon/profile.json';
+import RYUJAEGWAN_PROFILE from '@/data/personas/ryujaegwan/profile.json';
+import SOLUM_PROFILE from '@/data/personas/solum/profile.json';
+import HAEGEUM_PROFILE from '@/data/personas/haegeum/profile.json';
+import KOYOUNGEUN_PROFILE from '@/data/personas/koyoungeun/profile.json';
+import JANGHYEOWOON_PROFILE from '@/data/personas/janghyeowoon/profile.json';
+
 // 세션 스토리지 키
 const SESSION_STORAGE_KEY = 'haetae_agent_session';
 
-// 더미 요원 데이터 (기존 데이터 유지)
-// 생략: MOCK_AGENTS 데이터는 너무 길어서 파일 크기 문제로 전체를 다시 쓰기보다는
-// replace_file_content를 사용할까 했지만, 구조가 많이 바뀌어 write_to_file이 안전함.
-// MOCK_AGENTS는 Step 731의 내용과 동일하게 사용.
-// 하지만 컨텍스트 윈도우 절약을 위해 MOCK_AGENTS 만 별도 파일 분리하는 것도 방법이나,
-// 지금은 전체 파일 작성을 요청 받았으므로 MOCK_AGENTS 포함하여 작성.
-// (아래 MOCK_AGENTS 내용은 Step 731에서 복사)
-
-const MOCK_AGENTS: Record<string, Agent> = {
-  '박홍림': {
-    id: 'HMU-001',
-    name: '박홍림',
-    personaKey: 'parkhonglim',
-    codename: '홍화',
-    department: 'hyunmu',
-    team: '1팀',
-    rank: '팀장',
-    extension: '2101',
-    status: '정상',
-    contamination: 5,
-    totalIncidents: 52,
-    specialCases: 15,
-    rentals: [],
-    purificationHistory: [new Date('2025-12-15')],
-    funeralPreference: '매장',
-    grade: 6
-  },
-  '최요원': {
-    id: 'HMU-002',
-    name: '최요원',
-    personaKey: 'choiyowon',
-    codename: '미상',
-    department: 'hyunmu',
-    team: '1팀',
-    rank: '실무관',
-    extension: '2102',
-    status: '정상',
-    contamination: 35,
-    totalIncidents: 28,
-    specialCases: 8,
-    rentals: [
-      {
-        id: 'rent-001',
-        equipmentName: 'EMF 탐지기 (Pro)',
-        category: '대여',
-        rentalDate: new Date('2025-12-01'),
-        dueDate: new Date('2025-12-15'),
-        status: '연체',
-        quantity: 1
-      },
-      {
-        id: 'rent-002',
-        equipmentName: '기본 보급품 세트',
-        category: '지급',
-        rentalDate: new Date('2025-11-20'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-003',
-        equipmentName: '행방 막대',
-        category: '대여',
-        rentalDate: new Date('2025-12-28'),
-        dueDate: new Date('2026-01-04'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-004',
-        equipmentName: '햇살잡이',
-        category: '대여',
-        rentalDate: new Date('2025-12-25'),
-        dueDate: new Date('2026-01-08'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-005',
-        equipmentName: '유리손포',
-        category: '지급',
-        rentalDate: new Date('2025-01-01'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-006',
-        equipmentName: '작두(의식용)',
-        category: '대여',
-        rentalDate: new Date('2025-12-30'),
-        dueDate: new Date('2026-01-06'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-007',
-        equipmentName: '도깨비 감투',
-        category: '대여',
-        rentalDate: new Date('2025-12-31'),
-        dueDate: new Date('2026-01-07'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-008',
-        equipmentName: '간이 유리 감옥',
-        category: '대여',
-        rentalDate: new Date('2025-12-20'),
-        dueDate: new Date('2026-01-10'),
-        status: '정상',
-        quantity: 1
-      },
-      {
-        id: 'rent-cyw-009',
-        equipmentName: '신발끈',
-        category: '대여',
-        rentalDate: new Date('2025-11-01'),
-        dueDate: new Date('2026-02-01'),
-        status: '정상'
-      }
-    ],
-    purificationHistory: [new Date('2025-12-20'), new Date('2025-12-10')],
-    funeralPreference: '화장',
-    grade: 7
-  },
-  '류재관': {
-    id: 'HMU-003',
-    name: '류재관',
-    personaKey: 'ryujaegwan',
-    codename: '청동',
-    department: 'hyunmu',
-    team: '1팀',
-    rank: '실무관',
-    extension: '2103',
-    status: '정상',
-    contamination: 18,
-    totalIncidents: 35,
-    specialCases: 10,
-    rentals: [],
-    purificationHistory: [new Date('2025-12-05')],
-    funeralPreference: '매장',
-    grade: 8
-  },
-  '김솔음': {
-    id: 'HMU-004',
-    name: '김솔음',
-    personaKey: 'solum',
-    codename: '포도',
-    department: 'hyunmu',
-    team: '1팀',
-    rank: '실무관',
-    extension: '2104',
-    status: '정상',
-    contamination: 22,
-    totalIncidents: 24,
-    specialCases: 7,
-    rentals: [],
-    purificationHistory: [new Date('2025-11-28')],
-    funeralPreference: '수목장',
-    grade: 7
-  },
-  '해금': {
-    id: 'HMU-301',
-    name: '해금',
-    personaKey: 'haegeum',
-    codename: '해금',
-    department: 'hyunmu',
-    team: '3팀',
-    rank: '팀장',
-    extension: '2301',
-    status: '정상',
-    contamination: 12,
-    totalIncidents: 48,
-    specialCases: 18,
-    rentals: [],
-    purificationHistory: [new Date('2025-12-01')],
-    funeralPreference: '데이터 소각',
-    grade: 6
-  },
-  '고영은': {
-    id: 'BKH-201',
-    name: '고영은',
-    personaKey: 'koyoungeun',
-    codename: '박하',
-    department: 'baekho',
-    team: '2팀',
-    rank: '실무관',
-    extension: '3201',
-    status: '정상',
-    contamination: 15,
-    totalIncidents: 31,
-    specialCases: 6,
-    rentals: [
-      {
-        id: 'rent-003',
-        equipmentName: '야간 투시경',
-        category: '대여',
-        rentalDate: new Date('2025-12-28'),
-        dueDate: new Date('2026-01-04'),
-        status: '정상',
-        quantity: 1
-      }
-    ],
-    purificationHistory: [new Date('2025-11-20')],
-    funeralPreference: '화장',
-    grade: 7
-  },
-  '장허운': {
-    id: 'JJK-201',
-    name: '장허운',
-    personaKey: 'janghyeowoon',
-    codename: '화각',
-    department: 'jujak',
-    team: '2팀',
-    rank: '실무관',
-    extension: '4201',
-    status: '정상',
-    contamination: 28,
-    totalIncidents: 26,
-    specialCases: 4,
-    rentals: [],
-    purificationHistory: [new Date('2025-12-18'), new Date('2025-11-25')],
-    funeralPreference: '기억 소거 후 방생',
-    grade: 7
-  },
+// Helper to revive dates in Agent profile
+const parseAgentProfile = (profile: any): Agent => {
+  const agent = { ...profile };
+  
+  // Date fields conversion
+  if (agent.purificationHistory) {
+     agent.purificationHistory = agent.purificationHistory.map((d: string) => new Date(d));
+  }
+  
+  if (agent.rentals) {
+    agent.rentals = agent.rentals.map((r: any) => ({
+      ...r,
+      rentalDate: r.rentalDate ? new Date(r.rentalDate) : undefined,
+      dueDate: r.dueDate ? new Date(r.dueDate) : undefined,
+    }));
+  }
+  
+  return agent as Agent;
 };
+
+// Load and parse profiles
+const AGENT_PROFILES: Record<string, Agent> = {
+  'parkhonglim': parseAgentProfile(PARKHONGLIM_PROFILE),
+  'choiyowon': parseAgentProfile(CHOIYOWON_PROFILE),
+  'ryujaegwan': parseAgentProfile(RYUJAEGWAN_PROFILE),
+  'solum': parseAgentProfile(SOLUM_PROFILE),
+  'haegeum': parseAgentProfile(HAEGEUM_PROFILE),
+  'koyoungeun': parseAgentProfile(KOYOUNGEUN_PROFILE),
+  'janghyeowoon': parseAgentProfile(JANGHYEOWOON_PROFILE),
+};
+
+// Map by name for easy lookup (e.g. login by name) if needed, though login uses personaKey usually.
+// Login logic below uses personaKey directly against AGENT_PROFILES keys, 
+// OR agent name. Let's support both for robustness.
+const AGENT_NAME_MAP: Record<string, Agent> = Object.values(AGENT_PROFILES).reduce((acc, agent) => {
+  acc[agent.name] = agent;
+  return acc;
+}, {} as Record<string, Agent>);
 
 interface AuthContextType {
   agent: Agent | null;
@@ -306,18 +128,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   };
 
-  const login = (personaKey: string): boolean => {
-    // 1. 네임드 요원 확인
-    const foundAgent = MOCK_AGENTS[personaKey.trim()];
+  const login = (personaKeyInput: string): boolean => {
+    const key = personaKeyInput.trim();
+    
+    // 1. 네임드 요원 확인 (키로 검색)
+    let foundAgent = AGENT_PROFILES[key];
+    
+    // 2. 이름으로도 검색 지원 (사용자 편의)
+    if (!foundAgent) {
+       foundAgent = AGENT_NAME_MAP[key];
+    }
+
     if (foundAgent) {
       setAgent(foundAgent);
       return true;
     }
 
-    // 2. 평범한 요원 (동적 생성)
+    // 3. 평범한 요원 (동적 생성)
     // 입력값이 있으면 무조건 로그인 성공으로 처리 (단, 빈 값은 제외)
-    if (personaKey.trim().length > 0) {
-      const newAgent = createRandomAgent(personaKey);
+    if (key.length > 0) {
+      const newAgent = createRandomAgent(key);
       setAgent(newAgent);
       return true;
     }

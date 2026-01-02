@@ -1,0 +1,18 @@
+{
+  "id": "HMU-003",
+  "name": "류재관",
+  "personaKey": "ryujaegwan",
+  "codename": "청동",
+  "department": "hyunmu",
+  "team": "1팀",
+  "rank": "실무관",
+  "extension": "2103",
+  "status": "정상",
+  "contamination": 18,
+  "totalIncidents": 35,
+  "specialCases": 10,
+  "rentals": [],
+  "purificationHistory": ["2025-12-05"],
+  "funeralPreference": "매장",
+  "grade": 8
+}

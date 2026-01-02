@@ -107,6 +107,7 @@
   ```
   personas/
   ├── parkhonglim/
+  │   ├── profile.json        # [NEW] 요원 프로필
   │   ├── messages.json       # 캐릭터 전용 쪽지
   │   ├── notifications.json  # 캐릭터 전용 공지
   │   ├── approvals.json      # 캐릭터 전용 결재
@@ -734,13 +735,15 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 **위치**: `src/data/personas/{캐릭터명}/`
 **특징**: 7명의 주요 캐릭터별 맞춤형 스토리 데이터
 
-각 페르소나 폴더는 4개 파일로 구성:
+각 페르소나 폴더는 5개 파일로 구성:
+- **profile.json**: 요원 프로필 정보 (직급, 오염도, 장비 등) - 소스 분리됨
 - **messages.json**: 캐릭터 관련 쪽지 (1~4건)
 - **notifications.json**: 캐릭터 전용 공지 (0~2건)
 - **approvals.json**: 캐릭터 전용 결재 문서 (0~3건)
 - **schedules.json**: 캐릭터 전용 일정 (0~5건)
 
 **병합 로직**:
+- 요원 정보: `profile.json` (AuthContext 로드)
 - 재난: GLOBAL_INCIDENTS (단일 소스)
 - 공지사항: GLOBAL_NOTIFICATIONS + {캐릭터}_NOTIFICATIONS
 - 쪽지/결재/일정: {캐릭터} 개인 데이터만 제공

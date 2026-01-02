@@ -16,5 +16,29 @@
     "title": "정기 주간 당직",
     "type": "당직",
     "date": "2026-01-05T18:00:00"
+  },
+  {
+    "id": "sch-solum-vacation-001",
+    "title": "개인 연차",
+    "type": "행사",
+    "date": "2025-03-10T09:00:00"
+  },
+  {
+    "id": "sch-solum-vacation-002",
+    "title": "개인 연차",
+    "type": "행사",
+    "date": "2025-03-11T09:00:00"
+  },
+  {
+    "id": "sch-solum-vacation-003",
+    "title": "개인 연차",
+    "type": "행사",
+    "date": "2025-03-12T09:00:00"
+  },
+  {
+    "id": "sch-solum-vacation-004",
+    "title": "개인 연차",
+    "type": "행사",
+    "date": "2025-03-13T09:00:00"
   }
 ]
