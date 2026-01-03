@@ -26,13 +26,37 @@ import { ko } from 'date-fns/locale';
 
 type GroupBy = 'status' | 'dangerLevel';
 
+import { useInteraction } from '@/contexts/InteractionContext';
+import { useEffect } from 'react';
+
+// ...
+
 export default function IncidentsPage() {
     const { agent } = useAuth();
+    const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteraction();
+
+    // Clear the "newly triggered" state shortly after viewing to stop animation re-runs eventually?
+    // Actually we keep it until page leave or manual clear. 
+    // Effect to clear "New" flag when unmounting or changing pages? 
+    // Maybe we just use it for the className.
+
+    useEffect(() => {
+        return () => clearNewTrigger();
+    }, []);
+
     const [groupBy, setGroupBy] = useState<GroupBy>('status');
     const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
     const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
     const [showManualDialog, setShowManualDialog] = useState(false);
+
     const incidents = DataManager.getIncidents(agent)
+        .filter(inc => {
+            // Special handling for Sinkhole: Show only if triggered
+            if (inc.id === 'inc-sinkhole-001') {
+                return triggeredIds.includes(inc.id);
+            }
+            return true;
+        })
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     const handleManualClick = (manualId: string) => {
@@ -84,6 +108,7 @@ export default function IncidentsPage() {
                     groupBy={groupBy}
                     onCardClick={setSelectedIncident}
                     onManualClick={handleManualClick}
+                    highlightId={newlyTriggeredId}
                 />
             </div>
 

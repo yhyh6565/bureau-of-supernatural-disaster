@@ -76,14 +76,14 @@ export function MessagesPage() {
         <Card className="card-gov pb-12">
           <CardHeader className="border-b border-border">
             <div className="space-y-2">
-              <CardTitle className="text-lg">{selectedMessage.title}</CardTitle>
+              <CardTitle className="text-base">{selectedMessage.title}</CardTitle>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <User className="w-3.5 h-3.5" />
                   <span>발신: {selectedMessage.senderName} ({selectedMessage.senderDepartment})</span>
                 </div>
                 <span>|</span>
-                <span>{format(new Date(selectedMessage.createdAt), 'yyyy년 M월 d일 HH:mm', { locale: ko })}</span>
+                <span>{format(new Date(selectedMessage.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</span>
               </div>
             </div>
           </CardHeader>
@@ -212,19 +212,18 @@ export function MessagesPage() {
                       </div>
 
                       {/* Desktop Grid Layout */}
-                      <div className="hidden md:grid grid-cols-12 gap-2 p-3">
+                      <div className="hidden md:grid grid-cols-12 gap-2 py-2 px-3 items-center">
                         <div className="col-span-2 text-sm">
-                          {message.senderName}
-                          <div className="text-xs text-muted-foreground">{message.senderDepartment}</div>
+                          {message.senderName}({message.senderDepartment})
                         </div>
                         <div className="col-span-7 flex items-center gap-2">
-                          {!message.isRead && <Badge className="bg-primary text-xs">NEW</Badge>}
-                          <span className={`truncate ${!message.isRead ? 'font-medium' : ''}`}>
+                          {!message.isRead && <Badge className="bg-primary text-[10px] px-1 h-4">NEW</Badge>}
+                          <span className={`truncate text-sm ${!message.isRead ? 'font-medium' : ''}`}>
                             {message.title}
                           </span>
                         </div>
-                        <div className="col-span-3 text-center text-sm text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yy/M/d HH:mm', { locale: ko })}
+                        <div className="col-span-3 text-center text-xs text-muted-foreground">
+                          {format(new Date(message.createdAt), 'yyyy.MM.dd', { locale: ko })}
                         </div>
                       </div>
                     </div>
@@ -271,15 +270,15 @@ export function MessagesPage() {
                       </div>
 
                       {/* Desktop Grid Layout */}
-                      <div className="hidden md:grid grid-cols-12 gap-2 p-3">
+                      <div className="hidden md:grid grid-cols-12 gap-2 py-2 px-3 items-center">
                         <div className="col-span-2 text-sm">
                           {getPersonaName(message.receiverId)}
                         </div>
                         <div className="col-span-7 flex items-center">
-                          <span className="truncate">{message.title}</span>
+                          <span className="truncate text-sm">{message.title}</span>
                         </div>
-                        <div className="col-span-3 text-center text-sm text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yy/M/d HH:mm', { locale: ko })}
+                        <div className="col-span-3 text-center text-xs text-muted-foreground">
+                          {format(new Date(message.createdAt), 'yyyy.MM.dd', { locale: ko })}
                         </div>
                       </div>
                     </div>

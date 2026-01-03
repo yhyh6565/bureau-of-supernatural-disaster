@@ -9,12 +9,13 @@ interface IncidentBoardProps {
     groupBy: GroupBy;
     onCardClick?: (incident: Incident) => void;
     onManualClick?: (manualId: string) => void;
+    highlightId?: string | null;
 }
 
 const STATUS_ORDER: IncidentStatus[] = ['접수', '조사중', '구조대기', '구조중', '정리대기', '정리중', '종결', '봉인'];
 const DANGER_ORDER: DangerLevel[] = ['멸형', '파형', '뇌형', '고형'];
 
-export function IncidentBoard({ incidents, groupBy, onCardClick, onManualClick }: IncidentBoardProps) {
+export function IncidentBoard({ incidents, groupBy, onCardClick, onManualClick, highlightId }: IncidentBoardProps) {
     const columns = groupBy === 'status'
         ? STATUS_ORDER.map(status => ({
             key: status,
@@ -39,6 +40,7 @@ export function IncidentBoard({ incidents, groupBy, onCardClick, onManualClick }
                     colorClass={col.colorClass}
                     onCardClick={onCardClick}
                     onManualClick={onManualClick}
+                    highlightId={highlightId}
                 />
             ))}
         </div>

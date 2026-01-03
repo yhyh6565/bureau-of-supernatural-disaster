@@ -2,56 +2,62 @@ import { DataManager } from '@/data/dataManager';
 import { AlertTriangle, Radio } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { useInteraction } from '@/contexts/InteractionContext';
+
+const SINKHOLE_ID = 'inc-sinkhole-001';
 
 export function DisasterTicker() {
     const { agent } = useAuth();
-    const incidents = DataManager.getIncidents(agent);
+    const { isTriggered, newlyTriggeredId } = useInteraction();
 
-    // High priority incidents (Brain/High types or specialized keywords)
-    const activeHighPriority = incidents.filter(i =>
-        (i.dangerLevel === '뇌형' || i.dangerLevel === '고형') &&
-        i.status !== '종결'
-    );
+    // Only show if the Sinkhole event is triggered
+    const showTicker = isTriggered(SINKHOLE_ID);
 
-    const activeCount = incidents.filter(i => i.status !== '종결').length;
-
-    // Rotation logic for multiple alerts
-    const [currentIndex, setCurrentIndex] = useState(0);
+    // Blink Effect State
+    const [isBlinking, setIsBlinking] = useState(false);
 
     useEffect(() => {
-        if (activeHighPriority.length > 1) {
-            const timer = setInterval(() => {
-                setCurrentIndex(prev => (prev + 1) % activeHighPriority.length);
-            }, 5000);
-            return () => clearInterval(timer);
+        if (newlyTriggeredId === SINKHOLE_ID) {
+            setIsBlinking(true);
+            const timer = setTimeout(() => setIsBlinking(false), 5000); // 5s blink
+            return () => clearTimeout(timer);
         }
-    }, [activeHighPriority.length]);
+    }, [newlyTriggeredId]);
+
+    const incidents = DataManager.getIncidents(agent);
+
+    // Filter to show ONLY the Sinkhole incident in this special mode
+    const targetIncident = incidents.find(i => i.id === SINKHOLE_ID);
+
+    if (!showTicker || !targetIncident) return null;
 
     return (
-        <div className="bg-destructive/10 border-b border-destructive/20 h-10 flex items-center px-4 overflow-hidden relative">
-            <div className="flex items-center gap-2 text-destructive font-bold text-sm whitespace-nowrap z-10 bg-background/0 pr-4">
-                <Radio className="w-4 h-4 animate-pulse" />
+        <div className={`
+            h-12 flex items-center px-4 overflow-hidden relative transition-colors duration-500
+            ${isBlinking ? 'animate-pulse bg-destructive text-destructive-foreground' : 'bg-destructive/10 border-b border-destructive/20'}
+        `}>
+            <div className={`flex items-center gap-2 font-bold text-sm whitespace-nowrap z-10 pr-4 
+                ${isBlinking ? 'text-destructive-foreground' : 'text-destructive'}`}>
+                <Radio className="w-5 h-5 animate-pulse" />
                 <span className="hidden sm:inline">재난 경보 발령:</span>
             </div>
 
-            <div className="flex-1 flex items-center overflow-hidden">
-                {activeHighPriority.length > 0 ? (
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-500 whitespace-nowrap text-sm font-medium">
-                        <span className="text-destructive mr-2">[{activeHighPriority[currentIndex].dangerLevel}]</span>
-                        {activeHighPriority[currentIndex].location} - {activeHighPriority[currentIndex].reportContent.slice(0, 40)}...
-                        <span className="ml-4 text-xs text-muted-foreground">
-                            (대응 중: {activeHighPriority[currentIndex].status})
-                        </span>
-                    </div>
-                ) : (
-                    <div className="text-sm text-muted-foreground flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4" />
-                        <span>현재 특이 단계의 재난 징후가 없습니다. 관할 지역 {activeCount}건 통상 관리 중.</span>
-                    </div>
-                )}
+            <div className="flex-1 flex items-center">
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 whitespace-nowrap text-sm font-medium">
+                    <span className={`mr-2 font-bold ${isBlinking ? 'text-white' : 'text-destructive'}`}>
+                        [{targetIncident.dangerLevel}]
+                    </span>
+                    <span className={isBlinking ? 'text-white' : ''}>
+                        {targetIncident.title} - {targetIncident.reportContent}
+                    </span>
+                    <span className={`ml-4 text-xs ${isBlinking ? 'text-white/80' : 'text-muted-foreground'}`}>
+                        (현재 상태: {targetIncident.status})
+                    </span>
+                </div>
             </div>
 
-            <div className="text-xs font-mono text-destructive/70 whitespace-nowrap z-10 pl-4 border-l border-destructive/20 h-full flex items-center">
+            <div className={`text-xs font-mono whitespace-nowrap z-10 pl-4 border-l h-full flex items-center
+                ${isBlinking ? 'border-white/30 text-white/80' : 'border-destructive/20 text-destructive/70'}`}>
                 LIVE FEED
             </div>
         </div>

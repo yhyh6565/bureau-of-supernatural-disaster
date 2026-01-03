@@ -118,7 +118,37 @@ src/data/
   }
   ```
 
-### 3.2 📝 결재 문서 (ApprovalDocument)
+  // ...
+  }
+  ```
+
+### 3.2 📢 공지사항 (Notification)
+전사 및 개인 대상 공지사항 데이터입니다.
+
+- **JSON 파일**: `global/notifications.json` (전사), `personas/*/notifications.json` (개인)
+- **주요 필드**:
+  ```typescript
+  interface Notification {
+    id: string;                 // 예: "noti-sinkhole-alert"
+    title: string;
+    content: string;            // 목록에 표시될 요약
+    fullContent: string;        // 상세 본문 (줄바꿈 포함)
+    priority: NoticePriority;   // "긴급" | "중요" | "일반"
+    category: NoticeCategory;   // "안전" | "인사" | "보안" | "기타"
+    sourceDepartment: string;   // 발신 부서
+    targetDepartment?: string | "전체" | "전사";
+    isPinned: boolean;          // 상단 고정 여부 (true일 경우 최상단 노출)
+    isRead?: boolean;           // 읽음 여부 (개인 데이터의 경우)
+    createdAt: Date;
+    trigger?: {                 // (Optional) 이스터에그 트리거
+      type: 'time-elapsed' | 'date-range' | 'random';
+      value: any;               // 예: 5000 (5초 후 발동)
+      delay?: number;           // 발동 지연 시간 (ms)
+    };
+  }
+  ```
+
+### 3.3 📝 결재 문서 (ApprovalDocument)
 업무 승인 및 보고 체계 데이터입니다.
 
 - **JSON 파일**: `ordinary/approvals.json`, `personas/*/approvals.json`
@@ -144,7 +174,7 @@ src/data/
   ```
 - **참고**: `createdBy`는 Agent의 `personaKey`를 사용합니다 (5.1 참조)
 
-### 3.3 💌 쪽지 (Message)
+### 3.4 💌 쪽지 (Message)
 사내 메신저 데이터입니다.
 
 - **JSON 파일**: `ordinary/messages.json`, `personas/*/messages.json`
@@ -168,7 +198,7 @@ src/data/
   ```
 - **참고**: `senderId`와 `receiverId`는 Agent의 `personaKey`를 사용합니다 (5.1 참조)
 
-### 3. Equipment (장비)
+### 3.5 Equipment (장비)
 *   **파일**: `src/data/global/equipment.json`
 *   **설명**: 대여 가능 장비 및 지급 물품
 *   **구조**:
@@ -184,7 +214,7 @@ src/data/
     }
     ```
 
-### 4. VisitLocation (방문 장소)
+### 3.6 VisitLocation (방문 장소)
 *   **파일**: `src/data/global/locations.json`
 *   **설명**: 예약 가능한 시설 정보
 *   **구조**:
@@ -198,7 +228,7 @@ src/data/
     }
     ```
 
-### 4.4 검사 예약 (Inspection Requests)
+### 3.7 검사 예약 (Inspection Requests)
 정화/오염 검사 예약 정보입니다.
 - **파일명**: `inspections.json`
 - **구분**: `ordinary`(일반) / `personas`(페르소나별)
@@ -210,7 +240,7 @@ src/data/
   - `symptoms`: 증상 (정밀검사 시)
   - `status`: 상태 (접수, 완료)
 
-### 5. RentalRecord (대여/지급 기록)
+### 3.8 RentalRecord (대여/지급 기록)
 *   **설명**: `Agent` 객체 내부에 포함되는 개인 자산 현황
 *   **구조**:
     ```typescript
@@ -224,7 +254,7 @@ src/data/
     }
     ```
 
-### 6. InspectionRequest (오염 검사)
+### 3.9 InspectionRequest (오염 검사)
 *   **설명**: `ResourcesPage` 오염 검사 탭에서 생성되는 데이터
 *   **구조**:
     ```typescript
@@ -241,7 +271,7 @@ src/data/
 
     ```
 
-### 7. Manual (재난 대응 매뉴얼)
+### 3.10 Manual (재난 대응 매뉴얼)
 *   **파일**: `src/data/global/manuals.json`
 *   **설명**: 특정 재난에 대한 상세 대응 수칙 및 금기 사항
 *   **연동**: `Incident.manualId`와 `Manual.id`로 연결

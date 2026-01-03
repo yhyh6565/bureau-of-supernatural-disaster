@@ -6,6 +6,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { UserProvider } from "@/contexts/UserContext";
 import { ResourceProvider } from "@/contexts/ResourceContext";
+import { InteractionProvider } from "@/contexts/InteractionContext";
 import { WorkProvider } from "@/contexts/WorkContext";
 import { LoginPage } from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
@@ -60,9 +61,11 @@ const App = () => (
         <AuthProvider>
           <UserProvider>
             <ResourceProvider>
-              <WorkProvider>
-                <AppRoutes />
-              </WorkProvider>
+              <InteractionProvider>
+                <WorkProvider>
+                  <AppRoutes />
+                </WorkProvider>
+              </InteractionProvider>
             </ResourceProvider>
           </UserProvider>
         </AuthProvider>

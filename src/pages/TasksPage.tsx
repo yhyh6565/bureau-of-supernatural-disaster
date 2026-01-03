@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { useInteraction } from '@/contexts/InteractionContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,21 +25,19 @@ import {
 import { Shield, Ban, List, Calendar as CalendarIcon } from 'lucide-react';
 import { TasksCalendar } from '@/components/work/TasksCalendar';
 import { IncidentCard } from '@/components/work/IncidentCard';
-
 import { ManualViewer } from '@/components/work/ManualViewer';
-
 import { useSearchParams } from 'react-router-dom';
 
 export function TasksPage() {
   const { agent } = useAuth();
   const { acceptedIncidentIds, acceptIncident } = useWork(); // Use Context
+  const { triggeredIds } = useInteraction();
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
 
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
   const [showDetailDialog, setShowDetailDialog] = useState(false);
-  // const [acceptedIncidentIds, setAcceptedIncidentIds] = useState<string[]>([]); // Removed local state
 
   // Manual View State
   const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
@@ -47,8 +46,15 @@ export function TasksPage() {
   if (!agent) return null;
 
   const department = agent.department;
-  const deptInfo = DEPARTMENT_INFO[department];
-  const incidents = DataManager.getIncidents(agent);
+  // const deptInfo = DEPARTMENT_INFO[department]; // Unused
+
+  // Filter incidents: Show normal + triggered sinkhole
+  const incidents = DataManager.getIncidents(agent).filter(inc => {
+    if (inc.id === 'inc-sinkhole-001') {
+      return triggeredIds.includes(inc.id);
+    }
+    return true;
+  });
 
   // 부서별 업무 필터링
   const getTasksByDepartment = () => {

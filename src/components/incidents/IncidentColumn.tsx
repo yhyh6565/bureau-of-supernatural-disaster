@@ -8,9 +8,10 @@ interface IncidentColumnProps {
     colorClass?: string;
     onCardClick?: (incident: Incident) => void;
     onManualClick?: (manualId: string) => void;
+    highlightId?: string | null;
 }
 
-export function IncidentColumn({ title, incidents, colorClass = 'bg-muted', onCardClick, onManualClick }: IncidentColumnProps) {
+export function IncidentColumn({ title, incidents, colorClass = 'bg-muted', onCardClick, onManualClick, highlightId }: IncidentColumnProps) {
     return (
         <div className="flex-shrink-0 w-72 bg-muted/30 rounded-md border border-border flex flex-col max-h-[calc(100vh-200px)]">
             {/* 컬럼 헤더 */}
@@ -29,7 +30,13 @@ export function IncidentColumn({ title, incidents, colorClass = 'bg-muted', onCa
                     </div>
                 ) : (
                     incidents.map((incident) => (
-                        <IncidentBoardCard key={incident.id} incident={incident} onClick={() => onCardClick?.(incident)} onManualClick={onManualClick} />
+                        <IncidentBoardCard
+                            key={incident.id}
+                            incident={incident}
+                            onClick={() => onCardClick?.(incident)}
+                            onManualClick={onManualClick}
+                            isHighlighted={incident.id === highlightId}
+                        />
                     ))
                 )}
             </div>

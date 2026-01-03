@@ -1,10 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useInteraction } from '@/contexts/InteractionContext';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { ArrowLeft, Calendar, Building2, User, Pin } from 'lucide-react';
 import { format } from 'date-fns';
@@ -14,9 +16,16 @@ export function NoticeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { agent } = useAuth();
+  const { markAsRead } = useInteraction();
 
   const notifications = DataManager.getNotifications(agent);
   const notice = notifications.find(n => n.id === id);
+
+  useEffect(() => {
+    if (id) {
+      markAsRead(id);
+    }
+  }, [id, markAsRead]);
 
   if (!notice) {
     return (

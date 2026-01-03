@@ -22,9 +22,17 @@ const NAV_ITEMS = [
   { path: '/tasks', label: '담당업무', icon: Briefcase },
 ];
 
+import { useInteraction } from '@/contexts/InteractionContext';
+import { useState, useEffect } from 'react';
+
+// ...
+
 export function GNBHeader() {
   const { agent, logout } = useAuth();
+  const { isTriggered, isRead } = useInteraction();
   const location = useLocation();
+
+  const showNoticeBadge = isTriggered('noti-sinkhole-alert');
 
   if (!agent) return null;
 
@@ -53,7 +61,7 @@ export function GNBHeader() {
                 key={item.path}
                 to={item.path}
                 className={`
-                  px-3 py-2 text-sm font-medium rounded-sm transition-colors
+                  px-3 py-2 text-sm font-medium rounded-sm transition-colors relative
                   ${isActive
                     ? 'bg-primary-foreground/20 text-primary-foreground'
                     : 'text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10'
@@ -62,6 +70,9 @@ export function GNBHeader() {
               >
                 <item.icon className="w-4 h-4 inline-block mr-1.5 -mt-0.5" />
                 {item.label}
+                {item.path === '/notices' && showNoticeBadge && !isRead('noti-sinkhole-alert') && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-destructive rounded-full animate-pulse" />
+                )}
               </Link>
             );
           })}

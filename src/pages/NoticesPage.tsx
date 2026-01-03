@@ -303,7 +303,7 @@ export function NoticesPage() {
                               {notice.priority}
                             </Badge>
                             <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
-                              <categoryStyle.icon className="w-3 h-3" />
+                              {notice.category}
                             </Badge>
                             {isNew && <Badge className="bg-success text-xs">NEW</Badge>}
                           </div>
@@ -328,13 +328,13 @@ export function NoticesPage() {
                         )}
                       </div>
                       <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs`}>
-                          {notice.priority}
+                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs md:w-full md:justify-center`}>
+                          {notice.category}
                         </Badge>
                       </div>
                       <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
-                          <categoryStyle.icon className="w-3 h-3" />
+                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs md:w-full md:justify-center`}>
+                          {notice.priority}
                         </Badge>
                       </div>
                       <div className="col-span-5 flex items-center gap-2">

@@ -8,14 +8,18 @@ interface IncidentBoardCardProps {
     incident: Incident;
     onClick?: () => void;
     onManualClick?: (manualId: string) => void;
+    isHighlighted?: boolean;
 }
 
-export function IncidentBoardCard({ incident, onClick, onManualClick }: IncidentBoardCardProps) {
+export function IncidentBoardCard({ incident, onClick, onManualClick, isHighlighted }: IncidentBoardCardProps) {
     const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' };
 
     return (
         <div
-            className="bg-card border border-border rounded-sm p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+            className={`
+                bg-card border border-border rounded-sm p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer
+                ${isHighlighted ? 'animate-in fade-in slide-in-from-bottom-2 duration-700 ring-2 ring-destructive bg-destructive/5' : ''}
+            `}
             onClick={onClick}
         >
             {/* 상단: 등급 + 제목 */}
