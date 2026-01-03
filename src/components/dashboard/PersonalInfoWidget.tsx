@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 import { useResource } from '@/contexts/ResourceContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { User, Brain, Briefcase, Package } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Progress } from '@/components/ui/progress';
 
 export function PersonalInfoWidget() {
     const { agent } = useAuth();
+    const { contamination } = useUser();
     const { rentals } = useResource();
 
     if (!agent) return null;
@@ -20,11 +22,11 @@ export function PersonalInfoWidget() {
         return 'text-success';
     };
 
-    const contaminationColor = getContaminationColor(agent.contamination);
+    const contaminationColor = getContaminationColor(contamination);
 
     return (
         <Card className="card-gov h-fit">
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-1.5">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <User className="w-4 h-4" />
                     개인 정보
@@ -66,13 +68,13 @@ export function PersonalInfoWidget() {
                             정신오염도
                         </span>
                         <span className={`text-sm font-mono font-bold ${contaminationColor}`}>
-                            {agent.contamination}%
+                            {contamination}%
                         </span>
                     </div>
-                    <Progress value={agent.contamination} className="h-1.5"
+                    <Progress value={contamination} className="h-1.5"
                         indicatorClassName={
-                            agent.contamination >= 80 ? 'bg-destructive' :
-                                agent.contamination >= 50 ? 'bg-warning' : 'bg-success'
+                            contamination >= 80 ? 'bg-destructive' :
+                                contamination >= 50 ? 'bg-warning' : 'bg-success'
                         }
                     />
                 </div>

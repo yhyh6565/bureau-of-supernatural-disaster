@@ -63,7 +63,7 @@ export function WeeklySchedule() {
 
   return (
     <Card className="card-gov">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <CardTitle className="text-sm md:text-base font-medium flex items-center gap-2">
           <Calendar className="w-4 h-4" />
           주 단위 일정

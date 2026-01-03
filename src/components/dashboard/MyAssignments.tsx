@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEPARTMENT_INFO } from '@/constants/haetae';
+import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -60,7 +61,7 @@ export function MyAssignments() {
 
   return (
     <Card className="card-gov">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <CardTitle className="text-sm md:text-base font-medium flex flex-col sm:flex-row items-start sm:items-center gap-2">
           <div className="flex items-center gap-2">
             <DeptIcon className="w-4 h-4" />
@@ -73,32 +74,46 @@ export function MyAssignments() {
       </CardHeader>
       <CardContent>
         {myIncidents.length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {myIncidents.map((incident) => (
               <div
                 key={incident.id}
                 className="p-3 border border-border rounded-sm hover:bg-accent/50 transition-colors"
               >
-                <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-2 mb-2">
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {incident.caseNumber}
-                  </span>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex-1 min-w-0 space-y-2">
+                    {/* 상단: 상태, 등급 뱃지 */}
+                    <div className="flex items-center gap-1.5">
+                      <Badge className={`${STATUS_STYLE[incident.status].bgClass} ${STATUS_STYLE[incident.status].textClass} text-[10px] px-1.5 h-5`}>
+                        {incident.status}
+                      </Badge>
+                      <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} text-[10px] px-1.5 h-5`}>
+                        {incident.dangerLevel}
+                      </Badge>
+                    </div>
+
+                    {/* 중단: 제목 및 위치 */}
+                    <div className="space-y-0.5">
+                      <h4 className="font-semibold text-sm leading-tight truncate">
+                        {incident.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground truncate font-mono">
+                        {incident.location}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 우측: 액션 버튼 */}
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="h-7 text-xs gap-1 w-full sm:w-auto"
+                    variant="default"
+                    className="text-xs shrink-0 flex flex-col items-center justify-center gap-0.5"
                     onClick={() => navigate('/tasks')}
                   >
-                    {getActionLabel()}
-                    <ArrowRight className="w-3 h-3" />
+                    <span>{getActionLabel().split(' ')[0]}</span>
+                    <span>{getActionLabel().split(' ')[1]}</span>
                   </Button>
                 </div>
-                <p className="text-sm truncate">{incident.location}</p>
-                {incident.darknessType && (
-                  <span className="text-xs text-abyssal">
-                    어둠: {incident.darknessType}
-                  </span>
-                )}
               </div>
             ))}
           </div>
@@ -110,9 +125,8 @@ export function MyAssignments() {
         )}
 
         <Button
-          variant="outline"
-          className="w-full mt-3"
-          size="sm"
+          variant="ghost"
+          className="w-full mt-2 text-xs text-muted-foreground h-8"
           onClick={() => navigate('/tasks')}
         >
           담당업무 전체 보기

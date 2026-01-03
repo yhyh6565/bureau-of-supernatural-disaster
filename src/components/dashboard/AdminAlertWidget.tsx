@@ -26,7 +26,7 @@ export function AdminAlertWidget() {
 
     return (
         <Card className="card-gov h-fit">
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-1.5">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Bell className="w-4 h-4" />
                     행정 알림

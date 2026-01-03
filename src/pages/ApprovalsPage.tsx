@@ -58,7 +58,7 @@ export function ApprovalsPage() {
                   {selectedApproval.status}
                 </Badge>
               </div>
-              <CardTitle className="text-lg">{selectedApproval.title}</CardTitle>
+              <CardTitle className="text-base">{selectedApproval.title}</CardTitle>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span>기안자: {getPersonaName(selectedApproval.createdByName) || selectedApproval.createdByName}</span>
                 <span>|</span>

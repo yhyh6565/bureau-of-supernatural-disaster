@@ -1,10 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 import { Activity, Brain, ShieldAlert } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
 export function AgentStatusWidget() {
     const { agent } = useAuth();
+    const { contamination } = useUser();
 
     if (!agent) return null;
 
@@ -21,11 +23,11 @@ export function AgentStatusWidget() {
         return '정상 (작전 가능)';
     };
 
-    const colorClass = getStatusColor(agent.contamination);
+    const colorClass = getStatusColor(contamination);
 
     return (
         <Card className="card-gov h-fit">
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-1.5">
                 <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Activity className="w-4 h-4" />
                     요원 상태 모니터
@@ -40,17 +42,17 @@ export function AgentStatusWidget() {
                             정신 오염도
                         </span>
                         <span className={`font-mono font-bold ${colorClass}`}>
-                            {agent.contamination}%
+                            {contamination}%
                         </span>
                     </div>
-                    <Progress value={agent.contamination} className="h-2"
+                    <Progress value={contamination} className="h-2"
                         indicatorClassName={
-                            agent.contamination >= 80 ? 'bg-destructive' :
-                                agent.contamination >= 50 ? 'bg-warning' : 'bg-success'
+                            contamination >= 80 ? 'bg-destructive' :
+                                contamination >= 50 ? 'bg-warning' : 'bg-success'
                         }
                     />
                     <p className={`text-xs text-right font-medium ${colorClass}`}>
-                        {getStatusLabel(agent.contamination)}
+                        {getStatusLabel(contamination)}
                     </p>
                 </div>
 

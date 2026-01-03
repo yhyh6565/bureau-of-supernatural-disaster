@@ -1,321 +1,321 @@
-import { useState, useMemo } from 'react';
-import { Calendar } from '@/components/ui/calendar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
-import { useResource } from '@/contexts/ResourceContext';
-import { useWork } from '@/contexts/WorkContext';
+import { useState, useEffect, useMemo } from 'react';
 import {
     format,
-    isSameDay,
+    startOfMonth,
+    endOfMonth,
     startOfWeek,
     endOfWeek,
     eachDayOfInterval,
     isSameMonth,
-    addDays,
-    subDays
+    isSameDay,
+    addMonths,
+    subMonths,
+    addWeeks,
+    subWeeks,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import {
-    AlertTriangle,
-    Calendar as CalendarIcon,
-    Shield,
-    Package,
-    FileText,
-    Droplets,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Calendar as CalendarIcon,
+    AlertTriangle,
+    Package,
+    Shield,
+    Droplets,
+    FileText
 } from 'lucide-react';
-import {
-    Incident,
-    RentalRecord,
-    InspectionRequest,
-    ApprovalDocument
-} from '@/types/haetae';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { useWork } from '@/contexts/WorkContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useResource } from '@/contexts/ResourceContext';
+import { DataManager } from '@/data/dataManager';
+import { STATUS_STYLE } from '@/constants/haetae';
 
-// 1. Unified Event Type
+// Unified Event Type
 export interface CalendarEvent {
     id: string;
     date: Date;
     type: 'incident' | 'rental' | 'inspection' | 'purification' | 'approval' | 'schedule';
     title: string;
-    description?: string;
-    priority?: 'high' | 'medium' | 'low';
-    meta?: any; // Original data
+    status: string;
+    dangerLevel?: string;
 }
 
 export function TasksCalendar() {
     const { agent } = useAuth();
-    const { rentals } = useResource(); // Dynamic rentals
-    const { schedules, approvals, inspectionRequests } = useWork(); // Dynamic work data
+    const { rentals } = useResource();
+    const { schedules, approvals, inspectionRequests, acceptedIncidentIds } = useWork();
 
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-    const [viewDate, setViewDate] = useState<Date>(new Date()); // For month navigation
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [viewMode, setViewMode] = useState<'month' | 'week'>('month');
 
-    // Resize listener for responsive view
-    useState(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
+    // Responsive View Mode
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setViewMode('week');
+            } else {
+                setViewMode('month');
+            }
+        };
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    });
+    }, []);
 
-    // 2. Data Aggregation
+    if (!agent) return null;
+
+    // Data Aggregation
     const events = useMemo(() => {
-        if (!agent) return [];
         const allEvents: CalendarEvent[] = [];
 
-        // A. Incidents (Work) -> CreatedAt
-        const incidents = DataManager.getIncidents(agent);
-        incidents.forEach(inc => {
+        // 1. Incidents
+        const allIncidents = DataManager.getIncidents(agent);
+        const myIncidents = allIncidents.filter(inc => {
+            if (acceptedIncidentIds.includes(inc.id)) return true;
+            if (agent.department === 'baekho' && inc.status === '접수') return true;
+            if (agent.department === 'hyunmu' && inc.status === '구조대기') return true;
+            if (agent.department === 'jujak' && inc.status === '정리대기') return true;
+            return false;
+        });
+
+        myIncidents.forEach(inc => {
             allEvents.push({
                 id: `inc-${inc.id}`,
                 date: new Date(inc.createdAt),
                 type: 'incident',
-                title: `[${inc.dangerLevel}] ${inc.location} 재난`,
-                description: inc.reportContent,
-                priority: inc.dangerLevel === '멸형' || inc.dangerLevel === '파형' ? 'high' : 'medium',
-                meta: inc
+                title: inc.title,
+                status: inc.status,
+                dangerLevel: inc.dangerLevel
             });
         });
 
-        // B. Rentals (Resources) -> DueDate
-        // Use rentals from context which handles dynamic updates
-        if (rentals) {
-            rentals.forEach(rental => {
-                if (rental.dueDate) {
-                    allEvents.push({
-                        id: `rent-${rental.id}`,
-                        date: new Date(rental.dueDate),
-                        type: 'rental',
-                        title: `반납 마감: ${rental.equipmentName}`,
-                        description: rental.status === '연체' ? '현재 연체 중입니다.' : undefined,
-                        priority: rental.status === '연체' ? 'high' : 'medium',
-                        meta: rental
-                    });
-                }
-            });
-        }
+        // 2. Rentals (Resources)
+        rentals.forEach(rental => {
+            if (rental.dueDate) {
+                allEvents.push({
+                    id: `rent-${rental.id}`,
+                    date: new Date(rental.dueDate),
+                    type: 'rental',
+                    title: `${rental.equipmentName} 반납`,
+                    status: rental.status
+                });
+            }
+        });
 
-        // C. Inspections (Health) -> ScheduledDate
-        // Use inspectionRequests from context
+        // 3. Inspections
         inspectionRequests.forEach(insp => {
             allEvents.push({
                 id: `insp-${insp.id}`,
                 date: new Date(insp.scheduledDate),
                 type: 'inspection',
-                title: `${insp.type} 일정`,
-                description: insp.status === '완료' ? `결과: ${insp.result}` : '검사 예정',
-                priority: 'high',
-                meta: insp
+                title: `${insp.type}`,
+                status: insp.status
             });
         });
 
-        // D. Purification History (Health) -> Visit Date
-        if (agent.purificationHistory) {
-            agent.purificationHistory.forEach((date, index) => {
-                allEvents.push({
-                    id: `puri-${index}`,
-                    date: new Date(date),
-                    type: 'purification',
-                    title: '용천 선녀탕 방문',
-                    description: '정신 오염 정화 완료',
-                    priority: 'low',
-                    meta: date
-                });
-            });
-        }
-
-        // E. Approvals (Admin) -> CreatedAt
-        // Use approvals from context
+        // 4. Approvals
         approvals.forEach(app => {
             allEvents.push({
                 id: `app-${app.id}`,
                 date: new Date(app.createdAt),
                 type: 'approval',
-                title: `결재 기안: ${app.title}`,
-                description: `상태: ${app.status}`,
-                priority: 'low',
-                meta: app
+                title: app.title,
+                status: app.status
             });
         });
 
-        // F. Static Schedules -> Date
-        // Use schedules from context
+        // 5. Schedules
         schedules.forEach(sch => {
             allEvents.push({
                 id: `sch-${sch.id}`,
                 date: new Date(sch.date),
                 type: 'schedule',
                 title: sch.title,
-                description: sch.type,
-                priority: 'medium',
-                meta: sch
+                status: sch.type // Using type as status-like label
             });
         });
 
         return allEvents;
-    }, [agent, rentals, schedules, approvals, inspectionRequests]);
+    }, [agent, rentals, schedules, approvals, inspectionRequests, acceptedIncidentIds]);
 
-    // 3. Helper to get events for a date
-    const getEventsForDate = (date: Date) => {
-        return events.filter(e => isSameDay(e.date, date));
-    };
+    // Calendar Logic
+    const calendarDays = (() => {
+        const start = viewMode === 'month' ? startOfMonth(currentDate) : startOfWeek(currentDate, { locale: ko });
+        const end = viewMode === 'month' ? endOfMonth(currentDate) : endOfWeek(currentDate, { locale: ko });
 
-    // 4. Render Day Decoration
-    const renderDay = (day: Date) => {
-        const dayEvents = getEventsForDate(day);
-        if (dayEvents.length === 0) return <div>{format(day, 'd')}</div>;
+        // For Month view, pad to full weeks (Sun-Sat)
+        const viewStart = startOfWeek(start, { locale: ko });
+        const viewEnd = endOfWeek(end, { locale: ko });
 
-        const hasHighPriority = dayEvents.some(e => e.priority === 'high');
-        const hasWork = dayEvents.some(e => e.type === 'incident');
-        const hasPersonal = dayEvents.some(e => ['rental', 'inspection', 'purification', 'approval'].includes(e.type));
+        return eachDayOfInterval({ start: viewStart, end: viewEnd });
+    })();
 
+    const next = () => setCurrentDate(viewMode === 'month' ? addMonths(currentDate, 1) : addWeeks(currentDate, 1));
+    const prev = () => setCurrentDate(viewMode === 'month' ? subMonths(currentDate, 1) : subWeeks(currentDate, 1));
+    const today = () => setCurrentDate(new Date());
+
+    const renderEvents = (date: Date) => {
+        const dayEvents = events.filter(e => isSameDay(e.date, date));
         return (
-            <div className="relative w-full h-full flex items-center justify-center">
-                <span>{format(day, 'd')}</span>
-                <div className="absolute bottom-1 flex gap-0.5">
-                    {hasWork && <div className="w-1 h-1 rounded-full bg-destructive" />}
-                    {hasPersonal && <div className="w-1 h-1 rounded-full bg-primary" />}
-                </div>
+            <div className={`flex flex-col gap-1 mt-1 ${viewMode === 'week' ? 'gap-2' : ''}`}>
+                {dayEvents.map(e => {
+                    let bgClass = 'bg-secondary text-secondary-foreground';
+                    let icon = null;
+                    let borderClass = '';
+
+                    if (e.type === 'incident') {
+                        bgClass = STATUS_STYLE[e.status]?.bgClass || bgClass;
+                        if (e.dangerLevel === '멸형') borderClass = 'border-l-2 border-destructive';
+                        icon = <AlertTriangle className="w-3 h-3 text-destructive" />;
+                    } else if (e.type === 'rental') {
+                        bgClass = 'bg-orange-100 text-orange-800';
+                        icon = <Package className="w-3 h-3" />;
+                    } else if (e.type === 'inspection') {
+                        bgClass = 'bg-blue-100 text-blue-800';
+                        icon = <Shield className="w-3 h-3" />;
+                    } else if (e.type === 'approval') {
+                        bgClass = 'bg-green-100 text-green-800';
+                        icon = <FileText className="w-3 h-3" />;
+                    }
+
+                    return (
+                        <div
+                            key={e.id}
+                            className={`
+                        text-xs p-2 rounded flex items-center gap-1.5 cursor-pointer hover:opacity-80
+                        ${bgClass} ${borderClass}
+                        ${viewMode === 'week' ? 'p-3' : ''}
+                    `}
+                        >
+                            {icon}
+                            <div className="min-w-0 flex-1 truncate font-medium">
+                                {e.title}
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         );
     };
 
-    // 5. Selected Date Display
-    const selectedEvents = selectedDate ? getEventsForDate(selectedDate) : [];
-
-    // Mobile Weekly View Logic
-    const weekDays = useMemo(() => {
-        const start = startOfWeek(viewDate, { locale: ko });
-        const end = endOfWeek(viewDate, { locale: ko });
-        return eachDayOfInterval({ start, end });
-    }, [viewDate]);
-
     return (
-        <div className="flex flex-col lg:flex-row gap-6">
-            {/* Calendar Section */}
-            <Card className="card-gov flex-1 border-0 lg:border">
-                <CardContent className="p-0 lg:p-4">
-                    {/* Mobile Weekly Custom View */}
-                    {isMobile ? (
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between px-4 pt-4">
-                                <Button variant="ghost" size="icon" onClick={() => setViewDate(subDays(viewDate, 7))} aria-label="이전 주">
-                                    <ChevronLeft className="w-4 h-4" />
-                                </Button>
-                                <span className="font-semibold">
-                                    {format(viewDate, 'yyyy년 M월', { locale: ko })} {Math.ceil(viewDate.getDate() / 7)}주차
-                                </span>
-                                <Button variant="ghost" size="icon" onClick={() => setViewDate(addDays(viewDate, 7))} aria-label="다음 주">
-                                    <ChevronRight className="w-4 h-4" />
-                                </Button>
-                            </div>
-                            <div className="grid grid-cols-7 gap-1 px-2 text-center">
-                                {['일', '월', '화', '수', '목', '금', '토'].map(d => (
-                                    <div key={d} className="text-xs text-muted-foreground py-2">{d}</div>
-                                ))}
-                                {weekDays.map(day => {
-                                    const isSelected = selectedDate && isSameDay(day, selectedDate);
-                                    const dayEvents = getEventsForDate(day);
-                                    const hasHigh = dayEvents.some(e => e.priority === 'high');
-                                    const hasEvent = dayEvents.length > 0;
+        <Card className="card-gov h-full min-h-[600px] flex flex-col">
+            <div className="p-4 border-b flex items-center justify-between bg-muted/20">
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <Button variant="outline" size="icon" onClick={prev} aria-label="이전 달">
+                            <ChevronLeft className="w-4 h-4" />
+                        </Button>
+                        <h2 className="text-lg font-bold min-w-[100px] text-center">
+                            {format(currentDate, 'yyyy. MM', { locale: ko })}
+                        </h2>
+                        <Button variant="outline" size="icon" onClick={next} aria-label="다음 달">
+                            <ChevronRight className="w-4 h-4" />
+                        </Button>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={today}>
+                        오늘
+                    </Button>
+                </div>
 
-                                    return (
-                                        <button
-                                            key={day.toISOString()}
-                                            onClick={() => setSelectedDate(day)}
+                <div className="flex items-center bg-secondary rounded-md p-1">
+                    <Button
+                        variant={viewMode === 'month' ? 'default' : 'ghost'}
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => setViewMode('month')}
+                    >
+                        월간
+                    </Button>
+                    <Button
+                        variant={viewMode === 'week' ? 'default' : 'ghost'}
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => setViewMode('week')}
+                    >
+                        주간
+                    </Button>
+                </div>
+            </div>
+
+            <CardContent className="p-0 flex-1 flex flex-col">
+                {/* Header Row - Only for Month View or Desktop */}
+                {viewMode === 'month' && (
+                    <div className="grid grid-cols-7 border-b bg-muted/40 divide-x">
+                        {['일', '월', '화', '수', '목', '금', '토'].map((day, i) => (
+                            <div
+                                key={day}
+                                className={`
+                        py-2 text-center text-xs font-medium 
+                        ${i === 0 ? 'text-destructive' : i === 6 ? 'text-blue-500' : 'text-muted-foreground'}
+                    `}
+                            >
+                                {day}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Calendar Grid */}
+
+                {/* VIEW 1: MONTH (Desktop) */}
+                {viewMode === 'month' && (
+                    <div className="grid grid-cols-7 auto-rows-[minmax(120px,1fr)] divide-x divide-y border-b flex-1">
+                        {calendarDays.map((day) => {
+                            const isCurrentMonth = isSameMonth(day, currentDate);
+                            const isToday = isSameDay(day, new Date());
+                            return (
+                                <div
+                                    key={day.toString()}
+                                    className={`
+                        p-1 relative flex flex-col gap-1
+                        ${!isCurrentMonth ? 'bg-muted/10 text-muted-foreground/30' : 'bg-background'}
+                        ${isToday ? 'bg-primary/5' : ''}
+                    `}
+                                >
+                                    <div className="text-center">
+                                        <span
                                             className={`
-                                        flex flex-col items-center justify-center py-3 rounded-lg text-sm relative
-                                        ${isSelected ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}
-                                        ${!isSameMonth(day, viewDate) ? 'opacity-30' : ''}
-                                    `}
+                                text-xs font-medium w-6 h-6 inline-flex items-center justify-center rounded-full
+                                ${isToday ? 'bg-primary text-primary-foreground' : ''}
+                            `}
                                         >
-                                            <span className="mb-1">{format(day, 'd')}</span>
-                                            {hasEvent && (
-                                                <div className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : (hasHigh ? 'bg-destructive' : 'bg-primary')}`} />
-                                            )}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ) : (
-                        /* Desktop Monthly View */
-                        <Calendar
-                            mode="single"
-                            selected={selectedDate}
-                            onSelect={setSelectedDate}
-                            locale={ko}
-                            className="w-full"
-                            components={{
-                                DayContent: ({ date }) => renderDay(date)
-                            }}
-                        />
-                    )}
-                </CardContent>
-            </Card>
-
-            {/* Detail List Section */}
-            <Card className="card-gov flex-1 h-full min-h-[400px]">
-                <CardHeader>
-                    <CardTitle className="text-base flex items-center gap-2">
-                        <CalendarIcon className="w-4 h-4" />
-                        {selectedDate ? format(selectedDate, 'M월 d일 일정', { locale: ko }) : '날짜를 선택하세요'}
-                        <Badge variant="secondary" className="ml-auto">
-                            {selectedEvents.length}건
-                        </Badge>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    {selectedEvents.length > 0 ? (
-                        <div className="space-y-3">
-                            {selectedEvents.map(event => (
-                                <div key={event.id} className="flex gap-3 p-3 border rounded-sm hover:bg-accent/50 transition-colors">
-                                    {/* Icon based on Type */}
-                                    <div className={`
-                                w-8 h-8 rounded-full flex items-center justify-center shrink-0
-                                ${event.type === 'incident' ? 'bg-destructive/10 text-destructive' :
-                                            event.type === 'rental' ? 'bg-warning/10 text-warning' :
-                                                event.type === 'purification' ? 'bg-blue-500/10 text-blue-500' :
-                                                    'bg-primary/10 text-primary'}
-                            `}>
-                                        {event.type === 'incident' && <AlertTriangle className="w-4 h-4" />}
-                                        {event.type === 'rental' && <Package className="w-4 h-4" />}
-                                        {event.type === 'inspection' && <Shield className="w-4 h-4" />}
-                                        {event.type === 'purification' && <Droplets className="w-4 h-4" />}
-                                        {(event.type === 'approval' || event.type === 'schedule') && <FileText className="w-4 h-4" />}
+                                            {format(day, 'd')}
+                                        </span>
                                     </div>
-
-                                    <div className="space-y-1">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-medium text-sm">{event.title}</span>
-                                            {event.priority === 'high' && (
-                                                <Badge variant="destructive" className="text-[10px] h-4 px-1">중요</Badge>
-                                            )}
-                                        </div>
-                                        {event.description && (
-                                            <p className="text-xs text-muted-foreground line-clamp-1">
-                                                {event.description}
-                                            </p>
-                                        )}
-                                        <div className="text-[10px] text-muted-foreground font-mono">
-                                            {format(event.date, 'HH:mm')}
-                                        </div>
-                                    </div>
+                                    {renderEvents(day)}
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="h-[200px] flex flex-col items-center justify-center text-muted-foreground text-sm">
-                            <CalendarIcon className="w-8 h-8 mb-2 opacity-20" />
-                            일정이 없습니다.
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-        </div>
+                            );
+                        })}
+                    </div>
+                )}
+
+                {/* VIEW 2: WEEK (Mobile - Vertical Stack) */}
+                {viewMode === 'week' && (
+                    <div className="flex flex-col flex-1 divide-y">
+                        {calendarDays.map((day) => {
+                            const isToday = isSameDay(day, new Date());
+                            return (
+                                <div key={day.toString()} className={`p-3 min-h-[80px] ${isToday ? 'bg-primary/5' : ''}`}>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className={`text-sm font-bold ${isToday ? 'text-primary' : ''}`}>
+                                            {format(day, 'd')}
+                                        </span>
+                                        <span className="text-xs text-muted-foreground">
+                                            {format(day, 'EEE', { locale: ko })}
+                                        </span>
+                                        {isToday && <Badge variant="outline" className="text-[10px] h-4">Today</Badge>}
+                                    </div>
+                                    {renderEvents(day)}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </CardContent>
+        </Card >
     );
 }

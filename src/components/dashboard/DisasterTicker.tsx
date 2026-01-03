@@ -42,8 +42,8 @@ export function DisasterTicker() {
                 <span className="hidden sm:inline">재난 경보 발령:</span>
             </div>
 
-            <div className="flex-1 flex items-center">
-                <div className="animate-in fade-in slide-in-from-right-4 duration-500 whitespace-nowrap text-sm font-medium">
+            <div className="flex-1 flex items-center min-w-0">
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 text-sm font-medium truncate">
                     <span className={`mr-2 font-bold ${isBlinking ? 'text-white' : 'text-destructive'}`}>
                         [{targetIncident.dangerLevel}]
                     </span>

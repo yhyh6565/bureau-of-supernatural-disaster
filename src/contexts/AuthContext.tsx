@@ -16,12 +16,12 @@ const SESSION_STORAGE_KEY = 'haetae_agent_session';
 // Helper to revive dates in Agent profile
 const parseAgentProfile = (profile: any): Agent => {
   const agent = { ...profile };
-  
+
   // Date fields conversion
   if (agent.purificationHistory) {
-     agent.purificationHistory = agent.purificationHistory.map((d: string) => new Date(d));
+    agent.purificationHistory = agent.purificationHistory.map((d: string) => new Date(d));
   }
-  
+
   if (agent.rentals) {
     agent.rentals = agent.rentals.map((r: any) => ({
       ...r,
@@ -29,7 +29,7 @@ const parseAgentProfile = (profile: any): Agent => {
       dueDate: r.dueDate ? new Date(r.dueDate) : undefined,
     }));
   }
-  
+
   return agent as Agent;
 };
 
@@ -130,13 +130,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (personaKeyInput: string): boolean => {
     const key = personaKeyInput.trim();
-    
+
     // 1. 네임드 요원 확인 (키로 검색)
     let foundAgent = AGENT_PROFILES[key];
-    
+
     // 2. 이름으로도 검색 지원 (사용자 편의)
     if (!foundAgent) {
-       foundAgent = AGENT_NAME_MAP[key];
+      foundAgent = AGENT_NAME_MAP[key];
     }
 
     if (foundAgent) {
@@ -157,6 +157,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setAgent(null);
+
+    // Clear all session storage related to the app
+    // We iterate backwards to avoid index issues when removing items
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key && key.startsWith('haetae_')) {
+        keysToRemove.push(key);
+      }
+    }
+
+    keysToRemove.forEach(key => sessionStorage.removeItem(key));
   };
 
   return (

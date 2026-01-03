@@ -120,7 +120,7 @@ export function DepartmentStats() {
 
   return (
     <Card className="card-gov">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <CardTitle className="text-base font-medium flex items-center gap-2">
           <TrendingUp className="w-4 h-4" />
           {deptInfo.name} ({deptInfo.fullName}) 현황

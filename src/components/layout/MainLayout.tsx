@@ -11,17 +11,25 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
+        본문으로 건너뛰기
+      </a>
+
       <GNBHeader />
-      
+
       {/* 워터마크 제거됨 */}
-      
+
       {/* 메인 콘텐츠 */}
-      <main className="p-4 lg:p-6 max-w-[1920px] mx-auto">
+      <main id="main-content" className="p-4 lg:p-6 max-w-[1920px] mx-auto pb-10">
         {children}
       </main>
 
       {/* 하단 정보 바 */}
-      <footer className="fixed bottom-0 left-0 right-0 h-8 bg-muted border-t border-border px-4 flex items-center justify-between text-xs text-muted-foreground">
+      <footer className="fixed bottom-0 left-0 right-0 h-8 bg-muted border-t border-border px-4 flex items-center justify-between text-xs text-muted-foreground z-30">
         <div className="flex items-center gap-4">
           <span>접속자: {agent?.name}</span>
           <span className="font-mono">{new Date().toLocaleDateString('ko-KR')}</span>

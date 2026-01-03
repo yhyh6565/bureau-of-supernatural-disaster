@@ -1,6 +1,6 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
-import { Bell, LogOut, User, Home, FileText, Mail, Package, ClipboardCheck, Briefcase, AlertTriangle } from 'lucide-react';
+import { Bell, LogOut, User, Home, FileText, Mail, Package, ClipboardCheck, Briefcase, AlertTriangle, Menu } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,10 +9,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { Logo } from '@/components/ui/Logo';
 
 const NAV_ITEMS = [
-  { path: '/', label: '대시보드', icon: Home },
+  // { path: '/', label: '대시보드', icon: Home }, // Removed as per request (Title acts as home link)
   { path: '/incidents', label: '재난 현황', icon: AlertTriangle },
   { path: '/mypage', label: '개인정보', icon: User },
   { path: '/notices', label: '공지사항', icon: FileText },
@@ -25,12 +32,11 @@ const NAV_ITEMS = [
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useState, useEffect } from 'react';
 
-// ...
-
 export function GNBHeader() {
   const { agent, logout } = useAuth();
   const { isTriggered, isRead } = useInteraction();
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const showNoticeBadge = isTriggered('noti-sinkhole-alert');
 
@@ -41,15 +47,64 @@ export function GNBHeader() {
   return (
     <header className="h-16 bg-primary text-primary-foreground border-b border-primary/20 sticky top-0 z-40">
       <div className="h-full px-4 flex items-center justify-between max-w-[1920px] mx-auto">
-        {/* 좌측: 로고 */}
+        {/* 좌측: 모바일 메뉴 + 로고 */}
         <div className="flex items-center gap-3">
-          {/* 태극 문양 */}
-          <div className="w-8 h-8">
-            <Logo />
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="font-black text-lg leading-tight tracking-tight">초자연재난관리국</span>
-          </div>
+          {/* 모바일 메뉴 버튼 */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden text-primary-foreground hover:bg-primary-foreground/10"
+                aria-label="메뉴 열기"
+              >
+                <Menu className="w-5 h-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[280px] sm:w-[320px]">
+              <SheetHeader>
+                <SheetTitle className="flex items-center gap-2">
+                  <Logo />
+                  <span className="font-bold">초자연재난관리국</span>
+                </SheetTitle>
+              </SheetHeader>
+              <nav className="mt-6 flex flex-col gap-1">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`
+                        flex items-center gap-3 px-4 py-3 text-sm font-medium rounded transition-colors
+                        ${isActive
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                        }
+                      `}
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                      {item.path === '/notices' && showNoticeBadge && !isRead('noti-sinkhole-alert') && (
+                        <span className="ml-auto w-2 h-2 bg-destructive rounded-full animate-pulse" aria-label="새 알림" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+          </Sheet>
+
+          {/* 태극 문양 + 타이틀 (클릭 시 홈 이동) */}
+          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div className="w-8 h-8">
+              <Logo />
+            </div>
+            <div className="flex flex-col justify-center">
+              <span className="font-black text-base sm:text-lg leading-tight tracking-tight">초자연재난관리국</span>
+            </div>
+          </Link>
         </div>
 
         {/* 중앙: 네비게이션 */}
@@ -83,7 +138,7 @@ export function GNBHeader() {
           {/* 부서 표시 */}
           <div className={`px-2 py-1 rounded text-xs font-medium flex items-center gap-1.5 ${deptInfo.bgClass}`}>
             <deptInfo.icon className="w-4 h-4" />
-            <span>{deptInfo.name} ({deptInfo.fullName})</span>
+            <span>{deptInfo.name} <span className="hidden md:inline">({deptInfo.fullName})</span></span>
           </div>
 
           {/* 알림 */}
@@ -102,11 +157,11 @@ export function GNBHeader() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2"
+                className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2 max-w-[200px]"
               >
-                <User className="w-4 h-4" />
-                <span className="text-sm font-medium">{agent.name}</span>
-                <span className="text-xs opacity-70">({agent.rank})</span>
+                <User className="w-4 h-4 shrink-0" />
+                <span className="text-sm font-medium truncate">{agent.name}</span>
+                <span className="text-xs opacity-70 shrink-0">({agent.rank})</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">

@@ -19,6 +19,7 @@ import ApprovalsPage from "@/pages/ApprovalsPage";
 import TasksPage from "@/pages/TasksPage";
 import IncidentsPage from "@/pages/IncidentsPage";
 import NotFound from "./pages/NotFound";
+import { ContaminationGameOver } from "@/components/common/ContaminationGameOver";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
             <ResourceProvider>
               <InteractionProvider>
                 <WorkProvider>
+                  <ContaminationGameOver />
                   <AppRoutes />
                 </WorkProvider>
               </InteractionProvider>

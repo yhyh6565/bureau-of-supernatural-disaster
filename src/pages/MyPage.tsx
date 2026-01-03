@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 import { useResource } from '@/contexts/ResourceContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
@@ -25,6 +26,7 @@ import { toast } from '@/hooks/use-toast';
 
 export function MyPage() {
   const { agent } = useAuth();
+  const { contamination } = useUser();
   const { rentals } = useResource();
   const [selectedFuneral, setSelectedFuneral] = useState('funeral-001');
   const [currentFuneral, setCurrentFuneral] = useState('화장');
@@ -124,8 +126,8 @@ export function MyPage() {
 
               <div className="flex items-center justify-between py-1 border-t border-border">
                 <span className="text-sm text-muted-foreground">정신 오염도</span>
-                <span className={`text-sm font-mono font-medium ${agent.contamination >= 80 ? 'text-destructive' : agent.contamination >= 50 ? 'text-warning' : 'text-success'}`}>
-                  {agent.contamination}%
+                <span className={`text-sm font-mono font-medium ${contamination >= 80 ? 'text-destructive' : contamination >= 50 ? 'text-warning' : 'text-success'}`}>
+                  {contamination}%
                 </span>
               </div>
             </CardContent>

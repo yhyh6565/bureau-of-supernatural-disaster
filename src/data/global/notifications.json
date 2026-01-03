@@ -25,7 +25,7 @@
     "category": "인사",
     "author": "인사팀장 김현기",
     "isUrgent": true,
-    "createdAt": "2026-01-01T12:00:00",
+    "createdAt": "2026-01-01T06:27:55.573Z",
     "isRead": false,
     "isPinned": true
   },
@@ -39,7 +39,7 @@
     "category": "보안",
     "author": "보안팀 한경환",
     "isUrgent": true,
-    "createdAt": "2026-01-01T12:00:00",
+    "createdAt": "2026-01-01T06:27:55.573Z",
     "isRead": false
   },
   {
@@ -78,7 +78,7 @@
     "category": "규정",
     "author": "총무팀 박수아",
     "isUrgent": true,
-    "createdAt": "2025-12-29T12:00:00",
+    "createdAt": "2025-12-29T06:27:55.573Z",
     "isRead": false,
     "department": "hyunmu"
   },
@@ -105,7 +105,7 @@
     "category": "행사",
     "author": "총무팀 신기우",
     "isUrgent": false,
-    "createdAt": "2025-12-31T12:00:00",
+    "createdAt": "2025-12-31T06:27:55.573Z",
     "isRead": true
   },
   {

@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
 import { getPersonaName } from '@/constants/haetae';
+import { useInteraction } from '@/contexts/InteractionContext';
 import {
   Dialog,
   DialogContent,
@@ -24,14 +25,16 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 
+
 export function MessagesPage() {
   const { agent } = useAuth();
+  const { sessionMessages, sendMessage } = useInteraction();
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [newMessage, setNewMessage] = useState({ recipient: '', title: '', content: '' });
 
-  // DataManager를 통해 메시지 로드
-  const ALL_MESSAGES = DataManager.getMessages(agent);
+  // DataManager를 통해 메시지 로드 + 세션 메시지 병합
+  const ALL_MESSAGES = [...DataManager.getMessages(agent), ...sessionMessages];
 
   const receivedMessages = ALL_MESSAGES.filter(m =>
     m.receiverId === agent?.personaKey || m.receiverId === agent?.id || m.receiverId === 'me'
@@ -51,10 +54,8 @@ export function MessagesPage() {
       return;
     }
 
-    toast({
-      title: '쪽지 발송 완료',
-      description: `${newMessage.recipient}님에게 쪽지를 발송했습니다.`,
-    });
+    sendMessage(newMessage.recipient, newMessage.title, newMessage.content);
+
     setNewMessage({ recipient: '', title: '', content: '' });
     setIsComposeOpen(false);
   };

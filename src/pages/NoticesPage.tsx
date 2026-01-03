@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -34,9 +35,18 @@ export function NoticesPage() {
   const [selectedCategories, setSelectedCategories] = useState<NoticeCategory[]>([]);
   const [selectedDepartments, setSelectedDepartments] = useState<NoticeDepartment[]>([]);
   const [showUnreadOnly, setShowUnreadOnly] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 공지사항 데이터
   const allNotices = DataManager.getNotifications(agent);
+
+  // 초기 로딩 시뮬레이션
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   // 필터링 로직
   const filteredNotices = allNotices
@@ -111,7 +121,7 @@ export function NoticesPage() {
 
   return (
     <MainLayout>
-
+      <h1 className="sr-only">공지사항</h1>
 
       {/* 검색 및 필터 */}
       <Card className="card-gov mb-4">
@@ -277,7 +287,16 @@ export function NoticesPage() {
             </div>
 
             {/* 테이블 내용 */}
-            {filteredNotices.length > 0 ? (
+            {isLoading ? (
+              // 로딩 스켈레톤
+              <div className="p-4 space-y-3">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <Skeleton className="h-12 w-full" />
+                  </div>
+                ))}
+              </div>
+            ) : filteredNotices.length > 0 ? (
               filteredNotices.map((notice, idx) => {
                 const priorityStyle = NOTICE_PRIORITY_STYLE[notice.priority];
                 const categoryStyle = NOTICE_CATEGORY_STYLE[notice.category];
@@ -328,13 +347,13 @@ export function NoticesPage() {
                         )}
                       </div>
                       <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs md:w-full md:justify-center`}>
-                          {notice.category}
+                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs w-auto px-4 min-w-[60px] justify-center`}>
+                          {notice.priority}
                         </Badge>
                       </div>
                       <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs md:w-full md:justify-center`}>
-                          {notice.priority}
+                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs w-auto px-4 min-w-[60px] justify-center`}>
+                          {notice.category}
                         </Badge>
                       </div>
                       <div className="col-span-5 flex items-center gap-2">

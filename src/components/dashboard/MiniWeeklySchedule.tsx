@@ -27,7 +27,7 @@ export function MiniWeeklySchedule() {
 
     return (
         <Card className="card-gov h-full">
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-1.5">
                 <CardTitle className="text-sm font-medium flex items-center gap-2 group">
                     <CalendarIcon className="w-4 h-4" />
                     <Link to="/tasks?view=calendar" className="hover:underline cursor-pointer flex items-center gap-1">

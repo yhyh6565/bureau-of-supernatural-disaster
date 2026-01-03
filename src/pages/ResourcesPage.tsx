@@ -17,6 +17,7 @@ import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { useResource } from '@/contexts/ResourceContext';
 import { useWork } from '@/contexts/WorkContext';
+import { useUser } from '@/contexts/UserContext';
 import { INSPECTION_TYPES } from '@/constants/haetae';
 import {
     Package,
@@ -118,6 +119,7 @@ function InspectionRequestForm({ onClose, onSubmit }: {
     onClose: () => void;
     onSubmit: (type: '정기검사' | '정밀검사' | '긴급검사', date: Date, symptoms: string) => void;
 }) {
+    const { decreaseContamination } = useUser();
     const [selectedType, setSelectedType] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [symptoms, setSymptoms] = useState('');
@@ -125,9 +127,10 @@ function InspectionRequestForm({ onClose, onSubmit }: {
     const handleSubmit = () => {
         if (selectedType && date) {
             onSubmit(selectedType as any, new Date(date), symptoms);
+            decreaseContamination(5); // Reduce contamination by 5%
             toast({
                 title: '검사 신청 완료',
-                description: '오염 검사 신청이 접수되었습니다. 의료팀의 승인 후 일정이 확정됩니다.',
+                description: '오염 검사 신청이 접수되었습니다. (정신 오염도 5% 감소)',
             });
             onClose();
         }
@@ -258,6 +261,7 @@ export function ResourcesPage() {
     const { addRental } = useResource();
     const resourceContext = useResource();
     const { addVisitSchedule, addApproval, addInspectionRequest, inspectionRequests } = useWork();
+    const { decreaseContamination } = useUser();
 
     // Tabs
     const [activeTab, setActiveTab] = useState('equipment');
@@ -365,10 +369,19 @@ export function ResourcesPage() {
                 approver: 'HMU-301', // 임시
             });
 
-            toast({
-                title: '결재 상신 완료',
-                description: `"${selectedLocation.name}" 방문 신청에 대한 결재가 상신되었습니다.`,
-            });
+            // 용천 선녀탕은 결재 상신 시 즉시 오염도 감소 (User Request)
+            if (selectedLocation.name === '용천 선녀탕') {
+                decreaseContamination(30);
+                toast({
+                    title: '결재 상신 완료',
+                    description: `"${selectedLocation.name}" 방문 신청이 상신되었습니다. (정신 오염도 30% 즉시 감소)`,
+                });
+            } else {
+                toast({
+                    title: '결재 상신 완료',
+                    description: `"${selectedLocation.name}" 방문 신청에 대한 결재가 상신되었습니다.`,
+                });
+            }
         } else {
             // 즉시 예약 (일정 추가)
             // 날짜와 시간을 합쳐서 Date 객체 생성
@@ -378,10 +391,19 @@ export function ResourcesPage() {
 
             addVisitSchedule(selectedLocation, scheduleDate);
 
-            toast({
-                title: '예약 완료',
-                description: `"${selectedLocation.name}" 방문 예약이 완료되었습니다.`,
-            });
+            // 용천 선녀탕 방문 시 오염도 감소
+            if (selectedLocation.name === '용천 선녀탕') {
+                decreaseContamination(30);
+                toast({
+                    title: '예약 완료',
+                    description: `"${selectedLocation.name}" 방문 예약이 완료되었습니다. (정신 오염도 30% 감소)`,
+                });
+            } else {
+                toast({
+                    title: '예약 완료',
+                    description: `"${selectedLocation.name}" 방문 예약이 완료되었습니다.`,
+                });
+            }
         }
 
         setSelectedLocation(null);
