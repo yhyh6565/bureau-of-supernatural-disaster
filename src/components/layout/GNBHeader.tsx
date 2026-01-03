@@ -1,4 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { Bell, LogOut, User, Home, FileText, Mail, Package, ClipboardCheck, Briefcase, AlertTriangle, Menu } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -21,12 +22,12 @@ import { Logo } from '@/components/ui/Logo';
 const NAV_ITEMS = [
   // { path: '/', label: '대시보드', icon: Home }, // Removed as per request (Title acts as home link)
   { path: '/incidents', label: '재난 현황', icon: AlertTriangle },
-  { path: '/mypage', label: '개인정보', icon: User },
+  { path: '/tasks', label: '담당업무', icon: Briefcase },
   { path: '/notices', label: '공지사항', icon: FileText },
+  { path: '/approvals', label: '결재', icon: ClipboardCheck },
   { path: '/messages', label: '쪽지함', icon: Mail },
   { path: '/resources', label: '업무지원', icon: Package },
-  { path: '/approvals', label: '결재', icon: ClipboardCheck },
-  { path: '/tasks', label: '담당업무', icon: Briefcase },
+  { path: '/mypage', label: '개인정보', icon: User },
 ];
 
 import { useInteraction } from '@/contexts/InteractionContext';
@@ -35,6 +36,7 @@ import { useState, useEffect } from 'react';
 export function GNBHeader() {
   const { agent, logout } = useAuth();
   const { isTriggered, isRead } = useInteraction();
+  const { contamination } = useUser();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -141,16 +143,10 @@ export function GNBHeader() {
             <span>{deptInfo.name} <span className="hidden md:inline">({deptInfo.fullName})</span></span>
           </div>
 
-          {/* 알림 */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 h-10 w-10 relative"
-            aria-label="알림"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
-          </Button>
+          {/* 정신오염도 표시 (벨 아이콘 대체) */}
+          <div className="flex items-center justify-center h-10 min-w-[3rem] px-2 font-mono font-bold text-lg text-destructive bg-destructive/10 rounded">
+            {Math.round(contamination)}
+          </div>
 
           {/* 사용자 드롭다운 */}
           <DropdownMenu>

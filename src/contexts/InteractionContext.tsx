@@ -122,6 +122,16 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
         setTriggeredIds((prev) => {
             if (prev.includes(id)) return prev;
 
+            // Trigger Toast for Sinkhole Event
+            if (id === 'inc-sinkhole-001') {
+                toast({
+                    variant: "destructive",
+                    title: "긴급 공지 발생",
+                    description: "서울시 강남구 역삼동 강남역 사거리 대규모 싱크홀 발생",
+                    duration: 5000,
+                });
+            }
+
             // Update DataManager logic for 'Real-time' if needed?
             // Since DataManager objects are references, we can mutate them here for the session
             if ('createdAt' in item) {
