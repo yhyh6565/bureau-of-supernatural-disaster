@@ -39,7 +39,8 @@ src/data/
         ├── messages.json
         ├── notifications.json
         ├── approvals.json
-        └── schedules.json
+        ├── schedules.json
+        └── inspections.json <!-- [NEW] 검사 예약 정보 -->
 ```
 
 ### 1.3 데이터 수명 주기 (Data Lifecycle)
@@ -110,6 +111,10 @@ src/data/
     manualId?: string;          // 연결된 대응 매뉴얼 ID
     createdAt: Date;
     updatedAt: Date;
+    trigger?: {                 // (Optional) 이스터에그/재난 발생 트리거
+      type: 'time-elapsed' | 'date-range' | 'random';
+      value: any;
+    };
   }
   ```
 
@@ -127,7 +132,11 @@ src/data/
     createdByName: string;
     approver: string;    // 결재자 ID
     approverName: string;
-    content: string;     // 본문
+    content: string;     // 내용 (HTML 지원 가능)
+    trigger?: {          // (Optional) 이스터에그/상호작용 트리거 설정
+      type: 'time-elapsed' | 'date-range' | 'random';
+      value: any;
+    };
     createdAt: Date;
     processedAt?: Date;
     // ...
@@ -151,6 +160,10 @@ src/data/
     content: string;
     createdAt: Date;
     isRead: boolean;
+    trigger?: {              // (Optional) 이스터에그/상호작용 트리거 설정
+      type: 'time-elapsed' | 'date-range' | 'random';
+      value: any;
+    };
   }
   ```
 - **참고**: `senderId`와 `receiverId`는 Agent의 `personaKey`를 사용합니다 (5.1 참조)
@@ -184,6 +197,18 @@ src/data/
       "operatingHours": "string"
     }
     ```
+
+### 4.4 검사 예약 (Inspection Requests)
+정화/오염 검사 예약 정보입니다.
+- **파일명**: `inspections.json`
+- **구분**: `ordinary`(일반) / `personas`(페르소나별)
+- **필드 정의**:
+  - `id`: 검사 ID
+  - `type`: 검사 유형 (정기검사, 정밀검사 등)
+  - `scheduledDate`: 예약 일시
+  - `result`: 검사 결과 (완료된 경우)
+  - `symptoms`: 증상 (정밀검사 시)
+  - `status`: 상태 (접수, 완료)
 
 ### 5. RentalRecord (대여/지급 기록)
 *   **설명**: `Agent` 객체 내부에 포함되는 개인 자산 현황
@@ -539,6 +564,7 @@ data-templates/
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| v1.8 | 2026-01-03 | 상호작용(Interactions) 데이터 통합 및 트리거 시스템(`trigger`) 필드 추가 |
 | v1.7 | 2026-01-03 | 요원 프로필 데이터 분리(`profile.json`), AuthContext 리팩토링 |
 | v1.6 | 2026-01-03 | 재난 데이터 통합, Agent.team 추가, 부서 명칭 확정 |
 | v1.5 | 2026-01-02 | 부서 표시명 변경 (백호→신규조사반, 현무→출동구조반, 주작→현장정리반) |

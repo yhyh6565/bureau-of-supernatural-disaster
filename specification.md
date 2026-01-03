@@ -94,6 +94,7 @@
   - **쪽지함** (messages.json) - 일상적인 업무 협조 메시지
   - **결재 문서** (approvals.json) - 평범한 보고서 및 신청서
   - **일정** (schedules.json) - 일반적인 업무 스케줄
+  - **검사 예약** (inspections.json) - [NEW] 오염 검사 예약 정보
   - **추가 재난** (incidents.json) - 현재 비어있음 (향후 확장 가능)
 - **특징**: "초자연재난관리국의 평범한 공무원으로서의 삶" 체험. 일상적이고 반복적인 업무 데이터만 제공됩니다.
 
@@ -111,7 +112,9 @@
   │   ├── messages.json       # 캐릭터 전용 쪽지
   │   ├── notifications.json  # 캐릭터 전용 공지
   │   ├── approvals.json      # 캐릭터 전용 결재
-  │   └── schedules.json      # 캐릭터 전용 일정
+  │   ├── approvals.json      # 캐릭터 전용 결재
+  │   ├── schedules.json      # 캐릭터 전용 일정
+  │   └── inspections.json    # [NEW] 캐릭터 전용 검사 예약
   ├── choiyowon/
   ├── ryujaegwan/
   ├── solum/

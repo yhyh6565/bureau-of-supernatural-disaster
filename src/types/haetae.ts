@@ -28,6 +28,25 @@ export interface Agent {
   funeralPreference?: string;
 }
 
+// 트리거 시스템 타입
+export type TriggerType =
+  | 'login'           // 로그인 시
+  | 'time-elapsed'    // 시간 경과 (로그인 후)
+  | 'date-range'      // 특정 날짜 범위
+  | 'random'          // 랜덤 확률 (매번 체크)
+  | 'condition';      // 기타 조건 키
+
+export interface Trigger {
+  type: TriggerType;
+  delay?: number;              // 밀리초 (time-elapsed용)
+  dateRange?: {
+    start: string; // JSON 호환을 위해 string (ISO)
+    end: string;
+  };
+  probability?: number;        // 0~1 사이 확률
+  conditionKey?: string;       // 커스텀 조건 식별 키
+}
+
 export interface Incident {
   id: string;
   title: string;
@@ -45,6 +64,7 @@ export interface Incident {
   createdAt: Date;
   updatedAt: Date;
   manualId?: string;
+  trigger?: Trigger; // [NEW] 트리거 조건
 }
 
 export interface ManualContent {
@@ -108,6 +128,7 @@ export interface Notification {
   createdAt: Date;
   isRead: boolean;
   isPinned?: boolean; // 상단 고정 여부
+  trigger?: Trigger; // [NEW] 트리거 조건
 }
 
 // [REMOVED] Constants moved to src/constants/haetae.tsx
@@ -123,6 +144,7 @@ export interface Message {
   content: string;
   createdAt: Date;
   isRead: boolean;
+  trigger?: Trigger; // [NEW] 트리거 조건
 }
 
 // 장비 데이터

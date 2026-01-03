@@ -1,68 +1,80 @@
-import { Agent, Incident, Notification, Schedule, ApprovalDocument, Message, InspectionRequest, Manual } from '@/types/haetae';
-import { VisitLocation, Equipment } from '@/types/haetae';
+import { Agent, Incident, Message, Notification, ApprovalDocument, Schedule, Equipment, VisitLocation, Manual, InspectionRequest } from '@/types/haetae';
 
-// Import Global JSON Data
-import GLOBAL_INCIDENTS_JSON from './global/incidents.json';
-import GLOBAL_NOTIFICATIONS_JSON from './global/notifications.json';
-import GLOBAL_EQUIPMENT_JSON from './global/equipment.json';
-import GLOBAL_LOCATIONS_JSON from './global/locations.json';
-import GLOBAL_MANUALS_JSON from './global/manuals.json';
+// Import Global Data
+import GLOBAL_INCIDENTS_JSON from '@/data/global/incidents.json';
+import GLOBAL_NOTIFICATIONS_JSON from '@/data/global/notifications.json';
+import GLOBAL_EQUIPMENT_JSON from '@/data/global/equipment.json';
+import GLOBAL_LOCATIONS_JSON from '@/data/global/locations.json';
+import GLOBAL_MANUALS_JSON from '@/data/global/manuals.json';
 
-// Import Ordinary JSON Data
-import ORDINARY_MESSAGES_JSON from './ordinary/messages.json';
-import ORDINARY_APPROVALS_JSON from './ordinary/approvals.json';
-import ORDINARY_SCHEDULES_JSON from './ordinary/schedules.json';
+// Import Ordinary Data
+import ORDINARY_MESSAGES_JSON from '@/data/ordinary/messages.json';
+import ORDINARY_APPROVALS_JSON from '@/data/ordinary/approvals.json';
+import ORDINARY_SCHEDULES_JSON from '@/data/ordinary/schedules.json';
+import ORDINARY_INSPECTIONS_JSON from '@/data/ordinary/inspections.json';
 
-// Import Persona JSON Data
-import PARKHONGLIM_MESSAGES_JSON from './personas/parkhonglim/messages.json';
-import PARKHONGLIM_NOTIFICATIONS_JSON from './personas/parkhonglim/notifications.json';
-import PARKHONGLIM_APPROVALS_JSON from './personas/parkhonglim/approvals.json';
-import PARKHONGLIM_SCHEDULES_JSON from './personas/parkhonglim/schedules.json';
+// Import Persona Data (MESSAGES)
+import PARKHONGLIM_MESSAGES_JSON from '@/data/personas/parkhonglim/messages.json';
+import CHOIYOWON_MESSAGES_JSON from '@/data/personas/choiyowon/messages.json';
+import RYUJAEGWAN_MESSAGES_JSON from '@/data/personas/ryujaegwan/messages.json';
+import SOLUM_MESSAGES_JSON from '@/data/personas/solum/messages.json';
+import HAEGEUM_MESSAGES_JSON from '@/data/personas/haegeum/messages.json';
+import KOYOUNGEUN_MESSAGES_JSON from '@/data/personas/koyoungeun/messages.json';
+import JANGHYEOWOON_MESSAGES_JSON from '@/data/personas/janghyeowoon/messages.json';
 
-import CHOIYOWON_MESSAGES_JSON from './personas/choiyowon/messages.json';
-import CHOIYOWON_NOTIFICATIONS_JSON from './personas/choiyowon/notifications.json';
-import CHOIYOWON_APPROVALS_JSON from './personas/choiyowon/approvals.json';
-import CHOIYOWON_SCHEDULES_JSON from './personas/choiyowon/schedules.json';
+// Import Persona Data (NOTIFICATIONS)
+import PARKHONGLIM_NOTIFICATIONS_JSON from '@/data/personas/parkhonglim/notifications.json';
+import CHOIYOWON_NOTIFICATIONS_JSON from '@/data/personas/choiyowon/notifications.json';
+import RYUJAEGWAN_NOTIFICATIONS_JSON from '@/data/personas/ryujaegwan/notifications.json';
+import SOLUM_NOTIFICATIONS_JSON from '@/data/personas/solum/notifications.json';
+import HAEGEUM_NOTIFICATIONS_JSON from '@/data/personas/haegeum/notifications.json';
+import KOYOUNGEUN_NOTIFICATIONS_JSON from '@/data/personas/koyoungeun/notifications.json';
+import JANGHYEOWOON_NOTIFICATIONS_JSON from '@/data/personas/janghyeowoon/notifications.json';
 
-import RYUJAEGWAN_MESSAGES_JSON from './personas/ryujaegwan/messages.json';
-import RYUJAEGWAN_NOTIFICATIONS_JSON from './personas/ryujaegwan/notifications.json';
-import RYUJAEGWAN_APPROVALS_JSON from './personas/ryujaegwan/approvals.json';
-import RYUJAEGWAN_SCHEDULES_JSON from './personas/ryujaegwan/schedules.json';
+// Import Persona Data (APPROVALS)
+import PARKHONGLIM_APPROVALS_JSON from '@/data/personas/parkhonglim/approvals.json';
+import CHOIYOWON_APPROVALS_JSON from '@/data/personas/choiyowon/approvals.json';
+import RYUJAEGWAN_APPROVALS_JSON from '@/data/personas/ryujaegwan/approvals.json';
+import SOLUM_APPROVALS_JSON from '@/data/personas/solum/approvals.json';
+import HAEGEUM_APPROVALS_JSON from '@/data/personas/haegeum/approvals.json';
+import KOYOUNGEUN_APPROVALS_JSON from '@/data/personas/koyoungeun/approvals.json';
+import JANGHYEOWOON_APPROVALS_JSON from '@/data/personas/janghyeowoon/approvals.json';
 
-import SOLUM_MESSAGES_JSON from './personas/solum/messages.json';
-import SOLUM_NOTIFICATIONS_JSON from './personas/solum/notifications.json';
-import SOLUM_APPROVALS_JSON from './personas/solum/approvals.json';
-import SOLUM_SCHEDULES_JSON from './personas/solum/schedules.json';
+// Import Persona Data (SCHEDULES)
+import PARKHONGLIM_SCHEDULES_JSON from '@/data/personas/parkhonglim/schedules.json';
+import CHOIYOWON_SCHEDULES_JSON from '@/data/personas/choiyowon/schedules.json';
+import RYUJAEGWAN_SCHEDULES_JSON from '@/data/personas/ryujaegwan/schedules.json';
+import SOLUM_SCHEDULES_JSON from '@/data/personas/solum/schedules.json';
+import HAEGEUM_SCHEDULES_JSON from '@/data/personas/haegeum/schedules.json';
+import KOYOUNGEUN_SCHEDULES_JSON from '@/data/personas/koyoungeun/schedules.json';
+import JANGHYEOWOON_SCHEDULES_JSON from '@/data/personas/janghyeowoon/schedules.json';
 
-import HAEGEUM_MESSAGES_JSON from './personas/haegeum/messages.json';
-import HAEGEUM_NOTIFICATIONS_JSON from './personas/haegeum/notifications.json';
-import HAEGEUM_APPROVALS_JSON from './personas/haegeum/approvals.json';
-import HAEGEUM_SCHEDULES_JSON from './personas/haegeum/schedules.json';
+// Import Persona Data (INSPECTIONS)
+import PARKHONGLIM_INSPECTIONS_JSON from '@/data/personas/parkhonglim/inspections.json';
+import CHOIYOWON_INSPECTIONS_JSON from '@/data/personas/choiyowon/inspections.json';
+import RYUJAEGWAN_INSPECTIONS_JSON from '@/data/personas/ryujaegwan/inspections.json';
+import SOLUM_INSPECTIONS_JSON from '@/data/personas/solum/inspections.json';
+import HAEGEUM_INSPECTIONS_JSON from '@/data/personas/haegeum/inspections.json';
+import KOYOUNGEUN_INSPECTIONS_JSON from '@/data/personas/koyoungeun/inspections.json';
+import JANGHYEOWOON_INSPECTIONS_JSON from '@/data/personas/janghyeowoon/inspections.json';
 
-import KOYOUNGEUN_MESSAGES_JSON from './personas/koyoungeun/messages.json';
-import KOYOUNGEUN_NOTIFICATIONS_JSON from './personas/koyoungeun/notifications.json';
-import KOYOUNGEUN_APPROVALS_JSON from './personas/koyoungeun/approvals.json';
-import KOYOUNGEUN_SCHEDULES_JSON from './personas/koyoungeun/schedules.json';
-
-import JANGHYEOWOON_MESSAGES_JSON from './personas/janghyeowoon/messages.json';
-import JANGHYEOWOON_NOTIFICATIONS_JSON from './personas/janghyeowoon/notifications.json';
-import JANGHYEOWOON_APPROVALS_JSON from './personas/janghyeowoon/approvals.json';
-import JANGHYEOWOON_SCHEDULES_JSON from './personas/janghyeowoon/schedules.json';
-
-// Helper to revive dates from JSON
-const parseDates = <T>(items: any[]): T[] => {
-    return items.map(item => {
+// Helper to parse dates in JSON data
+function parseDates<T>(data: any[]): T[] {
+    return data.map(item => {
         const newItem = { ...item };
+        // Common Date fields
         if (newItem.createdAt) newItem.createdAt = new Date(newItem.createdAt);
         if (newItem.updatedAt) newItem.updatedAt = new Date(newItem.updatedAt);
-        if (newItem.processedAt) newItem.processedAt = new Date(newItem.processedAt);
         if (newItem.date) newItem.date = new Date(newItem.date);
+        if (newItem.processedAt) newItem.processedAt = new Date(newItem.processedAt);
         if (newItem.lastUpdated) newItem.lastUpdated = new Date(newItem.lastUpdated);
+        if (newItem.assignedAt) newItem.assignedAt = new Date(newItem.assignedAt);
+        if (newItem.completedAt) newItem.completedAt = new Date(newItem.completedAt);
+        if (newItem.scheduledDate) newItem.scheduledDate = new Date(newItem.scheduledDate);
         return newItem as T;
     });
-};
+}
 
-// Processed Data
 const GLOBAL_INCIDENTS = parseDates<Incident>(GLOBAL_INCIDENTS_JSON);
 const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
@@ -73,6 +85,7 @@ const ORDINARY_DATA = {
     messages: parseDates<Message>(ORDINARY_MESSAGES_JSON),
     approvals: parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON),
     schedules: parseDates<Schedule>(ORDINARY_SCHEDULES_JSON),
+    inspections: parseDates<InspectionRequest>(ORDINARY_INSPECTIONS_JSON),
 };
 
 const PERSONA_MAP: Record<string, {
@@ -80,48 +93,56 @@ const PERSONA_MAP: Record<string, {
     notifications: Notification[];
     approvals: ApprovalDocument[];
     schedules: Schedule[];
+    inspections: InspectionRequest[];
 }> = {
     '박홍림': {
         messages: parseDates<Message>(PARKHONGLIM_MESSAGES_JSON),
         notifications: parseDates<Notification>(PARKHONGLIM_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(PARKHONGLIM_APPROVALS_JSON),
         schedules: parseDates<Schedule>(PARKHONGLIM_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(PARKHONGLIM_INSPECTIONS_JSON),
     },
     '최요원': {
         messages: parseDates<Message>(CHOIYOWON_MESSAGES_JSON),
         notifications: parseDates<Notification>(CHOIYOWON_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(CHOIYOWON_APPROVALS_JSON),
         schedules: parseDates<Schedule>(CHOIYOWON_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(CHOIYOWON_INSPECTIONS_JSON),
     },
     '류재관': {
         messages: parseDates<Message>(RYUJAEGWAN_MESSAGES_JSON),
         notifications: parseDates<Notification>(RYUJAEGWAN_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(RYUJAEGWAN_APPROVALS_JSON),
         schedules: parseDates<Schedule>(RYUJAEGWAN_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(RYUJAEGWAN_INSPECTIONS_JSON),
     },
     '김솔음': {
         messages: parseDates<Message>(SOLUM_MESSAGES_JSON),
         notifications: parseDates<Notification>(SOLUM_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(SOLUM_APPROVALS_JSON),
         schedules: parseDates<Schedule>(SOLUM_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(SOLUM_INSPECTIONS_JSON),
     },
     '해금': {
         messages: parseDates<Message>(HAEGEUM_MESSAGES_JSON),
         notifications: parseDates<Notification>(HAEGEUM_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(HAEGEUM_APPROVALS_JSON),
         schedules: parseDates<Schedule>(HAEGEUM_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(HAEGEUM_INSPECTIONS_JSON),
     },
     '고영은': {
         messages: parseDates<Message>(KOYOUNGEUN_MESSAGES_JSON),
         notifications: parseDates<Notification>(KOYOUNGEUN_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(KOYOUNGEUN_APPROVALS_JSON),
         schedules: parseDates<Schedule>(KOYOUNGEUN_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(KOYOUNGEUN_INSPECTIONS_JSON),
     },
     '장허운': {
         messages: parseDates<Message>(JANGHYEOWOON_MESSAGES_JSON),
         notifications: parseDates<Notification>(JANGHYEOWOON_NOTIFICATIONS_JSON),
         approvals: parseDates<ApprovalDocument>(JANGHYEOWOON_APPROVALS_JSON),
         schedules: parseDates<Schedule>(JANGHYEOWOON_SCHEDULES_JSON),
+        inspections: parseDates<InspectionRequest>(JANGHYEOWOON_INSPECTIONS_JSON),
     },
 };
 
@@ -226,47 +247,20 @@ export const DataManager = {
         return stats;
     },
 
-    // Inspection Requests (Mock Data for now)
+    // Inspection Requests
     getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
-        if (!agent) return [];
-
-        // Mock data for demo
-        const requests: InspectionRequest[] = [
-            {
-                id: 'insp-001',
-                agentId: agent.id,
-                type: '정기검사',
-                status: '완료',
-                scheduledDate: new Date('2024-12-01T10:00:00'),
-                result: '정상 (오염도 5%)',
-                createdAt: new Date('2024-11-25')
-            }
-        ];
-
-        // Agent Choi gets more inspections
-        if (agent.name === '최요원') {
-            requests.push(
-                {
-                    id: 'insp-002',
-                    agentId: agent.id,
-                    type: '정밀검사',
-                    status: '완료',
-                    scheduledDate: new Date('2024-12-15T14:00:00'),
-                    symptoms: '지속적인 두통 및 환청',
-                    result: '경미한 정신 오염 확인, 정화 치료 요망',
-                    createdAt: new Date('2024-12-10')
-                },
-                {
-                    id: 'insp-003',
-                    agentId: agent.id,
-                    type: '정기검사',
-                    status: '접수',
-                    scheduledDate: new Date('2025-01-05T09:00:00'),
-                    createdAt: new Date('2024-12-28')
-                }
-            );
-        }
-
-        return requests.sort((a, b) => b.scheduledDate.getTime() - a.scheduledDate.getTime());
+        if (!agent) return ORDINARY_DATA.inspections;
+        const personaData = PERSONA_MAP[agent.name];
+        
+        // Return persona data if exists, otherwise fallback to ordinary (optional, or just return empty)
+        // Based on logic for other data, usage seems to favor exact match or fallback.
+        // For inspections, if a persona has a specific file but it's empty [], we probably shouldn't fallback to ordinary mock data?
+        // But ordinary data is mocked "Default" data.
+        // Let's stick to consistent pattern: Persona Data OR Ordinary Data.
+        return personaData?.inspections || ORDINARY_DATA.inspections;
+        
+        // Note: Sort is handled here if needed, or by consumer.
+        // Let's add sort for consistency with previous mock logic.
+        // return (personaData?.inspections || ORDINARY_DATA.inspections).slice().sort((a, b) => b.scheduledDate.getTime() - a.scheduledDate.getTime());
     }
 };
