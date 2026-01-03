@@ -170,7 +170,7 @@ export function ApprovalsPage() {
                           </div>
                           <div className="text-sm text-muted-foreground space-y-1">
                             <div>결재자: {doc.approverName}</div>
-                            <div>기안일: {format(new Date(doc.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</div>
+                            <div>기안일: {format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</div>
                           </div>
                         </div>
 
@@ -184,7 +184,7 @@ export function ApprovalsPage() {
                             {doc.approverName}
                           </div>
                           <div className="col-span-2 text-center text-sm text-muted-foreground">
-                            {format(new Date(doc.createdAt), 'M/d HH:mm', { locale: ko })}
+                            {format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}
                           </div>
                           <div className="col-span-1 text-center">
                             <Badge className={`${style.bg} ${style.text} text-xs`}>
@@ -216,7 +216,10 @@ export function ApprovalsPage() {
             <CardContent>
               {(() => {
                 const pendingForMe = approvals.filter(
-                  a => a.status === '결재대기' && (a.approver === agent?.id || a.approver === agent?.personaKey)
+                  a => a.status === '결재대기' && (
+                    a.approver === agent?.id || a.approver === agent?.personaKey ||
+                    a.createdBy === agent?.id || a.createdBy === agent?.personaKey
+                  )
                 );
 
                 if (pendingForMe.length === 0) {
@@ -271,8 +274,10 @@ export function ApprovalsPage() {
             <CardContent>
               {(() => {
                 const completedByMe = approvals.filter(
-                  a => (a.status === '승인' || a.status === '반려') &&
-                    (a.approver === agent?.id || a.approver === agent?.personaKey)
+                  a => (a.status === '승인' || a.status === '반려') && (
+                    a.approver === agent?.id || a.approver === agent?.personaKey ||
+                    a.createdBy === agent?.id || a.createdBy === agent?.personaKey
+                  )
                 );
 
                 if (completedByMe.length === 0) {

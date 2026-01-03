@@ -9,7 +9,8 @@
     "createdByName": "고영은",
     "approver": "agent-bh-2-leader",
     "approverName": "신규조사반2팀장",
-    "createdAt": "2025-04-28T16:00"
+    "createdAt": "2025-04-28T16:00",
+    "processedAt": "2025-04-28T16:00"
   },
   {
     "id": "appr-016",
@@ -21,7 +22,8 @@
     "createdByName": "고영은",
     "approver": "agent-bh-2-leader",
     "approverName": "신규조사반2팀장",
-    "createdAt": "2025-04-25T11:00"
+    "createdAt": "2025-04-25T11:00",
+    "processedAt": "2025-04-25T11:00"
   },
   {
     "id": "appr-017",
@@ -33,6 +35,7 @@
     "createdByName": "고영은",
     "approver": "agent-admin-002",
     "approverName": "총무",
-    "createdAt": "2025-04-24T10:00"
+    "createdAt": "2025-04-24T10:00",
+    "processedAt": "2025-04-24T10:00"
   }
 ]

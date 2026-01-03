@@ -36,8 +36,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 const storedVal = parseInt(stored, 10);
                 setContamination(storedVal);
                 // Restore game over state if needed? For now, we only restore contamination.
-                // If it was > 100, trigger loop will catch it or we set it here.
-                if (storedVal >= 100) setGameOverType('contamination');
+                // Park Honglim exeption: Never trigger contamination game over
+                if (storedVal >= 100 && agent.personaKey !== 'parkhonglim') setGameOverType('contamination');
                 else setGameOverType('none');
             } else {
                 setContamination(agent.contamination);
@@ -60,13 +60,18 @@ export function UserProvider({ children }: { children: ReactNode }) {
     // Auto-increase contamination
     useEffect(() => {
         if (!agent || isGameOver) return;
+        // Park Honglim exception: Fixed contamination, no auto-increase
+        if (agent.personaKey === 'parkhonglim') return;
 
         const interval = setInterval(() => {
             setContamination(prev => {
                 const next = prev + 1;
                 // Storage sync is handled by the effect above
                 if (next >= 100) {
-                    setGameOverType('contamination');
+                    // Park Honglim exception
+                    if (agent.personaKey !== 'parkhonglim') {
+                        setGameOverType('contamination');
+                    }
                     return 100;
                 }
                 return next;
@@ -79,7 +84,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const updateContamination = (val: number) => {
         const clamped = Math.max(0, Math.min(100, val));
         setContamination(clamped);
-        if (clamped >= 100) setGameOverType('contamination');
+        if (clamped >= 100 && agent?.personaKey !== 'parkhonglim') setGameOverType('contamination');
     };
 
     const decreaseContamination = (amount: number) => {

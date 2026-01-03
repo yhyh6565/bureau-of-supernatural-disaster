@@ -91,7 +91,7 @@ function transformDates(obj, baseDate = new Date()) {
 
     for (const [key, value] of Object.entries(obj)) {
       // 날짜 관련 필드 감지
-      const isDateField = ['date', 'createdAt', 'updatedAt', 'dueDate', 'rentalDate'].includes(key);
+      const isDateField = ['date', 'createdAt', 'updatedAt', 'dueDate', 'rentalDate', 'processedAt'].includes(key);
 
       if (isDateField && typeof value === 'string') {
         // 날짜 규칙 적용
@@ -181,6 +181,14 @@ function processTemplates(templateDir, outputDir, baseDate = new Date()) {
           }
         } else {
           finalData = currentContent;
+        }
+
+        if (entry.name.includes('approvals.json') && Array.isArray(finalData)) {
+          finalData.forEach(item => {
+            if (item.status === '승인') {
+              item.processedAt = item.createdAt;
+            }
+          });
         }
 
         const transformedData = transformDates(finalData, baseDate);

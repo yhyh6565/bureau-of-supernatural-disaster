@@ -8,11 +8,13 @@
   "rank": "팀장",
   "extension": "2101",
   "status": "휴직",
-  "contamination": 5,
+  "contamination": 98,
   "totalIncidents": 52,
   "specialCases": 15,
   "rentals": [],
-  "purificationHistory": ["2025-12-15"],
+  "purificationHistory": [
+    "2025-12-15"
+  ],
   "funeralPreference": "매장",
   "grade": 6
 }

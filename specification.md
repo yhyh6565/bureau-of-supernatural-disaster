@@ -189,11 +189,14 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 | **박홍림** | 출동구조반 | 현무1팀 | HMU-001 | 홍화 | 6급 | **[휴직]** 장기 요양 (오염) | 재난 2건, 쪽지 7건, 공지 0건, 결재 0건, 일정 0건 |
 | **최요원** | 출동구조반 | 현무1팀 | HMU-002 | 미상 | 7급 | 사고 다발, 주간 검진 | 재난 3건, 쪽지 4건, 공지 2건, 결재 3건, 일정 5건 |
 | **류재관** | 출동구조반 | 현무1팀 | HMU-003 | 청동 | 8급 | 부적 전문, 체계적 | 재난 2건, 쪽지 5건, 공지 1건, 결재 1건, 일정 4건 |
-| **v2.0** | 2026-01-03 | UI Refinement: Dashboard 'My Assignments' -> 'Real-time Waiting Tasks'. UI Standardization: TasksPage 'Request List' / 'My Tasks' unification. Logic Override: Session-accepted status sync on Incidents Board. Refactor: Centralized Incident Status Logic. | | | | | |
-| **김솔음** | 출동구조반 | 현무1팀 | HMU-004 | 포도 | 7급 | **[휴직]** 25.04.24~ (오염) | 재난 2건, 쪽지 13건, 공지 1건, 결재 0건, 일정 0건 |
-| **해금** | 출동구조반 | 현무3팀 | HMU-301 | 해금 | 6급 | 3팀 팀장, 멸형급 대응 | 재난 2건, 쪽지 6건, 공지 1건, 결재 5건, 일정 1건 |
 | **고영은** | 신규조사반 | 백호2팀 | BKH-201 | 박하 | 7급 | **[퇴사]** 25.04.29 | 재난 4건, 쪽지 3건, 공지 0건, 결재 3건, 일정 0건 |
 | **장허운** | 현장정리반 | 주작2팀 | JJK-201 | 화각 | 7급 | **[휴직]** 25.03.28~ (오염) | 재난 3건, 쪽지 3건, 공지 1건, 결재 3건, 일정 11건 |
+
+| 버전 | 날짜 | 변경 내용 |
+|------|------|----------|
+| **v2.2** | 2026-01-04 | **결재 필터링 개선** (내가 기안한 문서 통합 조회), **박홍림** 오염도 98% 고정 및 게임오버 예외 처리, **자동 데이터 보정** (결재 처리일 동기화) |
+| **v2.1** | 2026-01-04 | Rework: Notification pinning, specific rentals for Ryujaegwan, Incident location fix. |
+| **v2.0** | 2026-01-03 | UI Refinement: Dashboard 'My Assignments' -> 'Real-time Waiting Tasks'. UI Standardization: TasksPage 'Request List' / 'My Tasks' unification. Logic Override: Session-accepted status sync on Incidents Board. Refactor: Centralized Incident Status Logic. |
 
 
 
@@ -634,6 +637,9 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
     2. **부적 결계 (Talisman Screen)**: 화면 전체가 즉시 **황색(#FFC400)**으로 전환됨 (암전 단계 없음).
     3. **축객 명령 (Expulsion)**: 황색 배경 중앙에 거대한 적색 **'退 (물러날 퇴)'** 글자가 애니메이션 없이 즉시 나타남 (부적 형상).
     4. **강제 추방 (Force Logout)**: 시스템 강제 로그아웃 및 리다이렉트.
+  - **예외 사항 (박홍림 페르소나)**:
+    - **오염도 고정**: 98%로 시작하며 시간이 지나도 증가하지 않음.
+    - **게임오버 면제**: 오염도가 100%에 도달하더라도 게임오버가 발동하지 않음 (스토리상 이미 오염된 상태).
 
 ### 8.5. 보안 처형 게임오버
   - **발동 조건**: **금지된 신원(죄인 명단)으로 로그인 시도 시** 즉시 발동

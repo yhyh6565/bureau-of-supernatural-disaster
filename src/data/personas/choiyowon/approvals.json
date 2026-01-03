@@ -22,7 +22,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-admin-002",
     "approverName": "총무팀",
-    "createdAt": "2026-01-01T15:14:36.610Z"
+    "createdAt": "2026-01-01T15:44:13.388Z",
+    "processedAt": "2026-01-01T15:44:13.388Z"
   },
   {
     "id": "appr-007",
@@ -47,7 +48,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-31T15:14:36.610Z",
+    "createdAt": "2025-12-31T15:44:13.388Z",
     "rejectReason": "운전 연수 다시 받고 오세요."
   },
   {
@@ -60,7 +61,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-04-11T09:00"
+    "createdAt": "2025-04-11T09:00",
+    "processedAt": "2025-04-11T09:00"
   },
   {
     "id": "appr-010",
@@ -72,7 +74,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-08-11T09:00"
+    "createdAt": "2025-08-11T09:00",
+    "processedAt": "2025-08-11T09:00"
   },
   {
     "id": "appr-011",
@@ -84,7 +87,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-10-14T09:00"
+    "createdAt": "2025-10-14T09:00",
+    "processedAt": "2025-10-14T09:00"
   },
   {
     "id": "appr-012",
@@ -96,7 +100,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-24T15:14:36.610Z"
+    "createdAt": "2025-12-24T15:44:13.388Z",
+    "processedAt": "2025-12-24T15:44:13.388Z"
   },
   {
     "id": "appr-013",
@@ -108,7 +113,8 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-14T15:14:36.610Z"
+    "createdAt": "2025-12-14T15:44:13.388Z",
+    "processedAt": "2025-12-14T15:44:13.388Z"
   },
   {
     "id": "appr-014",
@@ -120,6 +126,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-04T15:14:36.610Z"
+    "createdAt": "2025-12-04T15:44:13.388Z",
+    "processedAt": "2025-12-04T15:44:13.388Z"
   }
 ]
