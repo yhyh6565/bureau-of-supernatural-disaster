@@ -55,10 +55,10 @@ export function GNBHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden text-primary-foreground hover:bg-primary-foreground/10"
+                className="lg:hidden text-primary-foreground hover:bg-primary-foreground/10 h-10 w-10 p-2"
                 aria-label="메뉴 열기"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[280px] sm:w-[320px]">
@@ -97,7 +97,7 @@ export function GNBHeader() {
           </Sheet>
 
           {/* 태극 문양 + 타이틀 (클릭 시 홈 이동) */}
-          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity py-2">
             <div className="w-8 h-8">
               <Logo />
             </div>
@@ -145,7 +145,7 @@ export function GNBHeader() {
           <Button
             variant="ghost"
             size="icon"
-            className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10"
+            className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 h-10 w-10 relative"
             aria-label="알림"
           >
             <Bell className="w-5 h-5" />
@@ -157,7 +157,7 @@ export function GNBHeader() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2 max-w-[200px]"
+                className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2 max-w-[200px] h-10"
               >
                 <User className="w-4 h-4 shrink-0" />
                 <span className="text-sm font-medium truncate">{agent.name}</span>

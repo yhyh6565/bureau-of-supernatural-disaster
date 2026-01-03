@@ -24,12 +24,12 @@ export function MainLayout({ children }: MainLayoutProps) {
       {/* 워터마크 제거됨 */}
 
       {/* 메인 콘텐츠 */}
-      <main id="main-content" className="p-4 lg:p-6 max-w-[1920px] mx-auto pb-10">
+      <main id="main-content" className="p-4 lg:p-6 max-w-[1920px] mx-auto pb-4 lg:pb-10">
         {children}
       </main>
 
       {/* 하단 정보 바 */}
-      <footer className="fixed bottom-0 left-0 right-0 h-8 bg-muted border-t border-border px-4 flex items-center justify-between text-xs text-muted-foreground z-30">
+      <footer className="lg:fixed bottom-0 left-0 right-0 h-8 bg-muted border-t border-border px-4 flex items-center justify-between text-xs text-muted-foreground z-30">
         <div className="flex items-center gap-4">
           <span>접속자: {agent?.name}</span>
           <span className="font-mono">{new Date().toLocaleDateString('ko-KR')}</span>

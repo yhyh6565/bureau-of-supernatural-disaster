@@ -144,28 +144,78 @@ export function TasksPage() {
                   <Badge variant="secondary" className="ml-auto">{tasks.list.length}건</Badge>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {tasks.list.length > 0 ? (
-                  tasks.list.map((incident) => (
-                    <IncidentCard
-                      key={incident.id}
-                      incident={incident}
-                      showAction={department === 'hyunmu'} // 현무팀은 자율 배정
-                      onActionClick={(inc) => {
-                        setSelectedIncident(inc);
-                        setShowAcceptDialog(true);
-                      }}
-                      actionLabel={action.label}
-                      department={department}
-                      onManualClick={handleManualClick}
-                    />
-                  ))
-                ) : (
-                  <div className="p-8 text-center text-muted-foreground">
-                    <Briefcase className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p>대기 중인 업무가 없습니다.</p>
+              <CardContent>
+                <div className="border border-border rounded-sm overflow-hidden min-h-[100px]">
+                  {/* Desktop Table Header */}
+                  <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-sm">
+                    <div className="col-span-2 text-center">등급/상태</div>
+                    <div className="col-span-2">사건번호</div>
+                    <div className="col-span-5">내용</div>
+                    <div className="col-span-3 text-center">작업</div>
                   </div>
-                )}
+
+                  {tasks.list.length > 0 ? (
+                    tasks.list.map((incident) => (
+                      <div key={incident.id} className="border-t border-border hover:bg-accent/50 transition-colors">
+                        {/* Mobile Card Layout - hidden on md+ */}
+                        <div className="md:hidden p-3">
+                          <IncidentCard
+                            incident={incident}
+                            showAction={department === 'hyunmu'}
+                            onActionClick={(inc) => {
+                              setSelectedIncident(inc);
+                              setShowAcceptDialog(true);
+                            }}
+                            actionLabel={action.label}
+                            department={department}
+                            onManualClick={handleManualClick}
+                          />
+                        </div>
+
+                        {/* Desktop Grid Layout - hidden on sm */}
+                        <div className="hidden md:grid grid-cols-12 gap-2 p-3 items-center text-sm">
+                          <div className="col-span-2 text-center flex flex-col gap-1 items-center justify-center">
+                            <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} text-xs w-auto px-2`}>
+                              {incident.dangerLevel}
+                            </Badge>
+                            <Badge className={`${STATUS_STYLE[incident.status].bgClass} ${STATUS_STYLE[incident.status].textClass} text-xs w-auto px-2`}>
+                              {incident.status}
+                            </Badge>
+                          </div>
+                          <div className="col-span-2 font-mono text-xs text-muted-foreground truncate">
+                            {incident.caseNumber}
+                          </div>
+                          <div className="col-span-5 space-y-1">
+                            <div className="font-medium truncate">{incident.title}</div>
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground truncate">
+                              <MapPin className="w-3 h-3" />
+                              {incident.location}
+                            </div>
+                          </div>
+                          <div className="col-span-3 flex justify-center">
+                            {department === 'hyunmu' && (
+                              <Button
+                                size="sm"
+                                className="h-8 text-xs"
+                                onClick={() => {
+                                  setSelectedIncident(incident);
+                                  setShowAcceptDialog(true);
+                                }}
+                              >
+                                {action.label}
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-muted-foreground">
+                      <Briefcase className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>대기 중인 업무가 없습니다.</p>
+                    </div>
+                  )}
+                </div>
               </CardContent>
             </Card>
 
@@ -178,48 +228,105 @@ export function TasksPage() {
                   <Badge variant="secondary" className="ml-auto">{tasks.assigned.length}건</Badge>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {tasks.assigned.length > 0 ? (
-                  tasks.assigned.map((incident) => (
-                    <div key={incident.id}>
-                      <IncidentCard
-                        incident={incident}
-                        onManualClick={handleManualClick}
-                      />
-                      <div className="flex gap-2 mt-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1"
-                          onClick={() => {
-                            setSelectedIncident(incident);
-                            setShowDetailDialog(true);
-                          }}
-                        >
-                          상세 보기
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="flex-1"
-                          onClick={() => {
-                            toast({
-                              title: '보고서 작성 페이지로 이동',
-                              description: '결재 페이지에서 보고서를 작성할 수 있습니다.',
-                            });
-                            window.location.href = '/approvals';
-                          }}
-                        >
-                          보고서 작성
-                        </Button>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-8 text-center text-muted-foreground">
-                    <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p>배정된 업무가 없습니다.</p>
+              <CardContent>
+                <div className="border border-border rounded-sm overflow-hidden min-h-[100px]">
+                  {/* Desktop Table Header */}
+                  <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-sm">
+                    <div className="col-span-2 text-center">등급/상태</div>
+                    <div className="col-span-5">내용</div>
+                    <div className="col-span-5 text-center">작업</div>
                   </div>
-                )}
+
+                  {tasks.assigned.length > 0 ? (
+                    tasks.assigned.map((incident) => (
+                      <div key={incident.id} className="border-t border-border hover:bg-accent/50 transition-colors">
+                        {/* Mobile Card Layout */}
+                        <div className="md:hidden p-3">
+                          <IncidentCard
+                            incident={incident}
+                            onManualClick={handleManualClick}
+                          />
+                          <div className="flex gap-2 mt-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1"
+                              onClick={() => {
+                                setSelectedIncident(incident);
+                                setShowDetailDialog(true);
+                              }}
+                            >
+                              상세
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="flex-1"
+                              onClick={() => {
+                                toast({
+                                  title: '보고서 작성 페이지로 이동',
+                                  description: '결재 페이지에서 보고서를 작성할 수 있습니다.',
+                                });
+                                window.location.href = '/approvals';
+                              }}
+                            >
+                              보고서
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Desktop Grid Layout */}
+                        <div className="hidden md:grid grid-cols-12 gap-2 p-3 items-center text-sm">
+                          <div className="col-span-2 text-center flex flex-col gap-1 items-center justify-center">
+                            <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} text-xs w-auto px-2`}>
+                              {incident.dangerLevel}
+                            </Badge>
+                            <Badge className={`${STATUS_STYLE[incident.status].bgClass} ${STATUS_STYLE[incident.status].textClass} text-xs w-auto px-2`}>
+                              {incident.status}
+                            </Badge>
+                          </div>
+                          <div className="col-span-5 space-y-1">
+                            <div className="font-medium truncate">{incident.title}</div>
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground truncate">
+                              <MapPin className="w-3 h-3" />
+                              {incident.location}
+                            </div>
+                          </div>
+                          <div className="col-span-5 flex justify-center gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-8 text-xs"
+                              onClick={() => {
+                                setSelectedIncident(incident);
+                                setShowDetailDialog(true);
+                              }}
+                            >
+                              상세
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="h-8 text-xs"
+                              onClick={() => {
+                                toast({
+                                  title: '보고서 작성 페이지로 이동',
+                                  description: '결재 페이지에서 보고서를 작성할 수 있습니다.',
+                                });
+                                window.location.href = '/approvals';
+                              }}
+                            >
+                              보고서 작성
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-muted-foreground">
+                      <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>배정된 업무가 없습니다.</p>
+                    </div>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -361,7 +468,7 @@ export function TasksPage() {
         open={showManualDialog}
         onOpenChange={setShowManualDialog}
       />
-    </MainLayout>
+    </MainLayout >
   );
 }
 

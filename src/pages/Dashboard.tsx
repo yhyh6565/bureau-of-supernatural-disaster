@@ -96,18 +96,21 @@ export function Dashboard() {
           ) : (
             <>
               {/* 좌측: 주요 일정 (4) */}
-              <div className="lg:col-span-3">
+              {/* Mobile: 1st, Tablet: 1st (Col 1-6), Desktop: 1st (Col 1-3) */}
+              <div className="md:col-span-6 lg:col-span-3 order-1">
                 <MiniWeeklySchedule />
               </div>
 
               {/* 중앙: 배정 업무 + 재난 현황 (5) */}
-              <div className="lg:col-span-5 space-y-4">
+              {/* Mobile: 2nd, Tablet: 3rd (Row 2, Full Width), Desktop: 2nd (Col 4-8) */}
+              <div className="md:col-span-12 lg:col-span-5 space-y-4 order-2 md:order-3 lg:order-2">
                 <IncidentSummary />
                 <MyAssignments />
               </div>
 
               {/* 우측: 개인정보 + 행정알림 (4) */}
-              <div className="lg:col-span-4 space-y-4">
+              {/* Mobile: 3rd, Tablet: 2nd (Col 7-12), Desktop: 3rd (Col 9-12) */}
+              <div className="md:col-span-6 lg:col-span-4 space-y-4 order-3 md:order-2 lg:order-3">
                 <PersonalInfoWidget />
                 <AdminAlertWidget />
               </div>
