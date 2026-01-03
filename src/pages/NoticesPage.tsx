@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useInteraction } from '@/contexts/InteractionContext';
+import { parseNotificationDate, safeFormatDate } from '@/utils/dateUtils';
 import {
   Notification,
   NoticePriority,
@@ -29,6 +31,7 @@ import {
 
 export function NoticesPage() {
   const { agent } = useAuth();
+  const { isTriggered } = useInteraction();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPriorities, setSelectedPriorities] = useState<NoticePriority[]>([]);
@@ -75,14 +78,17 @@ export function NoticesPage() {
       // 읽지 않음 필터
       const matchesUnread = !showUnreadOnly || !notice.isRead;
 
-      return matchesSearch && matchesPriority && matchesCategory && matchesDepartment && matchesUnread;
+      // Trigger 필터 (이스터에그 등 발동 조건이 있는 경우)
+      const isVisible = !notice.trigger || isTriggered(notice.id);
+
+      return matchesSearch && matchesPriority && matchesCategory && matchesDepartment && matchesUnread && isVisible;
     })
     .sort((a, b) => {
       // 상단 고정 우선
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
       // 날짜 역순
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      return parseNotificationDate(b.createdAt).getTime() - parseNotificationDate(a.createdAt).getTime();
     });
 
   const togglePriority = (priority: NoticePriority) => {
@@ -109,9 +115,11 @@ export function NoticesPage() {
     );
   };
 
-  const isNewNotice = (createdAt: Date) => {
-    return differenceInDays(new Date(), new Date(createdAt)) <= 1;
+  const isNewNotice = (createdAt: Date | string) => {
+    const date = typeof createdAt === 'string' ? parseNotificationDate(createdAt) : createdAt;
+    return differenceInDays(new Date(), date) <= 1;
   };
+
 
   const activeFilterCount =
     selectedPriorities.length +
@@ -327,13 +335,13 @@ export function NoticesPage() {
                             {isNew && <Badge className="bg-success text-xs">NEW</Badge>}
                           </div>
                           <h3 className={`text-sm ${!notice.isRead ? 'font-medium' : ''}`}>
-                            {notice.title}
+                            {notice.title.replace(/^\[.*?\]\s*/, '')}
                           </h3>
                         </div>
                       </div>
                       <div className="text-xs text-muted-foreground space-y-1">
                         <div>발신: {notice.sourceDepartment}</div>
-                        <div>{format(new Date(notice.createdAt), 'yyyy.MM.dd', { locale: ko })}</div>
+                        <div>{safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}</div>
                       </div>
                     </div>
 
@@ -358,7 +366,7 @@ export function NoticesPage() {
                       </div>
                       <div className="col-span-5 flex items-center gap-2">
                         <span className={`truncate ${!notice.isRead ? 'font-medium' : ''}`}>
-                          {notice.title}
+                          {notice.title.replace(/^\[.*?\]\s*/, '')}
                         </span>
                         {isNew && (
                           <Badge className="bg-success text-xs h-4 px-1.5">NEW</Badge>
@@ -368,7 +376,7 @@ export function NoticesPage() {
                         {notice.sourceDepartment}
                       </div>
                       <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
-                        {format(new Date(notice.createdAt), 'yyyy.MM.dd', { locale: ko })}
+                        {safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}
                       </div>
                     </div>
                   </div>

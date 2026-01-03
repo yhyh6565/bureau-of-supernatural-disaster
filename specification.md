@@ -149,6 +149,23 @@ getNotifications: (agent) => {
 }
 ```
 
+### 1.3 세션 데이터 지속성 및 동기화 (Session Persistence & Synchronization) - [UPDATED]
+
+시스템은 로그인 세션 동안 발생하는 사용자의 활동을 유지하기 위해 **`sessionStorage`**와 **`Context API`**를 적극 활용합니다.
+
+| 데이터 영역 | 관리 주체 (Context) | 저장소 Key | 지속 범위 | 동기화 방식 |
+|-------------|---------------------|------------|-----------|-------------|
+| **이스터에그 상태** | `InteractionContext` | `haetae_triggered_ids` | 세션 | 모든 페이지 연동 (트리거 시 즉시 반영) |
+| **정신 오염도** | `UserContext` | `haetae_contamination` | 세션 | 새로고침 시 유지, 로그아웃 시 초기화 |
+| **업무 내역 (세션)** | `WorkContext` | `haetae_session_schedules` 등 | 세션 | 대시보드 및 업무 페이지 실시간 동기화 |
+| **재난 상태 (수락)** | `WorkContext` | `haetae_session_accepted_tasks` | 세션 | `processedIncidents`를 통해 전역 반영 |
+
+**핵심 아키텍처 (Single Source of Truth)**:
+*   `WorkContext`가 재난 및 업무 데이터의 **단일 진실 공급원** 역할을 수행합니다.
+*   **글로벌 가시성 필터링**: `InteractionContext`의 트리거 목록(`triggeredIds`)을 참조하여, 아직 발동조건(예: 30초 대기)을 충족하지 못한 숨겨진 재난/공지는 **앱 전체에서 원천적으로 차단**합니다.
+*   이를 통해 대시보드, 상황판, 담당 업무 등 모든 페이지에서 **동일한 재난 목록과 상태**를 보장합니다.
+```
+
 **3) 쪽지/결재/일정 (Messages/Approvals/Schedules)**: 개인 전용만
 ```typescript
 getMessages: (agent) => {
@@ -179,22 +196,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 | **장허운** | 현장정리반 | 주작2팀 | JJK-201 | 화각 | 7급 | **[휴직]** 25.03.28~ (오염) | 재난 3건, 쪽지 3건, 공지 1건, 결재 3건, 일정 11건 |
 
 
-### 로그인 후 브리핑
-로그인 성공 시 **"오늘의 재난 브리핑"** 화면 표시 (스킵 가능):
 
-```
-[오늘의 재난 브리핑]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📅 2025년 1월 1일 (수) 09:23
-
-🚨 긴급 재난: 1건 (멸형급 1)
-⚠️  처리 중 재난: 5건 (파형 2, 뇌형 3)
-✅ 금일 종결: 2건
-
-📌 나의 배정 업무: 3건
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[확인] [자세히 보기]
-```
 
 ### 보안 수칙
 - 페르소나 키(이름)는 외부 노출 금지
@@ -282,11 +284,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 5. **정리대기 → 정리중**: 주작팀 배정 시
 6. **정리중 → 종결**: 주작팀 정리 보고서 승인 시
 
-### 주요 출몰 재난 유형 (Lore)
-- **시간의 틈**: 시간 왜곡 현상 (멸형급)
-- **물의 기억**: 해변 안개 현상
-- **메아리**: 정체불명 소리 반복
-- **길 잃은 자**: 방황하는 영혼
+
 
 ### 재난 대응 매뉴얼 시스템
 일부 특수 재난은 현장 요원의 생존율을 높이기 위해 전용 **대응 매뉴얼**을 보유하고 있습니다.
@@ -624,7 +622,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 ### 8.4 정신 오염 게임오버 (Mental Contamination & Game Over)
 - **오염도 메카니즘**:
-  - **자연 증가**: 현실 시간 **7초당 1%**씩 증가
+  - **자연 증가**: 현실 시간 **10초당 1%**씩 증가
   - **감소 방법**:
     - **오염 검사 신청**: -5% (ResourcesPage)
     - **용천 선녀탕 방문**: -30% (ResourcesPage > Facilities)
@@ -1032,7 +1030,22 @@ npm run build
 
 ---
 
-## 🎯 세계관 몰입 요소
+## 🎯 세계관 몰입 요소 및 이스터에그
+
+### 4.1 시스템 알림 및 특수 트리거 (Notifications & Easter Eggs)
+
+**1) 시간차 발동 재난 (Time-Elapsed Trigger)**
+*   특정 재난은 로그인 직후에는 보이지 않다가, 일정 시간이 경과해야 시스템에 감지됩니다.
+*   **대표 사례**: `강남역 포식자 싱크홀`
+    *   **발동 조건**: 로그인 후 **30초 경과**
+    *   **효과**:
+        1.  30초 전까지는 모든 목록에서 **은폐** (Hidden).
+        2.  30초 타이머 종료 시, 해당 공지의 생성 시각을 **'현재 시각(Real-time)'**으로 재설정.
+        3.  대시보드 및 공지사항 최상단에 **[긴급]** 배지와 함께 경보 발생.
+
+**2) 우선순위 공지 정책**
+*   **정신 건강 권장**: "정신 감응형 재난 예방" 공지가 기본적으로 목록 최상단에 고정됩니다 (싱크홀 발동 전까지).
+*   **날짜 랜덤화**: 일반 공지들은 `2026-01-01` ~ `2026-01-03` 사이의 날짜가 랜덤하게 배정되어 사실감을 부여합니다.
 
 ### Footer 메시지
 모든 페이지 하단에 표시:
@@ -1104,6 +1117,46 @@ npm run build
 - **Merge Logic**: 스크립트가 각 페르소나 데이터를 생성할 때, `_base` 데이터를 먼저 로드하고 그 위에 개별 페르소나 데이터를 병합(Merge)합니다.
   - **배열(Array)**: Base 항목 뒤에 개별 항목을 추가 (Concat)
   - **객체(Object)**: Base 속성을 개별 속성이 덮어씀 (Override)
+
+### 4. 컴포넌트 구조 (Component Architecture) - [v2.0 UPDATE]
+
+#### 4.1 페이지별 컴포넌트 분리 정책
+대규모 페이지 컴포넌트는 기능 단위로 분리하여 유지보수성을 높입니다.
+
+**Resources 관련 컴포넌트**:
+```
+src/components/resources/
+├── index.ts              # Barrel export
+├── EquipmentCard.tsx     # 장비 카드 (재사용)
+├── InspectionForm.tsx    # 검사 신청 폼
+└── visitUtils.ts         # 방문 예약 유틸리티 함수
+```
+
+**Dashboard 컴포넌트**:
+```
+src/components/dashboard/
+├── IncidentSummary.tsx   # 재난 현황 요약 (useWork 사용)
+├── MyAssignments.tsx     # 실시간 대기 업무 (useWork 사용)
+├── DisasterTicker.tsx    # 재난 경보 티커 (useWork 사용)
+├── PersonalInfoWidget.tsx
+├── AdminAlertWidget.tsx
+└── MiniWeeklySchedule.tsx
+```
+
+#### 4.2 데이터 소스 정책 (Single Source of Truth)
+> **중요**: 모든 재난 관련 컴포넌트는 반드시 `useWork().processedIncidents`를 사용해야 합니다.
+> `DataManager.getIncidents()` 직접 호출은 금지됩니다 (트리거 필터링 우회 방지).
+
+### 5. 유틸리티 모듈 (Utility Modules) - [v2.0 UPDATE]
+
+공통적으로 사용되는 로직은 `src/utils/` 디렉토리에서 관리합니다.
+
+#### `src/utils/dateUtils.ts`
+| 함수 | 설명 |
+|------|------|
+| `parseNotificationDate()` | 다양한 형식(ISO, relative:, fixed:)의 날짜 문자열을 Date 객체로 변환 |
+| `safeFormatDate()` | 에러 발생 시 폴백 처리가 포함된 안전한 날짜 포맷팅 |
+| `isNewItem()` | 항목이 "신규"인지 판단 (기본 7일 이내) |
 
 ---
 

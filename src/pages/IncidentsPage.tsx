@@ -23,6 +23,12 @@ import {
 } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 
 type GroupBy = 'status' | 'dangerLevel';
 
@@ -74,6 +80,58 @@ export default function IncidentsPage() {
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-5 h-5 text-destructive" />
                         <h1 className="text-xl font-bold">재난 현황</h1>
+
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-5 w-5 rounded-full text-[10px] font-bold border-muted-foreground/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground hover:border-foreground/50 transition-colors"
+                                >
+                                    !
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[450px] p-0" align="start">
+                                <div className="p-4 bg-muted/20 border-b">
+                                    <h4 className="font-semibold leading-none mb-1">위험 등급 체계 (형刑 시스템)</h4>
+                                    <p className="text-xs text-muted-foreground">초자연 재난관리국은 재난의 위험도를 4단계로 분류합니다.</p>
+                                </div>
+                                <div className="p-2">
+                                    <table className="w-full text-xs">
+                                        <thead>
+                                            <tr className="border-b text-muted-foreground">
+                                                <th className="h-8 px-2 text-left font-medium w-20">등급</th>
+                                                <th className="h-8 px-2 text-left font-medium w-40">정의</th>
+                                                <th className="h-8 px-2 text-left font-medium">특징</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr className="border-b last:border-0 hover:bg-muted/50">
+                                                <td className="p-2 font-bold text-purple-600">멸형</td>
+                                                <td className="p-2">사망처리자 오십만 명 이상</td>
+                                                <td className="p-2 text-muted-foreground">최고 위험 등급, 특수 장비 필수</td>
+                                            </tr>
+                                            <tr className="border-b last:border-0 hover:bg-muted/50">
+                                                <td className="p-2 font-bold text-red-600">파형</td>
+                                                <td className="p-2">수십 년간 수백 명 실종</td>
+                                                <td className="p-2 text-muted-foreground">종결 불가, 봉인만 가능</td>
+                                            </tr>
+                                            <tr className="border-b last:border-0 hover:bg-muted/50">
+                                                <td className="p-2 font-bold text-orange-500">뇌형</td>
+                                                <td className="p-2">수십 년간 수십 명 피해</td>
+                                                <td className="p-2 text-muted-foreground">봉인 가능, 장기 관찰 필요</td>
+                                            </tr>
+                                            <tr className="border-b last:border-0 hover:bg-muted/50">
+                                                <td className="p-2 font-bold text-gray-500">고형</td>
+                                                <td className="p-2">인명피해 없음</td>
+                                                <td className="p-2 text-muted-foreground">낮은 위험도, 일반 대응 가능</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
+
                         <span className="text-sm text-muted-foreground">
                             (총 {incidents.length}건)
                         </span>

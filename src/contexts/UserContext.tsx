@@ -16,7 +16,14 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuth();
-    const [contamination, setContamination] = useState(0);
+    const SESSION_CONTAMINATION_KEY = 'haetae_contamination';
+
+    // Initialize from storage or agent default
+    const [contamination, setContamination] = useState(() => {
+        if (!agent) return 0;
+        const stored = sessionStorage.getItem(SESSION_CONTAMINATION_KEY);
+        return stored ? parseInt(stored, 10) : agent.contamination;
+    });
     const [gameOverType, setGameOverType] = useState<GameOverType>('none');
 
     // Derived state for backward compatibility and general checks
@@ -24,13 +31,31 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         if (agent) {
-            setContamination(agent.contamination);
-            setGameOverType('none'); // Reset on login
+            const stored = sessionStorage.getItem(SESSION_CONTAMINATION_KEY);
+            if (stored) {
+                const storedVal = parseInt(stored, 10);
+                setContamination(storedVal);
+                // Restore game over state if needed? For now, we only restore contamination.
+                // If it was > 100, trigger loop will catch it or we set it here.
+                if (storedVal >= 100) setGameOverType('contamination');
+                else setGameOverType('none');
+            } else {
+                setContamination(agent.contamination);
+                setGameOverType('none'); // Reset on new login
+            }
         } else {
             setContamination(0);
             setGameOverType('none');
+            sessionStorage.removeItem(SESSION_CONTAMINATION_KEY);
         }
     }, [agent?.id]);
+
+    // Sync to Storage
+    useEffect(() => {
+        if (agent) {
+            sessionStorage.setItem(SESSION_CONTAMINATION_KEY, contamination.toString());
+        }
+    }, [contamination, agent]);
 
     // Auto-increase contamination
     useEffect(() => {
@@ -39,13 +64,14 @@ export function UserProvider({ children }: { children: ReactNode }) {
         const interval = setInterval(() => {
             setContamination(prev => {
                 const next = prev + 1;
+                // Storage sync is handled by the effect above
                 if (next >= 100) {
                     setGameOverType('contamination');
                     return 100;
                 }
                 return next;
             });
-        }, 7000); // Increase by 1 every 7 seconds
+        }, 10000); // Increase by 1 every 10 seconds
 
         return () => clearInterval(interval);
     }, [agent, isGameOver]);

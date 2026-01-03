@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useMemo, ReactNode } from 'react';
 import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
 import { useAuth } from '@/contexts/AuthContext';
+import { useInteraction } from '@/contexts/InteractionContext';
 import { DataManager } from '@/data/dataManager';
 import * as approvalService from '@/services/approvalService';
 import * as scheduleService from '@/services/scheduleService';
@@ -63,6 +64,7 @@ const parseInspections = (data: any[]): InspectionRequest[] => {
 
 export function WorkProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuth();
+    const { triggeredIds } = useInteraction();
 
     // Persistent Session State (New items added during session)
     const [sessionSchedules, setSessionSchedules] = usePersistentState<Schedule[]>(
@@ -93,24 +95,30 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         if (!agent) return [];
         const baseIncidents = DataManager.getIncidents(agent);
 
-        return baseIncidents.map(inc => {
-            // Override status if accepted in this session
-            if (acceptedIncidentIds.includes(inc.id)) {
-                let newStatus = inc.status;
-                if (agent.department === 'baekho') newStatus = '조사중';
-                else if (agent.department === 'hyunmu') newStatus = '구조중';
-                else if (agent.department === 'jujak') newStatus = '정리중';
+        return baseIncidents
+            .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Filter hidden triggers (Easter Eggs)
+            .map(inc => {
+                // Override status if accepted in this session
+                if (acceptedIncidentIds.includes(inc.id)) {
+                    let newStatus = inc.status;
+                    if (agent.department === 'baekho') newStatus = '조사중';
+                    else if (agent.department === 'hyunmu') newStatus = '구조중';
+                    else if (agent.department === 'jujak') newStatus = '정리중';
 
-                return { ...inc, status: newStatus as any };
-            }
-            return inc;
-        }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    }, [agent, acceptedIncidentIds]);
+                    return { ...inc, status: newStatus as any };
+                }
+                return inc;
+            }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }, [agent, acceptedIncidentIds, triggeredIds]);
 
     // Derived State: Combine Base Data (from DataManager) + Session Data
     const schedules = useMemo(() => {
         if (!agent) return [];
-        const base = DataManager.getSchedules(agent);
+        const base = DataManager.getSchedules(agent).filter(s => {
+            // Filter out administrative submission logs (e.g., "Application Submitted", "Approval")
+            // User wants to see only the actual scheduled events (Target Date), not the request submission dates.
+            return !s.title.endsWith('신청 건') && s.type !== '결재';
+        });
 
         // Dynamic Schedules from Assigned Incidents (using processedIncidents)
         let myIncidents: any[] = [];

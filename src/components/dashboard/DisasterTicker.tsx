@@ -1,14 +1,15 @@
-import { DataManager } from '@/data/dataManager';
 import { AlertTriangle, Radio } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useInteraction } from '@/contexts/InteractionContext';
+import { useWork } from '@/contexts/WorkContext';
 
 const SINKHOLE_ID = 'inc-sinkhole-001';
 
 export function DisasterTicker() {
     const { agent } = useAuth();
     const { isTriggered, newlyTriggeredId } = useInteraction();
+    const { processedIncidents } = useWork();
 
     // Only show if the Sinkhole event is triggered
     const showTicker = isTriggered(SINKHOLE_ID);
@@ -24,7 +25,8 @@ export function DisasterTicker() {
         }
     }, [newlyTriggeredId]);
 
-    const incidents = DataManager.getIncidents(agent);
+    // Use processedIncidents from WorkContext (Single Source of Truth)
+    const incidents = processedIncidents;
 
     // Filter to show ONLY the Sinkhole incident in this special mode
     const targetIncident = incidents.find(i => i.id === SINKHOLE_ID);

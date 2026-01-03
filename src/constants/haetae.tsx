@@ -157,16 +157,16 @@ export const NOTICE_CATEGORY_STYLE: Record<NoticeCategory, {
     textClass: string;
     icon: React.ComponentType<{ className?: string }>;
 }> = {
-    '인사': { bgClass: 'bg-blue-500/10', textClass: 'text-blue-500', icon: Users },
-    '보안': { bgClass: 'bg-red-500/10', textClass: 'text-red-500', icon: Shield },
-    '복지': { bgClass: 'bg-green-500/10', textClass: 'text-green-500', icon: Gift },
-    '안전': { bgClass: 'bg-orange-500/10', textClass: 'text-orange-500', icon: AlertTriangle },
-    '교육': { bgClass: 'bg-purple-500/10', textClass: 'text-purple-500', icon: BookOpen },
-    '행사': { bgClass: 'bg-pink-500/10', textClass: 'text-pink-500', icon: PartyPopper },
-    '시스템': { bgClass: 'bg-indigo-500/10', textClass: 'text-indigo-500', icon: Monitor },
-    '장비': { bgClass: 'bg-amber-500/10', textClass: 'text-amber-500', icon: Wrench },
-    '규정': { bgClass: 'bg-slate-500/10', textClass: 'text-slate-500', icon: ClipboardList },
-    '공지': { bgClass: 'bg-gray-500/10', textClass: 'text-gray-500', icon: Megaphone },
+    '인사': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Users },
+    '보안': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Shield },
+    '복지': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Gift },
+    '안전': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: AlertTriangle },
+    '교육': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: BookOpen },
+    '행사': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: PartyPopper },
+    '시스템': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Monitor },
+    '장비': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Wrench },
+    '규정': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: ClipboardList },
+    '공지': { bgClass: 'bg-slate-100', textClass: 'text-slate-600', icon: Megaphone },
 };
 
 // 페르소나 키를 이름으로 매핑

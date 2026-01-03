@@ -22,7 +22,8 @@ import {
     Package,
     Shield,
     Droplets,
-    FileText
+    FileText,
+    Briefcase
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -105,7 +106,8 @@ export function TasksCalendar() {
             }
         });
 
-        // 3. Inspections
+        // 3. Inspections - REMOVED (Covered by Schedules, prevents duplication)
+        /*
         inspectionRequests.forEach(insp => {
             allEvents.push({
                 id: `insp-${insp.id}`,
@@ -115,8 +117,10 @@ export function TasksCalendar() {
                 status: insp.status
             });
         });
+        */
 
-        // 4. Approvals
+        // 4. Approvals - REMOVED (User requested to hide administrative logs)
+        /*
         approvals.forEach(app => {
             allEvents.push({
                 id: `app-${app.id}`,
@@ -126,6 +130,7 @@ export function TasksCalendar() {
                 status: app.status
             });
         });
+        */
 
         // 5. Schedules
         schedules.forEach(sch => {
@@ -173,12 +178,22 @@ export function TasksCalendar() {
                     } else if (e.type === 'rental') {
                         bgClass = 'bg-orange-100 text-orange-800';
                         icon = <Package className="w-3 h-3" />;
-                    } else if (e.type === 'inspection') {
-                        bgClass = 'bg-blue-100 text-blue-800';
-                        icon = <Shield className="w-3 h-3" />;
-                    } else if (e.type === 'approval') {
-                        bgClass = 'bg-green-100 text-green-800';
-                        icon = <FileText className="w-3 h-3" />;
+                    } else if (e.type === 'schedule') {
+                        // schedule.type is stored in e.status
+                        const type = e.status;
+                        if (['작전', '현장 조사', '긴급 출동', '사후 정리'].includes(type) || e.title.includes('출동') || e.title.includes('조사')) {
+                            // 업무 (Work) -> Green
+                            bgClass = 'bg-green-100 text-green-800';
+                            icon = <Briefcase className="w-3 h-3" />;
+                        } else if (['방문예약', '검사'].includes(type) || e.title.includes('예약')) {
+                            // 예약 (Reservation) -> Blue
+                            bgClass = 'bg-blue-100 text-blue-800';
+                            icon = <CalendarIcon className="w-3 h-3" />;
+                        } else {
+                            // 행사/기타 (Events) -> Gray
+                            bgClass = 'bg-gray-100 text-gray-800';
+                            icon = <CalendarIcon className="w-3 h-3" />;
+                        }
                     }
 
                     return (
