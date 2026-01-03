@@ -40,6 +40,14 @@
 - **도깨비 공방 장비 대여**: 해태상, 도깨비불, 은심장 등 특수 장비 대여 신청
 - **시설 예약**: 도깨비 공방, 용천 선녀탕(정화 시설) 등 방문 예약 (운영시간 기반 동적 슬롯)
 
+### 6. 이스터에그 및 특수 시스템 (Hidden Systems)
+- **정신 오염 게임오버 (Mental Contamination)**: 오염도 100% 도달 시 시스템이 사용자를 '오염체'로 간주.
+  - **검열(Censorship)**: 화면의 모든 텍스트가 '■'로 강제 변환 (지수적 가속).
+  - **축객(Expulsion)**: 노란색 부적 결계가 펼쳐지며 '退(물러날 퇴)' 부적으로 강제 추방.
+- **보안 처형 (Security Execution)**: 금지된 신원(예: 죄인 명단)으로 로그인 시도 시 발동.
+  - **동결(Freeze)**: 3초간 화면이 잿빛으로 변하며 시스템 먹통 현상 발생.
+  - **처형**: 적색 점멸과 함께 즉결 처형 시퀀스 진행.
+
 ## 🛠 기술 스택 (Tech Stack)
 - **Framework**: React 18, TypeScript
 - **Build**: Vite
@@ -61,5 +69,5 @@ npm run dev
 ```
 
 ---
-**System Version**: v1.3
+**System Version**: v2.0
 **Security Level**: Confidential (대외비)
