@@ -78,36 +78,45 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
         }
     }, [sessionMessages]);
 
+    // Track scheduled triggers to avoid duplicate timeouts
+    const scheduledTriggers = React.useRef<Set<string>>(new Set());
+
     // Check triggers
     useEffect(() => {
         if (!isAuthenticated || !agent) return;
 
         const checkTriggers = () => {
-            // 1. Get all potential items (Incidents, Notifications, Messages)
-            // We check Global Incidents and Global Notifications for now as per requirement
-            // Ideally DataManager should give access to ALL raw data, but here we can fetch lists
             const incidents = DataManager.getIncidents(agent);
             const notifications = DataManager.getNotifications(agent);
 
             const allItems = [...incidents, ...notifications];
 
             allItems.forEach((item) => {
-                // Skip if already triggered or no trigger
-                if (!item.trigger || triggeredIds.includes(item.id)) return;
-                // Skip if NOT time-elapsed (for now handling only time-elapsed)
+                // Skip if already triggered OR already scheduled
+                if (!item.trigger || triggeredIds.includes(item.id) || scheduledTriggers.current.has(item.id)) return;
+
+                // Skip if NOT time-elapsed
                 if (item.trigger.type !== 'time-elapsed') return;
 
-                const delay = item.trigger.delay || 0;
+                // Support both 'delay' field and 'value' (if number) for time
+                const delay = item.trigger.delay ?? (typeof item.trigger.value === 'number' ? item.trigger.value : 0);
+
+                // Mark as scheduled
+                scheduledTriggers.current.add(item.id);
 
                 // Set timeout
                 setTimeout(() => {
                     triggerEvent(item.id, item);
+                    // Optional: remove from scheduledTriggers if we want to allow re-trigger logic later? 
+                    // But for "once per session", we keep it or rely on triggeredIds check next time.
+                    // Ideally we should CLEANUP scheduledTriggers if component unmounts?
+                    // But here triggeredIds will strictly prevent it.
                 }, delay);
             });
         };
 
         checkTriggers();
-    }, [isAuthenticated, agent]); // Run once on login
+    }, [isAuthenticated, agent, triggeredIds]); // Add triggeredIds to dependency to ensure checks use fresh state
 
     const triggerEvent = (id: string, item: any) => {
         setTriggeredIds((prev) => {

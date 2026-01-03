@@ -22,7 +22,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-admin-002",
     "approverName": "총무팀",
-    "createdAt": "2026-01-01T06:27:55.573Z"
+    "createdAt": "2026-01-01T08:51:20.121Z"
   },
   {
     "id": "appr-007",
@@ -47,7 +47,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-31T06:27:55.573Z",
+    "createdAt": "2025-12-31T08:51:20.121Z",
     "rejectReason": "운전 연수 다시 받고 오세요."
   },
   {
@@ -96,7 +96,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-24T06:27:55.573Z"
+    "createdAt": "2025-12-24T08:51:20.121Z"
   },
   {
     "id": "appr-013",
@@ -108,7 +108,7 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-14T06:27:55.573Z"
+    "createdAt": "2025-12-14T08:51:20.121Z"
   },
   {
     "id": "appr-014",
@@ -120,6 +120,6 @@
     "createdByName": "choiyowon",
     "approver": "agent-team-lead",
     "approverName": "출동구조반 부서장",
-    "createdAt": "2025-12-04T06:27:55.573Z"
+    "createdAt": "2025-12-04T08:51:20.121Z"
   }
 ]

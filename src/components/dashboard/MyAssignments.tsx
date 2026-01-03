@@ -7,31 +7,28 @@ import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+import { useWork } from '@/contexts/WorkContext';
+
 export function MyAssignments() {
   const { agent } = useAuth();
+  const { processedIncidents } = useWork();
   const navigate = useNavigate();
 
   if (!agent) return null;
 
   const department = agent.department;
   const deptInfo = DEPARTMENT_INFO[department];
-  const incidents = DataManager.getIncidents(agent);
+  // const incidents = DataManager.getIncidents(agent); // Replaced by context data
 
-  // 부서별 할당 업무 필터링
+  // 부서별 대기 업무 필터링 (내가 배정한 건 자동으로 상태가 바뀌어 제외됨)
   const getMyIncidents = () => {
     switch (department) {
       case 'baekho':
-        return incidents.filter(inc =>
-          inc.status === '접수' || inc.status === '조사중'
-        ).slice(0, 3);
+        return processedIncidents.filter(inc => inc.status === '접수').slice(0, 3);
       case 'hyunmu':
-        return incidents.filter(inc =>
-          inc.status === '구조대기' || inc.status === '구조중'
-        ).slice(0, 3);
+        return processedIncidents.filter(inc => inc.status === '구조대기').slice(0, 3);
       case 'jujak':
-        return incidents.filter(inc =>
-          inc.status === '정리대기' || inc.status === '정리중'
-        ).slice(0, 3);
+        return processedIncidents.filter(inc => inc.status === '정리대기').slice(0, 3);
       default:
         return [];
     }
@@ -41,9 +38,9 @@ export function MyAssignments() {
 
   const getActionLabel = () => {
     switch (department) {
-      case 'baekho': return '조사 시작';
-      case 'hyunmu': return '출동 승낙';
-      case 'jujak': return '정리 시작';
+      case 'baekho': return '조사 착수'; // Status change implies starting work
+      case 'hyunmu': return '출동 수락';
+      case 'jujak': return '정리 착수';
       default: return '상세 보기';
     }
   };
@@ -61,11 +58,11 @@ export function MyAssignments() {
 
   return (
     <Card className="card-gov">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm md:text-base font-medium flex flex-col sm:flex-row items-start sm:items-center gap-2">
+      <CardHeader className="pt-6 pb-0">
+        <CardTitle className="text-base font-semibold flex flex-col sm:flex-row items-start sm:items-center gap-2">
           <div className="flex items-center gap-2">
             <DeptIcon className="w-4 h-4" />
-            나의 배정 업무
+            실시간 대기 업무
           </div>
           <span className={`text-xs sm:text-sm px-2 py-0.5 rounded flex items-center gap-1.5 sm:ml-auto ${deptInfo.bgClassLight} ${deptInfo.textClass}`}>
             <deptInfo.icon className="w-3.5 h-3.5" /> {deptInfo.name}

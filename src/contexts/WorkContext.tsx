@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, ReactNode } from 'react';
-import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest } from '@/types/haetae';
+import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
 import { useAuth } from '@/contexts/AuthContext';
 import { DataManager } from '@/data/dataManager';
 import * as approvalService from '@/services/approvalService';
@@ -11,6 +11,7 @@ interface WorkContextType {
     approvals: ApprovalDocument[];
     inspectionRequests: InspectionRequest[];
     acceptedIncidentIds: string[];
+    processedIncidents: Incident[];
     addSchedule: (schedule: Omit<Schedule, 'id'>) => void;
     addVisitSchedule: (location: VisitLocation, date: Date) => void;
     addApproval: (doc: Omit<ApprovalDocument, 'id' | 'createdAt' | 'processedAt' | 'approverName'>) => void;
@@ -87,28 +88,71 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         []
     );
 
+    // Derived State: Unified Incident Data (Single Source of Truth)
+    const processedIncidents = useMemo(() => {
+        if (!agent) return [];
+        const baseIncidents = DataManager.getIncidents(agent);
+
+        return baseIncidents.map(inc => {
+            // Override status if accepted in this session
+            if (acceptedIncidentIds.includes(inc.id)) {
+                let newStatus = inc.status;
+                if (agent.department === 'baekho') newStatus = '조사중';
+                else if (agent.department === 'hyunmu') newStatus = '구조중';
+                else if (agent.department === 'jujak') newStatus = '정리중';
+
+                return { ...inc, status: newStatus as any };
+            }
+            return inc;
+        }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }, [agent, acceptedIncidentIds]);
+
     // Derived State: Combine Base Data (from DataManager) + Session Data
     const schedules = useMemo(() => {
         if (!agent) return [];
         const base = DataManager.getSchedules(agent);
-        return [...base, ...sessionSchedules];
-    }, [agent, sessionSchedules]);
+
+        // Dynamic Schedules from Assigned Incidents (using processedIncidents)
+        let myIncidents: any[] = [];
+
+        // Filter based on Department (Active "In-Progress" only)
+        // Since attributes are already overridden in processedIncidents, we just check the status directly.
+        if (agent.department === 'baekho') {
+            myIncidents = processedIncidents.filter(inc => inc.status === '조사중');
+        } else if (agent.department === 'hyunmu') {
+            myIncidents = processedIncidents.filter(inc => inc.status === '구조중');
+        } else if (agent.department === 'jujak') {
+            myIncidents = processedIncidents.filter(inc => inc.status === '정리중');
+        }
+
+        const incidentSchedules: Schedule[] = myIncidents.slice(0, 3).map(inc => {
+            let actionPrefix = '작전';
+            if (agent.department === 'baekho') actionPrefix = '현장 조사';
+            else if (agent.department === 'hyunmu') actionPrefix = '긴급 출동';
+            else if (agent.department === 'jujak') actionPrefix = '사후 정리';
+
+            return {
+                id: `sch-inc-${inc.id}`,
+                title: `${actionPrefix}: ${inc.title}`,
+                date: new Date(), // Always show as Today's task
+                type: '작전',
+                relatedId: inc.id
+            };
+        });
+
+        return [...base, ...sessionSchedules, ...incidentSchedules];
+    }, [agent, sessionSchedules, processedIncidents]);
 
     const approvals = useMemo(() => {
         if (!agent) return [];
         const base = DataManager.getApprovals(agent);
-        return [...sessionApprovals, ...base]; // Newest first for approvals usually? Check logic.
-        // Original logic was setApprovals([...baseApprovals, ...sessionApprovals])? 
-        // Logic check: addApproval did `[newDoc, ...prev]`. 
-        // So sessionApprovals are likely newer. 
-        // If I want newest on top, usually sessionApprovals (new) + baseApprovals (old).
-        // Let's stick to [...sessionApprovals, ...base].
+        return [...sessionApprovals, ...base];
     }, [agent, sessionApprovals]);
 
     const inspectionRequests = useMemo(() => {
         if (!agent) return [];
         const base = DataManager.getInspectionRequests(agent);
-        return [...sessionInspections, ...base]; // Newest first
+        return [...sessionInspections, ...base];
     }, [agent, sessionInspections]);
 
 
@@ -157,6 +201,7 @@ export function WorkProvider({ children }: { children: ReactNode }) {
             approvals,
             inspectionRequests,
             acceptedIncidentIds,
+            processedIncidents, // Exported
             addSchedule,
             addVisitSchedule,
             addApproval,

@@ -26,8 +26,8 @@ export function IncidentSummary() {
 
     return (
         <Card className="card-gov">
-            <CardHeader className="pb-2">
-                <CardTitle className="text-sm md:text-base font-medium flex items-center justify-between">
+            <CardHeader className="pt-6 pb-0">
+                <CardTitle className="text-base font-semibold flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-destructive" />
                         재난 현황
@@ -37,8 +37,7 @@ export function IncidentSummary() {
                     </div>
                     <Button
                         variant="ghost"
-                        size="sm"
-                        className="text-xs text-primary hover:text-primary"
+                        className="h-6 px-2 text-xs text-primary hover:text-primary"
                         onClick={() => navigate('/incidents')}
                     >
                         상세 보기

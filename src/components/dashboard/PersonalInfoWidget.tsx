@@ -26,8 +26,8 @@ export function PersonalInfoWidget() {
 
     return (
         <Card className="card-gov h-fit">
-            <CardHeader className="pb-1.5">
-                <CardTitle className="text-sm font-medium flex items-center gap-2">
+            <CardHeader className="pt-6 pb-0">
+                <CardTitle className="text-base font-semibold flex items-center gap-2">
                     <User className="w-4 h-4" />
                     개인 정보
                 </CardTitle>

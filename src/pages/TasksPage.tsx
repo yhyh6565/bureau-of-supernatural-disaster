@@ -30,7 +30,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export function TasksPage() {
   const { agent } = useAuth();
-  const { acceptedIncidentIds, acceptIncident } = useWork(); // Use Context
+  const { processedIncidents, acceptIncident } = useWork(); // Use Context (Centralized Data)
   const { triggeredIds } = useInteraction();
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
@@ -49,36 +49,36 @@ export function TasksPage() {
   // const deptInfo = DEPARTMENT_INFO[department]; // Unused
 
   // Filter incidents: Show normal + triggered sinkhole
-  const incidents = DataManager.getIncidents(agent).filter(inc => {
+  const incidents = processedIncidents.filter(inc => {
     if (inc.id === 'inc-sinkhole-001') {
       return triggeredIds.includes(inc.id);
     }
     return true;
   });
 
-  // 부서별 업무 필터링
+  // 부서별 업무 필터링 (Context에서 이미 상태 보정이 끝난 데이터 사용)
   const getTasksByDepartment = () => {
     switch (department) {
       case 'baekho':
         return {
-          list: incidents.filter(inc => inc.status === '접수' && !acceptedIncidentIds.includes(inc.id)),
-          assigned: [...incidents.filter(inc => inc.status === '조사중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '접수')],
-          listLabel: '접수된 조사 요청',
-          assignedLabel: '나의 조사 업무',
+          list: incidents.filter(inc => inc.status === '접수'),
+          assigned: incidents.filter(inc => inc.status === '조사중'),
+          listLabel: '요청 목록',
+          assignedLabel: '나의 업무',
         };
       case 'hyunmu':
         return {
-          list: incidents.filter(inc => inc.status === '구조대기' && !acceptedIncidentIds.includes(inc.id)),
-          assigned: [...incidents.filter(inc => inc.status === '구조중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '구조대기')],
-          listLabel: '구조 요청 목록',
-          assignedLabel: '나의 구조 업무',
+          list: incidents.filter(inc => inc.status === '구조대기'),
+          assigned: incidents.filter(inc => inc.status === '구조중'),
+          listLabel: '요청 목록',
+          assignedLabel: '나의 업무',
         };
       case 'jujak':
         return {
-          list: incidents.filter(inc => inc.status === '정리대기' && !acceptedIncidentIds.includes(inc.id)),
-          assigned: [...incidents.filter(inc => inc.status === '정리중'), ...incidents.filter(inc => acceptedIncidentIds.includes(inc.id) && inc.status === '정리대기')],
-          listLabel: '정리 요청 목록',
-          assignedLabel: '나의 정리 업무',
+          list: incidents.filter(inc => inc.status === '정리대기'),
+          assigned: incidents.filter(inc => inc.status === '정리중'),
+          listLabel: '요청 목록',
+          assignedLabel: '나의 업무',
         };
       default:
         return { list: [], assigned: [], listLabel: '', assignedLabel: '' };

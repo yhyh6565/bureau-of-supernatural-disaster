@@ -31,9 +31,12 @@ import { useEffect } from 'react';
 
 // ...
 
+import { useWork } from '@/contexts/WorkContext';
+
 export default function IncidentsPage() {
     const { agent } = useAuth();
     const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteraction();
+    const { processedIncidents } = useWork();
 
     // Clear the "newly triggered" state shortly after viewing to stop animation re-runs eventually?
     // Actually we keep it until page leave or manual clear. 
@@ -49,15 +52,14 @@ export default function IncidentsPage() {
     const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
     const [showManualDialog, setShowManualDialog] = useState(false);
 
-    const incidents = DataManager.getIncidents(agent)
+    const incidents = processedIncidents
         .filter(inc => {
             // Special handling for Sinkhole: Show only if triggered
             if (inc.id === 'inc-sinkhole-001') {
                 return triggeredIds.includes(inc.id);
             }
             return true;
-        })
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        });
 
     const handleManualClick = (manualId: string) => {
         setSelectedManualId(manualId);
