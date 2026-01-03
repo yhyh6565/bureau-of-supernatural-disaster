@@ -9,7 +9,7 @@
     "createdByName": "해금",
     "approver": "agent-chief-001",
     "approverName": "출동구조반장",
-    "createdAt": "2025-12-29T14:53:18.724Z"
+    "createdAt": "2025-12-29T15:14:36.610Z"
   },
   {
     "id": "appr-011",
@@ -21,7 +21,7 @@
     "createdByName": "김하늘",
     "approver": "haegeum",
     "approverName": "해금",
-    "createdAt": "2026-01-02T14:53:18.724Z"
+    "createdAt": "2026-01-02T15:14:36.610Z"
   },
   {
     "id": "appr-012",
@@ -33,7 +33,7 @@
     "createdByName": "박지수",
     "approver": "haegeum",
     "approverName": "해금",
-    "createdAt": "2025-12-31T14:53:18.724Z"
+    "createdAt": "2025-12-31T15:14:36.610Z"
   },
   {
     "id": "appr-013",
@@ -45,7 +45,7 @@
     "createdByName": "최태양",
     "approver": "haegeum",
     "approverName": "해금",
-    "createdAt": "2025-12-28T14:53:18.724Z"
+    "createdAt": "2025-12-28T15:14:36.610Z"
   },
   {
     "id": "appr-014",
@@ -57,6 +57,6 @@
     "createdByName": "이별",
     "approver": "haegeum",
     "approverName": "해금",
-    "createdAt": "2026-01-01T14:53:18.724Z"
+    "createdAt": "2026-01-01T15:14:36.610Z"
   }
 ]

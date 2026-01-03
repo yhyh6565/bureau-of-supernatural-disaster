@@ -282,7 +282,9 @@ export function LoginPage() {
 
       {/* 하단 정보 */}
       <div className="mt-8 text-center text-xs text-muted-foreground space-y-1">
-        <p>© 2025 초자연재난관리국</p>
+        <p className="text-[10px] text-gray-500 text-center px-4 leading-relaxed">
+          Copyright © 2025 All rights reserved. | 본 페이지는 비공식 팬 페이지로, '괴담에 떨어져도 출근을 해야 하는구나' IP 및 제반 권리는 원작자에게 귀속됩니다.
+        </p>
       </div>
     </div>
   );

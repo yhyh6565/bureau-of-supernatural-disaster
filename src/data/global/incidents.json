@@ -317,7 +317,7 @@
     "updatedAt": "2024-01-29T00:00:00",
     "trigger": {
       "type": "time-elapsed",
-      "delay": 5000
+      "delay": 30000
     }
   }
 ]
