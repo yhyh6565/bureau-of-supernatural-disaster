@@ -129,25 +129,5 @@
     "isUrgent": false,
     "createdAt": "2026-01-04T14:00:00",
     "isRead": false
-  },
-  {
-    "id": "noti-event-002",
-    "title": "[긴급] 긴급 소집",
-    "content": "전원 회의실로 집합. 멸형급 재난 브리핑 예정.",
-    "fullContent": "수 신: 전 직원\r\n발 신: 본부\r\n제 목: 5등급 멸형 재난 대비 긴급 소집\r\n\r\n본부 상황실에서 발령합니다. 현재 서울 지역에 멸형(Level 5) 규모의 이상 징후가 포착되었습니다.\r\n모든 현장 요원 및 행정 요원은 즉시 대회의실로 집합하여 브리핑에 참석하시기 바랍니다.\r\n\r\n■ 위 협 수 준: 멸형 (City-Level Threat)\r\n■ 집 합 시 간: 즉시\r\n■ 장       소: 지하 2층 작전 회의실\r\n\r\n* 휴가자 포함 전원 복귀 명령 하달됨.",
-    "priority": "긴급",
-    "sourceDepartment": "본부",
-    "category": "공지",
-    "author": "국장",
-    "isUrgent": true,
-    "createdAt": "2024-12-20T09:00:00",
-    "isRead": false,
-    "trigger": {
-        "type": "date-range",
-        "dateRange": {
-            "start": "2024-12-20",
-            "end": "2024-12-31"
-        }
-    }
   }
 ]
