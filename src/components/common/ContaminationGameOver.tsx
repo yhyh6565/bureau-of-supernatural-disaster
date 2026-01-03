@@ -4,14 +4,32 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useUser } from '@/contexts/UserContext';
 import { cn } from '@/lib/utils';
 
-const CONFIG = {
+const CONTAMINATION_CONFIG = {
+    TEXT: {
+        MAIN_CHAR: '狱', // 추후 변경 가능
+        SENTENCE: " 죄인은 오랏줄을 받으라\n"
+    },
+    DURATION: {
+        FLASH: 2000,
+        INITIAL_TYPING: 2000,
+        HOLD: 3000,
+        FILL_TYPING: 10000,
+    },
+    SPEED: {
+        INITIAL_DELAY: 200,
+        MIN_DELAY: 5,
+        ACCELERATION_FACTOR: 0.95
+    }
+} as const;
+
+const FORBIDDEN_CONFIG = {
     TEXT: {
         MAIN_CHAR: '狱',
         SENTENCE: " 죄인은 오랏줄을 받으라\n"
     },
     DURATION: {
         FLASH: 2000,
-        INITIAL_TYPING: 2000, // Wait time after showing '狱'
+        INITIAL_TYPING: 2000,
         HOLD: 3000,
         FILL_TYPING: 10000,
     },
@@ -24,7 +42,10 @@ const CONFIG = {
 
 export function ContaminationGameOver() {
     const { logout } = useAuth();
-    const { isGameOver } = useUser();
+    const { isGameOver, gameOverType } = useUser();
+
+    // Select configuration based on type
+    const config = gameOverType === 'forbidden_login' ? FORBIDDEN_CONFIG : CONTAMINATION_CONFIG;
 
     // Stages: 
     // 'idle': Initial state
@@ -63,31 +84,31 @@ export function ContaminationGameOver() {
             case 'flash':
                 safeSetTimeout(() => {
                     setStage('initial_typing');
-                }, CONFIG.DURATION.FLASH);
+                }, config.DURATION.FLASH);
                 break;
 
             case 'initial_typing':
-                setTextContent(CONFIG.TEXT.MAIN_CHAR);
+                setTextContent(config.TEXT.MAIN_CHAR);
                 safeSetTimeout(() => {
                     setStage('hold');
-                }, CONFIG.DURATION.INITIAL_TYPING);
+                }, config.DURATION.INITIAL_TYPING);
                 break;
 
             case 'hold':
                 safeSetTimeout(() => {
                     setStage('fill_typing');
-                }, CONFIG.DURATION.HOLD);
+                }, config.DURATION.HOLD);
                 break;
 
             case 'fill_typing':
                 const startTime = Date.now();
-                const sentence = CONFIG.TEXT.SENTENCE;
+                const sentence = config.TEXT.SENTENCE;
                 let fillCharIndex = 0;
-                let currentDelay: number = CONFIG.SPEED.INITIAL_DELAY;
+                let currentDelay: number = config.SPEED.INITIAL_DELAY;
 
                 const typeRecursive = () => {
                     const elapsed = Date.now() - startTime;
-                    if (elapsed >= CONFIG.DURATION.FILL_TYPING) {
+                    if (elapsed >= config.DURATION.FILL_TYPING) {
                         logout();
                         window.location.reload();
                         return;
@@ -105,7 +126,7 @@ export function ContaminationGameOver() {
                     }
 
                     // Accelerate
-                    currentDelay = Math.max(CONFIG.SPEED.MIN_DELAY, currentDelay * CONFIG.SPEED.ACCELERATION_FACTOR);
+                    currentDelay = Math.max(config.SPEED.MIN_DELAY, currentDelay * config.SPEED.ACCELERATION_FACTOR);
 
                     // Schedule next
                     safeSetTimeout(typeRecursive, currentDelay);
@@ -153,7 +174,7 @@ export function ContaminationGameOver() {
                 <div className="m-auto w-full flex flex-col items-center text-center p-8 md:p-12">
                     <div className="whitespace-pre-wrap leading-loose break-all">
                         {textContent.split('').map((char, index) => {
-                            if (char === CONFIG.TEXT.MAIN_CHAR) {
+                            if (char === config.TEXT.MAIN_CHAR) {
                                 return (
                                     <span key={index} className="block text-9xl md:text-[12rem] mb-8 font-bold text-white">
                                         {char}

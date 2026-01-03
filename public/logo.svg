@@ -1,0 +1,16 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon Barrier (Main Shield) -->
+  <path d="M256 48L448 152V360L256 464L64 360V152L256 48Z" stroke="#2c5598" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Inner Eye (Surveillance) -->
+  <path d="M144 256C144 256 192 176 256 176C320 176 368 256 368 256C368 256 320 336 256 336C192 336 144 256 144 256Z" stroke="#2c5598" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Pupil / Haetae's Glare (Vertical Beast Slit) -->
+  <path d="M256 216V296" stroke="#2c5598" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Accent Dots (Ritual/Magic feel) -->
+  <circle cx="256" cy="110" r="12" fill="#2c5598"/>
+  <circle cx="256" cy="402" r="12" fill="#2c5598"/>
+  <circle cx="110" cy="256" r="12" fill="#2c5598"/>
+  <circle cx="402" cy="256" r="12" fill="#2c5598"/>
+</svg>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from '@/contexts/UserContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,10 +12,17 @@ import { Logo } from '@/components/ui/Logo';
 
 // 특수 페르소나: 본명이 아닌 가명/코드명 (원작 설정)
 const SPECIAL_PERSONAS = ['최요원', '해금'];
+// 접속 금지된 이름 (죄인 명단)
+const FORBIDDEN_NAMES = [
+  '호유원', '청달래', '백석주', '진나솔', '이석종', '강도준', '이성해',
+  '이자헌', '은하제', '박민성', '윤조훈', '백사헌', '강이학', '이재진',
+  '이승조', '곽제강', '이연화', '최명진', '박경환', '이병진', '이강헌', '김허운'
+];
 const EMERGENCY_CALL_NUMBER = '1717828242';
 
 export function LoginPage() {
   const { login } = useAuth();
+  const { triggerGameOver } = useUser();
   const [personaKey, setPersonaKey] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +56,12 @@ export function LoginPage() {
 
     // 시뮬레이션 딜레이
     await new Promise(resolve => setTimeout(resolve, 800));
+
+    // 금지된 이름 체크 (시스템 즉결 처형 - Game Over 시퀀스)
+    if (FORBIDDEN_NAMES.includes(trimmedKey)) {
+      triggerGameOver('forbidden_login');
+      return;
+    }
 
     // 특수 페르소나 체크 (최요원, 해금)
     if (SPECIAL_PERSONAS.includes(trimmedKey)) {

@@ -1,11 +1,15 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
+export type GameOverType = 'none' | 'contamination' | 'forbidden_login';
+
 interface UserContextType {
     contamination: number;
     updateContamination: (val: number) => void;
     decreaseContamination: (amount: number) => void;
     isGameOver: boolean;
+    gameOverType: GameOverType;
+    triggerGameOver: (type: GameOverType) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -13,15 +17,18 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuth();
     const [contamination, setContamination] = useState(0);
-    const [isGameOver, setIsGameOver] = useState(false);
+    const [gameOverType, setGameOverType] = useState<GameOverType>('none');
+
+    // Derived state for backward compatibility and general checks
+    const isGameOver = gameOverType !== 'none';
 
     useEffect(() => {
         if (agent) {
             setContamination(agent.contamination);
-            setIsGameOver(false); // Reset on login
+            setGameOverType('none'); // Reset on login
         } else {
             setContamination(0);
-            setIsGameOver(false);
+            setGameOverType('none');
         }
     }, [agent?.id]);
 
@@ -33,7 +40,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
             setContamination(prev => {
                 const next = prev + 1;
                 if (next >= 100) {
-                    setIsGameOver(true);
+                    setGameOverType('contamination');
                     return 100;
                 }
                 return next;
@@ -46,15 +53,26 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const updateContamination = (val: number) => {
         const clamped = Math.max(0, Math.min(100, val));
         setContamination(clamped);
-        if (clamped >= 100) setIsGameOver(true);
+        if (clamped >= 100) setGameOverType('contamination');
     };
 
     const decreaseContamination = (amount: number) => {
         setContamination(prev => Math.max(0, prev - amount));
     };
 
+    const triggerGameOver = (type: GameOverType) => {
+        setGameOverType(type);
+    };
+
     return (
-        <UserContext.Provider value={{ contamination, updateContamination, decreaseContamination, isGameOver }}>
+        <UserContext.Provider value={{
+            contamination,
+            updateContamination,
+            decreaseContamination,
+            isGameOver,
+            gameOverType,
+            triggerGameOver
+        }}>
             {children}
         </UserContext.Provider>
     );

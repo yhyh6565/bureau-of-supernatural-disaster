@@ -110,7 +110,7 @@ export function NoticesPage() {
   };
 
   const isNewNotice = (createdAt: Date) => {
-    return differenceInDays(new Date(), new Date(createdAt)) <= 3;
+    return differenceInDays(new Date(), new Date(createdAt)) <= 1;
   };
 
   const activeFilterCount =
