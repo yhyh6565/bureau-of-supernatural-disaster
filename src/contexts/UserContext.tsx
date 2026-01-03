@@ -45,7 +45,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 }
                 return next;
             });
-        }, 10000); // Increase by 1 every 10 seconds
+        }, 7000); // Increase by 1 every 7 seconds
 
         return () => clearInterval(interval);
     }, [agent, isGameOver]);
