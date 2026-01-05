@@ -27,7 +27,7 @@ export function IncidentBoardCard({ incident, onClick, onManualClick, isHighligh
                 <span className={`${dangerStyle.bgClass} ${dangerStyle.textClass} px-1.5 py-0.5 text-[10px] font-bold rounded shrink-0`}>
                     {incident.dangerLevel}
                 </span>
-                <span className="text-sm font-medium line-clamp-2 leading-tight">
+                <span className="text-sm font-medium truncate leading-tight">
                     {incident.title}
                 </span>
             </div>

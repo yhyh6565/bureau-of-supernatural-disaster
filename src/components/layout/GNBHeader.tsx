@@ -47,7 +47,7 @@ export function GNBHeader() {
   const deptInfo = DEPARTMENT_INFO[agent.department];
 
   return (
-    <header className="h-16 bg-primary text-primary-foreground border-b border-primary/20 sticky top-0 z-40">
+    <header className="h-14 bg-primary text-primary-foreground border-b border-primary/20 sticky top-0 z-40">
       <div className="h-full px-4 flex items-center justify-between max-w-[1920px] mx-auto">
         {/* 좌측: 모바일 메뉴 + 로고 */}
         <div className="flex items-center gap-3">
@@ -65,9 +65,11 @@ export function GNBHeader() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[280px] sm:w-[320px]">
               <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Logo />
-                  <span className="font-bold">초자연재난관리국</span>
+                <SheetTitle className="flex">
+                  <Link to="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <Logo className="w-12 h-12" />
+                    <span className="font-bold">초자연재난관리국</span>
+                  </Link>
                 </SheetTitle>
               </SheetHeader>
               <nav className="mt-6 flex flex-col gap-1">
@@ -100,13 +102,24 @@ export function GNBHeader() {
 
           {/* 태극 문양 + 타이틀 (클릭 시 홈 이동) */}
           <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity py-2">
-            <div className="w-8 h-8">
+            <div className="w-7 h-7 md:w-8 md:h-8">
               <Logo />
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="hidden md:flex flex-col justify-center">
               <span className="font-black text-base sm:text-lg leading-tight tracking-tight">초자연재난관리국</span>
             </div>
           </Link>
+
+          {/* Mobile Display: Dept & Contamination (Next to Logo) */}
+          <div className="flex items-center gap-2 md:hidden">
+            <div className={`px-1.5 py-0.5 rounded text-sm font-medium flex items-center gap-1.5 ${deptInfo.bgClass}`}>
+              <deptInfo.icon className="w-3.5 h-3.5" />
+              <span>{deptInfo.name}</span>
+            </div>
+            <div className="flex items-center justify-center h-auto py-0.5 min-w-[2rem] px-1.5 font-mono font-bold text-sm text-destructive bg-destructive/10 rounded">
+              {Math.round(contamination)}
+            </div>
+          </div>
         </div>
 
         {/* 중앙: 네비게이션 */}
@@ -137,14 +150,14 @@ export function GNBHeader() {
 
         {/* 우측: 사용자 정보 */}
         <div className="flex items-center gap-3">
-          {/* 부서 표시 */}
-          <div className={`px-2 py-1 rounded text-xs font-medium flex items-center gap-1.5 ${deptInfo.bgClass}`}>
+          {/* 부서 표시 (Desktop) */}
+          <div className={`hidden md:flex px-2 py-1 rounded text-xs font-medium items-center gap-1.5 ${deptInfo.bgClass}`}>
             <deptInfo.icon className="w-4 h-4" />
-            <span>{deptInfo.name} <span className="hidden md:inline">({deptInfo.fullName})</span></span>
+            <span>{deptInfo.name} <span>({deptInfo.fullName})</span></span>
           </div>
 
-          {/* 정신오염도 표시 (벨 아이콘 대체) */}
-          <div className="flex items-center justify-center h-10 min-w-[3rem] px-2 font-mono font-bold text-lg text-destructive bg-destructive/10 rounded">
+          {/* 정신오염도 표시 (Desktop) */}
+          <div className="hidden md:flex items-center justify-center h-10 min-w-[3rem] px-2 font-mono font-bold text-lg text-destructive bg-destructive/10 rounded">
             {Math.round(contamination)}
           </div>
 
@@ -155,7 +168,7 @@ export function GNBHeader() {
                 variant="ghost"
                 className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 gap-2 max-w-[200px] h-10"
               >
-                <User className="w-4 h-4 shrink-0" />
+                <User className="hidden md:block w-4 h-4 shrink-0" />
                 <span className="text-sm font-medium truncate">{agent.name}</span>
                 <span className="text-xs opacity-70 shrink-0">({agent.rank})</span>
               </Button>

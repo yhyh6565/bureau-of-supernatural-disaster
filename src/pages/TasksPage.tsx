@@ -113,40 +113,113 @@ export function TasksPage() {
 
   return (
     <MainLayout>
-      <Tabs defaultValue={defaultTab} className="w-full space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+      <Tabs defaultValue={defaultTab} className="w-full space-y-2">
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-xl font-bold tracking-tight flex items-center gap-2 whitespace-nowrap">
             <Briefcase className="w-6 h-6 text-primary" />
             담당 업무
           </h1>
 
-          <TabsList className="grid grid-cols-2 w-full sm:w-[400px] h-10 bg-white border border-border/60 rounded-sm p-1">
+          <TabsList className="grid grid-cols-2 w-[180px] sm:w-[220px] h-9 bg-muted/50 border border-border/40 rounded-sm p-0.5">
             <TabsTrigger
               value="list"
-              className="h-full gap-2 data-[state=active]:bg-primary/5 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-sm transition-all text-xs sm:text-sm"
+              className="h-full gap-1.5 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-[3px] transition-all text-[11px] sm:text-xs"
             >
-              <List className="w-4 h-4" />
-              목록 보기
+              <List className="w-3.5 h-3.5" />
+              목록
             </TabsTrigger>
             <TabsTrigger
               value="calendar"
-              className="h-full gap-2 data-[state=active]:bg-primary/5 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-sm transition-all text-xs sm:text-sm"
+              className="h-full gap-1.5 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-[3px] transition-all text-[11px] sm:text-xs"
             >
-              <CalendarIcon className="w-4 h-4" />
-              캘린더 보기
+              <CalendarIcon className="w-3.5 h-3.5" />
+              캘린더
             </TabsTrigger>
           </TabsList>
         </div>
 
         <TabsContent value="list" className="mt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-200px)] min-h-[600px]">
-            {/* 1. Requests List */}
+            {/* 1. Assigned Tasks (Moved to top) */}
             <section className="flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-4">
-                <Grip className="w-5 h-5 text-muted-foreground" />
-                <h2 className="text-lg font-bold flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle className="w-4 h-4 text-success" />
+                <h2 className="text-base font-bold flex items-center gap-2">
+                  {tasks.assignedLabel}
+                  <Badge variant="secondary" className="rounded-full px-2 h-5 text-[10px]">{tasks.assigned.length}</Badge>
+                </h2>
+              </div>
+
+              <Card className="border border-border/60 shadow-sm bg-white overflow-hidden flex-1 flex flex-col">
+                <CardContent className="p-0 flex-1 relative overflow-hidden flex flex-col">
+                  <div className="hidden md:grid table-header-gov grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 border-b border-border/60 bg-muted/20 text-xs font-medium text-muted-foreground shrink-0">
+                    <div className="text-center">등급</div>
+                    <div className="text-center">상태</div>
+                    <div>내용</div>
+                    <div className="text-center">작업</div>
+                  </div>
+
+                  <div className="divide-y divide-border/40 overflow-auto flex-1 h-0">
+                    {tasks.assigned.length > 0 ? (
+                      tasks.assigned.map((incident) => (
+                        <div key={incident.id} className="group hover:bg-muted/30 transition-colors">
+                          {/* Mobile */}
+                          <div className="md:hidden p-2">
+                            <IncidentCard
+                              incident={incident}
+                              onManualClick={handleManualClick}
+                              onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}
+                              showAction={true}
+                              actionLabel="보고서"
+                              onActionClick={() => { }}
+                            />
+                          </div>
+
+                          {/* Desktop */}
+                          <div
+                            className="hidden md:grid grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 items-center cursor-pointer"
+                            onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}
+                          >
+                            <div className="text-center">
+                              <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} border-none rounded-[4px] px-1.5 h-6 min-w-[40px] justify-center text-xs`}>
+                                {incident.dangerLevel}
+                              </Badge>
+                            </div>
+                            <div className="text-center">
+                              <Badge className={`${STATUS_STYLE[incident.status].bgClass} ${STATUS_STYLE[incident.status].textClass} border-none rounded-[4px] px-1.5 h-6 min-w-[50px] justify-center text-xs`}>
+                                {incident.status}
+                              </Badge>
+                            </div>
+                            <div className="space-y-1 min-w-0 pr-2">
+                              <div className="font-medium text-foreground/90 truncate text-sm group-hover:text-primary transition-colors">{incident.title}</div>
+                              <div className="text-[10px] text-muted-foreground font-mono truncate">{incident.caseNumber}</div>
+                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground truncate">
+                                <MapPin className="w-3 h-3" />
+                                {incident.location}
+                              </div>
+                            </div>
+                            <div className="flex justify-center gap-1">
+                              <Button size="sm" variant="outline" className="h-7 text-xs px-2 whitespace-nowrap" onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}>상세</Button>
+                              <Button size="sm" className="h-7 text-xs px-2 bg-blue-900 hover:bg-blue-800 text-white whitespace-nowrap" onClick={() => { window.location.href = '/approvals'; }}>보고서</Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-12 text-center text-muted-foreground text-sm">배정된 업무가 없습니다.</div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
+
+            {/* 2. Requests List (Moved to bottom) */}
+            <section className="flex flex-col h-full">
+              <div className="flex items-center gap-2 mb-2">
+                <Grip className="w-4 h-4 text-muted-foreground" />
+                <h2 className="text-base font-bold flex items-center gap-2">
                   {tasks.listLabel}
-                  <Badge variant="secondary" className="rounded-full px-2">{tasks.list.length}</Badge>
+                  <Badge variant="secondary" className="rounded-full px-2 h-5 text-[10px]">{tasks.list.length}</Badge>
                 </h2>
               </div>
 
@@ -164,7 +237,7 @@ export function TasksPage() {
                       tasks.list.map((incident) => (
                         <div key={incident.id} className="group hover:bg-muted/30 transition-colors">
                           {/* Mobile */}
-                          <div className="md:hidden p-4">
+                          <div className="md:hidden p-2">
                             <IncidentCard
                               incident={incident}
                               showAction={department === 'hyunmu'}
@@ -172,11 +245,15 @@ export function TasksPage() {
                               actionLabel={action.label}
                               department={department}
                               onManualClick={handleManualClick}
+                              onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}
                             />
                           </div>
 
                           {/* Desktop */}
-                          <div className="hidden md:grid grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 items-center">
+                          <div
+                            className="hidden md:grid grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 items-center cursor-pointer"
+                            onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}
+                          >
                             <div className="text-center">
                               <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} border-none rounded-[4px] px-1.5 h-6 min-w-[40px] justify-center text-xs`}>
                                 {incident.dangerLevel}
@@ -207,73 +284,6 @@ export function TasksPage() {
                       ))
                     ) : (
                       <div className="p-12 text-center text-muted-foreground text-sm">대기 중인 업무가 없습니다.</div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </section>
-
-            {/* 2. Assigned Tasks */}
-            <section className="flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle className="w-5 h-5 text-success" />
-                <h2 className="text-lg font-bold flex items-center gap-2">
-                  {tasks.assignedLabel}
-                  <Badge variant="secondary" className="rounded-full px-2">{tasks.assigned.length}</Badge>
-                </h2>
-              </div>
-
-              <Card className="border border-border/60 shadow-sm bg-white overflow-hidden flex-1 flex flex-col">
-                <CardContent className="p-0 flex-1 relative overflow-hidden flex flex-col">
-                  <div className="hidden md:grid table-header-gov grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 border-b border-border/60 bg-muted/20 text-xs font-medium text-muted-foreground shrink-0">
-                    <div className="text-center">등급</div>
-                    <div className="text-center">상태</div>
-                    <div>내용</div>
-                    <div className="text-center">작업</div>
-                  </div>
-
-                  <div className="divide-y divide-border/40 overflow-auto flex-1 h-0">
-                    {tasks.assigned.length > 0 ? (
-                      tasks.assigned.map((incident) => (
-                        <div key={incident.id} className="group hover:bg-muted/30 transition-colors">
-                          {/* Mobile */}
-                          <div className="md:hidden p-4">
-                            <IncidentCard incident={incident} onManualClick={handleManualClick} />
-                            <div className="flex gap-2 mt-3">
-                              <Button size="sm" variant="outline" className="flex-1" onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}>상세</Button>
-                              <Button size="sm" className="flex-1" onClick={() => { window.location.href = '/approvals'; }}>보고서</Button>
-                            </div>
-                          </div>
-
-                          {/* Desktop */}
-                          <div className="hidden md:grid grid-cols-[1.2fr_1.2fr_4fr_1.5fr] gap-2 p-3 items-center">
-                            <div className="text-center">
-                              <Badge className={`${DANGER_LEVEL_STYLE[incident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[incident.dangerLevel].textClass} border-none rounded-[4px] px-1.5 h-6 min-w-[40px] justify-center text-xs`}>
-                                {incident.dangerLevel}
-                              </Badge>
-                            </div>
-                            <div className="text-center">
-                              <Badge className={`${STATUS_STYLE[incident.status].bgClass} ${STATUS_STYLE[incident.status].textClass} border-none rounded-[4px] px-1.5 h-6 min-w-[50px] justify-center text-xs`}>
-                                {incident.status}
-                              </Badge>
-                            </div>
-                            <div className="space-y-1 min-w-0 pr-2">
-                              <div className="font-medium text-foreground/90 truncate text-sm group-hover:text-primary transition-colors">{incident.title}</div>
-                              <div className="text-[10px] text-muted-foreground font-mono truncate">{incident.caseNumber}</div>
-                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground truncate">
-                                <MapPin className="w-3 h-3" />
-                                {incident.location}
-                              </div>
-                            </div>
-                            <div className="flex justify-center gap-1">
-                              <Button size="sm" variant="outline" className="h-7 text-xs px-2 whitespace-nowrap" onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}>상세</Button>
-                              <Button size="sm" className="h-7 text-xs px-2 bg-blue-900 hover:bg-blue-800 text-white whitespace-nowrap" onClick={() => { window.location.href = '/approvals'; }}>보고서</Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="p-12 text-center text-muted-foreground text-sm">배정된 업무가 없습니다.</div>
                     )}
                   </div>
                 </CardContent>
@@ -315,9 +325,9 @@ export function TasksPage() {
             </div>
           )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAcceptDialog(false)}>취소</Button>
-            <Button onClick={handleAcceptTask}>승낙</Button>
+          <DialogFooter className="flex-row gap-2 sm:justify-end">
+            <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setShowAcceptDialog(false)}>취소</Button>
+            <Button className="flex-1 sm:flex-none" onClick={handleAcceptTask}>승낙</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -400,8 +410,8 @@ export function TasksPage() {
             </div>
           )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDetailDialog(false)}>
+          <DialogFooter className="flex-row sm:justify-end">
+            <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setShowDetailDialog(false)}>
               닫기
             </Button>
           </DialogFooter>

@@ -50,9 +50,10 @@ export function TasksCalendar() {
     const { schedules, approvals, inspectionRequests, acceptedIncidentIds } = useWork();
 
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [viewMode, setViewMode] = useState<'month' | 'week'>('month');
+    const [viewMode, setViewMode] = useState<'month' | 'week'>('week');
 
-    // Responsive View Mode
+    // Effect removed to enforce week view only
+    /*
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 768) {
@@ -65,6 +66,7 @@ export function TasksCalendar() {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+    */
 
     if (!agent) return null;
 
@@ -218,25 +220,26 @@ export function TasksCalendar() {
 
     return (
         <Card className="card-gov h-full min-h-[600px] flex flex-col">
-            <div className="p-4 border-b flex items-center justify-between bg-muted/20">
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="icon" onClick={prev} aria-label="이전 달">
-                            <ChevronLeft className="w-4 h-4" />
+            <div className="py-1 px-2 border-b flex items-center justify-between bg-muted/20">
+                <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
+                        <Button variant="outline" size="icon" className="w-7 h-7" onClick={prev} aria-label="이전 달">
+                            <ChevronLeft className="w-3 h-3" />
                         </Button>
-                        <h2 className="text-lg font-bold min-w-[100px] text-center">
+                        <h2 className="text-base font-bold min-w-[80px] text-center">
                             {format(currentDate, 'yyyy. MM', { locale: ko })}
                         </h2>
-                        <Button variant="outline" size="icon" onClick={next} aria-label="다음 달">
-                            <ChevronRight className="w-4 h-4" />
+                        <Button variant="outline" size="icon" className="w-7 h-7" onClick={next} aria-label="다음 달">
+                            <ChevronRight className="w-3 h-3" />
                         </Button>
                     </div>
-                    <Button variant="outline" size="sm" onClick={today}>
+                    <Button variant="outline" size="sm" className="h-7 text-xs px-2" onClick={today}>
                         오늘
                     </Button>
                 </div>
 
-                <div className="flex items-center bg-secondary rounded-md p-1">
+                {/* View Toggle Removed - Week View Only */}
+                <div className="hidden">
                     <Button
                         variant={viewMode === 'month' ? 'default' : 'ghost'}
                         size="sm"

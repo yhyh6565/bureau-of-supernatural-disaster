@@ -35,7 +35,7 @@ export function DisasterTicker() {
 
     return (
         <div className={`
-            h-12 flex items-center px-4 overflow-hidden relative transition-colors duration-500
+            h-9 md:h-12 flex items-center px-4 overflow-hidden relative transition-colors duration-500
             ${isBlinking ? 'animate-pulse bg-destructive text-destructive-foreground' : 'bg-destructive/10 border-b border-destructive/20'}
         `}>
             <div className={`flex items-center gap-2 font-bold text-sm whitespace-nowrap z-10 pr-4 

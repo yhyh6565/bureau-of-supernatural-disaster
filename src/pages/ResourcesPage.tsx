@@ -258,14 +258,27 @@ export function ResourcesPage() {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                             {/* Rental Section */}
                             <section className="space-y-4">
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                                <div className="flex items-center justify-between gap-2">
                                     <div className="flex items-center gap-3 shrink-0">
                                         <Key className="w-6 h-6 text-primary fill-primary/20" />
-                                        <h2 className="text-xl font-bold tracking-tight text-foreground">대여 장비</h2>
+                                        <h2 className="text-lg font-bold tracking-tight text-foreground">대여 장비</h2>
+                                    </div>
+                                    {/* Mobile Filter */}
+                                    <div className="md:hidden">
+                                        <Select value={selectedType} onValueChange={setSelectedType}>
+                                            <SelectTrigger className="h-8 w-24 text-xs">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {['전체', '탐지', '제압', '방어', '은신', '특수'].map((type) => (
+                                                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </div>
 
-                                <div className="rounded-md border h-auto md:h-[400px] overflow-auto relative bg-white">
+                                <div className="rounded-md border max-h-[240px] md:h-[400px] md:max-h-none overflow-auto relative bg-white">
                                     {/* Mobile View: Cards */}
                                     <div className="md:hidden divide-y divide-border/60">
                                         {rentalItems
@@ -381,14 +394,12 @@ export function ResourcesPage() {
 
                             {/* Supply Section */}
                             <section className="space-y-4">
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                                    <div className="flex items-center gap-3 shrink-0">
-                                        <Package className="w-6 h-6 text-primary fill-primary/20" />
-                                        <h2 className="text-xl font-bold tracking-tight text-foreground">지급 물품</h2>
-                                    </div>
+                                <div className="flex items-center gap-3">
+                                    <Package className="w-6 h-6 text-primary fill-primary/20" />
+                                    <h2 className="text-lg font-bold tracking-tight text-foreground">지급 물품</h2>
                                 </div>
 
-                                <div className="rounded-md border h-auto md:h-[400px] overflow-auto relative bg-white">
+                                <div className="rounded-md border max-h-[240px] md:h-[400px] md:max-h-none overflow-auto relative bg-white">
                                     {/* Mobile View: Cards */}
                                     <div className="md:hidden divide-y divide-border/60">
                                         {supplyItems.map((item) => (
@@ -437,7 +448,7 @@ export function ResourcesPage() {
 
                     {/* Other tabs content simplified for length, logic remains same */}
                     <TabsContent value="facilities" className="mt-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {locations.map((location) => (
                                 <div
                                     key={location.id}
@@ -445,18 +456,20 @@ export function ResourcesPage() {
                                     onClick={() => setSelectedLocation(location)}
                                 >
                                     <div className="p-5 space-y-3">
-                                        <div className="flex items-start justify-between">
-                                            <div className="w-10 h-10 bg-primary/5 rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                                                <MapPin className="w-5 h-5 text-primary" />
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-8 h-8 bg-primary/5 rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors shrink-0">
+                                                    <MapPin className="w-4 h-4 text-primary" />
+                                                </div>
+                                                <h3 className="font-bold text-lg">{location.name}</h3>
                                             </div>
                                             {location.requiresApproval && (
-                                                <Badge variant="outline" className="text-xs border-destructive text-destructive bg-destructive/5">
+                                                <Badge variant="outline" className="text-xs border-destructive text-destructive bg-destructive/5 shrink-0">
                                                     결재필요
                                                 </Badge>
                                             )}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg mb-2">{location.name}</h3>
                                             <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                                                 {location.description}
                                             </p>
@@ -471,15 +484,15 @@ export function ResourcesPage() {
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="inspection" className="mt-8 space-y-6">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-muted/20 p-6 rounded-lg border border-border/40">
+                    <TabsContent value="inspection" className="mt-8 space-y-3.5">
+                        <div className="flex flex-col gap-3 bg-muted/20 p-4 rounded-lg border border-border/40">
                             <div className="space-y-1">
-                                <h2 className="text-xl font-bold tracking-tight text-foreground">오염 검사 내역</h2>
-                                <p className="text-sm text-muted-foreground">정기 및 현장 복귀 후 필수 오염도 검사 기록을 확인하고 관리합니다.</p>
+                                <h2 className="text-lg font-bold tracking-tight text-foreground">오염 검사 내역</h2>
+                                <p className="text-sm text-muted-foreground">정기 및 현장 복귀 후 필수 오염도 검사 기록을 확인 & 관리</p>
                             </div>
                             <Dialog open={isInspectionOpen} onOpenChange={setIsInspectionOpen}>
                                 <DialogTrigger asChild>
-                                    <Button className="bg-blue-900 hover:bg-blue-800 text-white shadow-sm shrink-0">
+                                    <Button className="bg-blue-900 hover:bg-blue-800 text-white shadow-sm w-full sm:w-auto h-9">
                                         + 검사 신청
                                     </Button>
                                 </DialogTrigger>
@@ -585,9 +598,9 @@ export function ResourcesPage() {
                             <Textarea placeholder="사용 목적을 입력하세요." value={equipmentReason} onChange={(e) => setEquipmentReason(e.target.value)} />
                         </div>
                     </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setSelectedEquipment(null)}>취소</Button>
-                        <Button onClick={handleEquipmentRequest}>{selectedEquipment?.requiresApproval ? '결재 요청' : '신청하기'}</Button>
+                    <DialogFooter className="flex-row gap-2 sm:justify-end">
+                        <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setSelectedEquipment(null)}>취소</Button>
+                        <Button className="flex-1 sm:flex-none" onClick={handleEquipmentRequest}>{selectedEquipment?.requiresApproval ? '결재 요청' : '신청하기'}</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -622,9 +635,9 @@ export function ResourcesPage() {
                             <Textarea value={visitReason} onChange={e => setVisitReason(e.target.value)} />
                         </div>
                     </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setSelectedLocation(null)}>취소</Button>
-                        <Button onClick={handleVisitSubmit}>{selectedLocation?.requiresApproval ? '결재 요청' : '예약하기'}</Button>
+                    <DialogFooter className="flex-row gap-2 sm:justify-end">
+                        <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setSelectedLocation(null)}>취소</Button>
+                        <Button className="flex-1 sm:flex-none" onClick={handleVisitSubmit}>{selectedLocation?.requiresApproval ? '결재 요청' : '예약하기'}</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

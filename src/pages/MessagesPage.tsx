@@ -80,7 +80,7 @@ export function MessagesPage() {
         <Card className="card-gov pb-12">
           <div className="p-6 border-b border-border">
             <div className="space-y-4">
-              <h2 className="text-xl font-bold">{selectedMessage.title}</h2>
+              <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">{selectedMessage.title}</h1>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <User className="w-3.5 h-3.5" />
@@ -115,7 +115,7 @@ export function MessagesPage() {
       <div className="space-y-4">
         <Tabs defaultValue="received" className="w-full">
           {/* Header Area */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+          <div className="flex items-center justify-between gap-2 mb-4">
             <TabsList className="bg-white/80 p-1 border border-border/50 h-auto">
               <TabsTrigger
                 value="received"
@@ -140,7 +140,7 @@ export function MessagesPage() {
 
             <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
               <DialogTrigger asChild>
-                <Button className="gap-2 bg-blue-900 hover:bg-blue-800 text-white min-w-[100px] h-8 text-xs">
+                <Button className="gap-1.5 bg-blue-900 hover:bg-blue-800 text-white h-[calc(1.75rem+2px)] px-3 text-xs shrink-0">
                   <PenLine className="w-3.5 h-3.5" />
                   쪽지 쓰기
                 </Button>
@@ -176,9 +176,9 @@ export function MessagesPage() {
                     />
                   </div>
                 </div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsComposeOpen(false)}>취소</Button>
-                  <Button onClick={handleSendMessage}>발송</Button>
+                <DialogFooter className="flex-row gap-2 sm:justify-end">
+                  <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsComposeOpen(false)}>취소</Button>
+                  <Button className="flex-1 sm:flex-none" onClick={handleSendMessage}>발송</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

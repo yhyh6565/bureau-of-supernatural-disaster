@@ -131,13 +131,13 @@ export function NoticesPage() {
       <div className="space-y-4">
         {/* Header & Search Area */}
         <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+          <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
             <Bell className="w-6 h-6 text-primary" />
             공지사항
           </h1>
 
-          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-            <div className="relative w-full md:w-80">
+          <div className="flex gap-2 w-full md:w-auto items-center">
+            <div className="relative flex-1 md:flex-none md:w-80">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="제목 또는 내용 검색..."
@@ -146,29 +146,27 @@ export function NoticesPage() {
                 className="pl-9 h-10 bg-white"
               />
             </div>
-            <div className="flex gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="gap-2 bg-white h-10">
-                    <Filter className="w-4 h-4" />
-                    필터
-                    {activeFilterCount > 0 && <Badge className="h-5 px-1.5">{activeFilterCount}</Badge>}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>필터 옵션</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {/* Simplified Menu for brevity/cleanliness - typically would be nested or separate but keeping one menu for "Filter" button style */}
-                  <DropdownMenuLabel className="text-xs text-muted-foreground">긴급도</DropdownMenuLabel>
-                  {(['긴급', '필독', '일반'] as NoticePriority[]).map(p => (
-                    <DropdownMenuCheckboxItem key={p} checked={selectedPriorities.includes(p)} onCheckedChange={() => togglePriority(p)}>{p}</DropdownMenuCheckboxItem>
-                  ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs text-muted-foreground">보기 설정</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem checked={showUnreadOnly} onCheckedChange={(c) => setShowUnreadOnly(c)}>읽지 않은 공지만 보기</DropdownMenuCheckboxItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="gap-2 bg-white h-10 shrink-0">
+                  <Filter className="w-4 h-4" />
+                  필터
+                  {activeFilterCount > 0 && <Badge className="h-5 px-1.5">{activeFilterCount}</Badge>}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>필터 옵션</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {/* Simplified Menu for brevity/cleanliness - typically would be nested or separate but keeping one menu for "Filter" button style */}
+                <DropdownMenuLabel className="text-xs text-muted-foreground">긴급도</DropdownMenuLabel>
+                {(['긴급', '필독', '일반'] as NoticePriority[]).map(p => (
+                  <DropdownMenuCheckboxItem key={p} checked={selectedPriorities.includes(p)} onCheckedChange={() => togglePriority(p)}>{p}</DropdownMenuCheckboxItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground">보기 설정</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={showUnreadOnly} onCheckedChange={(c) => setShowUnreadOnly(c)}>읽지 않은 공지만 보기</DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 

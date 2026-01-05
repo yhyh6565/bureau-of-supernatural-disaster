@@ -134,7 +134,7 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
 
             // Update DataManager logic for 'Real-time' if needed?
             // Since DataManager objects are references, we can mutate them here for the session
-            if ('createdAt' in item) {
+            if (item && 'createdAt' in item) {
                 item.createdAt = new Date(); // Update to NOW
                 if ('updatedAt' in item) item.updatedAt = new Date();
             }
@@ -159,7 +159,7 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
                         const messageToAdd = {
                             ...(egg.message || {}),
                             receiverId: agent.id,
-                            createdAt: egg.message?.createdAt ? new Date(egg.message.createdAt as string) : new Date(),
+                            createdAt: egg.message?.createdAt ? new Date(egg.message.createdAt) : new Date(),
                             isRead: false
                         } as Message;
 

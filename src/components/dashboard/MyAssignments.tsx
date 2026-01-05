@@ -58,13 +58,13 @@ export function MyAssignments() {
 
   return (
     <Card className="card-gov">
-      <CardHeader className="pt-6 pb-0">
-        <CardTitle className="text-base font-semibold flex flex-col sm:flex-row items-start sm:items-center gap-2">
+      <CardHeader className="pt-3 md:pt-6 pb-3 md:pb-6">
+        <CardTitle className="text-base font-semibold flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <DeptIcon className="w-4 h-4" />
             실시간 대기 업무
           </div>
-          <span className={`text-xs sm:text-sm px-2 py-0.5 rounded flex items-center gap-1.5 sm:ml-auto ${deptInfo.bgClassLight} ${deptInfo.textClass}`}>
+          <span className={`text-xs sm:text-sm px-2 py-0.5 rounded flex items-center gap-1.5 ${deptInfo.bgClassLight} ${deptInfo.textClass}`}>
             <deptInfo.icon className="w-3.5 h-3.5" /> {deptInfo.name}
           </span>
         </CardTitle>

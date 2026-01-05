@@ -170,7 +170,7 @@ export function MyPage() {
                         <Heart className="w-5 h-5" />
                         장례법 지정 신청
                       </DialogTitle>
-                      <DialogDescription>
+                      <DialogDescription className="pl-7">
                         순직 시 희망하는 장례 절차를 선택하십시오.
                       </DialogDescription>
                     </DialogHeader>
@@ -189,11 +189,11 @@ export function MyPage() {
                       </RadioGroup>
                     </div>
 
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                    <DialogFooter className="flex-row gap-2 sm:justify-end">
+                      <Button variant="outline" className="flex-1 sm:flex-none h-9" onClick={() => setIsDialogOpen(false)}>
                         취소
                       </Button>
-                      <Button onClick={handleFuneralSave}>
+                      <Button className="flex-1 sm:flex-none h-9" onClick={handleFuneralSave}>
                         저장
                       </Button>
                     </DialogFooter>

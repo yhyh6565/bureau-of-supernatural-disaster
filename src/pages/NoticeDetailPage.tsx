@@ -80,7 +80,7 @@ export function NoticeDetailPage() {
                 <categoryStyle.icon className="w-3 h-3" /> {notice.category}
               </Badge>
             </div>
-            <h1 className="text-2xl font-bold leading-tight">
+            <h1 className="text-xl font-bold leading-tight">
               {notice.title}
             </h1>
           </div>

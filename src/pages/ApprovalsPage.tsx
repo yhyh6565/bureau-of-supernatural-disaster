@@ -113,7 +113,7 @@ export function ApprovalsPage() {
       <div className="space-y-4">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+          <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
             <ClipboardCheck className="w-6 h-6 text-primary" />
             전자결재
           </h1>

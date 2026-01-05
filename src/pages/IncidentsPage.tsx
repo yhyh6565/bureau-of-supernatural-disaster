@@ -65,10 +65,10 @@ export default function IncidentsPage() {
         <MainLayout>
             <div className="space-y-6">
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-6 h-6 text-destructive" />
-                        <h1 className="text-2xl font-bold tracking-tight">재난 현황</h1>
+                        <h1 className="text-xl font-bold tracking-tight">재난 현황</h1>
 
                         <Popover>
                             <PopoverTrigger asChild>
