@@ -117,7 +117,7 @@ export function GNBHeader() {
               <span>{deptInfo.name}</span>
             </div>
             <div className="flex items-center justify-center h-auto py-0.5 min-w-[2rem] px-1.5 font-mono font-bold text-xs text-destructive bg-destructive/10 rounded">
-              오염도 : {Math.round(contamination)}%
+              오염 : {Math.round(contamination)}%
             </div>
           </div>
         </div>

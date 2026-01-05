@@ -65,7 +65,7 @@ export default function IncidentsPage() {
         <MainLayout>
             <div className="space-y-6">
                 {/* Header */}
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-2">
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-6 h-6 text-destructive" />
                         <h1 className="text-lg md:text-xl font-bold tracking-tight whitespace-nowrap">재난 현황</h1>
@@ -126,7 +126,7 @@ export default function IncidentsPage() {
                         </Badge>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 self-end md:self-auto">
                         <span className="text-sm text-muted-foreground whitespace-nowrap">그룹:</span>
                         <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupBy)}>
                             <SelectTrigger className="w-32 h-8 text-xs">
