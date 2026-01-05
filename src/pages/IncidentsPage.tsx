@@ -80,7 +80,7 @@ export default function IncidentsPage() {
                                     !
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[450px] p-0" align="start">
+                            <PopoverContent className="w-[90vw] max-w-[450px] p-0" align="start">
                                 <div className="p-4 bg-muted/20 border-b">
                                     <h4 className="font-semibold leading-none mb-1">위험 등급 체계 (형刑 시스템)</h4>
                                     <p className="text-xs text-muted-foreground">초자연 재난관리국은 재난의 위험도를 4단계로 분류합니다.</p>

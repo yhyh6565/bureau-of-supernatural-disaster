@@ -212,7 +212,7 @@ export function ResourcesPage() {
             <div className="space-y-6">
                 <Tabs defaultValue="equipment" className="w-full" onValueChange={setActiveTab}>
                     {/* Full-width Tabs Style */}
-                    <TabsList className="w-full grid grid-cols-4 h-11 bg-white border border-border/60 rounded-sm p-1">
+                    <TabsList className="w-full flex md:grid md:grid-cols-4 h-auto md:h-11 bg-white border border-border/60 rounded-sm p-1 overflow-x-auto no-scrollbar gap-1 md:gap-0">
                         <TabsTrigger
                             value="equipment"
                             className="h-full gap-2 text-sm font-medium data-[state=active]:bg-primary/5 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-sm transition-all"
@@ -239,7 +239,6 @@ export function ResourcesPage() {
                             className="h-full gap-2 text-sm font-medium data-[state=active]:bg-primary/5 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-sm transition-all"
                             disabled
                         >
-                            <Home className="w-4 h-4" />
                             기숙사
                         </TabsTrigger>
                     </TabsList>
@@ -266,79 +265,117 @@ export function ResourcesPage() {
                                     </div>
                                 </div>
 
-                                <div className="rounded-md border h-[400px] overflow-auto relative bg-white">
-                                    <Table>
-                                        <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
-                                            <TableRow>
-                                                <TableHead className="w-[120px]">이름</TableHead>
-                                                <TableHead className="w-[100px]">
-                                                    <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-                                                        <PopoverTrigger asChild>
-                                                            <Button variant="ghost" size="sm" className="-ml-3 h-8 data-[state=open]:bg-accent hover:bg-transparent">
-                                                                <span>분류</span>
-                                                                {selectedType !== '전체' && <Badge variant="secondary" className="ml-2 rounded-sm px-1 font-normal h-5">{selectedType}</Badge>}
-                                                                <Filter className="ml-2 h-3.5 w-3.5" />
-                                                            </Button>
-                                                        </PopoverTrigger>
-                                                        <PopoverContent align="start" className="w-[200px] p-0">
-                                                            <div className="p-1">
-                                                                {['전체', '탐지', '제압', '방어', '은신', '특수'].map((type) => (
-                                                                    <Button
-                                                                        key={type}
-                                                                        variant="ghost"
+                                <div className="rounded-md border h-auto md:h-[400px] overflow-auto relative bg-white">
+                                    {/* Mobile View: Cards */}
+                                    <div className="md:hidden divide-y divide-border/60">
+                                        {rentalItems
+                                            .filter(item => selectedType === '전체' || item.type === selectedType)
+                                            .map((item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="p-4 space-y-2 cursor-pointer active:bg-muted/50 transition-colors"
+                                                    onClick={() => setSelectedEquipment(item)}
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <h3 className="font-medium text-foreground">{item.name}</h3>
+                                                        {item.type && (
+                                                            <Badge
+                                                                className={cn(
+                                                                    "font-normal h-5 px-1.5 text-[10px]",
+                                                                    item.type === '탐지' && "bg-blue-100 text-blue-800",
+                                                                    item.type === '제압' && "bg-red-100 text-red-800",
+                                                                    item.type === '방어' && "bg-green-100 text-green-800",
+                                                                    item.type === '은신' && "bg-gray-100 text-gray-800",
+                                                                    item.type === '특수' && "bg-purple-100 text-purple-800",
+                                                                )}
+                                                                variant="outline"
+                                                            >
+                                                                {item.type}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-sm text-muted-foreground line-clamp-2">
+                                                        {item.description}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                    </div>
+
+                                    {/* Desktop View: Table */}
+                                    <div className="hidden md:block">
+                                        <Table>
+                                            <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
+                                                <TableRow>
+                                                    <TableHead className="w-[120px]">이름</TableHead>
+                                                    <TableHead className="w-[100px]">
+                                                        <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                                                            <PopoverTrigger asChild>
+                                                                <Button variant="ghost" size="sm" className="-ml-3 h-8 data-[state=open]:bg-accent hover:bg-transparent">
+                                                                    <span>분류</span>
+                                                                    {selectedType !== '전체' && <Badge variant="secondary" className="ml-2 rounded-sm px-1 font-normal h-5">{selectedType}</Badge>}
+                                                                    <Filter className="ml-2 h-3.5 w-3.5" />
+                                                                </Button>
+                                                            </PopoverTrigger>
+                                                            <PopoverContent align="start" className="w-[200px] p-0">
+                                                                <div className="p-1">
+                                                                    {['전체', '탐지', '제압', '방어', '은신', '특수'].map((type) => (
+                                                                        <Button
+                                                                            key={type}
+                                                                            variant="ghost"
+                                                                            className={cn(
+                                                                                "w-full justify-start font-normal h-8",
+                                                                                selectedType === type && "bg-accent text-accent-foreground font-medium"
+                                                                            )}
+                                                                            onClick={() => {
+                                                                                setSelectedType(type);
+                                                                                setIsFilterOpen(false);
+                                                                            }}
+                                                                        >
+                                                                            {type}
+                                                                        </Button>
+                                                                    ))}
+                                                                </div>
+                                                            </PopoverContent>
+                                                        </Popover>
+                                                    </TableHead>
+                                                    <TableHead>설명</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {rentalItems
+                                                    .filter(item => selectedType === '전체' || item.type === selectedType)
+                                                    .map((item) => (
+                                                        <TableRow
+                                                            key={item.id}
+                                                            className="cursor-pointer hover:bg-muted/50"
+                                                            onClick={() => setSelectedEquipment(item)}
+                                                        >
+                                                            <TableCell className="font-medium">{item.name}</TableCell>
+                                                            <TableCell>
+                                                                {item.type && (
+                                                                    <Badge
                                                                         className={cn(
-                                                                            "w-full justify-start font-normal h-8",
-                                                                            selectedType === type && "bg-accent text-accent-foreground font-medium"
+                                                                            "font-normal",
+                                                                            item.type === '탐지' && "bg-blue-100 text-blue-800 hover:bg-blue-200",
+                                                                            item.type === '제압' && "bg-red-100 text-red-800 hover:bg-red-200",
+                                                                            item.type === '방어' && "bg-green-100 text-green-800 hover:bg-green-200",
+                                                                            item.type === '은신' && "bg-gray-100 text-gray-800 hover:bg-gray-200",
+                                                                            item.type === '특수' && "bg-purple-100 text-purple-800 hover:bg-purple-200",
                                                                         )}
-                                                                        onClick={() => {
-                                                                            setSelectedType(type);
-                                                                            setIsFilterOpen(false);
-                                                                        }}
+                                                                        variant="outline"
                                                                     >
-                                                                        {type}
-                                                                    </Button>
-                                                                ))}
-                                                            </div>
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                </TableHead>
-                                                <TableHead>설명</TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {rentalItems
-                                                .filter(item => selectedType === '전체' || item.type === selectedType)
-                                                .map((item) => (
-                                                    <TableRow
-                                                        key={item.id}
-                                                        className="cursor-pointer hover:bg-muted/50"
-                                                        onClick={() => setSelectedEquipment(item)}
-                                                    >
-                                                        <TableCell className="font-medium">{item.name}</TableCell>
-                                                        <TableCell>
-                                                            {item.type && (
-                                                                <Badge
-                                                                    className={cn(
-                                                                        "font-normal",
-                                                                        item.type === '탐지' && "bg-blue-100 text-blue-800 hover:bg-blue-200",
-                                                                        item.type === '제압' && "bg-red-100 text-red-800 hover:bg-red-200",
-                                                                        item.type === '방어' && "bg-green-100 text-green-800 hover:bg-green-200",
-                                                                        item.type === '은신' && "bg-gray-100 text-gray-800 hover:bg-gray-200",
-                                                                        item.type === '특수' && "bg-purple-100 text-purple-800 hover:bg-purple-200",
-                                                                    )}
-                                                                    variant="outline"
-                                                                >
-                                                                    {item.type}
-                                                                </Badge>
-                                                            )}
-                                                        </TableCell>
-                                                        <TableCell className="text-muted-foreground truncate max-w-[200px]" title={item.description}>
-                                                            {item.description}
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ))}
-                                        </TableBody>
-                                    </Table>
+                                                                        {item.type}
+                                                                    </Badge>
+                                                                )}
+                                                            </TableCell>
+                                                            <TableCell className="text-muted-foreground truncate max-w-[200px]" title={item.description}>
+                                                                {item.description}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
                                 </div>
                             </section>
 
@@ -351,29 +388,48 @@ export function ResourcesPage() {
                                     </div>
                                 </div>
 
-                                <div className="rounded-md border h-[400px] overflow-auto relative bg-white">
-                                    <Table>
-                                        <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
-                                            <TableRow>
-                                                <TableHead className="w-[160px]">이름</TableHead>
-                                                <TableHead>설명</TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {supplyItems.map((item) => (
-                                                <TableRow
-                                                    key={item.id}
-                                                    className="cursor-pointer hover:bg-muted/50"
-                                                    onClick={() => setSelectedEquipment(item)}
-                                                >
-                                                    <TableCell className="font-medium">{item.name}</TableCell>
-                                                    <TableCell className="text-muted-foreground truncate max-w-[200px]" title={item.description}>
-                                                        {item.description}
-                                                    </TableCell>
+                                <div className="rounded-md border h-auto md:h-[400px] overflow-auto relative bg-white">
+                                    {/* Mobile View: Cards */}
+                                    <div className="md:hidden divide-y divide-border/60">
+                                        {supplyItems.map((item) => (
+                                            <div
+                                                key={item.id}
+                                                className="p-4 space-y-2 cursor-pointer active:bg-muted/50 transition-colors"
+                                                onClick={() => setSelectedEquipment(item)}
+                                            >
+                                                <h3 className="font-medium text-foreground">{item.name}</h3>
+                                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Desktop View: Table */}
+                                    <div className="hidden md:block">
+                                        <Table>
+                                            <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
+                                                <TableRow>
+                                                    <TableHead className="w-[160px]">이름</TableHead>
+                                                    <TableHead>설명</TableHead>
                                                 </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {supplyItems.map((item) => (
+                                                    <TableRow
+                                                        key={item.id}
+                                                        className="cursor-pointer hover:bg-muted/50"
+                                                        onClick={() => setSelectedEquipment(item)}
+                                                    >
+                                                        <TableCell className="font-medium">{item.name}</TableCell>
+                                                        <TableCell className="text-muted-foreground truncate max-w-[200px]" title={item.description}>
+                                                            {item.description}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
                                 </div>
                             </section>
                         </div>
