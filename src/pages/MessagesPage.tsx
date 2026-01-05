@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -10,12 +10,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Message } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, Send, Inbox, ArrowLeft, Reply, User } from 'lucide-react';
+import { Mail, Send, Inbox, ArrowLeft, Reply, User, MoreHorizontal, PenLine } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
 import { getPersonaName } from '@/constants/haetae';
 import { useInteraction } from '@/contexts/InteractionContext';
+import { safeFormatDate } from '@/utils/dateUtils';
 import {
   Dialog,
   DialogContent,
@@ -60,6 +61,8 @@ export function MessagesPage() {
     setIsComposeOpen(false);
   };
 
+
+
   if (selectedMessage) {
     return (
       <MainLayout>
@@ -75,25 +78,27 @@ export function MessagesPage() {
         </div>
 
         <Card className="card-gov pb-12">
-          <CardHeader className="border-b border-border">
-            <div className="space-y-2">
-              <CardTitle className="text-base">{selectedMessage.title}</CardTitle>
+          <div className="p-6 border-b border-border">
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold">{selectedMessage.title}</h2>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <User className="w-3.5 h-3.5" />
                   <span>발신: {selectedMessage.senderName} ({selectedMessage.senderDepartment})</span>
                 </div>
                 <span>|</span>
-                <span>{format(new Date(selectedMessage.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</span>
+                <span>{selectedMessage.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(selectedMessage.createdAt, 'yyyy.MM.dd HH:mm')}</span>
               </div>
             </div>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <div className="prose prose-sm max-w-none mb-6">
-              <p className="whitespace-pre-wrap">{selectedMessage.content}</p>
+          </div>
+          <CardContent className="pt-8">
+            <div className="prose prose-sm max-w-none mb-8 min-h-[200px]">
+              <p className="whitespace-pre-wrap leading-relaxed">
+                {selectedMessage.content.replace(/\bme\b/g, agent?.name || 'me')}
+              </p>
             </div>
 
-            <div className="flex gap-2 pt-4 border-t border-border">
+            <div className="flex gap-2 pt-6 border-t border-border">
               <Button variant="outline" className="gap-2">
                 <Reply className="w-4 h-4" />
                 답장
@@ -107,193 +112,224 @@ export function MessagesPage() {
 
   return (
     <MainLayout>
-      <Card className="card-gov pb-12">
-        <Tabs defaultValue="received">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 max-w-full sm:max-w-xs">
-                <TabsTrigger value="received" className="gap-2">
-                  <Inbox className="w-4 h-4" />
-                  받은 쪽지
-                  {unreadCount > 0 && (
-                    <Badge variant="destructive" className="text-xs">{unreadCount}</Badge>
-                  )}
-                </TabsTrigger>
-                <TabsTrigger value="sent" className="gap-2">
-                  <Send className="w-4 h-4" />
-                  보낸 쪽지
-                </TabsTrigger>
-              </TabsList>
+      <div className="space-y-4">
+        <Tabs defaultValue="received" className="w-full">
+          {/* Header Area */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+            <TabsList className="bg-white/80 p-1 border border-border/50 h-auto">
+              <TabsTrigger
+                value="received"
+                className="h-7 text-xs gap-2 px-4 data-[state=active]:bg-primary/5 data-[state=active]:text-primary rounded-sm transition-colors"
+              >
+                <Inbox className="w-3.5 h-3.5" />
+                받은 쪽지
+                {unreadCount > 0 && (
+                  <Badge variant="destructive" className="ml-1.5 h-4 w-4 p-0 flex items-center justify-center rounded-full text-[10px]">
+                    {unreadCount}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="sent"
+                className="h-7 text-xs gap-2 px-4 data-[state=active]:bg-primary/5 data-[state=active]:text-primary rounded-sm transition-colors"
+              >
+                <Send className="w-3.5 h-3.5" />
+                보낸 쪽지
+              </TabsTrigger>
+            </TabsList>
 
-              <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
-                <DialogTrigger asChild>
-                  <Button size="sm" className="gap-2">
-                    <Send className="w-4 h-4" />
-                    쪽지 쓰기
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle>새 쪽지 작성</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                      <Label>받는 사람 <span className="text-destructive">*</span></Label>
-                      <Input
-                        placeholder="수신자 이름 입력"
-                        value={newMessage.recipient}
-                        onChange={(e) => setNewMessage({ ...newMessage, recipient: e.target.value })}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>제목 <span className="text-destructive">*</span></Label>
-                      <Input
-                        placeholder="쪽지 제목"
-                        value={newMessage.title}
-                        onChange={(e) => setNewMessage({ ...newMessage, title: e.target.value })}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>내용 <span className="text-destructive">*</span></Label>
-                      <Textarea
-                        placeholder="쪽지 내용을 입력하세요..."
-                        rows={6}
-                        value={newMessage.content}
-                        onChange={(e) => setNewMessage({ ...newMessage, content: e.target.value })}
-                      />
-                    </div>
+            <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
+              <DialogTrigger asChild>
+                <Button className="gap-2 bg-blue-900 hover:bg-blue-800 text-white min-w-[100px] h-8 text-xs">
+                  <PenLine className="w-3.5 h-3.5" />
+                  쪽지 쓰기
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <DialogTitle>새 쪽지 작성</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label>받는 사람 <span className="text-destructive">*</span></Label>
+                    <Input
+                      placeholder="수신자 이름 입력"
+                      value={newMessage.recipient}
+                      onChange={(e) => setNewMessage({ ...newMessage, recipient: e.target.value })}
+                    />
                   </div>
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsComposeOpen(false)}>취소</Button>
-                    <Button onClick={handleSendMessage}>발송</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </CardHeader>
+                  <div className="space-y-2">
+                    <Label>제목 <span className="text-destructive">*</span></Label>
+                    <Input
+                      placeholder="쪽지 제목"
+                      value={newMessage.title}
+                      onChange={(e) => setNewMessage({ ...newMessage, title: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>내용 <span className="text-destructive">*</span></Label>
+                    <Textarea
+                      placeholder="쪽지 내용을 입력하세요..."
+                      rows={6}
+                      value={newMessage.content}
+                      onChange={(e) => setNewMessage({ ...newMessage, content: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setIsComposeOpen(false)}>취소</Button>
+                  <Button onClick={handleSendMessage}>발송</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
 
-          <CardContent>
-            <TabsContent value="received" className="mt-0">
-              <div className="border border-border rounded-sm overflow-hidden">
+          <Card className="border border-border/60 shadow-sm bg-white overflow-hidden">
+            <CardContent className="p-0">
+              {/* Content: Received */}
+              <TabsContent value="received" className="mt-0">
                 {/* Desktop Table Header */}
-                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3">
-                  <div className="col-span-2">발신자</div>
-                  <div className="col-span-7">제목</div>
-                  <div className="col-span-3 text-center">수신일</div>
+                <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 border-b border-border/60 bg-muted/20 text-sm font-medium text-muted-foreground">
+                  <div>발신자</div>
+                  <div>제목</div>
+                  <div className="text-right pr-4">수신일</div>
                 </div>
 
-                {receivedMessages.length > 0 ? (
-                  receivedMessages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`
-                        border-t border-border cursor-pointer transition-colors
-                        ${!message.isRead ? 'bg-accent/30' : 'hover:bg-accent/50'}
-                      `}
-                      onClick={() => setSelectedMessage(message)}
-                    >
-                      {/* Mobile Card Layout */}
-                      <div className="md:hidden p-4 space-y-2">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              {!message.isRead && <Badge className="bg-primary text-xs">NEW</Badge>}
-                              <span className={`text-sm ${!message.isRead ? 'font-medium' : ''}`}>
+                <div className="divide-y divide-border/40">
+                  {receivedMessages.length > 0 ? (
+                    receivedMessages.map((message) => (
+                      <div
+                        key={message.id}
+                        className="group hover:bg-muted/30 transition-colors cursor-pointer"
+                        onClick={() => setSelectedMessage(message)}
+                      >
+                        {/* Mobile Card Layout */}
+                        <div className="md:hidden p-4 space-y-3">
+                          <div className="flex justify-between items-start gap-3">
+                            <div className="space-y-1 flex-1">
+                              <div className="flex items-center gap-2">
+                                {!message.isRead && (
+                                  <Badge className="bg-blue-600 hover:bg-blue-700 h-5 px-1.5 rounded-[4px] text-[10px] font-normal shrink-0">
+                                    NEW
+                                  </Badge>
+                                )}
+                                <span className="font-medium text-foreground line-clamp-1">
+                                  {message.title}
+                                </span>
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {message.senderName} <span className="text-xs opacity-70">({message.senderDepartment})</span>
+                              </div>
+                            </div>
+                            <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
+                              {message.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Desktop Row Layout */}
+                        <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 items-center">
+                          <div className="text-sm font-medium text-foreground/90 truncate">
+                            {message.senderName} <span className="text-muted-foreground text-xs font-normal">({message.senderDepartment})</span>
+                          </div>
+
+                          <div className="flex items-center gap-2 min-w-0">
+                            {!message.isRead && (
+                              <Badge className="bg-blue-600 hover:bg-blue-700 h-5 px-1.5 rounded-[4px] text-[10px] font-normal shrink-0">
+                                NEW
+                              </Badge>
+                            )}
+                            <span className="text-sm text-foreground/80 truncate group-hover:text-primary transition-colors">
+                              {message.title}
+                            </span>
+                          </div>
+
+                          <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
+                            {message.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-12 text-center text-muted-foreground text-sm">
+                      받은 쪽지가 없습니다.
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+
+              {/* Content: Sent */}
+              <TabsContent value="sent" className="mt-0">
+                {/* Desktop Table Header */}
+                <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 border-b border-border/60 bg-muted/20 text-sm font-medium text-muted-foreground">
+                  <div>수신자</div>
+                  <div>제목</div>
+                  <div className="text-right pr-4">발신일</div>
+                </div>
+
+                <div className="divide-y divide-border/40">
+                  {sentMessages.length > 0 ? (
+                    sentMessages.map((message) => (
+                      <div
+                        key={message.id}
+                        className="group hover:bg-muted/30 transition-colors cursor-pointer"
+                        onClick={() => setSelectedMessage(message)}
+                      >
+                        {/* Mobile Card Layout */}
+                        <div className="md:hidden p-4 space-y-3">
+                          <div className="flex justify-between items-start gap-3">
+                            <div className="space-y-1 flex-1">
+                              <span className="font-medium text-foreground line-clamp-1 block">
                                 {message.title}
                               </span>
+                              <div className="text-sm text-muted-foreground">
+                                {getPersonaName(message.receiverId)}
+                              </div>
                             </div>
-                            <div className="text-sm text-muted-foreground">
-                              {message.senderName} ({message.senderDepartment})
-                            </div>
+                            <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
+                              {safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                            </span>
                           </div>
                         </div>
-                        <div className="text-xs text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}
-                        </div>
-                      </div>
 
-                      {/* Desktop Grid Layout */}
-                      <div className="hidden md:grid grid-cols-12 gap-2 py-2 px-3 items-center">
-                        <div className="col-span-2 text-sm">
-                          {message.senderName}({message.senderDepartment})
-                        </div>
-                        <div className="col-span-7 flex items-center gap-2">
-                          {!message.isRead && <Badge className="bg-primary text-[10px] px-1 h-4">NEW</Badge>}
-                          <span className={`truncate text-sm ${!message.isRead ? 'font-medium' : ''}`}>
-                            {message.title}
-                          </span>
-                        </div>
-                        <div className="col-span-3 text-center text-xs text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yyyy.MM.dd', { locale: ko })}
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-8 text-center text-muted-foreground">
-                    받은 쪽지가 없습니다.
-                  </div>
-                )}
-              </div>
-            </TabsContent>
+                        {/* Desktop Row Layout */}
+                        <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 items-center">
+                          <div className="text-sm font-medium text-foreground/90 truncate">
+                            {getPersonaName(message.receiverId)}
+                          </div>
 
-            <TabsContent value="sent" className="mt-0">
-              <div className="border border-border rounded-sm overflow-hidden">
-                {/* Desktop Table Header */}
-                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3">
-                  <div className="col-span-2">수신자</div>
-                  <div className="col-span-7">제목</div>
-                  <div className="col-span-3 text-center">발신일</div>
-                </div>
-
-                {sentMessages.length > 0 ? (
-                  sentMessages.map((message) => (
-                    <div
-                      key={message.id}
-                      className="border-t border-border cursor-pointer transition-colors hover:bg-accent/50"
-                      onClick={() => setSelectedMessage(message)}
-                    >
-                      {/* Mobile Card Layout */}
-                      <div className="md:hidden p-4 space-y-2">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <div className="text-sm font-medium mb-1">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-sm text-foreground/80 truncate group-hover:text-primary transition-colors">
                               {message.title}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              수신: {getPersonaName(message.receiverId)}
-                            </div>
+                            </span>
+                          </div>
+
+                          <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
+                            {safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
                           </div>
                         </div>
-                        <div className="text-xs text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}
-                        </div>
                       </div>
-
-                      {/* Desktop Grid Layout */}
-                      <div className="hidden md:grid grid-cols-12 gap-2 py-2 px-3 items-center">
-                        <div className="col-span-2 text-sm">
-                          {getPersonaName(message.receiverId)}
-                        </div>
-                        <div className="col-span-7 flex items-center">
-                          <span className="truncate text-sm">{message.title}</span>
-                        </div>
-                        <div className="col-span-3 text-center text-xs text-muted-foreground">
-                          {format(new Date(message.createdAt), 'yyyy.MM.dd', { locale: ko })}
-                        </div>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="p-12 text-center text-muted-foreground text-sm">
+                      보낸 쪽지가 없습니다.
                     </div>
-                  ))
-                ) : (
-                  <div className="p-8 text-center text-muted-foreground">
-                    보낸 쪽지가 없습니다.
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-          </CardContent>
+                  )}
+                </div>
+              </TabsContent>
+            </CardContent>
+          </Card>
+
+          {/* Pagination Placeholder */}
+          <div className="flex justify-center py-4">
+            <div className="flex gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+            </div>
+          </div>
         </Tabs>
-      </Card>
+      </div>
     </MainLayout>
   );
 }

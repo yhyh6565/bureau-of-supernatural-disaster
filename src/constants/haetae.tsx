@@ -26,7 +26,46 @@ import {
     Megaphone
 } from 'lucide-react';
 import { BaekhoIcon, HyunmuIcon, JujakIcon } from '@/components/icons/DeptIcons';
-import { Department, IncidentStatus, DangerLevel, NoticePriority, NoticeCategory } from '@/types/haetae';
+import { Department, IncidentStatus, DangerLevel, NoticePriority, NoticeCategory, Agent } from '@/types/haetae';
+
+// Import Profile JSONs
+import PARKHONGLIM_PROFILE from '@/data/personas/parkhonglim/profile.json';
+import CHOIYOWON_PROFILE from '@/data/personas/choiyowon/profile.json';
+import RYUJAEGWAN_PROFILE from '@/data/personas/ryujaegwan/profile.json';
+import SOLUM_PROFILE from '@/data/personas/solum/profile.json';
+import HAEGEUM_PROFILE from '@/data/personas/haegeum/profile.json';
+import KOYOUNGEUN_PROFILE from '@/data/personas/koyoungeun/profile.json';
+import JANGHYEOWOON_PROFILE from '@/data/personas/janghyeowoon/profile.json';
+
+// Helper to revive dates in Agent profile
+const parseAgentProfile = (profile: any): Agent => {
+    const agent = { ...profile };
+
+    // Date fields conversion
+    if (agent.purificationHistory) {
+        agent.purificationHistory = agent.purificationHistory.map((d: string) => new Date(d));
+    }
+
+    if (agent.rentals) {
+        agent.rentals = agent.rentals.map((r: any) => ({
+            ...r,
+            rentalDate: r.rentalDate ? new Date(r.rentalDate) : undefined,
+            dueDate: r.dueDate ? new Date(r.dueDate) : undefined,
+        }));
+    }
+
+    return agent as Agent;
+};
+
+export const AGENT_PROFILES: Record<string, Agent> = {
+    'parkhonglim': parseAgentProfile(PARKHONGLIM_PROFILE),
+    'choiyowon': parseAgentProfile(CHOIYOWON_PROFILE),
+    'ryujaegwan': parseAgentProfile(RYUJAEGWAN_PROFILE),
+    'solum': parseAgentProfile(SOLUM_PROFILE),
+    'haegeum': parseAgentProfile(HAEGEUM_PROFILE),
+    'koyoungeun': parseAgentProfile(KOYOUNGEUN_PROFILE),
+    'janghyeowoon': parseAgentProfile(JANGHYEOWOON_PROFILE),
+};
 
 // 부서별 표시 정보
 export const DEPARTMENT_INFO: Record<Department, {
@@ -185,3 +224,6 @@ export const getPersonaName = (personaKey: string | undefined): string => {
     if (!personaKey) return '';
     return PERSONA_NAMES[personaKey] || personaKey;
 };
+
+// 랜덤 요원명 생성용 단어 목록
+export const RANDOM_CODENAMES = ['유리', '살구', '새솔', '자라'];

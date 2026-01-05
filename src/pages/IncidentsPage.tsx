@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { IncidentBoard } from '@/components/incidents/IncidentBoard';
-import { IncidentCard } from '@/components/work/IncidentCard';
 import { ManualViewer } from '@/components/work/ManualViewer';
-import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
-import { AlertTriangle, LayoutGrid, Layers, MapPin, Clock, Shield, Ban } from 'lucide-react';
+import { AlertTriangle, MapPin, Clock, Shield, Ban } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
     Select,
@@ -21,6 +19,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogFooter,
 } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -30,8 +29,6 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useWork } from '@/contexts/WorkContext';
 
@@ -66,21 +63,19 @@ export default function IncidentsPage() {
 
     return (
         <MainLayout>
-            <Tabs defaultValue="board" className="space-y-4" onValueChange={(v) => {
-                // 탭 변경 시 로직이 필요하다면 추가
-            }}>
-                {/* 페이지 헤더 */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-6">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
-                        <AlertTriangle className="w-5 h-5 text-destructive" />
-                        <h1 className="text-xl font-bold">재난 현황</h1>
+                        <AlertTriangle className="w-6 h-6 text-destructive" />
+                        <h1 className="text-2xl font-bold tracking-tight">재난 현황</h1>
 
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     size="icon"
-                                    className="h-5 w-5 rounded-full text-[10px] font-bold border-muted-foreground/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground hover:border-foreground/50 transition-colors"
+                                    className="h-5 w-5 rounded-full text-[10px] font-bold border-muted-foreground/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground hover:border-foreground/50 transition-colors ml-2"
                                 >
                                     !
                                 </Button>
@@ -126,51 +121,26 @@ export default function IncidentsPage() {
                             </PopoverContent>
                         </Popover>
 
-                        <span className="text-sm text-muted-foreground">
-                            (총 {incidents.length}건)
-                        </span>
+                        <Badge variant="secondary" className="rounded-full px-2 ml-2">
+                            {incidents.length}건
+                        </Badge>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-end sm:items-center gap-4">
-                        <TabsList>
-                            <TabsTrigger value="board" className="flex items-center gap-2">
-                                <LayoutGrid className="w-4 h-4" />
-                                <span className="hidden sm:inline">보드</span>
-                                <span className="sm:hidden">보드</span>
-                            </TabsTrigger>
-                            <TabsTrigger value="list" className="flex items-center gap-2">
-                                <Layers className="w-4 h-4" />
-                                <span className="hidden sm:inline">목록</span>
-                                <span className="sm:hidden">목록</span>
-                            </TabsTrigger>
-                        </TabsList>
-
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground whitespace-nowrap">그룹:</span>
-                            <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupBy)}>
-                                <SelectTrigger className="w-28 sm:w-32">
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="status">
-                                        <div className="flex items-center gap-2">
-                                            <LayoutGrid className="w-4 h-4" />
-                                            <span>처리 상태</span>
-                                        </div>
-                                    </SelectItem>
-                                    <SelectItem value="dangerLevel">
-                                        <div className="flex items-center gap-2">
-                                            <Layers className="w-4 h-4" />
-                                            <span>위험 등급</span>
-                                        </div>
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground whitespace-nowrap">그룹:</span>
+                        <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupBy)}>
+                            <SelectTrigger className="w-32 h-8 text-xs">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="status">처리 상태</SelectItem>
+                                <SelectItem value="dangerLevel">위험 등급</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 
-                <TabsContent value="board" className="space-y-4 mt-4">
+                <div className="mt-4">
                     <IncidentBoard
                         incidents={incidents}
                         groupBy={groupBy}
@@ -178,85 +148,8 @@ export default function IncidentsPage() {
                         onManualClick={handleManualClick}
                         highlightId={newlyTriggeredId}
                     />
-                </TabsContent>
-
-                <TabsContent value="list" className="space-y-4 mt-4">
-                    <Card className="card-gov">
-                        <CardHeader>
-                            <CardTitle className="text-base flex items-center gap-2">
-                                <AlertTriangle className="w-4 h-4" />
-                                전체 재난 목록
-                                <Badge variant="secondary" className="ml-auto">{incidents.length}건</Badge>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="border border-border rounded-sm overflow-hidden min-h-[100px]">
-                                {/* Desktop Table Header */}
-                                <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-sm">
-                                    <div className="col-span-2 text-center">등급/상태</div>
-                                    <div className="col-span-2">사건번호</div>
-                                    <div className="col-span-6">내용</div>
-                                    <div className="col-span-2 text-center">작업</div>
-                                </div>
-
-                                {incidents.length > 0 ? (
-                                    incidents.map((incident) => (
-                                        <div key={incident.id} className="border-t border-border hover:bg-accent/50 transition-colors">
-                                            {/* Mobile Card Layout */}
-                                            <div className="md:hidden p-3">
-                                                <IncidentCard
-                                                    incident={incident}
-                                                    onManualClick={handleManualClick}
-                                                    showAction={true}
-                                                    actionLabel="상세 보기"
-                                                    onActionClick={(inc) => setSelectedIncident(inc)}
-                                                />
-                                            </div>
-
-                                            {/* Desktop Grid Layout */}
-                                            <div className="hidden md:grid grid-cols-12 gap-2 p-3 items-center text-sm">
-                                                <div className="col-span-2 text-center flex flex-col gap-1 items-center justify-center">
-                                                    <Badge className={`${(DANGER_LEVEL_STYLE[incident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(DANGER_LEVEL_STYLE[incident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass} text-xs w-auto px-2`}>
-                                                        {incident.dangerLevel}
-                                                    </Badge>
-                                                    <Badge className={`${(STATUS_STYLE[incident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(STATUS_STYLE[incident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass} text-xs w-auto px-2`}>
-                                                        {incident.status}
-                                                    </Badge>
-                                                </div>
-                                                <div className="col-span-2 font-mono text-xs text-muted-foreground truncate">
-                                                    {incident.caseNumber}
-                                                </div>
-                                                <div className="col-span-6 space-y-1">
-                                                    <div className="font-medium truncate">{incident.title}</div>
-                                                    <div className="flex items-center gap-1 text-xs text-muted-foreground truncate">
-                                                        <MapPin className="w-3 h-3" />
-                                                        {incident.location}
-                                                    </div>
-                                                </div>
-                                                <div className="col-span-2 flex justify-center">
-                                                    <Button
-                                                        size="sm"
-                                                        variant="outline"
-                                                        className="h-8 text-xs"
-                                                        onClick={() => setSelectedIncident(incident)}
-                                                    >
-                                                        상세 보기
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="p-8 text-center text-muted-foreground">
-                                        <AlertTriangle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                        <p>등록된 재난이 없습니다.</p>
-                                    </div>
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-            </Tabs>
+                </div>
+            </div>
 
             {/* 매뉴얼 보기 모달 */}
             <ManualViewer
@@ -273,10 +166,10 @@ export default function IncidentsPage() {
                             재난 상세 정보
                             {selectedIncident && (
                                 <>
-                                    <Badge className={`${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass}`}>
+                                    <Badge className={`${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].textClass}`}>
                                         {selectedIncident.dangerLevel}
                                     </Badge>
-                                    <Badge className={`${(STATUS_STYLE[selectedIncident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).bgClass} ${(STATUS_STYLE[selectedIncident.status] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' }).textClass}`}>
+                                    <Badge className={`${STATUS_STYLE[selectedIncident.status].bgClass} ${STATUS_STYLE[selectedIncident.status].textClass}`}>
                                         {selectedIncident.status}
                                     </Badge>
                                 </>
@@ -357,6 +250,11 @@ export default function IncidentsPage() {
                             </div>
                         </div>
                     )}
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setSelectedIncident(null)}>
+                            닫기
+                        </Button>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </MainLayout>

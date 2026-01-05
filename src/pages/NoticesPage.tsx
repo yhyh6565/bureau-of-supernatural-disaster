@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -17,9 +17,8 @@ import {
   NoticeDepartment,
 } from '@/types/haetae';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
-import { Bell, Search, Pin, ChevronDown } from 'lucide-react';
+import { Bell, Search, Pin, ChevronDown, Filter } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
-import { ko } from 'date-fns/locale';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,7 +77,7 @@ export function NoticesPage() {
       // 읽지 않음 필터
       const matchesUnread = !showUnreadOnly || !notice.isRead;
 
-      // Trigger 필터 (이스터에그 등 발동 조건이 있는 경우)
+      // Trigger 필터
       const isVisible = !notice.trigger || isTriggered(notice.id);
 
       return matchesSearch && matchesPriority && matchesCategory && matchesDepartment && matchesUnread && isVisible;
@@ -129,268 +128,136 @@ export function NoticesPage() {
 
   return (
     <MainLayout>
-      <h1 className="sr-only">공지사항</h1>
+      <div className="space-y-4">
+        {/* Header & Search Area */}
+        <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <Bell className="w-6 h-6 text-primary" />
+            공지사항
+          </h1>
 
-      {/* 검색 및 필터 */}
-      <Card className="card-gov mb-4">
-        <CardContent className="pt-4">
-          <div className="flex flex-col sm:flex-row gap-2">
-            {/* 검색 */}
-            <div className="relative flex-1">
+          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+            <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="제목 또는 내용으로 검색..."
+                placeholder="제목 또는 내용 검색..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 rounded-sm"
+                className="pl-9 h-10 bg-white"
               />
             </div>
-
-            {/* 필터 버튼들 */}
-            <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-              {/* 긴급도 필터 */}
+            <div className="flex gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="rounded-sm">
-                    긴급도
-                    {selectedPriorities.length > 0 && (
-                      <Badge variant="secondary" className="ml-2">
-                        {selectedPriorities.length}
-                      </Badge>
-                    )}
-                    <ChevronDown className="w-3 h-3 ml-1" />
+                  <Button variant="outline" className="gap-2 bg-white h-10">
+                    <Filter className="w-4 h-4" />
+                    필터
+                    {activeFilterCount > 0 && <Badge className="h-5 px-1.5">{activeFilterCount}</Badge>}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuLabel>긴급도</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>필터 옵션</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {(['긴급', '필독', '일반'] as NoticePriority[]).map(priority => (
-                    <DropdownMenuCheckboxItem
-                      key={priority}
-                      checked={selectedPriorities.includes(priority)}
-                      onCheckedChange={() => togglePriority(priority)}
-                    >
-                      {priority}
-                    </DropdownMenuCheckboxItem>
+                  {/* Simplified Menu for brevity/cleanliness - typically would be nested or separate but keeping one menu for "Filter" button style */}
+                  <DropdownMenuLabel className="text-xs text-muted-foreground">긴급도</DropdownMenuLabel>
+                  {(['긴급', '필독', '일반'] as NoticePriority[]).map(p => (
+                    <DropdownMenuCheckboxItem key={p} checked={selectedPriorities.includes(p)} onCheckedChange={() => togglePriority(p)}>{p}</DropdownMenuCheckboxItem>
                   ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* 분류 필터 */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="rounded-sm">
-                    분류
-                    {selectedCategories.length > 0 && (
-                      <Badge variant="secondary" className="ml-2">
-                        {selectedCategories.length}
-                      </Badge>
-                    )}
-                    <ChevronDown className="w-3 h-3 ml-1" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuLabel>내용 분류</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {(['인사', '보안', '복지', '안전', '교육', '행사', '시스템', '장비', '규정', '공지'] as NoticeCategory[]).map(category => {
-                    const CategoryIcon = NOTICE_CATEGORY_STYLE[category].icon;
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={category}
-                        checked={selectedCategories.includes(category)}
-                        onCheckedChange={() => toggleCategory(category)}
-                      >
-                        <CategoryIcon className="w-3 h-3 mr-2 inline-block" />
-                        {category}
-                      </DropdownMenuCheckboxItem>
-                    );
-                  })}
+                  <DropdownMenuLabel className="text-xs text-muted-foreground">보기 설정</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem checked={showUnreadOnly} onCheckedChange={(c) => setShowUnreadOnly(c)}>읽지 않은 공지만 보기</DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              {/* 발신부서 필터 */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="rounded-sm">
-                    발신부서
-                    {selectedDepartments.length > 0 && (
-                      <Badge variant="secondary" className="ml-2">
-                        {selectedDepartments.length}
-                      </Badge>
-                    )}
-                    <ChevronDown className="w-3 h-3 ml-1" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuLabel>발신 부서</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {(['본부', '백호반', '현무반', '주작반', '인사팀', '보안팀', '총무팀', '전산팀', '법무팀'] as NoticeDepartment[]).map(dept => (
-                    <DropdownMenuCheckboxItem
-                      key={dept}
-                      checked={selectedDepartments.includes(dept)}
-                      onCheckedChange={() => toggleDepartment(dept)}
-                    >
-                      {dept}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* 읽지 않음만 보기 */}
-              <Button
-                variant={showUnreadOnly ? 'default' : 'outline'}
-                onClick={() => setShowUnreadOnly(!showUnreadOnly)}
-                className="rounded-sm"
-              >
-                읽지 않음
-              </Button>
             </div>
           </div>
+        </div>
 
-          {/* 활성 필터 표시 */}
-          {activeFilterCount > 0 && (
-            <div className="flex items-center gap-2 mt-3 pt-3 border-t">
-              <span className="text-xs text-muted-foreground">
-                활성 필터: {activeFilterCount}개
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setSelectedPriorities([]);
-                  setSelectedCategories([]);
-                  setSelectedDepartments([]);
-                  setShowUnreadOnly(false);
-                }}
-                className="h-6 text-xs"
-              >
-                전체 해제
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* 공지사항 목록 */}
-      <Card className="card-gov pb-12">
-        <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Bell className="w-4 h-4" />
-            공지 목록
-            <Badge variant="secondary" className="ml-auto">
-              {filteredNotices.length}건
-            </Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="border border-border rounded-sm overflow-hidden">
-            {/* 테이블 헤더 - Desktop only */}
-            <div className="hidden md:grid table-header-gov grid-cols-12 gap-2 p-3 text-xs">
-              <div className="col-span-1 text-center">번호</div>
-              <div className="col-span-1 text-center">긴급도</div>
-              <div className="col-span-1 text-center">분류</div>
-              <div className="col-span-5">제목</div>
-              <div className="col-span-2 text-center">발신부서</div>
-              <div className="col-span-2 text-center">등록일</div>
+        <Card className="border border-border/60 shadow-sm bg-white overflow-hidden">
+          <CardContent className="p-0">
+            <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_6fr_2fr_2fr] gap-4 p-4 border-b border-border/60 bg-muted/20 text-sm font-medium text-muted-foreground">
+              <div className="text-center">번호/고정</div>
+              <div className="text-center">긴급도</div>
+              <div className="text-center">분류</div>
+              <div>제목</div>
+              <div className="text-center">발신부서</div>
+              <div className="text-right pr-4">등록일</div>
             </div>
 
-            {/* 테이블 내용 */}
-            {isLoading ? (
-              // 로딩 스켈레톤
-              <div className="p-4 space-y-3">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <Skeleton className="h-12 w-full" />
-                  </div>
-                ))}
-              </div>
-            ) : filteredNotices.length > 0 ? (
-              filteredNotices.map((notice, idx) => {
-                const priorityStyle = NOTICE_PRIORITY_STYLE[notice.priority];
-                const categoryStyle = NOTICE_CATEGORY_STYLE[notice.category];
-                const isNew = isNewNotice(notice.createdAt);
+            <div className="divide-y divide-border/40">
+              {isLoading ? (
+                <div className="p-8 space-y-4">
+                  {[1, 2, 3].map(i => <Skeleton key={i} className="h-12 w-full" />)}
+                </div>
+              ) : filteredNotices.length > 0 ? (
+                filteredNotices.map((notice, idx) => {
+                  const priorityStyle = NOTICE_PRIORITY_STYLE[notice.priority];
+                  const categoryStyle = NOTICE_CATEGORY_STYLE[notice.category];
+                  const isNew = isNewNotice(notice.createdAt);
 
-                return (
-                  <div
-                    key={notice.id}
-                    onClick={() => navigate(`/notices/${notice.id}`)}
-                    className={`
-                      border-t border-border cursor-pointer transition-colors
-                      ${notice.isPinned ? 'bg-accent/50' : ''}
-                      ${!notice.isRead ? 'bg-primary/5 hover:bg-primary/10' : 'hover:bg-accent/50'}
-                    `}
-                  >
-                    {/* Mobile Card Layout */}
-                    <div className="md:hidden p-4 space-y-3">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2">
-                            {notice.isPinned && <Pin className="w-3.5 h-3.5 text-primary" />}
-                            <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs`}>
-                              {notice.priority}
-                            </Badge>
-                            <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs`}>
-                              {notice.category}
-                            </Badge>
-                            {isNew && <Badge className="bg-success text-xs">NEW</Badge>}
+                  return (
+                    <div
+                      key={notice.id}
+                      onClick={() => navigate(`/notices/${notice.id}`)}
+                      className={`
+                                        group hover:bg-muted/30 transition-colors cursor-pointer
+                                        ${notice.isPinned ? 'bg-primary/5' : ''}
+                                    `}
+                    >
+                      {/* Mobile */}
+                      <div className="md:hidden p-4 space-y-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="space-y-2 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              {notice.isPinned && <Pin className="w-3.5 h-3.5 text-primary fill-primary/20" />}
+                              <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} border-none rounded-[4px] px-1.5 h-5 text-[10px] font-medium`}>{notice.priority}</Badge>
+                              <Badge variant="outline" className="text-muted-foreground border-border rounded-[4px] px-1.5 h-5 text-[10px] font-normal">{notice.category}</Badge>
+                              {isNew && <Badge className="bg-blue-600 h-5 px-1.5 rounded-[4px] text-[10px]">NEW</Badge>}
+                            </div>
+                            <h3 className={`text-sm ${!notice.isRead ? 'font-bold text-foreground' : 'font-medium text-foreground/80'}`}>
+                              {notice.title.replace(/^\[.*?\]\s*/, '')}
+                            </h3>
                           </div>
-                          <h3 className={`text-sm ${!notice.isRead ? 'font-medium' : ''}`}>
-                            {notice.title.replace(/^\[.*?\]\s*/, '')}
-                          </h3>
+                        </div>
+                        <div className="flex justify-between items-center text-xs text-muted-foreground">
+                          <span>{notice.sourceDepartment}</span>
+                          <span>{safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}</span>
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground space-y-1">
-                        <div>발신: {notice.sourceDepartment}</div>
-                        <div>{safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}</div>
-                      </div>
-                    </div>
 
-                    {/* Desktop Grid Layout */}
-                    <div className="hidden md:grid grid-cols-12 gap-2 p-3 text-sm">
-                      <div className="col-span-1 text-center flex items-center justify-center">
-                        {notice.isPinned ? (
-                          <Pin className="w-3.5 h-3.5 text-primary" />
-                        ) : (
-                          <span className="text-muted-foreground">{idx + 1}</span>
-                        )}
-                      </div>
-                      <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} text-xs w-auto px-4 min-w-[60px] justify-center`}>
-                          {notice.priority}
-                        </Badge>
-                      </div>
-                      <div className="col-span-1 text-center flex items-center justify-center">
-                        <Badge className={`${categoryStyle.bgClass} ${categoryStyle.textClass} text-xs w-auto px-4 min-w-[60px] justify-center`}>
-                          {notice.category}
-                        </Badge>
-                      </div>
-                      <div className="col-span-5 flex items-center gap-2">
-                        <span className={`truncate ${!notice.isRead ? 'font-medium' : ''}`}>
-                          {notice.title.replace(/^\[.*?\]\s*/, '')}
-                        </span>
-                        {isNew && (
-                          <Badge className="bg-success text-xs h-4 px-1.5">NEW</Badge>
-                        )}
-                      </div>
-                      <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
-                        {notice.sourceDepartment}
-                      </div>
-                      <div className="col-span-2 text-center text-muted-foreground flex items-center justify-center">
-                        {safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}
+                      {/* Desktop */}
+                      <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_6fr_2fr_2fr] gap-4 p-4 items-center">
+                        <div className="text-center flex justify-center">
+                          {notice.isPinned ? <Pin className="w-4 h-4 text-primary fill-primary/20" /> : <span className="text-muted-foreground text-sm">{idx + 1}</span>}
+                        </div>
+                        <div className="text-center flex justify-center">
+                          <Badge className={`${priorityStyle.bgClass} ${priorityStyle.textClass} border-none rounded-[4px] px-2 h-6 text-xs font-medium min-w-[60px] justify-center`}>{notice.priority}</Badge>
+                        </div>
+                        <div className="text-center flex justify-center">
+                          <Badge variant="outline" className="text-muted-foreground border-border bg-white rounded-[4px] px-2 h-6 text-xs font-normal min-w-[60px] justify-center">{notice.category}</Badge>
+                        </div>
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className={`truncate text-sm ${!notice.isRead ? 'font-bold text-foreground' : 'font-medium text-foreground/80'} group-hover:text-primary transition-colors`}>
+                            {notice.title.replace(/^\[.*?\]\s*/, '')}
+                          </span>
+                          {isNew && <Badge className="bg-blue-600 h-5 px-1.5 rounded-[4px] text-[10px] shrink-0">NEW</Badge>}
+                        </div>
+                        <div className="text-center text-sm text-muted-foreground">
+                          {notice.sourceDepartment}
+                        </div>
+                        <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
+                          {safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="p-12 text-center text-muted-foreground">
-                <Bell className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                <p>검색 결과가 없습니다.</p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+                  );
+                })
+              ) : (
+                <div className="p-12 text-center text-muted-foreground text-sm">검색 결과가 없습니다.</div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </MainLayout>
   );
 }

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, ReactNode } from 'react';
+import React, { createContext, useContext, useMemo, ReactNode, useEffect } from 'react';
 import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
@@ -89,6 +89,16 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         STORAGE_KEYS.ACCEPTED_TASKS,
         []
     );
+
+    // Reset session data when agent logs out
+    useEffect(() => {
+        if (!agent) {
+            setSessionSchedules([]);
+            setSessionApprovals([]);
+            setSessionInspections([]);
+            setAcceptedIncidentIds([]);
+        }
+    }, [agent, setSessionSchedules, setSessionApprovals, setSessionInspections, setAcceptedIncidentIds]);
 
     // Derived State: Unified Incident Data (Single Source of Truth)
     const processedIncidents = useMemo(() => {

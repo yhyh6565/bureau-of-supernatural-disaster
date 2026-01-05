@@ -1,48 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Agent, Department } from '@/types/haetae';
+// Removed RANDOM_CODENAMES import if it was here, will be imported below properly if strict
 
-// Import Profile JSONs
-import PARKHONGLIM_PROFILE from '@/data/personas/parkhonglim/profile.json';
-import CHOIYOWON_PROFILE from '@/data/personas/choiyowon/profile.json';
-import RYUJAEGWAN_PROFILE from '@/data/personas/ryujaegwan/profile.json';
-import SOLUM_PROFILE from '@/data/personas/solum/profile.json';
-import HAEGEUM_PROFILE from '@/data/personas/haegeum/profile.json';
-import KOYOUNGEUN_PROFILE from '@/data/personas/koyoungeun/profile.json';
-import JANGHYEOWOON_PROFILE from '@/data/personas/janghyeowoon/profile.json';
+
+import { AGENT_PROFILES, RANDOM_CODENAMES } from '@/constants/haetae';
 
 // 세션 스토리지 키
 const SESSION_STORAGE_KEY = 'haetae_agent_session';
-
-// Helper to revive dates in Agent profile
-const parseAgentProfile = (profile: any): Agent => {
-  const agent = { ...profile };
-
-  // Date fields conversion
-  if (agent.purificationHistory) {
-    agent.purificationHistory = agent.purificationHistory.map((d: string) => new Date(d));
-  }
-
-  if (agent.rentals) {
-    agent.rentals = agent.rentals.map((r: any) => ({
-      ...r,
-      rentalDate: r.rentalDate ? new Date(r.rentalDate) : undefined,
-      dueDate: r.dueDate ? new Date(r.dueDate) : undefined,
-    }));
-  }
-
-  return agent as Agent;
-};
-
-// Load and parse profiles
-const AGENT_PROFILES: Record<string, Agent> = {
-  'parkhonglim': parseAgentProfile(PARKHONGLIM_PROFILE),
-  'choiyowon': parseAgentProfile(CHOIYOWON_PROFILE),
-  'ryujaegwan': parseAgentProfile(RYUJAEGWAN_PROFILE),
-  'solum': parseAgentProfile(SOLUM_PROFILE),
-  'haegeum': parseAgentProfile(HAEGEUM_PROFILE),
-  'koyoungeun': parseAgentProfile(KOYOUNGEUN_PROFILE),
-  'janghyeowoon': parseAgentProfile(JANGHYEOWOON_PROFILE),
-};
 
 // Map by name for easy lookup (e.g. login by name) if needed, though login uses personaKey usually.
 // Login logic below uses personaKey directly against AGENT_PROFILES keys, 
@@ -106,14 +70,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const fixedRank = '실무관';
     const fixedGrade = 9;
 
-    // 코드명 생성 부서코드-숫자
-    const deptCode = randomDept === 'baekho' ? 'BKH' : randomDept === 'hyunmu' ? 'HMU' : 'JJK';
-    const randomCodeNum = Math.floor(Math.random() * 99) + 10;
+
+
+    // 코드명 랜덤 생성 (유리, 살구, 새솔, 자라)
+    const randomCodename = RANDOM_CODENAMES[Math.floor(Math.random() * RANDOM_CODENAMES.length)];
 
     return {
       id: `agent-${Math.random().toString(36).substr(2, 5)}`,
       name: name,
-      codename: `${deptCode}-${randomCodeNum}`,
+      codename: randomCodename,
       department: randomDept,
       team: `${randomTeamNum}팀`,
       rank: fixedRank,

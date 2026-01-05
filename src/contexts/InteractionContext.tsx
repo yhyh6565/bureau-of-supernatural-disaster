@@ -3,6 +3,7 @@ import { useAuth } from './AuthContext';
 import { DataManager } from '@/data/dataManager';
 import { Incident, Notification, TriggerType, Message } from '@/types/haetae';
 import { useToast } from '@/hooks/use-toast';
+import { EASTER_EGGS } from '@/constants/easterEggs';
 
 interface InteractionContextType {
     triggeredIds: string[];
@@ -18,105 +19,104 @@ interface InteractionContextType {
 
 const InteractionContext = createContext<InteractionContextType | undefined>(undefined);
 
-const SESSION_MESSAGES_KEY = 'haetae_session_messages';
-const SESSION_TRIGGERED_KEY = 'haetae_triggered_ids';
-
 export function InteractionProvider({ children }: { children: React.ReactNode }) {
     const { agent, isAuthenticated } = useAuth();
-
-    // Initialize triggeredIds from session storage
-    const [triggeredIds, setTriggeredIds] = useState<string[]>(() => {
-        const stored = sessionStorage.getItem(SESSION_TRIGGERED_KEY);
-        return stored ? JSON.parse(stored) : [];
-    });
-
-    const [readIds, setReadIds] = useState<string[]>([]);
-    const [newlyTriggeredId, setNewlyTriggeredId] = useState<string | null>(null);
     const { toast } = useToast();
 
-    // Session Messages State
-    const [sessionMessages, setSessionMessages] = useState<Message[]>(() => {
-        const stored = sessionStorage.getItem(SESSION_MESSAGES_KEY);
-        if (stored) {
-            try {
-                const parsed = JSON.parse(stored);
-                // Convert Date strings back to Date objects
-                return parsed.map((msg: any) => ({
-                    ...msg,
-                    createdAt: new Date(msg.createdAt)
-                }));
-            } catch (e) {
-                console.error("Failed to parse session messages", e);
-                return [];
-            }
-        }
-        return [];
-    });
+    // Triggered Events (Incidents, Notifications)
+    const [triggeredIds, setTriggeredIds] = useState<string[]>([]);
 
-    // Reset on logout
+    // Read Status (Notifications, Messages)
+    const [readIds, setReadIds] = useState<string[]>([]);
+
+    // New Trigger Alert
+    const [newlyTriggeredId, setNewlyTriggeredId] = useState<string | null>(null);
+
+    // Session-based Messages (User sent or System triggered)
+    const [sessionMessages, setSessionMessages] = useState<Message[]>([]);
+
+    // Load initial triggers on login
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (isAuthenticated && agent) {
+            // Load base triggers (immediate ones)
+            // For checking purposes, we might want to load *potential* triggers?
+            // Actually, global data is filtered by Logic.
+            // Here we just manage the *IDs* that are currently active.
+
+            // On Login, check Time-based triggers
+            checkTriggers('login');
+
+            // Start timer for time-elapsed triggers
+            const timer = setInterval(() => {
+                checkTriggers('time-elapsed');
+            }, 5000); // Check every 5 sec
+
+            return () => clearInterval(timer);
+        } else {
             setTriggeredIds([]);
             setReadIds([]);
-            setNewlyTriggeredId(null);
-            // Clear session messages on logout
             setSessionMessages([]);
-            sessionStorage.removeItem(SESSION_MESSAGES_KEY);
-            sessionStorage.removeItem(SESSION_TRIGGERED_KEY);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, agent]);
 
-    // Sync triggeredIds to sessionStorage
+    const checkTriggers = (type: TriggerType) => {
+        // This is a simplified Mock trigger logic. 
+        // In real app, we iterate over all data definitions to check 'trigger' field.
+        // For now, hardcode some example logic or load from DataManager if extended.
+
+        const allIncidents = DataManager.getIncidents(agent);
+        const allNotices = DataManager.getNotifications(agent);
+
+        // 1. Check Incidents
+        allIncidents.forEach(incident => {
+            // Logic for Sinkhole (30s delay)
+            if (incident.id === 'inc-sinkhole-001') {
+                // Check if already triggered
+                if (triggeredIds.includes(incident.id)) return;
+
+                // Check condition (30s elapsed)
+                // Mock: We use a session start timestamp? 
+                // For now, let's just say it triggers after a timeout in useEffect below.
+            }
+        });
+    };
+
+    // Specific logic for Sinkhole (Hardcoded for demo effect as requested in 4.1)
     useEffect(() => {
-        sessionStorage.setItem(SESSION_TRIGGERED_KEY, JSON.stringify(triggeredIds));
-    }, [triggeredIds]);
+        if (!isAuthenticated) return;
 
-    // Sync sessionMessages to sessionStorage
-    useEffect(() => {
-        if (sessionMessages.length > 0) {
-            sessionStorage.setItem(SESSION_MESSAGES_KEY, JSON.stringify(sessionMessages));
-        }
-    }, [sessionMessages]);
+        const sinkholeId = 'inc-sinkhole-001';
+        if (triggeredIds.includes(sinkholeId)) return;
 
-    // Track scheduled triggers to avoid duplicate timeouts
-    const scheduledTriggers = React.useRef<Set<string>>(new Set());
+        const timer = setTimeout(() => {
+            triggerEvent(sinkholeId, null); // Item is technically dynamic, handled in DataManager or View
+        }, 30000); // 30 sec
 
-    // Check triggers
-    useEffect(() => {
-        if (!isAuthenticated || !agent) return;
+        return () => clearTimeout(timer);
+    }, [isAuthenticated, triggeredIds]);
 
-        const checkTriggers = () => {
-            const incidents = DataManager.getIncidents(agent);
-            const notifications = DataManager.getNotifications(agent);
 
-            const allItems = [...incidents, ...notifications];
-
-            allItems.forEach((item) => {
-                // Skip if already triggered OR already scheduled
-                if (!item.trigger || triggeredIds.includes(item.id) || scheduledTriggers.current.has(item.id)) return;
-
-                // Skip if NOT time-elapsed
-                if (item.trigger.type !== 'time-elapsed') return;
-
-                // Support both 'delay' field and 'value' (if number) for time
-                const delay = item.trigger.delay ?? (typeof item.trigger.value === 'number' ? item.trigger.value : 0);
-
-                // Mark as scheduled
-                scheduledTriggers.current.add(item.id);
-
-                // Set timeout
-                setTimeout(() => {
-                    triggerEvent(item.id, item);
-                    // Optional: remove from scheduledTriggers if we want to allow re-trigger logic later? 
-                    // But for "once per session", we keep it or rely on triggeredIds check next time.
-                    // Ideally we should CLEANUP scheduledTriggers if component unmounts?
-                    // But here triggeredIds will strictly prevent it.
-                }, delay);
-            });
+    const sendMessage = (recipient: string, title: string, content: string) => {
+        const newMessage: Message = {
+            id: `msg-${Date.now()}`,
+            senderId: agent?.id || 'unknown',
+            senderName: agent?.name || 'Unknown',
+            senderDepartment: agent?.department || 'baekho',
+            receiverId: recipient,
+            title: title,
+            content: content,
+            createdAt: new Date(),
+            isRead: true, // Sender reads their own
         };
 
-        checkTriggers();
-    }, [isAuthenticated, agent, triggeredIds]); // Add triggeredIds to dependency to ensure checks use fresh state
+        setSessionMessages(prev => [...prev, newMessage]);
+
+        // Mock Reply Logic (Optional)
+    };
+
+    const clearNewTrigger = () => {
+        setNewlyTriggeredId(null);
+    };
 
     const triggerEvent = (id: string, item: any) => {
         setTriggeredIds((prev) => {
@@ -144,6 +144,48 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
         });
     };
 
+    // Haunted Easter Egg Logic
+    useEffect(() => {
+        if (!isAuthenticated || !agent) return;
+
+        // List of named agents to exclude
+        const NAMED_AGENTS = ['박홍림', '최요원', '류재관', '김솔음', '해금', '고영은', '장허운'];
+
+        // Loop through configured Easter Eggs
+        EASTER_EGGS.forEach(egg => {
+            if (egg.triggerType === 'time-elapsed' && egg.targetCondition === 'ordinary') {
+                if (!NAMED_AGENTS.includes(agent.name)) {
+                    const timer = setTimeout(() => {
+                        const messageToAdd = {
+                            ...(egg.message || {}),
+                            receiverId: agent.id,
+                            createdAt: egg.message?.createdAt ? new Date(egg.message.createdAt as string) : new Date(),
+                            isRead: false
+                        } as Message;
+
+                        // Add to session messages
+                        setSessionMessages(prev => {
+                            if (prev.some(m => m.id === messageToAdd.id)) return prev;
+                            return [...prev, messageToAdd];
+                        });
+
+                        // Trigger Toast
+                        if (egg.toast) {
+                            toast({
+                                description: egg.toast.description,
+                                duration: 5000,
+                                className: egg.toast.className
+                            });
+                        }
+
+                    }, egg.delaySeconds ? egg.delaySeconds * 1000 : 60000);
+
+                    return () => clearTimeout(timer);
+                }
+            }
+        });
+    }, [isAuthenticated, agent]);
+
     const markAsRead = (id: string) => {
         setReadIds(prev => {
             if (prev.includes(id)) return prev;
@@ -159,48 +201,18 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
         return readIds.includes(id);
     };
 
-    const clearNewTrigger = () => {
-        setNewlyTriggeredId(null);
-    };
-
-    const sendMessage = (recipient: string, title: string, content: string) => {
-        if (!agent) return;
-
-        const newMessage: Message = {
-            id: `msg-session-${Date.now()}`,
-            senderId: agent.id,
-            senderName: agent.name,
-            senderDepartment: agent.department === 'baekho' ? '신규조사반' : agent.department === 'hyunmu' ? '출동구조반' : '현장정리반', // Simple mapping
-            receiverId: recipient, // Use input recipient name as ID/Name for display
-            title: title,
-            content: content,
-            createdAt: new Date(),
-            isRead: false,
-            // Trigger not needed for user sent messages usually
-        };
-
-        setSessionMessages(prev => [newMessage, ...prev]);
-
-        toast({
-            title: '쪽지 발송 완료',
-            description: `${recipient}님에게 쪽지를 발송했습니다.`,
-        });
-    };
-
     return (
-        <InteractionContext.Provider
-            value={{
-                triggeredIds,
-                readIds,
-                isTriggered,
-                isRead,
-                markAsRead,
-                newlyTriggeredId,
-                clearNewTrigger,
-                sessionMessages,
-                sendMessage,
-            }}
-        >
+        <InteractionContext.Provider value={{
+            triggeredIds,
+            readIds,
+            markAsRead,
+            isRead,
+            isTriggered,
+            newlyTriggeredId,
+            clearNewTrigger,
+            sessionMessages,
+            sendMessage
+        }}>
             {children}
         </InteractionContext.Provider>
     );

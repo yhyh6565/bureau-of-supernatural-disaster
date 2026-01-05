@@ -154,8 +154,7 @@ export interface Equipment {
   category: '대여' | '지급';
   requiresApproval: boolean;
   description: string;
-  totalStock: number;
-  availableStock: number;
+  type?: '탐지' | '제압' | '방어' | '은신' | '특수';
   // imageEmoji removed
 }
 

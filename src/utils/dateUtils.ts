@@ -11,6 +11,13 @@ import { ko } from 'date-fns/locale';
  * @param dateStr - ISO 8601, "relative:-2d", "fixed:01-03T10:00" 등
  * @returns Date 객체 (파싱 실패 시 현재 날짜)
  */
+export function parseDateValue(dateStr: string | Date | undefined): Date {
+    return parseNotificationDate(dateStr);
+}
+
+/**
+ * @deprecated Use parseDateValue instead
+ */
 export function parseNotificationDate(dateStr: string | Date | undefined): Date {
     try {
         if (!dateStr) return new Date();

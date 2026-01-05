@@ -57,22 +57,38 @@ import SOLUM_INSPECTIONS_JSON from '@/data/personas/solum/inspections.json';
 import HAEGEUM_INSPECTIONS_JSON from '@/data/personas/haegeum/inspections.json';
 import KOYOUNGEUN_INSPECTIONS_JSON from '@/data/personas/koyoungeun/inspections.json';
 import JANGHYEOWOON_INSPECTIONS_JSON from '@/data/personas/janghyeowoon/inspections.json';
+import { parseDateValue } from '@/utils/dateUtils';
 
 // Helper to parse dates in JSON data
-function parseDates<T>(data: any[]): T[] {
-    return data.map(item => {
+function parseDates<T>(item: any): any {
+    if (!item) return item;
+
+    // Recursively handle arrays
+    if (Array.isArray(item)) {
+        return item.map(sub => parseDates(sub));
+    }
+
+    // Recursively handle objects
+    if (typeof item === 'object' && item !== null) {
+        // If it's already a Date object, return it (though parseDateValue handles it too)
+        if (item instanceof Date) return item;
+        
         const newItem = { ...item };
-        // Common Date fields
-        if (newItem.createdAt) newItem.createdAt = new Date(newItem.createdAt);
-        if (newItem.updatedAt) newItem.updatedAt = new Date(newItem.updatedAt);
-        if (newItem.date) newItem.date = new Date(newItem.date);
-        if (newItem.processedAt) newItem.processedAt = new Date(newItem.processedAt);
-        if (newItem.lastUpdated) newItem.lastUpdated = new Date(newItem.lastUpdated);
-        if (newItem.assignedAt) newItem.assignedAt = new Date(newItem.assignedAt);
-        if (newItem.completedAt) newItem.completedAt = new Date(newItem.completedAt);
-        if (newItem.scheduledDate) newItem.scheduledDate = new Date(newItem.scheduledDate);
+        
+        // Explicitly handle date fields
+        const DATE_FIELDS = ['createdAt', 'updatedAt', 'resolvedAt', 'startDate', 'endDate', 'date', 'rentalDate', 'dueDate', 'processedAt', 'lastUpdated', 'assignedAt', 'completedAt', 'scheduledDate'];
+        
+        Object.keys(newItem).forEach(key => {
+            if (DATE_FIELDS.includes(key)) {
+                newItem[key] = parseDateValue(newItem[key]);
+            } else if (typeof newItem[key] === 'object') {
+                newItem[key] = parseDates(newItem[key]);
+            }
+        });
         return newItem as T;
-    });
+    }
+
+    return item;
 }
 
 const GLOBAL_INCIDENTS = parseDates<Incident>(GLOBAL_INCIDENTS_JSON);
@@ -251,16 +267,7 @@ export const DataManager = {
     getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
         if (!agent) return ORDINARY_DATA.inspections;
         const personaData = PERSONA_MAP[agent.name];
-        
-        // Return persona data if exists, otherwise fallback to ordinary (optional, or just return empty)
-        // Based on logic for other data, usage seems to favor exact match or fallback.
-        // For inspections, if a persona has a specific file but it's empty [], we probably shouldn't fallback to ordinary mock data?
-        // But ordinary data is mocked "Default" data.
-        // Let's stick to consistent pattern: Persona Data OR Ordinary Data.
+
         return personaData?.inspections || ORDINARY_DATA.inspections;
-        
-        // Note: Sort is handled here if needed, or by consumer.
-        // Let's add sort for consistency with previous mock logic.
-        // return (personaData?.inspections || ORDINARY_DATA.inspections).slice().sort((a, b) => b.scheduledDate.getTime() - a.scheduledDate.getTime());
     }
 };
