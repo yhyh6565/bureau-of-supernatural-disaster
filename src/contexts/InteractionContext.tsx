@@ -25,6 +25,7 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
 
     const TRIGGERED_IDS_KEY = 'haetae_triggered_ids';
     const READ_IDS_KEY = 'haetae_read_ids';
+    const SESSION_MESSAGES_KEY = 'haetae_session_messages';
 
     // Triggered Events (Incidents, Notifications) - Load from sessionStorage
     const [triggeredIds, setTriggeredIds] = useState<string[]>(() => {
@@ -50,7 +51,14 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
     const [newlyTriggeredId, setNewlyTriggeredId] = useState<string | null>(null);
 
     // Session-based Messages (User sent or System triggered)
-    const [sessionMessages, setSessionMessages] = useState<Message[]>([]);
+    const [sessionMessages, setSessionMessages] = useState<Message[]>(() => {
+        try {
+            const saved = sessionStorage.getItem(SESSION_MESSAGES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
 
     // Persist triggeredIds to sessionStorage
     useEffect(() => {
@@ -61,6 +69,11 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
     useEffect(() => {
         sessionStorage.setItem(READ_IDS_KEY, JSON.stringify(readIds));
     }, [readIds]);
+
+    // Persist sessionMessages to sessionStorage
+    useEffect(() => {
+        sessionStorage.setItem(SESSION_MESSAGES_KEY, JSON.stringify(sessionMessages));
+    }, [sessionMessages]);
 
     // Load initial triggers on login
     useEffect(() => {
@@ -81,6 +94,7 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
             setTriggeredIds([]);
             setReadIds([]);
             setSessionMessages([]);
+            sessionStorage.removeItem(SESSION_MESSAGES_KEY);
         }
     }, [isAuthenticated, agent]);
 

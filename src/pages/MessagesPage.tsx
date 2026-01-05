@@ -94,7 +94,9 @@ export function MessagesPage() {
           <CardContent className="pt-8">
             <div className="prose prose-sm max-w-none mb-8 min-h-[200px]">
               <p className="whitespace-pre-wrap leading-relaxed">
-                {selectedMessage.content.replace(/\bme\b/g, agent?.name || 'me')}
+                {selectedMessage.receiverId === 'me'
+                  ? selectedMessage.content.replace(/\bme\b/g, agent?.name || 'me')
+                  : selectedMessage.content}
               </p>
             </div>
 
