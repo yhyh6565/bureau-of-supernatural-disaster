@@ -20,7 +20,25 @@ export function ResourceProvider({ children }: { children: ReactNode }) {
         if (agent) {
             // agent.rentals는 초기 스냅샷일 수 있으므로, 이미 로드된 상태가 아니면 로드
             // 여기서는 단순하게 agent가 바뀔 때(로그인) 리셋
-            setRentals(agent.rentals || []);
+            let baseRentals = agent.rentals || [];
+
+            // 현무팀(hyunmu) 소속 요원에게 '신발끈' 기본 지급
+            if (agent.department === 'hyunmu') {
+                const hasShoelace = baseRentals.some(r => r.equipmentName === '오방색 신발끈');
+                if (!hasShoelace) {
+                    const shoelaceEquipment: RentalRecord = {
+                        id: `rental-shoelace-${agent.id}`,
+                        equipmentName: '오방색 신발끈',
+                        category: '지급',
+                        rentalDate: new Date(),
+                        status: '정상',
+                        quantity: 1,
+                    };
+                    baseRentals = [...baseRentals, shoelaceEquipment];
+                }
+            }
+
+            setRentals(baseRentals);
         } else {
             setRentals([]);
         }

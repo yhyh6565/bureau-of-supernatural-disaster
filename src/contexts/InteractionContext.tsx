@@ -23,11 +23,28 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
     const { agent, isAuthenticated } = useAuth();
     const { toast } = useToast();
 
-    // Triggered Events (Incidents, Notifications)
-    const [triggeredIds, setTriggeredIds] = useState<string[]>([]);
+    const TRIGGERED_IDS_KEY = 'haetae_triggered_ids';
+    const READ_IDS_KEY = 'haetae_read_ids';
 
-    // Read Status (Notifications, Messages)
-    const [readIds, setReadIds] = useState<string[]>([]);
+    // Triggered Events (Incidents, Notifications) - Load from sessionStorage
+    const [triggeredIds, setTriggeredIds] = useState<string[]>(() => {
+        try {
+            const saved = sessionStorage.getItem(TRIGGERED_IDS_KEY);
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
+
+    // Read Status (Notifications, Messages) - Load from sessionStorage
+    const [readIds, setReadIds] = useState<string[]>(() => {
+        try {
+            const saved = sessionStorage.getItem(READ_IDS_KEY);
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
 
     // New Trigger Alert
     const [newlyTriggeredId, setNewlyTriggeredId] = useState<string | null>(null);
@@ -35,14 +52,19 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
     // Session-based Messages (User sent or System triggered)
     const [sessionMessages, setSessionMessages] = useState<Message[]>([]);
 
+    // Persist triggeredIds to sessionStorage
+    useEffect(() => {
+        sessionStorage.setItem(TRIGGERED_IDS_KEY, JSON.stringify(triggeredIds));
+    }, [triggeredIds]);
+
+    // Persist readIds to sessionStorage
+    useEffect(() => {
+        sessionStorage.setItem(READ_IDS_KEY, JSON.stringify(readIds));
+    }, [readIds]);
+
     // Load initial triggers on login
     useEffect(() => {
         if (isAuthenticated && agent) {
-            // Load base triggers (immediate ones)
-            // For checking purposes, we might want to load *potential* triggers?
-            // Actually, global data is filtered by Logic.
-            // Here we just manage the *IDs* that are currently active.
-
             // On Login, check Time-based triggers
             checkTriggers('login');
 
@@ -53,6 +75,9 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
 
             return () => clearInterval(timer);
         } else {
+            // On logout, clear sessionStorage
+            sessionStorage.removeItem(TRIGGERED_IDS_KEY);
+            sessionStorage.removeItem(READ_IDS_KEY);
             setTriggeredIds([]);
             setReadIds([]);
             setSessionMessages([]);
@@ -86,14 +111,23 @@ export function InteractionProvider({ children }: { children: React.ReactNode })
         if (!isAuthenticated) return;
 
         const sinkholeId = 'inc-sinkhole-001';
+        const sinkholeNotiId = 'noti-sinkhole-alert';
         if (triggeredIds.includes(sinkholeId)) return;
 
         const timer = setTimeout(() => {
-            triggerEvent(sinkholeId, null); // Item is technically dynamic, handled in DataManager or View
+            // Update the notification's createdAt to NOW before triggering
+            const allNotices = DataManager.getNotifications(agent);
+            const sinkholeNotice = allNotices.find(n => n.id === sinkholeNotiId);
+            if (sinkholeNotice) {
+                sinkholeNotice.createdAt = new Date();
+            }
+
+            triggerEvent(sinkholeId, null); // Trigger the incident
+            triggerEvent(sinkholeNotiId, sinkholeNotice); // Trigger the related notification with updated data
         }, 30000); // 30 sec
 
         return () => clearTimeout(timer);
-    }, [isAuthenticated, triggeredIds]);
+    }, [isAuthenticated, triggeredIds, agent]);
 
 
     const sendMessage = (recipient: string, title: string, content: string) => {

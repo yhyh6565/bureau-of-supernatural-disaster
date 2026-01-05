@@ -198,9 +198,8 @@ export function TasksPage() {
                                 {incident.location}
                               </div>
                             </div>
-                            <div className="flex justify-center gap-1">
-                              <Button size="sm" variant="outline" className="h-7 text-xs px-2 whitespace-nowrap" onClick={() => { setSelectedIncident(incident); setShowDetailDialog(true); }}>상세</Button>
-                              <Button size="sm" className="h-7 text-xs px-2 bg-blue-900 hover:bg-blue-800 text-white whitespace-nowrap" onClick={() => { window.location.href = '/approvals'; }}>보고서</Button>
+                            <div className="flex justify-center gap-1" onClick={(e) => e.stopPropagation()}>
+                              <Button size="sm" className="h-7 text-xs px-2 bg-blue-900 hover:bg-blue-800 text-white whitespace-nowrap">보고서</Button>
                             </div>
                           </div>
                         </div>

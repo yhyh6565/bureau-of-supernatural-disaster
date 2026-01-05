@@ -60,16 +60,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
     // Auto-increase contamination
     useEffect(() => {
         if (!agent || isGameOver) return;
-        // Park Honglim exception: Fixed contamination, no auto-increase
-        if (agent.personaKey === 'parkhonglim') return;
+        // Exceptions: Fixed contamination for Park Honglim and Jang Hyeowoon
+        if (['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) return;
 
         const interval = setInterval(() => {
             setContamination(prev => {
                 const next = prev + 1;
                 // Storage sync is handled by the effect above
                 if (next >= 100) {
-                    // Park Honglim exception
-                    if (agent.personaKey !== 'parkhonglim') {
+                    // Exceptions check (though should be caught by early return above, check again for safety)
+                    if (!['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) {
                         setGameOverType('contamination');
                     }
                     return 100;

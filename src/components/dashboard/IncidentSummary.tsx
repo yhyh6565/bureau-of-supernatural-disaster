@@ -27,7 +27,7 @@ export function IncidentSummary() {
 
     return (
         <Card className="card-gov">
-            <CardHeader className="pt-3 md:pt-6 pb-3 md:pb-6">
+            <CardHeader className="pt-3 md:pt-6 pb-1.5 md:pb-3">
                 <CardTitle className="text-base font-semibold flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-destructive" />

@@ -116,8 +116,8 @@ export function GNBHeader() {
               <deptInfo.icon className="w-3.5 h-3.5" />
               <span>{deptInfo.name}</span>
             </div>
-            <div className="flex items-center justify-center h-auto py-0.5 min-w-[2rem] px-1.5 font-mono font-bold text-sm text-destructive bg-destructive/10 rounded">
-              {Math.round(contamination)}
+            <div className="flex items-center justify-center h-auto py-0.5 min-w-[2rem] px-1.5 font-mono font-bold text-xs text-destructive bg-destructive/10 rounded">
+              오염도 : {Math.round(contamination)}%
             </div>
           </div>
         </div>
@@ -157,8 +157,8 @@ export function GNBHeader() {
           </div>
 
           {/* 정신오염도 표시 (Desktop) */}
-          <div className="hidden md:flex items-center justify-center h-10 min-w-[3rem] px-2 font-mono font-bold text-lg text-destructive bg-destructive/10 rounded">
-            {Math.round(contamination)}
+          <div className="hidden md:flex items-center justify-center h-10 min-w-[3rem] px-2 font-mono font-bold text-[15px] text-destructive bg-destructive/10 rounded">
+            오염도 : {Math.round(contamination)}%
           </div>
 
           {/* 사용자 드롭다운 */}

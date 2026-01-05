@@ -68,7 +68,7 @@ export default function IncidentsPage() {
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                         <AlertTriangle className="w-6 h-6 text-destructive" />
-                        <h1 className="text-xl font-bold tracking-tight">재난 현황</h1>
+                        <h1 className="text-lg md:text-xl font-bold tracking-tight whitespace-nowrap">재난 현황</h1>
 
                         <Popover>
                             <PopoverTrigger asChild>
