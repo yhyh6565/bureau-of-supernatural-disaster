@@ -69,13 +69,6 @@ export default function IncidentsPage() {
         }
     };
 
-    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            e.stopPropagation();
-            handleSearch(searchQuery);
-        }
-    };
 
     // Clear search query when entering Segwang mode
     useEffect(() => {
@@ -177,7 +170,13 @@ export default function IncidentsPage() {
 
                     {/* 컨트롤 영역 (우측: 검색창 + 필터) */}
                     <div className="flex items-center gap-2 w-full md:w-auto">
-                        <div className="flex bg-muted/30 p-1 rounded-lg flex-1 md:flex-none">
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSearch(searchQuery);
+                            }}
+                            className="flex bg-muted/30 p-1 rounded-lg flex-1 md:flex-none"
+                        >
                             <div className="relative w-full md:w-auto">
                                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                 <Input
@@ -185,22 +184,18 @@ export default function IncidentsPage() {
                                     placeholder="재난 검색..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.nativeEvent.isComposing) return;
-                                        handleSearchKeyDown(e);
-                                    }}
                                     className="w-full md:w-[200px] pl-9 h-8 bg-background/50 border-0 focus-visible:ring-1 transition-all text-xs"
                                 />
                             </div>
                             <Button
+                                type="submit"
                                 variant="ghost"
                                 size="icon"
                                 className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                                onClick={() => handleSearch(searchQuery)}
                             >
                                 <ArrowRight className="h-4 w-4" />
                             </Button>
-                        </div>
+                        </form>
 
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-muted-foreground whitespace-nowrap hidden md:inline">그룹:</span>
