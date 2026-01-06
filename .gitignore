@@ -27,10 +27,23 @@ dist-ssr
 QA_reports/
 
 # Generated data (from templates)
-# Note: Using src/data/* instead of src/data/ to allow negation patterns to work
-src/data/*
-!src/data/segwang/
-!src/data/ordinary/
-!src/data/global/
-!src/data/personas/
-!src/data/dataManager.ts
+# Strategy: Explicitly list auto-generated files instead of using broad patterns
+# This prevents accidentally ignoring files that should be tracked
+
+# Auto-generated global data (except manuals.json which is version controlled)
+src/data/global/equipment.json
+src/data/global/incidents.json
+src/data/global/locations.json
+src/data/global/notifications.json
+
+# Auto-generated ordinary data (all files)
+src/data/ordinary/*.json
+
+# Auto-generated persona data (all files in all persona directories)
+src/data/personas/*/*.json
+
+# Keep these tracked:
+# - src/data/dataManager.ts (static TypeScript file)
+# - src/data/global/manuals.json (manual content, frequently updated)
+# - src/data/segwang/* (static Segwang easter egg data)
+# - src/data/interactions/* (static interaction data)

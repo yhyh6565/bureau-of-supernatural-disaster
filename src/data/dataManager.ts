@@ -72,12 +72,12 @@ function parseDates<T>(item: any): any {
     if (typeof item === 'object' && item !== null) {
         // If it's already a Date object, return it (though parseDateValue handles it too)
         if (item instanceof Date) return item;
-        
+
         const newItem = { ...item };
-        
+
         // Explicitly handle date fields
         const DATE_FIELDS = ['createdAt', 'updatedAt', 'resolvedAt', 'startDate', 'endDate', 'date', 'rentalDate', 'dueDate', 'processedAt', 'lastUpdated', 'assignedAt', 'completedAt', 'scheduledDate'];
-        
+
         Object.keys(newItem).forEach(key => {
             if (DATE_FIELDS.includes(key)) {
                 newItem[key] = parseDateValue(newItem[key]);
@@ -169,9 +169,33 @@ export const DataManager = {
     },
 
     // Messages: Personal data only (no global)
+    // Messages: Personal data only (no global)
     getMessages: (agent: Agent | null) => {
         if (!agent) return ORDINARY_DATA.messages;
-        return PERSONA_MAP[agent.name]?.messages || ORDINARY_DATA.messages;
+
+        // 1. Get my received messages (My Inbox)
+        const myReceivedMessages = PERSONA_MAP[agent.name]?.messages || ORDINARY_DATA.messages;
+
+        // 2. Find messages I sent to others (Sent Items)
+        // Scan other personas' mailboxes for messages where senderId === my id
+        const mySentMessages: Message[] = [];
+
+        Object.entries(PERSONA_MAP).forEach(([personaName, data]) => {
+            // Skip my own mailbox (already checked, though technically I shouldn't send to myself in this logic)
+            if (personaName === agent.name) return;
+
+            const sentByMe = data.messages.filter(msg =>
+                msg.senderId === agent.id || msg.senderName === agent.name
+            );
+            mySentMessages.push(...sentByMe);
+        });
+
+        // 3. Combine and sort by date (Newest first)
+        const allMessages = [...myReceivedMessages, ...mySentMessages].sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+
+        return allMessages;
     },
 
     // Notifications: Global base + Persona personal notifications
