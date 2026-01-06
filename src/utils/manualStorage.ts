@@ -1,4 +1,4 @@
-import type { ManualComment } from '@/data/global/manualComments';
+import type { ManualComment } from '@/constants/manualComments';
 
 export interface Highlight {
     id: string;
