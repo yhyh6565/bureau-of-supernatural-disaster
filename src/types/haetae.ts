@@ -78,7 +78,8 @@ export interface Manual {
   title: string;
   severity: DangerLevel;
   lastUpdated: Date;
-  content: ManualContent;
+  content?: ManualContent;
+  body?: string; // [NEW] Unstructured prose content
   containmentMethod?: string;
   aftermath?: string;
   relatedIncidentIds?: string[];

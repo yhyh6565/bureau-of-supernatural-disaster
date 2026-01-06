@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, Lock, FileX } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -17,6 +18,7 @@ type Phase = 'search' | 'warning' | 'glitch' | 'recovery' | 'loading' | 'transit
 
 export function DeletedRecordModal({ isOpen, onClose, searchQuery }: DeletedRecordModalProps) {
     const { setMode } = useBureau();
+    const navigate = useNavigate();
     const [phase, setPhase] = useState<Phase>('search');
     const [message, setMessage] = useState('해당 기록은 존재하지 않습니다');
     const [progress, setProgress] = useState(0);
@@ -68,10 +70,10 @@ export function DeletedRecordModal({ isOpen, onClose, searchQuery }: DeletedReco
         // Close modal first
         onClose();
 
-        // Wait for dialog close animation, then switch mode
+        // Wait for dialog close animation, then switch mode and navigate
         setTimeout(() => {
-            window.history.pushState({ mode: 'segwang' }, '', window.location.href);
             setMode('segwang');
+            navigate('/');
         }, 400);
     };
 

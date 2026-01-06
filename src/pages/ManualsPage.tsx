@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { DataManager } from '@/data/dataManager';
 import { ManualContentDisplay } from '@/components/manual/ManualContentDisplay';
+import { ManualCommentSection } from '@/components/manual/ManualCommentSection';
 import { Search, Book, ChevronRight, ArrowLeft } from 'lucide-react';
 import { DANGER_LEVEL_STYLE } from '@/constants/haetae';
 import { useBureau } from '@/contexts/BureauContext';
@@ -98,10 +99,10 @@ export default function ManualsPage() {
                                     <Badge className={`${DANGER_LEVEL_STYLE[selectedManual.severity]?.bgClass || 'bg-gray-500'} ${DANGER_LEVEL_STYLE[selectedManual.severity]?.textClass || 'text-white'} mb-2 border-none`}>
                                         {selectedManual.severity}
                                     </Badge>
-                                    <CardTitle className="text-2xl font-bold font-serif tracking-tight">
+                                    <CardTitle className="text-2xl font-bold tracking-tight">
                                         {selectedManual.title}
                                     </CardTitle>
-                                    <p className="text-sm text-muted-foreground mt-1 font-mono">
+                                    <p className="text-xs md:text-sm text-muted-foreground mt-1 font-mono whitespace-nowrap">
                                         최초 등록일: {getFirstRegistrationDate(selectedManual.id) ? new Date(getFirstRegistrationDate(selectedManual.id)!).toLocaleDateString() : '-'} | 최종개정: {new Date(selectedManual.lastUpdated).toLocaleDateString()}
                                     </p>
                                 </div>
@@ -111,6 +112,7 @@ export default function ManualsPage() {
                         <CardContent className="p-0">
                             <div className="p-6">
                                 <ManualContentDisplay manual={selectedManual} />
+                                <ManualCommentSection manualId={selectedManual.id} />
                             </div>
                         </CardContent>
                     </Card>
@@ -123,11 +125,11 @@ export default function ManualsPage() {
         <MainLayout>
             <div className="flex flex-col h-[calc(100vh-8rem)]">
                 {/* Header Row */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight">재난 대응 매뉴얼</h1>
-                        <p className="text-muted-foreground">초자연 재난관리국 공식 대응 지침 문서 보관소</p>
-                    </div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
+                        <Book className="w-6 h-6 text-primary" />
+                        재난 대응 매뉴얼
+                    </h1>
 
                     <div className="relative w-full md:w-auto">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -146,11 +148,20 @@ export default function ManualsPage() {
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-100/50 sticky top-0 z-10">
                                 <tr>
-                                    <th className="px-6 py-3 w-[100px]">등급</th>
-                                    <th className="px-6 py-3">매뉴얼 제목</th>
-                                    <th className="px-6 py-3 w-[150px] text-center">최초 등록일</th>
-                                    <th className="px-6 py-3 w-[150px] text-center">최근 업데이트</th>
-                                    <th className="px-6 py-3 w-[50px]"></th>
+                                    <th className="px-2 md:px-6 py-3 w-[60px] md:w-[100px] text-center md:text-left">등급</th>
+                                    <th className="px-2 md:px-6 py-3">
+                                        <span className="hidden md:inline">매뉴얼 제목</span>
+                                        <span className="md:hidden">제목</span>
+                                    </th>
+                                    <th className="px-2 md:px-6 py-3 w-[80px] md:w-[150px] text-center">
+                                        <span className="hidden md:inline">최초 등록일</span>
+                                        <span className="md:hidden">등록</span>
+                                    </th>
+                                    <th className="px-2 md:px-6 py-3 w-[80px] md:w-[150px] text-center">
+                                        <span className="hidden md:inline">최근 업데이트</span>
+                                        <span className="md:hidden">수정</span>
+                                    </th>
+                                    <th className="px-2 md:px-6 py-3 w-[30px] md:w-[50px]"></th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -165,21 +176,31 @@ export default function ManualsPage() {
                                                 className="bg-white hover:bg-blue-50/50 cursor-pointer transition-colors group"
                                                 onClick={() => setSelectedManualId(manual.id)}
                                             >
-                                                <td className="px-6 py-4">
-                                                    <Badge className={`${dangerStyle?.bgClass || 'bg-gray-500'} ${dangerStyle?.textClass || 'text-white'} border-none hover:opacity-80`}>
+                                                <td className="px-2 md:px-6 py-4 text-center md:text-left">
+                                                    <Badge className={`${dangerStyle?.bgClass || 'bg-gray-500'} ${dangerStyle?.textClass || 'text-white'} border-none hover:opacity-80 whitespace-nowrap`}>
                                                         {manual.severity}
                                                     </Badge>
                                                 </td>
-                                                <td className="px-6 py-4 font-medium text-gray-900 group-hover:text-blue-700">
+                                                <td className="px-2 md:px-6 py-4 font-medium text-gray-900 group-hover:text-blue-700 break-keep">
                                                     {manual.title}
                                                 </td>
-                                                <td className="px-6 py-4 text-center text-gray-500 font-mono text-xs">
-                                                    {firstRegDate ? new Date(firstRegDate).toLocaleDateString() : '-'}
+                                                <td className="px-2 md:px-6 py-4 text-center text-gray-500 font-mono text-xs">
+                                                    <span className="hidden md:inline">
+                                                        {firstRegDate ? new Date(firstRegDate).toLocaleDateString() : '-'}
+                                                    </span>
+                                                    <span className="md:hidden">
+                                                        {firstRegDate ? `${new Date(firstRegDate).getFullYear()}..` : '-'}
+                                                    </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-center text-gray-500 font-mono text-xs">
-                                                    {new Date(manual.lastUpdated).toLocaleDateString()}
+                                                <td className="px-2 md:px-6 py-4 text-center text-gray-500 font-mono text-xs">
+                                                    <span className="hidden md:inline">
+                                                        {new Date(manual.lastUpdated).toLocaleDateString()}
+                                                    </span>
+                                                    <span className="md:hidden">
+                                                        {new Date(manual.lastUpdated).getFullYear()}..
+                                                    </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-center">
+                                                <td className="px-2 md:px-6 py-4 text-center">
                                                     <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500" />
                                                 </td>
                                             </tr>

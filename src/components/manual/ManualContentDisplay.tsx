@@ -1,13 +1,25 @@
 import { Manual } from '@/types/haetae';
 import { Separator } from '@/components/ui/separator';
 import { AlertTriangle, ShieldAlert, Ban, Info } from 'lucide-react';
-import { HighlightableText } from './HighlightableText';
 
 interface ManualContentDisplayProps {
     manual: Manual;
 }
 
 export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
+    // [NEW] Prose content support
+    if (manual.body) {
+        return (
+            <div className="py-4 px-1">
+                <div className="text-sm leading-8 text-slate-800 dark:text-slate-200 whitespace-pre-wrap font-sans">
+                    {manual.body}
+                </div>
+            </div>
+        );
+    }
+
+    if (!manual.content) return <div className="p-4 text-center text-muted-foreground">내용 없음</div>;
+
     return (
         <div className="space-y-8 py-4 px-1">
             {/* 식별 징후 */}
@@ -17,11 +29,7 @@ export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
                     식별 징후
                 </h4>
                 <div className="p-4 bg-muted/50 rounded-md text-sm leading-relaxed border border-border/50">
-                    <HighlightableText
-                        manualId={manual.id}
-                        sectionId="identification"
-                        text={manual.content.identification}
-                    />
+                    {manual.content.identification}
                 </div>
             </section>
 
@@ -40,11 +48,7 @@ export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
                                 {idx + 1}
                             </span>
                             <div className="flex-1 pt-0.5">
-                                <HighlightableText
-                                    manualId={manual.id}
-                                    sectionId={`immediateAction-${idx}`}
-                                    text={action}
-                                />
+                                {action}
                             </div>
                         </li>
                     ))}
@@ -63,11 +67,7 @@ export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
                             <li key={idx} className="flex items-start gap-3 text-sm font-medium text-destructive dark:text-red-400">
                                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                                 <div className="flex-1">
-                                    <HighlightableText
-                                        manualId={manual.id}
-                                        sectionId={`taboo-${idx}`}
-                                        text={item}
-                                    />
+                                    {item}
                                 </div>
                             </li>
                         ))}
@@ -83,11 +83,7 @@ export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
                     <h4 className="text-xs font-semibold uppercase text-muted-foreground select-none">봉인/대처법</h4>
                     {manual.containmentMethod ? (
                         <div className="text-sm border p-4 rounded-md bg-background shadow-sm">
-                            <HighlightableText
-                                manualId={manual.id}
-                                sectionId="containmentMethod"
-                                text={manual.containmentMethod}
-                            />
+                            {manual.containmentMethod}
                         </div>
                     ) : (
                         <div className="text-sm text-muted-foreground italic p-2">정보 없음</div>
@@ -97,11 +93,7 @@ export const ManualContentDisplay = ({ manual }: ManualContentDisplayProps) => {
                     <h4 className="text-xs font-semibold uppercase text-muted-foreground select-none">사후 처리</h4>
                     {manual.aftermath ? (
                         <div className="text-sm border p-4 rounded-md bg-background shadow-sm">
-                            <HighlightableText
-                                manualId={manual.id}
-                                sectionId="aftermath"
-                                text={manual.aftermath}
-                            />
+                            {manual.aftermath}
                         </div>
                     ) : (
                         <div className="text-sm text-muted-foreground italic p-2">정보 없음</div>

@@ -195,6 +195,7 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| **v2.2.4** | 2026-01-06 | **매뉴얼 시스템 대규모 개편**: 매뉴얼 본문 줄글(Prose) 포맷 전환, 스레드형 코멘트 시스템 도입(Lore 상호작용 포함), 모바일 UI 최적화(날짜 축약, 패딩 조정), 디자인 톤앤매너 통일, 야간 택시 매뉴얼 데이터 폐기 |
 | **v2.2.3** | 2026-01-05 | **모바일 UI 정밀 조정**: 재난 현황 타이틀 폰트 축소(줄바꿈 방지), GNB 오염도 표시 개선(폰트 축소, 포맷 변경), **데이터 최신화**: 장허운 오염도 고정(95%), 최요원/김솔음 오염도 조정, 최요원 코드명 변경(■■), 쪽지 제목 수정, **시스템 개선**: 이스터에그 세션 지속성(유지) 구현, 싱크홀 공지 실시간 날짜 적용, SEO 메타태그 적용 |
 | **v2.2.2** | 2026-01-05 | **모바일 UI 개선**: 담당업무 페이지 인시던트 카드 클릭 시 상세 팝업 추가, '강남역 포식자 싱크홀' 긴급 태그 추가, 팝업 모달 버튼 Side-by-Side 배치 통일, 공지사항/쪽지함 검색영역 한 줄 배치, 업무지원 페이지 장비 필터 및 스크롤 영역 제한, 시설 카드 간격/아이콘 축소, 오염검사 섹션 레이아웃 개선 |
 | **v2.2.1** | 2026-01-05 | **일반 유저 요원명 변경** (부서코드 -> 유리/살구/새솔/자라), **공포 이스터에그 추가** (일반 유저 로그인 1분 후 '오지마' 쪽지), **쪽지 날짜 파싱 안전장치** 추가 |
@@ -411,22 +412,25 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 기존의 '장비'와 '방문' 페이지가 통합된 **업무지원** 페이지에서 처리합니다.
 
-### 4. Manuals Page (재난 매뉴얼)
-- **Overview**: A dedicated page ("archive") for viewing disaster manuals in a "public enterprise document" style.
+### 4. Manuals Page (재난 대응 매뉴얼)
+- **Overview**: 특수 재난(파형/뇌형 등)에 대한 상세 대응 지침을 열람하는 아카이브 페이지
 - **Access**:
   - GNB Menu: "재난 매뉴얼"
   - URL: `/manuals` (List), `/manuals/:id` (Detail)
 - **Features**:
-  - **List View**: Table or card list of all available manuals.
-  - **Detail View**: Full-page view of the manual content (reusing the structure from the modal).
-  - **Highlight & Note System**:
-    - Users can select text within the manual.
-    - Context menu appears: "Highlight" (Default Yellow), "Note".
-    - Highlights are persisted (LocalStorage).
-    - Clicking a highlight shows the user's note.
+  - **List View**: 
+    - 모바일 최적화된 반응형 테이블 (모바일: 날짜 축약 표시, 필수 정보 위주)
+    - 위험 등급(Badge), 제목, 등록일/수정일 표시
+  - **Detail View**: 
+    - **Prose Content**: 기존 구조화된 포맷 대신, 현장감 있는 줄글(Prose) 형태의 네러티브 매뉴얼 제공
+    - **Threaded Comments (댓글 시스템)**:
+        - **Lore Integration**: 주요 요원(최요원, 류재관, 해금 등)들의 상호작용이 담긴 "고정 댓글" 제공
+        - **Session Notes**: 사용자가 직접 남기는 댓글 (세션 유지, 로그아웃 시 소기)
+        - 대댓글(Reply) 구조 지원
 - **Design Concept**:
-  - "Public Enterprise / Government" aesthetic (tables, stiff fonts, gray/white theme).
-  - Mobile-friendly text selection.
+  - **Tone & Manner**: 다른 메인 페이지와 통일된 헤더 디자인 (Icon + Title)
+  - **Typography**: 가독성을 위한 시스템 기본 폰트 사용 (Serif 제거)
+  - **Mobile Optimizations**: 좁은 화면에서도 줄바꿈 없이 중요 정보 전달 (폰트 사이즈 조정, 여백 축소)
 
 ### 5. Security & Access Control
 
@@ -1107,7 +1111,7 @@ npm run build
     *   **2단계**: 3초 후 화면에 글리치(Glitch) 효과 발생하며 텍스트 변조 ("해당 기록은 존재합니다")
     *   **3단계**: '삭제된 기록 보기' 버튼 활성화
 3.  **모드 전환**:
-    *   버튼 클릭 시 화면 전체가 찢어지는 듯한 붉은 노이즈 효과와 함께 **세광지부 인트라넷**으로 강제 리다이렉트 (`/bureau/segwang`)
+    *   버튼 클릭 시 화면 전체가 찢어지는 듯한 붉은 노이즈 효과와 함께 **메인 대시보드**로 강제 리다이렉트 (`/`)
     *   브라우저 히스토리가 조작되어 뒤로가기 시 일반 모드로 복귀
 
 
