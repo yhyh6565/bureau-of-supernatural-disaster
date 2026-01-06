@@ -29,7 +29,7 @@
     "receiverId": "haegeum",
     "title": "팀 공용 장비 점검 요청",
     "content": "안녕하십니까, 해금 팀장님. 총무팀 장비관리 담당입니다. 출동구조반3팀 공용 장비에 대한 정기 점검 시기가 도래하여 연락드립니다. 바쁘시겠지만 편하신 시간에 장비 점검 협조 부탁드리겠습니다.",
-    "createdAt": "2026-01-04T01:57:42.375Z",
+    "createdAt": "2026-01-04T03:37:26.782Z",
     "isRead": false
   },
   {
@@ -40,7 +40,7 @@
     "receiverId": "haegeum",
     "title": "팀원 근태 관리 안내",
     "content": "해금 팀장님, 금주 팀원 근태 마감 관련 안내드립니다. 전산 상 미처리된 건이 있는지 확인 바랍니다.",
-    "createdAt": "2026-01-05T01:57:42.375Z",
+    "createdAt": "2026-01-05T03:37:26.782Z",
     "isRead": true
   },
   {
@@ -51,7 +51,7 @@
     "receiverId": "haegeum",
     "title": "보안 등급 재설정 완료",
     "content": "요청하신 출동구조반3팀 작전 구역 보안 등급이 재설정되었습니다. 금일부터 적용됩니다.",
-    "createdAt": "2026-01-03T01:57:42.375Z",
+    "createdAt": "2026-01-03T03:37:26.782Z",
     "isRead": true
   },
   {
@@ -62,7 +62,62 @@
     "receiverId": "haegeum",
     "title": "4/4분기 예산 집행 내역 송부",
     "content": "안녕하십니까. 요청하신 4/4분기 팀 운영비 집행 내역 엑셀 파일을 송부드립니다. 확인 후 이상 있으시면 연락주세요.",
-    "createdAt": "2025-12-30T01:57:42.375Z",
+    "createdAt": "2025-12-30T03:37:26.782Z",
     "isRead": true
+  },
+  {
+    "id": "msg-sent-park-01",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "언니. 잘 자나? 갑자기 생각나서.",
+    "createdAt": "2025-04-12T23:30:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-sent-park-02",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "보고 싶네.",
+    "createdAt": "2025-06-25T01:15:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-sent-park-03",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "오늘 달이 참 밝다. 같이 봤으면 좋았을 텐데.",
+    "createdAt": "2025-08-15T22:45:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-sent-park-04",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "별일 없지?",
+    "createdAt": "2025-10-02T00:10:00",
+    "isRead": false
+  },
+  {
+    "id": "msg-sent-park-05",
+    "senderId": "haegeum",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반3팀",
+    "receiverId": "parkhonglim",
+    "title": "홍 언니",
+    "content": "홍 언니. 꿈에 나왔어. 얼굴 보니까 좋더라.",
+    "createdAt": "2025-11-20T23:55:00",
+    "isRead": false
   }
 ]
