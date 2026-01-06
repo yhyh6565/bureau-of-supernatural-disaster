@@ -27,7 +27,8 @@ dist-ssr
 QA_reports/
 
 # Generated data (from templates)
-src/data/
+# Note: Using src/data/* instead of src/data/ to allow negation patterns to work
+src/data/*
 !src/data/segwang/
 !src/data/ordinary/
 !src/data/global/
