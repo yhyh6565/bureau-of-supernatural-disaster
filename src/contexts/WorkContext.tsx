@@ -139,20 +139,14 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         if (!agent) return [];
 
         // Use Saekwang data if in Saekwang mode
-        let baseSchedules: Schedule[];
-        if (mode === 'segwang') {
-            baseSchedules = (segwangSchedules as any[]).map(s => ({
-                ...s,
-                date: new Date(s.date)
-            })) as Schedule[];
-        } else {
-            baseSchedules = DataManager.getSchedules(agent);
-        }
+        const baseSchedules = mode === 'segwang'
+            ? (segwangSchedules as any[]).map(s => ({ ...s, date: new Date(s.date) })) as Schedule[]
+            : DataManager.getSchedules(agent);
 
         const base = baseSchedules.filter(s => {
             // Filter out administrative submission logs (e.g., "Application Submitted", "Approval")
             // User wants to see only the actual scheduled events (Target Date), not the request submission dates.
-            return !s.title.endsWith('신청 건') && s.type !== '결재마감';
+            return !s.title.endsWith('신청 건') && s.type !== '결재';
         });
 
         // Dynamic Schedules from Assigned Incidents (using processedIncidents)
@@ -190,19 +184,16 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         if (!agent) return [];
 
         // Use Saekwang data if in Saekwang mode
-        let base: ApprovalDocument[];
-        if (mode === 'segwang') {
-            base = (segwangApprovals as any[]).map(a => ({
-                ...a,
-                createdAt: new Date(a.createdAt),
-                createdBy: 'segwang',
-                createdByName: '세광 아카이브',
-                approver: 'segwang',
-                approverName: '세광 아카이브',
-            })) as ApprovalDocument[];
-        } else {
-            base = DataManager.getApprovals(agent);
-        }
+        const base = mode === 'segwang'
+            ? (segwangApprovals as any[]).map(doc => ({
+                ...doc,
+                createdByName: 'Unknown',
+                approverName: 'Unknown',
+                createdBy: 'unknown-id',
+                approver: 'admin-id',
+                createdAt: new Date(doc.createdAt)
+            })) as ApprovalDocument[]
+            : DataManager.getApprovals(agent);
 
         return [...sessionApprovals, ...base];
     }, [agent, sessionApprovals, mode]);

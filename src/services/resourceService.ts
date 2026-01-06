@@ -37,6 +37,5 @@ export const calculateAvailableStock = (
         )
         .reduce((sum, r) => sum + (r.quantity || 1), 0);
 
-    const stock = item.availableStock ?? 0;
-    return Math.max(0, stock - myRentalCount);
+    return Math.max(0, (item.totalStock ?? 100) - myRentalCount);
 };

@@ -97,7 +97,8 @@
     "reportContent": "조수석의 귀신 현상. 민간인 구출 완료 후 현장 정리(귀신 이송) 요원 배정 중.",
     "requiresPatrol": true,
     "createdAt": "2026-01-19T00:00:00",
-    "updatedAt": "2026-01-01T03:00:00"
+    "updatedAt": "2026-01-01T03:00:00",
+    "manualId": "man-taxi-001"
   },
   {
     "id": "inc-003",

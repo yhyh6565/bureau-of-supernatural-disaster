@@ -156,7 +156,7 @@ export interface Equipment {
   requiresApproval: boolean;
   description: string;
   type?: '탐지' | '제압' | '방어' | '은신' | '특수';
-  availableStock?: number; // 가용 재고
+  totalStock?: number; // [NEW] 총 재고 수량
   // imageEmoji removed
 }
 
