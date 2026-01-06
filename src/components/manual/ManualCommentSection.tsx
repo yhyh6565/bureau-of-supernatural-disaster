@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ManualComment, DEFAULT_MANUAL_COMMENTS } from '@/data/global/manualComments';
+import { type ManualComment, DEFAULT_MANUAL_COMMENTS } from '@/data/global/manualComments';
 import { ManualStorage } from '@/utils/manualStorage';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

@@ -139,14 +139,20 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         if (!agent) return [];
 
         // Use Saekwang data if in Saekwang mode
-        const baseSchedules = mode === 'segwang'
-            ? segwangSchedules as Schedule[]
-            : DataManager.getSchedules(agent);
+        let baseSchedules: Schedule[];
+        if (mode === 'segwang') {
+            baseSchedules = (segwangSchedules as any[]).map(s => ({
+                ...s,
+                date: new Date(s.date)
+            })) as Schedule[];
+        } else {
+            baseSchedules = DataManager.getSchedules(agent);
+        }
 
         const base = baseSchedules.filter(s => {
             // Filter out administrative submission logs (e.g., "Application Submitted", "Approval")
             // User wants to see only the actual scheduled events (Target Date), not the request submission dates.
-            return !s.title.endsWith('신청 건') && s.type !== '결재';
+            return !s.title.endsWith('신청 건') && s.type !== '결재마감';
         });
 
         // Dynamic Schedules from Assigned Incidents (using processedIncidents)
@@ -184,9 +190,19 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         if (!agent) return [];
 
         // Use Saekwang data if in Saekwang mode
-        const base = mode === 'segwang'
-            ? segwangApprovals as ApprovalDocument[]
-            : DataManager.getApprovals(agent);
+        let base: ApprovalDocument[];
+        if (mode === 'segwang') {
+            base = (segwangApprovals as any[]).map(a => ({
+                ...a,
+                createdAt: new Date(a.createdAt),
+                createdBy: 'segwang',
+                createdByName: '세광 아카이브',
+                approver: 'segwang',
+                approverName: '세광 아카이브',
+            })) as ApprovalDocument[];
+        } else {
+            base = DataManager.getApprovals(agent);
+        }
 
         return [...sessionApprovals, ...base];
     }, [agent, sessionApprovals, mode]);

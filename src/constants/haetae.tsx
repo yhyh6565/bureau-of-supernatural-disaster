@@ -165,6 +165,8 @@ export const STATUS_STYLE: Record<IncidentStatus, {
     '정리중': { bgClass: 'bg-jujak/80', textClass: 'text-jujak-foreground' },
     '종결': { bgClass: 'bg-success', textClass: 'text-success-foreground' },
     '봉인': { bgClass: 'bg-abyssal', textClass: 'text-abyssal-foreground' },
+    '격리중': { bgClass: 'bg-warning', textClass: 'text-warning-foreground' },
+    '관찰중': { bgClass: 'bg-muted', textClass: 'text-muted-foreground' },
 };
 
 // 공지사항 긴급도별 스타일
