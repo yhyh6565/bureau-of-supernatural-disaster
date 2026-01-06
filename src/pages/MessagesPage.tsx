@@ -154,13 +154,25 @@ export function MessagesPage() {
               </TabsTrigger>
             </TabsList>
 
+            <Button
+              className="gap-1.5 bg-blue-900 hover:bg-blue-800 text-white h-[calc(1.75rem+2px)] px-3 text-xs shrink-0"
+              onClick={() => {
+                if (mode === 'segwang') {
+                  toast({
+                    title: '전송 실패',
+                    description: '현재 네트워크 상태가 불안정하여 쪽지를 보낼 수 없습니다.',
+                    variant: 'destructive',
+                  });
+                  return;
+                }
+                setIsComposeOpen(true);
+              }}
+            >
+              <PenLine className="w-3.5 h-3.5" />
+              쪽지 쓰기
+            </Button>
+
             <Dialog open={isComposeOpen} onOpenChange={setIsComposeOpen}>
-              <DialogTrigger asChild>
-                <Button className="gap-1.5 bg-blue-900 hover:bg-blue-800 text-white h-[calc(1.75rem+2px)] px-3 text-xs shrink-0">
-                  <PenLine className="w-3.5 h-3.5" />
-                  쪽지 쓰기
-                </Button>
-              </DialogTrigger>
               <DialogContent className="max-w-lg">
                 <DialogHeader>
                   <DialogTitle>새 쪽지 작성</DialogTitle>

@@ -294,7 +294,7 @@ export const segwangInbox: Message[] = [
 export const segwangSent: Message[] = [
     {
         id: 'msg-out-final',
-        receiverId: 'everyone',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -305,7 +305,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-16',
-        receiverId: 'segwang-hyeonmu2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -316,7 +316,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-15',
-        receiverId: 'seoul-hq',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -327,7 +327,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-14',
-        receiverId: 'segwang-jujak2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -338,7 +338,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-13',
-        receiverId: 'seoul-hyeonmu1',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -349,7 +349,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-12',
-        receiverId: 'segwang-hyeonmu2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -360,7 +360,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-11',
-        receiverId: 'seoul-info',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -371,7 +371,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-10',
-        receiverId: 'incheon-night',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -382,7 +382,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-09',
-        receiverId: 'segwang-baekho2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -393,7 +393,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-08',
-        receiverId: 'seoul-hq',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -404,7 +404,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-07',
-        receiverId: 'segwang-hyeonmu2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -415,7 +415,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-06',
-        receiverId: 'seoul-hq',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -426,7 +426,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-05',
-        receiverId: 'segwang-hyeonmu2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -437,7 +437,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-04',
-        receiverId: 'segwang-baekho1-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -448,7 +448,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-03',
-        receiverId: 'gangwon-night',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -459,7 +459,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-02',
-        receiverId: 'seoul-hyeonmu1',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -470,7 +470,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-01',
-        receiverId: 'segwang-jujak1-1',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
@@ -481,7 +481,7 @@ export const segwangSent: Message[] = [
     },
     {
         id: 'msg-out-00',
-        receiverId: 'segwang-hyeonmu2-2',
+        receiverId: '■■■',
         senderName: '나',
         senderId: 'user',
         senderDepartment: '본부',
