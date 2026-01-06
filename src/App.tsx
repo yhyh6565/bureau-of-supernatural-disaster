@@ -8,6 +8,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import { ResourceProvider } from "@/contexts/ResourceContext";
 import { InteractionProvider } from "@/contexts/InteractionContext";
 import { WorkProvider } from "@/contexts/WorkContext";
+import { BureauProvider } from "@/contexts/BureauContext";
 import { LoginPage } from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
 import MyPage from "@/pages/MyPage";
@@ -18,6 +19,7 @@ import ResourcesPage from "@/pages/ResourcesPage";
 import ApprovalsPage from "@/pages/ApprovalsPage";
 import TasksPage from "@/pages/TasksPage";
 import IncidentsPage from "@/pages/IncidentsPage";
+import ManualsPage from "@/pages/ManualsPage";
 import NotFound from "./pages/NotFound";
 import { ContaminationGameOver } from "@/components/common/ContaminationGameOver";
 
@@ -48,6 +50,7 @@ function AppRoutes() {
       <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
       <Route path="/approvals" element={<ProtectedRoute><ApprovalsPage /></ProtectedRoute>} />
       <Route path="/tasks" element={<ProtectedRoute><TasksPage /></ProtectedRoute>} />
+      <Route path="/manuals" element={<ProtectedRoute><ManualsPage /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
@@ -60,16 +63,18 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <AuthProvider>
-          <UserProvider>
-            <ResourceProvider>
-              <InteractionProvider>
-                <WorkProvider>
-                  <ContaminationGameOver />
-                  <AppRoutes />
-                </WorkProvider>
-              </InteractionProvider>
-            </ResourceProvider>
-          </UserProvider>
+          <BureauProvider>
+            <UserProvider>
+              <ResourceProvider>
+                <InteractionProvider>
+                  <WorkProvider>
+                    <ContaminationGameOver />
+                    <AppRoutes />
+                  </WorkProvider>
+                </InteractionProvider>
+              </ResourceProvider>
+            </UserProvider>
+          </BureauProvider>
         </AuthProvider>
       </HashRouter>
     </TooltipProvider>

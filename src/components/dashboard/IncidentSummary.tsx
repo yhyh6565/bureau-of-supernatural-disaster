@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWork } from '@/contexts/WorkContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 import { STATUS_STYLE } from '@/constants/haetae';
@@ -16,14 +17,23 @@ export function IncidentSummary() {
     const navigate = useNavigate();
     const incidents = processedIncidents;
 
+    const { mode } = useBureau();
+
     // 상태별 카운트 계산
     const statusCounts = STATUS_ORDER.reduce((acc, status) => {
         acc[status] = incidents.filter(inc => inc.status === status).length;
         return acc;
     }, {} as Record<IncidentStatus, number>);
 
-    // 진행 중인 재난 수 (종결/봉인 제외)
-    const activeCount = incidents.filter(inc => inc.status !== '종결' && inc.status !== '봉인').length;
+    // 진행 중인 재난 수 (종결 제외. 단, 일반 모드에서는 봉인도 제외)
+    // 세광 모드: '종결'과 '봉인'을 모두 포함하여 전체 재난 수 표시 (이스터에그 기록용)
+    const activeCount = incidents.filter(inc => {
+        if (mode === 'segwang') return true;
+
+        if (inc.status === '종결') return false;
+        if (inc.status === '봉인') return false;
+        return true;
+    }).length;
 
     return (
         <Card className="card-gov">

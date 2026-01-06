@@ -4,7 +4,7 @@ export type Department = 'baekho' | 'hyunmu' | 'jujak';
 
 export type AgentStatus = '정상' | '부상' | '오염' | '실종' | '사망' | '퇴사' | '휴직';
 
-export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결' | '봉인';
+export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조중' | '정리대기' | '정리중' | '종결' | '봉인' | '격리중' | '관찰중';
 
 // 재난 등급 체계 (형刑 시스템)
 export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형' | '소형' | '등급불명';

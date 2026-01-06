@@ -7,18 +7,22 @@ import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
+import { useBureau } from '@/contexts/BureauContext';
+import { segwangNotices } from '@/data/segwang/notices';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { ArrowLeft, Calendar, Building2, User, Pin } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { formatSegwangDate } from '@/utils/dateUtils';
 
 export function NoticeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { agent } = useAuth();
   const { markAsRead } = useInteraction();
+  const { mode } = useBureau();
 
-  const notifications = DataManager.getNotifications(agent);
+  const notifications = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
   const notice = notifications.find(n => n.id === id);
 
   useEffect(() => {
@@ -110,7 +114,7 @@ export function NoticeDetailPage() {
               <div>
                 <div className="text-xs text-muted-foreground">등록일</div>
                 <div className="font-medium">
-                  {format(new Date(notice.createdAt), 'yyyy년 MM월 dd일 HH:mm', { locale: ko })}
+                  {formatSegwangDate(notice.createdAt, 'yyyy년 MM월 dd일 HH:mm', mode === 'segwang')}
                 </div>
               </div>
             </div>

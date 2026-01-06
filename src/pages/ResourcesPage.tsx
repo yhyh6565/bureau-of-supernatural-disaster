@@ -65,12 +65,20 @@ import { cn } from '@/lib/utils';
 import { InspectionForm, parseOperatingHours, getOrCreateReservedSlots } from '@/components/resources';
 import { Calendar } from '@/components/ui/calendar';
 
+import { CensoredResourcesPage } from '@/components/segwang/CensoredResourcesPage';
+import { useBureau } from '@/contexts/BureauContext';
+
 export function ResourcesPage() {
     const { agent } = useAuth();
     const { addRental } = useResource();
     const resourceContext = useResource();
     const { addVisitSchedule, addApproval, addInspectionRequest, inspectionRequests } = useWork();
     const { decreaseContamination } = useUser();
+    const { mode } = useBureau();
+
+    if (mode === 'segwang') {
+        return <CensoredResourcesPage />;
+    }
 
     // Tabs
     const [activeTab, setActiveTab] = useState('equipment');

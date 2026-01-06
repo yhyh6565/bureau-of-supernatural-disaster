@@ -22,8 +22,8 @@
     "createdByName": "me",
     "approver": "agent-admin-002",
     "approverName": "총무",
-    "createdAt": "2026-01-03T07:38:08.947Z",
-    "processedAt": "2026-01-03T07:38:08.947Z"
+    "createdAt": "2026-01-04T03:37:26.782Z",
+    "processedAt": "2026-01-04T03:37:26.782Z"
   },
   {
     "id": "appr-007",
@@ -48,7 +48,7 @@
     "createdByName": "me",
     "approver": "agent-admin-003",
     "approverName": "경영지원",
-    "createdAt": "2026-01-02T07:38:08.947Z",
+    "createdAt": "2026-01-03T03:37:26.782Z",
     "rejectReason": "운전 연수 다시 받고 오세요."
   },
   {
@@ -61,7 +61,7 @@
     "createdByName": "me",
     "approver": "agent-team-lead",
     "approverName": "팀장",
-    "createdAt": "2025-12-31T07:38:08.947Z",
-    "processedAt": "2025-12-31T07:38:08.947Z"
+    "createdAt": "2026-01-01T03:37:26.782Z",
+    "processedAt": "2026-01-01T03:37:26.782Z"
   }
 ]

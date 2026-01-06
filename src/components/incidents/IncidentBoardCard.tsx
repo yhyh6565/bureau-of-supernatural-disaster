@@ -1,8 +1,8 @@
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { MapPin, Clock, BookOpen } from 'lucide-react';
-import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { formatSegwangDate } from '@/utils/dateUtils';
+import { useBureau } from '@/contexts/BureauContext';
 
 interface IncidentBoardCardProps {
     incident: Incident;
@@ -12,6 +12,7 @@ interface IncidentBoardCardProps {
 }
 
 export function IncidentBoardCard({ incident, onClick, onManualClick, isHighlighted }: IncidentBoardCardProps) {
+    const { mode } = useBureau();
     const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' };
 
     return (
@@ -45,12 +46,12 @@ export function IncidentBoardCard({ incident, onClick, onManualClick, isHighligh
 
             {/* 하단: 매뉴얼 여부 + 날짜 */}
             <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
-                {incident.manualId ? (
+                {incident.manualId && onManualClick ? (
                     <button
                         className="flex items-center gap-1 text-[10px] text-primary hover:underline cursor-pointer"
                         onClick={(e) => {
                             e.stopPropagation();
-                            onManualClick?.(incident.manualId!);
+                            onManualClick(incident.manualId!);
                         }}
                     >
                         <BookOpen className="w-3 h-3" />
@@ -61,7 +62,7 @@ export function IncidentBoardCard({ incident, onClick, onManualClick, isHighligh
                 )}
                 <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
                     <Clock className="w-3 h-3" />
-                    <span>{format(new Date(incident.createdAt), 'M/d', { locale: ko })}</span>
+                    <span>{formatSegwangDate(incident.createdAt, 'M/d', mode === 'segwang')}</span>
                 </div>
             </div>
         </div>

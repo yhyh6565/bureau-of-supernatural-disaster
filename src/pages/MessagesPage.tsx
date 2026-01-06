@@ -10,13 +10,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Message } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { Mail, Send, Inbox, ArrowLeft, Reply, User, MoreHorizontal, PenLine } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
 import { getPersonaName } from '@/constants/haetae';
 import { useInteraction } from '@/contexts/InteractionContext';
-import { safeFormatDate } from '@/utils/dateUtils';
+import { safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
   Dialog,
   DialogContent,
@@ -26,23 +27,36 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 
+// Import Saekwang messages
+// Import Saekwang messages
+import { segwangInbox, segwangSent } from '@/data/segwang/messages';
+
 
 export function MessagesPage() {
   const { agent } = useAuth();
+  const { mode } = useBureau();
   const { sessionMessages, sendMessage } = useInteraction();
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [newMessage, setNewMessage] = useState({ recipient: '', title: '', content: '' });
 
-  // DataManager를 통해 메시지 로드 + 세션 메시지 병합
-  const ALL_MESSAGES = [...DataManager.getMessages(agent), ...sessionMessages];
+  // DataManager를 통해 메시지 로드 (또는 세광 데이터) + 세션 메시지 병합
+  const baseMessages = mode === 'segwang'
+    ? [...segwangInbox, ...segwangSent]
+    : DataManager.getMessages(agent);
 
-  const receivedMessages = ALL_MESSAGES.filter(m =>
-    m.receiverId === agent?.personaKey || m.receiverId === agent?.id || m.receiverId === 'me'
-  ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const ALL_MESSAGES = [...baseMessages, ...sessionMessages];
 
-  const sentMessages = ALL_MESSAGES.filter(m => m.senderId === agent?.personaKey || m.senderId === agent?.id)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const receivedMessages = ALL_MESSAGES.filter(m => {
+    const isMe = m.receiverId === agent?.personaKey || m.receiverId === agent?.id || m.receiverId === 'me';
+    return isMe || (mode === 'segwang' && m.receiverId === 'user');
+  }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const sentMessages = ALL_MESSAGES.filter(m => {
+    const isMe = m.senderId === agent?.personaKey || m.senderId === agent?.id;
+    return isMe || (mode === 'segwang' && m.senderId === 'user');
+  }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
   const unreadCount = receivedMessages.filter(m => !m.isRead).length;
 
   const handleSendMessage = () => {
@@ -87,7 +101,7 @@ export function MessagesPage() {
                   <span>발신: {selectedMessage.senderName} ({selectedMessage.senderDepartment})</span>
                 </div>
                 <span>|</span>
-                <span>{selectedMessage.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(selectedMessage.createdAt, 'yyyy.MM.dd HH:mm')}</span>
+                {selectedMessage.id === 'msg-haunted-001' ? '20■■.05.04' : formatSegwangDate(selectedMessage.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
               </div>
             </div>
           </div>
@@ -224,7 +238,7 @@ export function MessagesPage() {
                               </div>
                             </div>
                             <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
-                              {message.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                              {message.id === 'msg-haunted-001' ? '20■■.05.04' : formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
                             </span>
                           </div>
                         </div>
@@ -247,7 +261,7 @@ export function MessagesPage() {
                           </div>
 
                           <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
-                            {message.id === 'msg-haunted-001' ? '20■■.05.04' : safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                            {message.id === 'msg-haunted-001' ? '20■■.05.04' : formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
                           </div>
                         </div>
                       </div>
@@ -289,7 +303,7 @@ export function MessagesPage() {
                               </div>
                             </div>
                             <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
-                              {safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                              {formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
                             </span>
                           </div>
                         </div>
@@ -307,7 +321,7 @@ export function MessagesPage() {
                           </div>
 
                           <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
-                            {safeFormatDate(message.createdAt, 'yyyy.MM.dd')}
+                            {formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
                           </div>
                         </div>
                       </div>

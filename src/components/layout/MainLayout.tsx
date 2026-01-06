@@ -1,6 +1,10 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { GNBHeader } from './GNBHeader';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBureau } from '@/contexts/BureauContext';
+import { ExitConfirmModal } from '@/components/segwang/ExitConfirmModal';
+import { Button } from '@/components/ui/button';
+import { Power } from 'lucide-react';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -8,6 +12,13 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const { agent } = useAuth();
+  const { mode, setMode } = useBureau();
+  const [showExitModal, setShowExitModal] = useState(false);
+
+  const handleExitSaekwang = () => {
+    setMode('ordinary');
+    setShowExitModal(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -29,16 +40,50 @@ export function MainLayout({ children }: MainLayoutProps) {
       </main>
 
       {/* 하단 정보 바 */}
-      <footer className="fixed bottom-0 left-0 right-0 h-8 bg-muted border-t border-border px-4 flex items-center justify-between text-xs text-muted-foreground z-50">
+      <footer className={`fixed bottom-0 left-0 right-0 h-8 border-t px-4 flex items-center justify-between text-xs z-50 ${
+        mode === 'segwang'
+          ? 'bg-red-950/30 border-red-900 text-red-500 font-mono'
+          : 'bg-muted border-border text-muted-foreground'
+      }`}>
         <div className="flex items-center gap-4">
-          <span>접속자: {agent?.name}</span>
-          <span className="font-mono">{new Date().toLocaleDateString('ko-KR')}</span>
+          {mode === 'segwang' ? (
+            <>
+              <span className="font-bold">세광특별시 지부</span>
+              <span className="font-mono opacity-70">마지막 백업: 20██.05.04 23:47</span>
+            </>
+          ) : (
+            <>
+              <span>접속자: {agent?.name}</span>
+              <span className="font-mono">{new Date().toLocaleDateString('ko-KR')}</span>
+            </>
+          )}
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
-          <span>시스템 정상</span>
+          {mode === 'segwang' ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 px-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-950/50"
+              onClick={() => setShowExitModal(true)}
+            >
+              <Power className="w-3 h-3 mr-1" />
+              접속 종료
+            </Button>
+          ) : (
+            <>
+              <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
+              <span>시스템 정상</span>
+            </>
+          )}
         </div>
       </footer>
+
+      {/* 세광 모드 종료 확인 모달 */}
+      <ExitConfirmModal
+        isOpen={showExitModal}
+        onClose={() => setShowExitModal(false)}
+        onConfirm={handleExitSaekwang}
+      />
     </div>
   );
 }

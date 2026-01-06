@@ -2,10 +2,18 @@ import React, { createContext, useContext, useMemo, ReactNode, useEffect } from 
 import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { DataManager } from '@/data/dataManager';
 import * as approvalService from '@/services/approvalService';
 import * as scheduleService from '@/services/scheduleService';
 import { usePersistentState } from '@/hooks/usePersistentState';
+
+// Import Saekwang data
+import { segwangIncidents } from '@/data/segwang/incidents';
+import { segwangInbox } from '@/data/segwang/messages';
+import { segwangNotices } from '@/data/segwang/notices';
+import segwangSchedules from '@/data/segwang/schedules.json';
+import segwangApprovals from '@/data/segwang/approvals.json';
 
 interface WorkContextType {
     schedules: Schedule[];
@@ -65,6 +73,7 @@ const parseInspections = (data: any[]): InspectionRequest[] => {
 export function WorkProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuth();
     const { triggeredIds } = useInteraction();
+    const { mode } = useBureau();
 
     // Persistent Session State (New items added during session)
     const [sessionSchedules, setSessionSchedules] = usePersistentState<Schedule[]>(
@@ -103,7 +112,11 @@ export function WorkProvider({ children }: { children: ReactNode }) {
     // Derived State: Unified Incident Data (Single Source of Truth)
     const processedIncidents = useMemo(() => {
         if (!agent) return [];
-        const baseIncidents = DataManager.getIncidents(agent);
+
+        // Use Saekwang data if in Saekwang mode
+        const baseIncidents = mode === 'segwang'
+            ? segwangIncidents
+            : DataManager.getIncidents(agent);
 
         return baseIncidents
             .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Filter hidden triggers (Easter Eggs)
@@ -119,12 +132,18 @@ export function WorkProvider({ children }: { children: ReactNode }) {
                 }
                 return inc;
             }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    }, [agent, acceptedIncidentIds, triggeredIds]);
+    }, [agent, acceptedIncidentIds, triggeredIds, mode]);
 
     // Derived State: Combine Base Data (from DataManager) + Session Data
     const schedules = useMemo(() => {
         if (!agent) return [];
-        const base = DataManager.getSchedules(agent).filter(s => {
+
+        // Use Saekwang data if in Saekwang mode
+        const baseSchedules = mode === 'segwang'
+            ? segwangSchedules as Schedule[]
+            : DataManager.getSchedules(agent);
+
+        const base = baseSchedules.filter(s => {
             // Filter out administrative submission logs (e.g., "Application Submitted", "Approval")
             // User wants to see only the actual scheduled events (Target Date), not the request submission dates.
             return !s.title.endsWith('신청 건') && s.type !== '결재';
@@ -159,13 +178,18 @@ export function WorkProvider({ children }: { children: ReactNode }) {
         });
 
         return [...base, ...sessionSchedules, ...incidentSchedules];
-    }, [agent, sessionSchedules, processedIncidents]);
+    }, [agent, sessionSchedules, processedIncidents, mode]);
 
     const approvals = useMemo(() => {
         if (!agent) return [];
-        const base = DataManager.getApprovals(agent);
+
+        // Use Saekwang data if in Saekwang mode
+        const base = mode === 'segwang'
+            ? segwangApprovals as ApprovalDocument[]
+            : DataManager.getApprovals(agent);
+
         return [...sessionApprovals, ...base];
-    }, [agent, sessionApprovals]);
+    }, [agent, sessionApprovals, mode]);
 
     const inspectionRequests = useMemo(() => {
         if (!agent) return [];

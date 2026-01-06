@@ -411,6 +411,29 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 
 기존의 '장비'와 '방문' 페이지가 통합된 **업무지원** 페이지에서 처리합니다.
 
+### 4. Manuals Page (재난 매뉴얼)
+- **Overview**: A dedicated page ("archive") for viewing disaster manuals in a "public enterprise document" style.
+- **Access**:
+  - GNB Menu: "재난 매뉴얼"
+  - URL: `/manuals` (List), `/manuals/:id` (Detail)
+- **Features**:
+  - **List View**: Table or card list of all available manuals.
+  - **Detail View**: Full-page view of the manual content (reusing the structure from the modal).
+  - **Highlight & Note System**:
+    - Users can select text within the manual.
+    - Context menu appears: "Highlight" (Default Yellow), "Note".
+    - Highlights are persisted (LocalStorage).
+    - Clicking a highlight shows the user's note.
+- **Design Concept**:
+  - "Public Enterprise / Government" aesthetic (tables, stiff fonts, gray/white theme).
+  - Mobile-friendly text selection.
+
+### 5. Security & Access Control
+
+**구분 로직**:
+- **일반 대여**: [신청] 버튼 즉시 활성화
+- **고위급 장비**: [결재 요청] 버튼 활성화 → 팀장 이상 결재 필수
+
 ### 1) 장비 대여 신청 (Asset Rental)
 
 **구분 로직**:
@@ -1071,6 +1094,22 @@ npm run build
 #### 2) 요원명 랜덤 부여 (Random Codename)
 *   **대상**: 일반 유저 (랜덤 생성된 요원)
 *   **로직**: 기존의 영문+숫자 조합(BKH-XX) 대신, **['유리', '살구', '새솔', '자라']** 중 하나의 순한글 단어가 무작위로 코드명으로 부여됨.
+
+### 8.6 세광지부 인트라넷 이스터에그 (Hidden Intranet) - [NEW v2.2.3]
+
+**개요**: 20██년 5월 4일 멸형급 재난으로 소멸한 '세광특별시 지부'의 마지막 날 기록을 열람할 수 있는 숨겨진 모드입니다.
+
+**진입 방법 (Entry Process)**:
+1.  **검색어 입력**: 재난 현황 페이지(`IncidentsPage`, `/incidents`)의 검색창에 특정 키워드 입력
+    *   **트리거 키워드**: `'세광'`, `'세광시'`, `'세광특별시'`, `'saekwang'`, `'sk'`
+2.  **경고 모달 발생 (Trigger Modal)**:
+    *   **1단계**: 시스템 경고 팝업 ("접근 제한 구역", "검색 결과 0건")
+    *   **2단계**: 3초 후 화면에 글리치(Glitch) 효과 발생하며 텍스트 변조 ("해당 기록은 존재합니다")
+    *   **3단계**: '삭제된 기록 보기' 버튼 활성화
+3.  **모드 전환**:
+    *   버튼 클릭 시 화면 전체가 찢어지는 듯한 붉은 노이즈 효과와 함께 **세광지부 인트라넷**으로 강제 리다이렉트 (`/bureau/segwang`)
+    *   브라우저 히스토리가 조작되어 뒤로가기 시 일반 모드로 복귀
+
 
 ### Footer 메시지
 모든 페이지 하단에 표시:

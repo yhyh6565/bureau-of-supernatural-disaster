@@ -3,15 +3,19 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { IncidentSummary } from '@/components/dashboard/IncidentSummary';
 import { MyAssignments } from '@/components/dashboard/MyAssignments';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { DisasterTicker } from '@/components/dashboard/DisasterTicker';
 import { PersonalInfoWidget } from '@/components/dashboard/PersonalInfoWidget';
 import { AdminAlertWidget } from '@/components/dashboard/AdminAlertWidget';
 import { MiniWeeklySchedule } from '@/components/dashboard/MiniWeeklySchedule';
+import { WarningBanner } from '@/components/segwang/WarningBanner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { SegwangTimelineLog } from '@/components/segwang/SegwangTimelineLog';
 
 export function Dashboard() {
   const { agent } = useAuth();
+  const { mode } = useBureau();
   const [isLoading, setIsLoading] = useState(true);
 
   // 초기 로딩 시뮬레이션
@@ -28,6 +32,9 @@ export function Dashboard() {
     <MainLayout>
       <div className="flex flex-col gap-4 pb-12">
         <h1 className="sr-only">대시보드</h1>
+
+        {/* 세광 모드일 때만 경고 배너 표시 */}
+        {mode === 'segwang' && <WarningBanner />}
 
         {/* 상단: 재난 경보 티커 */}
         {isLoading ? (
@@ -98,7 +105,7 @@ export function Dashboard() {
               {/* 좌측: 주요 일정 (4) */}
               {/* Mobile: 1st, Tablet: 1st (Col 1-6), Desktop: 1st (Col 1-3) */}
               <div className="md:col-span-6 lg:col-span-3 order-1">
-                <MiniWeeklySchedule />
+                {mode === 'segwang' ? <SegwangTimelineLog /> : <MiniWeeklySchedule />}
               </div>
 
               {/* 중앙: 배정 업무 + 재난 현황 (5) */}

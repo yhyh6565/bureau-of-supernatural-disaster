@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUser } from '@/contexts/UserContext';
 import { useResource } from '@/contexts/ResourceContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { User, Brain, Briefcase, Package } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
@@ -10,6 +11,7 @@ export function PersonalInfoWidget() {
     const { agent } = useAuth();
     const { contamination } = useUser();
     const { rentals } = useResource();
+    const { mode } = useBureau();
 
     if (!agent) return null;
 
@@ -24,6 +26,12 @@ export function PersonalInfoWidget() {
 
     const contaminationColor = getContaminationColor(contamination);
 
+    const censorText = (text: string | number) => {
+        if (mode !== 'segwang') return text;
+        const str = String(text);
+        return '■'.repeat(str.length);
+    };
+
     return (
         <Card className="card-gov h-fit">
             <CardHeader className="pt-3 md:pt-6 pb-1.5 md:pb-3">
@@ -37,11 +45,11 @@ export function PersonalInfoWidget() {
                 <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-0.5">
                         <span className="text-[10px] text-muted-foreground uppercase">이름</span>
-                        <p className="text-sm font-medium">{agent.name}</p>
+                        <p className="text-sm font-medium">{censorText(agent.name)}</p>
                     </div>
                     <div className="space-y-0.5">
                         <span className="text-[10px] text-muted-foreground uppercase">요원명</span>
-                        <p className="text-sm font-bold text-primary">{agent.codename}</p>
+                        <p className="text-sm font-bold text-primary">{censorText(agent.codename)}</p>
                     </div>
                 </div>
 
@@ -51,12 +59,12 @@ export function PersonalInfoWidget() {
                         <span className="text-[10px] text-muted-foreground uppercase">소속</span>
                         <div className="flex items-center gap-1">
                             <deptInfo.icon className="w-3 h-3" />
-                            <p className="text-sm">{deptInfo.name}</p>
+                            <p className="text-sm">{censorText(deptInfo.name)}</p>
                         </div>
                     </div>
                     <div className="space-y-0.5">
                         <span className="text-[10px] text-muted-foreground uppercase">근무상태</span>
-                        <p className="text-sm">{agent.status}</p>
+                        <p className="text-sm">{censorText(agent.status)}</p>
                     </div>
                 </div>
 
@@ -68,7 +76,7 @@ export function PersonalInfoWidget() {
                             정신오염도
                         </span>
                         <span className={`text-sm font-mono font-bold ${contaminationColor}`}>
-                            {contamination}%
+                            {censorText(`${contamination}%`)}
                         </span>
                     </div>
                     <Progress value={contamination} className="h-1.5"

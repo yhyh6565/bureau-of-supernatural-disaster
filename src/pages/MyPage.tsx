@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUser } from '@/contexts/UserContext';
 import { useResource } from '@/contexts/ResourceContext';
+import { useBureau } from '@/contexts/BureauContext';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
 import { User, Phone, Shield, Heart, AlertTriangle, Package, Calendar, Brain, Hash } from 'lucide-react';
@@ -28,6 +29,7 @@ export function MyPage() {
   const { agent } = useAuth();
   const { contamination } = useUser();
   const { rentals } = useResource();
+  const { mode } = useBureau();
   const [selectedFuneral, setSelectedFuneral] = useState('funeral-001');
   const [currentFuneral, setCurrentFuneral] = useState('화장');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -35,6 +37,19 @@ export function MyPage() {
   if (!agent) return null;
 
   const deptInfo = DEPARTMENT_INFO[agent.department];
+
+  const isSegwang = mode === 'segwang';
+  const redact = (text: string) => text.split('').map(() => '■').join('');
+
+  const displayName = isSegwang ? redact(agent.name) : agent.name;
+  const displayCodename = isSegwang ? redact(agent.codename) : agent.codename;
+  const displayRank = isSegwang ? redact(agent.rank) : agent.rank;
+  const displayExtension = isSegwang ? redact(agent.extension) : agent.extension;
+  const displayDeptName = isSegwang ? redact(deptInfo.name) : deptInfo.name;
+  const displayDeptFullName = isSegwang ? redact(deptInfo.fullName) : deptInfo.fullName;
+
+  const displayStatus = isSegwang ? '■■' : agent.status;
+  const displayContamination = isSegwang ? 100 : Math.round(contamination);
 
   const handleFuneralSave = () => {
     const selectedOption = FUNERAL_OPTIONS.find(f => f.id === selectedFuneral);
@@ -72,19 +87,19 @@ export function MyPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <span className="text-xs text-muted-foreground">이름</span>
-                  <p className="font-medium">{agent.name}</p>
+                  <p className="font-medium">{displayName}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-xs text-muted-foreground">요원명</span>
-                  <p className="font-bold text-primary">{agent.codename}</p>
+                  <p className="font-bold text-primary">{displayCodename}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-xs text-muted-foreground">직급</span>
-                  <p className="font-medium">{agent.rank}</p>
+                  <p className="font-medium">{displayRank}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-xs text-muted-foreground">내선번호</span>
-                  <p className="font-mono">{agent.extension}</p>
+                  <p className="font-mono">{displayExtension}</p>
                 </div>
               </div>
 
@@ -93,7 +108,7 @@ export function MyPage() {
                   <span className="text-xs text-muted-foreground">소속</span>
                   <div className="flex items-center gap-2">
                     <deptInfo.icon className="w-4 h-4" />
-                    <span className="font-medium">{deptInfo.name} ({deptInfo.fullName})</span>
+                    <span className="font-medium">{displayDeptName} ({displayDeptFullName})</span>
                   </div>
                 </div>
               </div>
@@ -113,12 +128,12 @@ export function MyPage() {
                 <span className="text-sm text-muted-foreground">근무 상태</span>
                 <Badge
                   className={
-                    agent.status === '정상'
+                    displayStatus === '정상'
                       ? 'bg-success text-success-foreground'
                       : 'bg-destructive text-destructive-foreground'
                   }
                 >
-                  {agent.status}
+                  {displayStatus}
                 </Badge>
               </div>
 
@@ -126,8 +141,8 @@ export function MyPage() {
 
               <div className="flex items-center justify-between py-1 border-t border-border">
                 <span className="text-sm text-muted-foreground">정신 오염도</span>
-                <span className={`text-sm font-mono font-medium ${contamination >= 80 ? 'text-destructive' : contamination >= 50 ? 'text-warning' : 'text-success'}`}>
-                  {contamination}%
+                <span className={`text-sm font-mono font-medium ${displayContamination >= 80 ? 'text-destructive' : displayContamination >= 50 ? 'text-warning' : 'text-success'}`}>
+                  {displayContamination}%
                 </span>
               </div>
             </CardContent>
@@ -227,14 +242,17 @@ export function MyPage() {
                       const daysLeft = item.dueDate ? differenceInDays(item.dueDate, new Date()) : 0;
                       const isOverdue = item.status === '연체' || (item.dueDate && daysLeft < 0);
 
+                      const displayItemName = isSegwang ? redact(item.equipmentName) : item.equipmentName;
+                      const displayCategory = isSegwang ? redact(item.category) : item.category;
+
                       return (
                         <div key={item.id} className="flex items-center justify-between p-3 border border-border rounded-sm bg-muted/10">
                           <div className="flex items-center gap-3">
                             <Badge variant={item.category === '대여' ? 'outline' : 'secondary'} className="text-xs">
-                              {item.category}
+                              {displayCategory}
                             </Badge>
                             <span className="font-medium text-sm">
-                              {item.equipmentName}
+                              {displayItemName}
                               {(item.quantity || 1) > 1 && <span className="text-muted-foreground ml-1">(x{item.quantity})</span>}
                             </span>
                           </div>
@@ -262,16 +280,20 @@ export function MyPage() {
                           ? 'text-destructive font-bold'
                           : daysLeft <= 3 ? 'text-warning font-bold' : 'text-success';
 
+                        const displaySchedName = isSegwang ? redact(item.equipmentName) : item.equipmentName;
+                        const displayDate = isSegwang ? '■■■■.■■.■■' : format(new Date(item.dueDate!), 'yyyy.MM.dd', { locale: ko });
+                        const displayDDay = isSegwang ? '■■' : (isOverdue ? `D+${Math.abs(daysLeft)}` : daysLeft === 0 ? 'D-Day' : `D-${daysLeft}`);
+
                         return (
                           <div key={`sched-${item.id}`} className="flex items-center justify-between p-3 border border-border rounded-sm">
                             <div className="flex flex-col">
-                              <span className="text-sm font-medium">{item.equipmentName}</span>
+                              <span className="text-sm font-medium">{displaySchedName}</span>
                               <span className="text-xs text-muted-foreground">
-                                반납일: {format(new Date(item.dueDate!), 'yyyy.MM.dd', { locale: ko })}
+                                반납일: {displayDate}
                               </span>
                             </div>
                             <div className={`text-sm ${dDayClass}`}>
-                              {isOverdue ? `D+${Math.abs(daysLeft)}` : daysLeft === 0 ? 'D-Day' : `D-${daysLeft}`}
+                              {displayDDay}
                             </div>
                           </div>
                         );

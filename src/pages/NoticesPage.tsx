@@ -9,7 +9,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
-import { parseNotificationDate, safeFormatDate } from '@/utils/dateUtils';
+import { useBureau } from '@/contexts/BureauContext';
+import { segwangNotices } from '@/data/segwang/notices';
+import { parseNotificationDate, safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
   Notification,
   NoticePriority,
@@ -31,6 +33,7 @@ import {
 export function NoticesPage() {
   const { agent } = useAuth();
   const { isTriggered } = useInteraction();
+  const { mode } = useBureau();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPriorities, setSelectedPriorities] = useState<NoticePriority[]>([]);
@@ -40,7 +43,7 @@ export function NoticesPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // 공지사항 데이터
-  const allNotices = DataManager.getNotifications(agent);
+  const allNotices = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
 
   // 초기 로딩 시뮬레이션
   useEffect(() => {
@@ -218,7 +221,7 @@ export function NoticesPage() {
                         </div>
                         <div className="flex justify-between items-center text-xs text-muted-foreground">
                           <span>{notice.sourceDepartment}</span>
-                          <span>{safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}</span>
+                          <span>{formatSegwangDate(notice.createdAt, 'yyyy.MM.dd', mode === 'segwang')}</span>
                         </div>
                       </div>
 
@@ -243,7 +246,7 @@ export function NoticesPage() {
                           {notice.sourceDepartment}
                         </div>
                         <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
-                          {safeFormatDate(parseNotificationDate(notice.createdAt), 'yyyy.MM.dd')}
+                          {formatSegwangDate(notice.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
                         </div>
                       </div>
                     </div>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { IncidentBoard } from '@/components/incidents/IncidentBoard';
-import { ManualViewer } from '@/components/work/ManualViewer';
 import { useAuth } from '@/contexts/AuthContext';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
-import { AlertTriangle, MapPin, Clock, Shield, Ban } from 'lucide-react';
+import { AlertTriangle, MapPin, Clock, Shield, Ban, Search, ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { DeletedRecordModal } from '@/components/segwang/DeletedRecordModal';
 import { Badge } from '@/components/ui/badge';
 import {
     Select,
@@ -23,6 +25,7 @@ import {
 } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { formatSegwangDate } from '@/utils/dateUtils';
 import {
     Popover,
     PopoverContent,
@@ -31,13 +34,17 @@ import {
 import { Button } from '@/components/ui/button';
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useWork } from '@/contexts/WorkContext';
+import { useBureau } from '@/contexts/BureauContext';
+import { segwangIncidents } from '@/data/segwang/incidents';
 
 type GroupBy = 'status' | 'dangerLevel';
 
 export default function IncidentsPage() {
     const { agent } = useAuth();
+    const { mode } = useBureau();
     const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteraction();
     const { processedIncidents } = useWork();
+    const navigate = useNavigate();
 
     useEffect(() => {
         return () => clearNewTrigger();
@@ -45,30 +52,72 @@ export default function IncidentsPage() {
 
     const [groupBy, setGroupBy] = useState<GroupBy>('status');
     const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
-    const [selectedManualId, setSelectedManualId] = useState<string | null>(null);
-    const [showManualDialog, setShowManualDialog] = useState(false);
 
-    const incidents = processedIncidents
+    // Easter Egg Search State
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showDeletedRecordModal, setShowDeletedRecordModal] = useState(false);
+
+    const handleSearch = (query: string) => {
+        const triggerKeywords = [
+            '세광', '세광특별시', '특별시',
+            '0000PSYA.2024.세00', '0000PSYA.20██.세00',
+            '삭제된 지역', '기억 소각', '5월 4일', '멸형급 552'
+        ];
+
+        if (triggerKeywords.some(keyword => query.includes(keyword))) {
+            setShowDeletedRecordModal(true);
+        }
+    };
+
+    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSearch(searchQuery);
+        }
+    };
+
+    // Clear search query when entering Segwang mode
+    useEffect(() => {
+        if (mode === 'segwang') {
+            setSearchQuery('');
+        }
+    }, [mode]);
+
+    const baseIncidents = mode === 'segwang'
+        ? segwangIncidents
+        : processedIncidents;
+
+    const incidents = baseIncidents
         .filter(inc => {
             if (inc.id === 'inc-sinkhole-001') {
                 return triggeredIds.includes(inc.id);
             }
             return true;
+        })
+        .filter(inc => {
+            if (!searchQuery) return true;
+            const query = searchQuery.toLowerCase();
+            return (
+                (inc.title || '').toLowerCase().includes(query) ||
+                (inc.location || '').toLowerCase().includes(query) ||
+                (inc.caseNumber || '').toLowerCase().includes(query) ||
+                (inc.reportContent || '').toLowerCase().includes(query)
+            );
         });
 
     const handleManualClick = (manualId: string) => {
-        setSelectedManualId(manualId);
-        setShowManualDialog(true);
+        navigate(`/manuals?id=${manualId}`);
     };
 
     return (
         <MainLayout>
             <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-row-reverse md:flex-row items-center justify-between gap-2">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    {/* 제목 영역 (좌측) */}
                     <div className="flex items-center gap-2">
-                        <AlertTriangle className="w-6 h-6 text-destructive" />
-                        <h1 className="text-lg md:text-xl font-bold tracking-tight whitespace-nowrap">재난 현황</h1>
+                        <AlertTriangle className="w-5 h-5 text-destructive" />
+                        <h1 className="text-lg font-bold tracking-tight whitespace-nowrap">재난 현황</h1>
 
                         <Popover>
                             <PopoverTrigger asChild>
@@ -126,17 +175,45 @@ export default function IncidentsPage() {
                         </Badge>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground whitespace-nowrap hidden md:inline">그룹:</span>
-                        <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupBy)}>
-                            <SelectTrigger className="w-[100px] md:w-32 h-8 text-xs">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="status">처리 상태</SelectItem>
-                                <SelectItem value="dangerLevel">위험 등급</SelectItem>
-                            </SelectContent>
-                        </Select>
+                    {/* 컨트롤 영역 (우측: 검색창 + 필터) */}
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <div className="flex bg-muted/30 p-1 rounded-lg flex-1 md:flex-none">
+                            <div className="relative w-full md:w-auto">
+                                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    type="text"
+                                    placeholder="재난 검색..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.nativeEvent.isComposing) return;
+                                        handleSearchKeyDown(e);
+                                    }}
+                                    className="w-full md:w-[200px] pl-9 h-8 bg-background/50 border-0 focus-visible:ring-1 transition-all text-xs"
+                                />
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                onClick={() => handleSearch(searchQuery)}
+                            >
+                                <ArrowRight className="h-4 w-4" />
+                            </Button>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm text-muted-foreground whitespace-nowrap hidden md:inline">그룹:</span>
+                            <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupBy)}>
+                                <SelectTrigger className="w-[100px] md:w-32 h-10 md:h-8 text-xs">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="status">처리 상태</SelectItem>
+                                    <SelectItem value="dangerLevel">위험 등급</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
 
@@ -145,18 +222,11 @@ export default function IncidentsPage() {
                         incidents={incidents}
                         groupBy={groupBy}
                         onCardClick={setSelectedIncident}
-                        onManualClick={handleManualClick}
+                        onManualClick={mode === 'segwang' ? undefined : handleManualClick}
                         highlightId={newlyTriggeredId}
                     />
                 </div>
             </div>
-
-            {/* 매뉴얼 보기 모달 */}
-            <ManualViewer
-                manualId={selectedManualId}
-                open={showManualDialog}
-                onOpenChange={setShowManualDialog}
-            />
 
             {/* 재난 상세 모달 */}
             <Dialog open={!!selectedIncident} onOpenChange={() => setSelectedIncident(null)}>
@@ -241,11 +311,11 @@ export default function IncidentsPage() {
                             <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t">
                                 <div className="flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
-                                    <span>접수: {format(new Date(selectedIncident.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</span>
+                                    <span>접수: {formatSegwangDate(selectedIncident.createdAt, 'yyyy.MM.dd HH:mm', mode === 'segwang')}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
-                                    <span>업데이트: {format(new Date(selectedIncident.updatedAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</span>
+                                    <span>업데이트: {formatSegwangDate(selectedIncident.updatedAt, 'yyyy.MM.dd HH:mm', mode === 'segwang')}</span>
                                 </div>
                             </div>
                         </div>
@@ -257,6 +327,15 @@ export default function IncidentsPage() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            {/* 세광특별시 이스터에그 모달 - ordinary 모드일 때만 렌더링 */}
+            {mode === 'ordinary' && (
+                <DeletedRecordModal
+                    isOpen={showDeletedRecordModal}
+                    onClose={() => setShowDeletedRecordModal(false)}
+                    searchQuery={searchQuery}
+                />
+            )}
         </MainLayout>
     );
 }

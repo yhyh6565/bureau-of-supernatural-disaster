@@ -3,8 +3,8 @@ import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, AlertTriangle, FileText, Truck, CheckCircle, ArrowRight, BookOpen } from 'lucide-react';
-import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { formatSegwangDate } from '@/utils/dateUtils';
+import { useBureau } from '@/contexts/BureauContext';
 
 interface IncidentCardProps {
     incident: Incident;
@@ -25,6 +25,7 @@ export const IncidentCard = ({
     onManualClick,
     onClick
 }: IncidentCardProps) => {
+    const { mode } = useBureau();
     const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel];
     const statusStyle = STATUS_STYLE[incident.status];
 
@@ -70,13 +71,13 @@ export const IncidentCard = ({
                         </Button>
                     )}
 
-                    {incident.manualId && (
+                    {incident.manualId && onManualClick && (
                         <Badge
                             variant="outline"
                             className="cursor-pointer hover:bg-accent gap-1 text-[10px] px-2 py-0.5 h-6 border-primary/50 text-primary w-full justify-center"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onManualClick?.(incident.manualId!);
+                                onManualClick(incident.manualId!);
                             }}
                         >
                             <BookOpen className="w-3 h-3" />
@@ -119,7 +120,7 @@ export const IncidentCard = ({
                 <div className="flex items-center justify-between pt-1.5 border-t border-border/50 mt-1.5">
                     <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
                         <Clock className="w-3 h-3" />
-                        <span>접수: {format(new Date(incident.createdAt), 'M/d HH:mm', { locale: ko })}</span>
+                        <span>접수: {formatSegwangDate(incident.createdAt, 'M/d HH:mm', mode === 'segwang')}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5">

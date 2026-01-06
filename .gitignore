@@ -28,3 +28,8 @@ QA_reports/
 
 # Generated data (from templates)
 src/data/
+!src/data/segwang/
+!src/data/ordinary/
+!src/data/global/
+!src/data/personas/
+!src/data/dataManager.ts
