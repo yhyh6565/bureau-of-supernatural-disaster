@@ -100,6 +100,7 @@ export interface Schedule {
   type: '작전' | '방문예약' | '결재마감' | '당직' | '훈련' | '행사';
   date: Date;
   relatedId?: string;
+  agentId?: string; // [NEW] 중앙화된 스케줄 관리를 위한 소유자 ID
 }
 
 // 공지사항 긴급도

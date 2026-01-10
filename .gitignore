@@ -31,16 +31,16 @@ QA_reports/
 # This prevents accidentally ignoring files that should be tracked
 
 # Auto-generated global data (except manuals.json which is version controlled)
-src/data/global/equipment.json
-src/data/global/incidents.json
-src/data/global/locations.json
-src/data/global/notifications.json
+# src/data/global/equipment.json
+# src/data/global/incidents.json
+# src/data/global/locations.json
+# src/data/global/notifications.json
 
 # Auto-generated ordinary data (all files)
-src/data/ordinary/*.json
+# src/data/ordinary/*.json
 
 # Auto-generated persona data (all files in all persona directories)
-src/data/personas/*/*.json
+# src/data/personas/*/*.json
 
 # Keep these tracked:
 # - src/data/dataManager.ts (static TypeScript file)
