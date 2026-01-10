@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from '@/contexts/UserContext';
+import { useAuthStore } from '@/store/authStore';
+import { useGameStore } from '@/store/gameStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,8 +21,8 @@ const FORBIDDEN_NAMES = [
 const EMERGENCY_CALL_NUMBER = '1717828242';
 
 export function LoginPage() {
-  const { login } = useAuth();
-  const { triggerGameOver } = useUser();
+  const { login } = useAuthStore();
+  const { triggerGameOver } = useGameStore();
   const [personaKey, setPersonaKey] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);

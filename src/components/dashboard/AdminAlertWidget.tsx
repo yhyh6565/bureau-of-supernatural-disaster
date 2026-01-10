@@ -1,17 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import { DataManager } from '@/data/dataManager';
 import { Bell, FileText, Package } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { differenceInDays } from 'date-fns';
 
 export function AdminAlertWidget() {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
+    const { approvals } = useWorkData();
 
     if (!agent) return null;
 
     // 1. Pending Approvals
-    const approvals = DataManager.getApprovals(agent);
+    // const approvals = DataManager.getApprovals(agent); // Removed
+    // Note: getCombinedApprovals filters by agent inside the helper?
+    // Let's check getCombinedApprovals implementation. It should include data for this agent.
+    // Actually getCombinedApprovals signature is (agent, mode, sessionApprovals). It assumes approvals fetched are for this agent or filtered.
+    // Wait, DataManager.getApprovals(agent) gets "MY" approvals. 
+    // getCombinedApprovals in workStore calls DataManager.getApprovals(agent) internally? No, it used to...
+    // Let me check workStore.ts again to be sure.
+    // If workStore helper calls DataManager, then useWorkData().approvals is correct.
     const pendingApprovals = approvals.filter(a => a.status === '결재대기' && a.createdBy === agent.id);
 
     // 2. Equipment Alerts (Overdue or Due Soon)

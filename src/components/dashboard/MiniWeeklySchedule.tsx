@@ -3,13 +3,13 @@ import { DataManager } from '@/data/dataManager';
 import { Calendar as CalendarIcon, MapPin } from 'lucide-react';
 import { format, isToday, isTomorrow, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useAuth } from '@/contexts/AuthContext';
-import { useWork } from '@/contexts/WorkContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import { Link } from 'react-router-dom';
 
 export function MiniWeeklySchedule() {
-    const { agent } = useAuth();
-    const { schedules } = useWork();
+    const { agent } = useAuthStore();
+    const { schedules } = useWorkData();
     // const schedules = DataManager.getSchedules(agent); // Removed
     const today = new Date();
 

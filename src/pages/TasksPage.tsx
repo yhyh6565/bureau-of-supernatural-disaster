@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { useInteraction } from '@/contexts/InteractionContext';
+import { useInteractionStore } from '@/store/interactionStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useAuth } from '@/contexts/AuthContext';
-import { useWork } from '@/contexts/WorkContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { Briefcase, MapPin, CheckCircle, ArrowRight, FileText, Truck, List, Calendar as CalendarIcon, Shield, Ban, Clock, Grip } from 'lucide-react';
@@ -27,9 +27,9 @@ import { ManualViewer } from '@/components/work/ManualViewer';
 import { useSearchParams } from 'react-router-dom';
 
 export function TasksPage() {
-  const { agent } = useAuth();
-  const { processedIncidents, acceptIncident } = useWork();
-  const { triggeredIds } = useInteraction();
+  const { agent } = useAuthStore();
+  const { processedIncidents, acceptIncident } = useWorkData();
+  const { triggeredIds } = useInteractionStore();
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
 

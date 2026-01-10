@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { IncidentBoard } from '@/components/incidents/IncidentBoard';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { AlertTriangle, MapPin, Clock, Shield, Ban, Search, ArrowRight } from 'lucide-react';
@@ -32,18 +32,18 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { useInteraction } from '@/contexts/InteractionContext';
-import { useWork } from '@/contexts/WorkContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useInteractionStore } from '@/store/interactionStore';
+import { useWorkData } from '@/hooks/useWorkData';
+import { useBureauStore } from '@/store/bureauStore';
 import { segwangIncidents } from '@/data/segwang/incidents';
 
 type GroupBy = 'status' | 'dangerLevel';
 
 export default function IncidentsPage() {
-    const { agent } = useAuth();
-    const { mode } = useBureau();
-    const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteraction();
-    const { processedIncidents } = useWork();
+    const { agent } = useAuthStore();
+    const { mode } = useBureauStore();
+    const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteractionStore();
+    const { processedIncidents } = useWorkData();
     const navigate = useNavigate();
 
     useEffect(() => {

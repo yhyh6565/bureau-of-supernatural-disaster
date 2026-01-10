@@ -9,14 +9,14 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Message } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useBureauStore } from '@/store/bureauStore';
 import { Mail, Send, Inbox, ArrowLeft, Reply, User, MoreHorizontal, PenLine } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
 import { getPersonaName } from '@/constants/haetae';
-import { useInteraction } from '@/contexts/InteractionContext';
+import { useInteractionStore } from '@/store/interactionStore';
 import { safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
   Dialog,
@@ -33,9 +33,9 @@ import { segwangInbox, segwangSent } from '@/data/segwang/messages';
 
 
 export function MessagesPage() {
-  const { agent } = useAuth();
-  const { mode } = useBureau();
-  const { sessionMessages, sendMessage } = useInteraction();
+  const { agent } = useAuthStore();
+  const { mode } = useBureauStore();
+  const { sessionMessages, sendMessage } = useInteractionStore();
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [newMessage, setNewMessage] = useState({ recipient: '', title: '', content: '' });
@@ -69,10 +69,22 @@ export function MessagesPage() {
       return;
     }
 
-    sendMessage(newMessage.recipient, newMessage.title, newMessage.content);
-
-    setNewMessage({ recipient: '', title: '', content: '' });
-    setIsComposeOpen(false);
+    if (agent) {
+      sendMessage(agent, newMessage.recipient, newMessage.title, newMessage.content).then(() => {
+        toast({
+          title: '전송 완료',
+          description: '메시지가 전송되었습니다.',
+        });
+        setNewMessage({ recipient: '', title: '', content: '' });
+        setIsComposeOpen(false);
+      });
+    } else {
+      toast({
+        title: '오류',
+        description: '로그인 정보가 없습니다.',
+        variant: 'destructive',
+      });
+    }
   };
 
 

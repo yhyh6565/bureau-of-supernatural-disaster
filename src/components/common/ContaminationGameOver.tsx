@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from '@/contexts/UserContext';
+import { useAuthStore } from '@/store/authStore';
+import { useGameStore } from '@/store/gameStore';
 import { cn } from '@/lib/utils';
 
 // Configuration for "Forbidden Login" (Security Execution)
@@ -39,8 +38,9 @@ const CONTAMINATION_CONFIG = {
 } as const;
 
 export function ContaminationGameOver() {
-    const { logout } = useAuth();
-    const { isGameOver, gameOverType } = useUser();
+    const { logout } = useAuthStore();
+    const { gameOverType } = useGameStore();
+    const isGameOver = gameOverType !== 'none';
 
     // Common State
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);

@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { GNBHeader } from './GNBHeader';
-import { useAuth } from '@/contexts/AuthContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useBureauStore } from '@/store/bureauStore';
 import { ExitConfirmModal } from '@/components/segwang/ExitConfirmModal';
 import { Button } from '@/components/ui/button';
 import { Power } from 'lucide-react';
@@ -11,8 +11,8 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
-  const { agent } = useAuth();
-  const { mode, setMode } = useBureau();
+  const { agent } = useAuthStore();
+  const { mode, setMode } = useBureauStore();
   const [showExitModal, setShowExitModal] = useState(false);
 
   const handleExitSaekwang = () => {
@@ -40,11 +40,10 @@ export function MainLayout({ children }: MainLayoutProps) {
       </main>
 
       {/* 하단 정보 바 */}
-      <footer className={`fixed bottom-0 left-0 right-0 h-8 border-t px-4 flex items-center justify-between text-xs z-50 ${
-        mode === 'segwang'
+      <footer className={`fixed bottom-0 left-0 right-0 h-8 border-t px-4 flex items-center justify-between text-xs z-50 ${mode === 'segwang'
           ? 'bg-red-950/30 border-red-900 text-red-500 font-mono'
           : 'bg-muted border-border text-muted-foreground'
-      }`}>
+        }`}>
         <div className="flex items-center gap-4">
           {mode === 'segwang' ? (
             <>

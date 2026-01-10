@@ -6,8 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ApprovalDocument } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
-import { useWork } from '@/contexts/WorkContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import { ClipboardCheck, FileText, Clock, CheckCircle, XCircle, ArrowLeft, PenLine } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -23,8 +23,8 @@ const STATUS_STYLE: Record<ApprovalStatus, { bg: string; text: string; icon: Rea
 };
 
 export function ApprovalsPage() {
-  const { agent } = useAuth();
-  const { approvals } = useWork();
+  const { agent } = useAuthStore();
+  const { approvals } = useWorkData();
   const [selectedApproval, setSelectedApproval] = useState<ApprovalDocument | null>(null);
 
   const myDocuments = approvals.filter(a => a.createdBy === agent?.personaKey || a.createdBy === agent?.id)

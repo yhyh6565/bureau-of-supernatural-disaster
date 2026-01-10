@@ -1,17 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from '@/contexts/UserContext';
-import { useResource } from '@/contexts/ResourceContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useGameStore } from '@/store/gameStore';
+import { useResourceStore } from '@/store/resourceStore';
+import { useBureauStore } from '@/store/bureauStore';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { User, Brain, Briefcase, Package } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
 export function PersonalInfoWidget() {
-    const { agent } = useAuth();
-    const { contamination } = useUser();
-    const { rentals } = useResource();
-    const { mode } = useBureau();
+    const { agent } = useAuthStore();
+    const { contamination } = useGameStore();
+    const { rentals } = useResourceStore();
+    const { mode } = useBureauStore();
 
     if (!agent) return null;
 

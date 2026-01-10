@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
-import { useWork } from '@/contexts/WorkContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
+import { useBureauStore } from '@/store/bureauStore';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 import { STATUS_STYLE } from '@/constants/haetae';
@@ -12,12 +12,12 @@ import { IncidentStatus } from '@/types/haetae';
 const STATUS_ORDER: IncidentStatus[] = ['접수', '조사중', '구조대기', '구조중', '정리대기', '정리중', '종결', '봉인'];
 
 export function IncidentSummary() {
-    const { agent } = useAuth();
-    const { processedIncidents } = useWork();
+    const { agent } = useAuthStore();
+    const { processedIncidents } = useWorkData();
     const navigate = useNavigate();
     const incidents = processedIncidents;
 
-    const { mode } = useBureau();
+    const { mode } = useBureauStore();
 
     // 상태별 카운트 계산
     const statusCounts = STATUS_ORDER.reduce((acc, status) => {

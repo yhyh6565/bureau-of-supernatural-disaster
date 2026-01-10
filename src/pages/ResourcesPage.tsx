@@ -20,10 +20,10 @@ import {
     VisitLocation
 } from '@/types/haetae';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
-import { useResource } from '@/contexts/ResourceContext';
-import { useWork } from '@/contexts/WorkContext';
-import { useUser } from '@/contexts/UserContext';
+import { useAuthStore } from '@/store/authStore';
+import { useResourceStore } from '@/store/resourceStore';
+import { useWorkData } from '@/hooks/useWorkData';
+import { useGameStore } from '@/store/gameStore';
 import {
     Package,
     Search,
@@ -66,15 +66,15 @@ import { InspectionForm, parseOperatingHours, getOrCreateReservedSlots } from '@
 import { Calendar } from '@/components/ui/calendar';
 
 import { CensoredResourcesPage } from '@/components/segwang/CensoredResourcesPage';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 export function ResourcesPage() {
-    const { agent } = useAuth();
-    const { addRental } = useResource();
-    const resourceContext = useResource();
-    const { addVisitSchedule, addApproval, addInspectionRequest, inspectionRequests } = useWork();
-    const { decreaseContamination } = useUser();
-    const { mode } = useBureau();
+    const { agent } = useAuthStore();
+    const { addRental } = useResourceStore();
+    // const resourceContext = useResource(); // Removed redundancy
+    const { addVisitSchedule, addApproval, addInspectionRequest, inspectionRequests } = useWorkData();
+    const { decreaseContamination } = useGameStore();
+    const { mode } = useBureauStore();
 
     if (mode === 'segwang') {
         return <CensoredResourcesPage />;
@@ -132,7 +132,7 @@ export function ResourcesPage() {
                 createdBy: agent?.id || 'unknown',
                 createdByName: agent?.name || '알 수 없음',
                 approver: 'HMU-301',
-            });
+            }, agent!);
 
             toast({
                 title: '결재 상신 완료',
@@ -177,7 +177,7 @@ export function ResourcesPage() {
                 createdBy: agent?.id || 'unknown',
                 createdByName: agent?.name || '알 수 없음',
                 approver: 'HMU-301',
-            });
+            }, agent!);
             if (selectedLocation.name === '용천 선녀탕') decreaseContamination(30);
             toast({ title: '결재 상신 완료', description: `"${selectedLocation.name}" 방문 신청 결재 상신됨.` });
         } else {
@@ -509,7 +509,7 @@ export function ResourcesPage() {
                                         <DialogTitle>오염 검사 신청</DialogTitle>
                                         <DialogDescription>검사 목적과 희망 일정을 입력해 주세요.</DialogDescription>
                                     </DialogHeader>
-                                    <InspectionForm onClose={() => setIsInspectionOpen(false)} onSubmit={addInspectionRequest} />
+                                    <InspectionForm onClose={() => setIsInspectionOpen(false)} onSubmit={(t, d, s) => agent && addInspectionRequest(t, d, s, agent)} />
                                 </DialogContent>
                             </Dialog>
                         </div>

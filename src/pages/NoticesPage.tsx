@@ -7,9 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInteraction } from '@/contexts/InteractionContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useInteractionStore } from '@/store/interactionStore';
+import { useBureauStore } from '@/store/bureauStore';
 import { segwangNotices } from '@/data/segwang/notices';
 import { parseNotificationDate, safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
@@ -31,9 +31,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function NoticesPage() {
-  const { agent } = useAuth();
-  const { isTriggered } = useInteraction();
-  const { mode } = useBureau();
+  const { agent } = useAuthStore();
+  const { triggeredIds } = useInteractionStore();
+  const { mode } = useBureauStore();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPriorities, setSelectedPriorities] = useState<NoticePriority[]>([]);
@@ -81,7 +81,7 @@ export function NoticesPage() {
       const matchesUnread = !showUnreadOnly || !notice.isRead;
 
       // Trigger 필터
-      const isVisible = !notice.trigger || isTriggered(notice.id);
+      const isVisible = !notice.trigger || triggeredIds.includes(notice.id);
 
       return matchesSearch && matchesPriority && matchesCategory && matchesDepartment && matchesUnread && isVisible;
     })

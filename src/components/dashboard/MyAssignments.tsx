@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
@@ -18,11 +19,9 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 
-import { useWork } from '@/contexts/WorkContext';
-
 export function MyAssignments() {
-  const { agent } = useAuth();
-  const { processedIncidents, acceptIncident } = useWork();
+  const { agent } = useAuthStore();
+  const { processedIncidents, acceptIncident } = useWorkData();
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);

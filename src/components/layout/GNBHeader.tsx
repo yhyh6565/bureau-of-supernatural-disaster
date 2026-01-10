@@ -1,6 +1,7 @@
-import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from '@/contexts/UserContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useGameStore } from '@/store/gameStore';
+import { useBureauStore } from '@/store/bureauStore';
+import { useInteractionStore } from '@/store/interactionStore';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { Bell, LogOut, User, Home, FileText, Mail, Package, ClipboardCheck, Briefcase, AlertTriangle, Menu, Book } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -32,14 +33,18 @@ const NAV_ITEMS = [
   { path: '/mypage', label: '개인정보', icon: User },
 ];
 
-import { useInteraction } from '@/contexts/InteractionContext';
 import { useState, useEffect } from 'react';
 
 export function GNBHeader() {
-  const { agent, logout } = useAuth();
-  const { isTriggered, isRead } = useInteraction();
-  const { contamination } = useUser();
-  const { mode } = useBureau();
+  const { agent, logout } = useAuthStore();
+  const { triggeredIds, readIds, markAsRead } = useInteractionStore(); // Assuming helper isn't needed or map helper logic here
+
+  // Hand-rolled helpers from Context
+  const isTriggered = (id: string) => triggeredIds.includes(id);
+  const isRead = (id: string) => readIds.includes(id);
+
+  const { contamination } = useGameStore();
+  const { mode } = useBureauStore();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);

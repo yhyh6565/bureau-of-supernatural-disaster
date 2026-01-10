@@ -1,15 +1,18 @@
 import { AlertTriangle, Radio } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useEffect, useState } from 'react';
-import { useInteraction } from '@/contexts/InteractionContext';
-import { useWork } from '@/contexts/WorkContext';
+import { useInteractionStore } from '@/store/interactionStore';
+import { useWorkData } from '@/hooks/useWorkData';
 
 const SINKHOLE_ID = 'inc-sinkhole-001';
 
 export function DisasterTicker() {
-    const { agent } = useAuth();
-    const { isTriggered, newlyTriggeredId } = useInteraction();
-    const { processedIncidents } = useWork();
+    const { agent } = useAuthStore();
+    const { triggeredIds, newlyTriggeredId } = useInteractionStore();
+    const { processedIncidents } = useWorkData();
+
+    // Helper to replicate context behavior
+    const isTriggered = (id: string) => triggeredIds.includes(id);
 
     // Only show if the Sinkhole event is triggered
     const showTicker = isTriggered(SINKHOLE_ID);

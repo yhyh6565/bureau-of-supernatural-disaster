@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { IncidentSummary } from '@/components/dashboard/IncidentSummary';
 import { MyAssignments } from '@/components/dashboard/MyAssignments';
-import { useAuth } from '@/contexts/AuthContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useAuthStore } from '@/store/authStore';
+import { useBureauStore } from '@/store/bureauStore';
 import { DisasterTicker } from '@/components/dashboard/DisasterTicker';
 import { PersonalInfoWidget } from '@/components/dashboard/PersonalInfoWidget';
 import { AdminAlertWidget } from '@/components/dashboard/AdminAlertWidget';
@@ -14,8 +14,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { SegwangTimelineLog } from '@/components/segwang/SegwangTimelineLog';
 
 export function Dashboard() {
-  const { agent } = useAuth();
-  const { mode } = useBureau();
+  const { agent } = useAuthStore();
+  const { mode } = useBureauStore();
   const [isLoading, setIsLoading] = useState(true);
 
   // 초기 로딩 시뮬레이션
