@@ -1,0 +1,52 @@
+{
+  "id": "HMU-003",
+  "name": "류재관",
+  "personaKey": "ryujaegwan",
+  "codename": "청동",
+  "department": "hyunmu",
+  "team": "1팀",
+  "rank": "실무관",
+  "extension": "2103",
+  "status": "정상",
+  "contamination": 18,
+  "totalIncidents": 35,
+  "specialCases": 10,
+  "rentals": [
+    {
+      "id": "rent-hm-003-01",
+      "equipmentName": "유리손포",
+      "category": "지급",
+      "rentalDate": "2024-01-01T09:00:00",
+      "status": "정상"
+    },
+    {
+      "id": "rent-hm-003-02",
+      "equipmentName": "신발끈",
+      "category": "대여",
+      "rentalDate": "2025-12-20T14:00:00",
+      "dueDate": "2026-01-20T14:00:00",
+      "status": "정상"
+    },
+    {
+      "id": "rent-hm-003-03",
+      "equipmentName": "도깨비불 호롱",
+      "category": "대여",
+      "rentalDate": "2025-12-25T10:00:00",
+      "dueDate": "2026-01-15T10:00:00",
+      "status": "정상"
+    },
+    {
+      "id": "rent-hm-003-04",
+      "equipmentName": "간이 유리 감옥",
+      "category": "대여",
+      "rentalDate": "2026-01-02T16:00:00",
+      "dueDate": "2026-01-09T16:00:00",
+      "status": "정상"
+    }
+  ],
+  "purificationHistory": [
+    "2025-12-05"
+  ],
+  "funeralPreference": "매장",
+  "grade": 8
+}

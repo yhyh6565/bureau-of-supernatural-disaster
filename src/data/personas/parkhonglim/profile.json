@@ -1,0 +1,20 @@
+{
+  "id": "HMU-001",
+  "name": "박홍림",
+  "personaKey": "parkhonglim",
+  "codename": "홍화",
+  "department": "hyunmu",
+  "team": "1팀",
+  "rank": "팀장",
+  "extension": "2101",
+  "status": "휴직",
+  "contamination": 98,
+  "totalIncidents": 52,
+  "specialCases": 15,
+  "rentals": [],
+  "purificationHistory": [
+    "2025-12-15"
+  ],
+  "funeralPreference": "매장",
+  "grade": 6
+}
