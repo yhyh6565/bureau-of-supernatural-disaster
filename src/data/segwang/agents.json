@@ -1,0 +1,98 @@
+[
+  {
+    "id": "seg_hm1_1",
+    "name": "■■ ■■",
+    "department": "현무반",
+    "team": "1팀",
+    "rank": "팀장",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_hm1_2",
+    "name": "■■ ■■",
+    "department": "현무반",
+    "team": "1팀",
+    "rank": "요원",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_bh1_1",
+    "name": "■■ ■■",
+    "department": "백호반",
+    "team": "1팀",
+    "rank": "팀장",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_bh1_2",
+    "name": "■■ ■■",
+    "department": "백호반",
+    "team": "1팀",
+    "rank": "요원",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_ja1_1",
+    "name": "■■ ■■",
+    "department": "주작반",
+    "team": "1팀",
+    "rank": "팀장",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_ja1_2",
+    "name": "■■ ■■",
+    "department": "주작반",
+    "team": "1팀",
+    "rank": "요원",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_hm2_1",
+    "name": "■■ ■■",
+    "department": "현무반",
+    "team": "2팀",
+    "rank": "팀장",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  },
+  {
+    "id": "seg_hm2_2",
+    "name": "■■ ■■",
+    "department": "현무반",
+    "team": "2팀",
+    "rank": "요원",
+    "status": "missing",
+    "extension": "■■■■",
+    "contamination": "0",
+    "codename": "■■■■",
+    "type": "segwang"
+  }
+]

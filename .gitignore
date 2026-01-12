@@ -30,13 +30,11 @@ QA_reports/
 # All JSON files are build artifacts generated from initial_data/*.csv
 # Only CSV files in initial_data/ are the source of truth
 
-# Auto-generated data directories
-src/data/global/
-src/data/personas/
-src/data/segwang/
-src/data/ordinary/
-
-# Auto-generated root data files
-src/data/agents.json
-src/data/incidents.json
-src/data/config.json
+# Generated data (SSOT) - Commented out to allow build/preview access
+# src/data/global/
+# src/data/personas/
+# src/data/segwang/
+# src/data/ordinary/
+# src/data/agents.json
+# src/data/incidents.json
+# src/data/config.json

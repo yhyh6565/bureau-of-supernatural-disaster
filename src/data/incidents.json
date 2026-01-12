@@ -1,0 +1,57 @@
+[
+  {
+    "id": "inc-001",
+    "title": "룩키마트 실종 사건",
+    "severity": "파형",
+    "status": "ongoing",
+    "location": "서울시 전역",
+    "description": "최소 300명 이상 실종",
+    "createdAt": "2001-01-01T00:00:00",
+    "resolvedAt": "",
+    "relatedManualId": "man-looky-001"
+  },
+  {
+    "id": "inc-002",
+    "title": "구시가지 이상 현상",
+    "severity": "멸형급",
+    "status": "resolved",
+    "location": "세광특별시 구시가지",
+    "description": "전 지부 실종",
+    "createdAt": "2024-05-04T20:00:00",
+    "resolvedAt": "2024-05-05T06:00:00",
+    "relatedManualId": ""
+  },
+  {
+    "id": "inc-003",
+    "title": "망원동 놀이터",
+    "severity": "경형",
+    "status": "investigating",
+    "location": "망원동",
+    "description": "민원 접수",
+    "createdAt": "2026-01-01T00:00:00",
+    "resolvedAt": "",
+    "relatedManualId": ""
+  },
+  {
+    "id": "inc-007",
+    "title": "자작나무숲 결계",
+    "severity": "경형",
+    "status": "monitoring",
+    "location": "자작나무숲",
+    "description": "결계 설치 중",
+    "createdAt": "2026-01-01T08:00:00",
+    "resolvedAt": "",
+    "relatedManualId": ""
+  },
+  {
+    "id": "inc-008",
+    "title": "지평선 산장",
+    "severity": "뇌형",
+    "status": "resolved",
+    "location": "강원도 산간",
+    "description": "연쇄살인사건 모방 재난",
+    "createdAt": "1991-11-20T09:00:00",
+    "resolvedAt": "2023-11-20T23:59:59",
+    "relatedManualId": "man-villa-001"
+  }
+]

@@ -153,10 +153,7 @@ export const CONTAMINATION_STYLE = {
 } as const;
 
 // 상태별 스타일
-export const STATUS_STYLE: Record<IncidentStatus, {
-    bgClass: string;
-    textClass: string;
-}> = {
+export const STATUS_STYLE: Record<IncidentStatus, { bgClass: string; textClass: string; borderClass?: string }> = {
     '접수': { bgClass: 'bg-baekho', textClass: 'text-baekho-foreground' },
     '조사중': { bgClass: 'bg-baekho/80', textClass: 'text-baekho-foreground' },
     '구조대기': { bgClass: 'bg-hyunmu', textClass: 'text-hyunmu-foreground' },
