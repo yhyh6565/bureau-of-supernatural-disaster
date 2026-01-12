@@ -1,3 +1,4 @@
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -54,7 +55,20 @@ function AppRoutes() {
 
 // Wrapper to handle Bureau Mode theme
 function BureauThemeWrapper({ children }: { children: React.ReactNode }) {
-  const { mode } = useBureauStore();
+  const { mode, setMode } = useBureauStore();
+
+  React.useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      // 브라우저 뒤로가기 시, 세광 모드였다면 일반 모드로 복귀
+      if (mode === 'segwang') {
+        setMode('ordinary');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [mode, setMode]);
+
   return (
     <div className={mode === 'segwang' ? 'segwang-theme' : ''}>
       {children}

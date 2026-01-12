@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, AlertTriangle, FileText, Truck, CheckCircle, ArrowRight, BookOpen } from 'lucide-react';
 import { formatSegwangDate } from '@/utils/dateUtils';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 interface IncidentCardProps {
     incident: Incident;
@@ -25,7 +25,7 @@ export const IncidentCard = ({
     onManualClick,
     onClick
 }: IncidentCardProps) => {
-    const { mode } = useBureau();
+    const { mode } = useBureauStore();
     const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel];
     const statusStyle = STATUS_STYLE[incident.status];
 

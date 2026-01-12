@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 import segwangNotices from '@/data/segwang/notices.json';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { ArrowLeft, Calendar, Building2, User, Pin } from 'lucide-react';
@@ -20,7 +20,7 @@ export function NoticeDetailPage() {
   const navigate = useNavigate();
   const { agent } = useAuth();
   const { markAsRead } = useInteraction();
-  const { mode } = useBureau();
+  const { mode } = useBureauStore();
 
   const notifications = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
   const notice = notifications.find(n => n.id === id);

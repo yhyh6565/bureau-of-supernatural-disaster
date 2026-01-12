@@ -2,7 +2,7 @@ import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { MapPin, Clock, BookOpen } from 'lucide-react';
 import { formatSegwangDate } from '@/utils/dateUtils';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 interface IncidentBoardCardProps {
     incident: Incident;
@@ -12,7 +12,7 @@ interface IncidentBoardCardProps {
 }
 
 export function IncidentBoardCard({ incident, onClick, onManualClick, isHighlighted }: IncidentBoardCardProps) {
-    const { mode } = useBureau();
+    const { mode } = useBureauStore();
     const dangerStyle = DANGER_LEVEL_STYLE[incident.dangerLevel] ?? { bgClass: 'bg-muted', textClass: 'text-muted-foreground' };
 
     return (

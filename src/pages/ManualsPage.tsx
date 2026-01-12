@@ -10,7 +10,7 @@ import { ManualContentDisplay } from '@/components/manual/ManualContentDisplay';
 import { ManualCommentSection } from '@/components/manual/ManualCommentSection';
 import { Search, Book, ChevronRight, ArrowLeft } from 'lucide-react';
 import { DANGER_LEVEL_STYLE } from '@/constants/haetae';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 export default function ManualsPage() {
     const [searchParams] = useSearchParams();
@@ -26,7 +26,7 @@ export default function ManualsPage() {
 
 
 
-    const { mode } = useBureau();
+    const { mode } = useBureauStore();
 
     // If 'segwang' mode, hide all manuals
     if (mode === 'segwang') {

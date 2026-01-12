@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, Lock, FileX } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 interface DeletedRecordModalProps {
     isOpen: boolean;
@@ -17,7 +17,7 @@ interface DeletedRecordModalProps {
 type Phase = 'search' | 'warning' | 'glitch' | 'recovery' | 'loading' | 'transition';
 
 export function DeletedRecordModal({ isOpen, onClose, searchQuery }: DeletedRecordModalProps) {
-    const { setMode } = useBureau();
+    const { setMode } = useBureauStore();
     const navigate = useNavigate();
     const [phase, setPhase] = useState<Phase>('search');
     const [message, setMessage] = useState('해당 기록은 존재하지 않습니다');

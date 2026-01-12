@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useBureau } from '@/contexts/BureauContext';
+import { useBureauStore } from '@/store/bureauStore';
 
 export type GameOverType = 'none' | 'contamination' | 'forbidden_login';
 
@@ -17,7 +17,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuth();
-    const { mode } = useBureau();
+    const { mode } = useBureauStore();
     const SESSION_CONTAMINATION_KEY = 'haetae_contamination';
 
     // Initialize from storage or agent default
