@@ -1,2 +1,2 @@
 id,type,title,content,status,createdBy,createdByName,approver,approverName,createdAt,processedAt
-app_001,장비품의서,현무반 정기 장비 점검,현무반 탐지 장비 12종에 대한 정기 점검을 요청합니다.,승인,koyoungeun,고영은,parkhonglim,박홍림,2025-04-28T14:00:00.000Z,2025-04-29T09:30:00.000Z
+app_001,장비품의서,현무반 정기 장비 점검,현무반 탐지 장비 12종에 대한 정기 점검을 요청합니다.,승인,koyoungeun,고영은,agent-bh-2-leader,강준호,2025-04-28T14:00:00.000Z,2025-04-29T09:30:00.000Z

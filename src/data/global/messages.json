@@ -23,9 +23,9 @@
   },
   {
     "id": "msg_003",
-    "senderId": "parkhonglim",
-    "senderName": "박홍림",
-    "senderDepartment": "출동구조반",
+    "senderId": "agent-bh-2-leader",
+    "senderName": "강준호",
+    "senderDepartment": "신규조사반",
     "receiverId": "koyoungeun",
     "title": "RE: 장비 대여 요청",
     "content": "승인되었습니다. 자재과로 방문해주세요.",
