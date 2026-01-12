@@ -29,8 +29,17 @@ function loadCSV(filename: string): any[] {
 }
 
 function loadConfig(): any {
-  const configPath = path.join(config.inputDir, '_meta/config.json');
-  return JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  // Try root config.json in initial_data
+  const rootConfigPath = path.join(config.inputDir, 'config.json');
+  if (fs.existsSync(rootConfigPath)) {
+    return JSON.parse(fs.readFileSync(rootConfigPath, 'utf-8'));
+  }
+
+  // Default fallback if no config is found
+  return {
+    "version": "1.0.0",
+    "lastUpdated": new Date().toISOString()
+  };
 }
 
 function buildGlobal() {
@@ -59,12 +68,57 @@ function buildGlobal() {
   }
 }
 
-function buildPersona(personaId: string) {
+function buildPersona(personaId: string, allAgents: any[]) {
   console.log(`\n👤 Building Persona: ${personaId}...`);
 
   const personaDir = path.join(config.outputDir, 'personas', personaId);
   if (!fs.existsSync(personaDir)) {
     fs.mkdirSync(personaDir, { recursive: true });
+  }
+
+  // Find agent data in agents.csv
+  // Note: agents.csv 'id' column corresponds to 'personaKey' (e.g., 'solum') in the old profile.json
+  const agentData = allAgents.find(a => a.id === personaId);
+
+  if (agentData) {
+    // Map CSV columns to Profile JSON structure
+    // We fill missing fields with defaults or empty strings to be filled later by user
+    const profile = {
+      id: agentData.employeeId || "", // Placeholder for employee ID
+      name: agentData.name,
+      personaKey: agentData.id,
+      codename: agentData.codename || "",
+      department: agentData.department === '출동구조반' ? 'hyunmu' :
+        agentData.department === '현장정리반' ? 'jujak' :
+          agentData.department === '신규조사반' ? 'baekho' :
+            agentData.department === '자재과' ? 'materials' : agentData.department,
+      team: agentData.team,
+      rank: agentData.rank,
+      extension: agentData.extension,
+      status: agentData.status,
+      contamination: parseInt(agentData.contamination || '0', 10),
+
+      // Enriched fields
+      grade: parseInt(agentData.grade || '0', 10),
+      totalIncidents: parseInt(agentData.totalIncidents || '0', 10),
+      specialCases: parseInt(agentData.specialCases || '0', 10),
+      funeralPreference: agentData.funeralPreference || "",
+      purificationHistory: agentData.purificationHistory
+        ? agentData.purificationHistory.split('|')
+        : [],
+
+      // Meta
+      profileImage: `/avatars/${personaId}.png`,
+      rentals: [] // Still empty as rentals come from Equipment/Rental logic not direct CSV yet
+    };
+
+    fs.writeFileSync(
+      path.join(personaDir, 'profile.json'),
+      JSON.stringify(profile, null, 2)
+    );
+    console.log(`  ✓ Generated profile.json from agents.csv`);
+  } else {
+    console.warn(`  ⚠️  Agent ${personaId} not found in agents.csv`);
   }
 
   // Approvals
@@ -111,17 +165,6 @@ function buildPersona(personaId: string) {
     JSON.stringify(personaInspections, null, 2)
   );
   console.log(`  ✓ ${personaInspections.length} inspections`);
-
-  // Profile
-  const allProfiles = loadCSV('_meta/persona_profiles.csv');
-  const profile = allProfiles.find(p => p.personaId === personaId);
-  if (profile) {
-    fs.writeFileSync(
-      path.join(personaDir, 'profile.json'),
-      JSON.stringify(profile, null, 2)
-    );
-    console.log(`  ✓ profile`);
-  }
 }
 
 function buildSegwang() {
@@ -248,7 +291,7 @@ function buildShared() {
     path.join(config.outputDir, 'config.json'),
     JSON.stringify(configData, null, 2)
   );
-  console.log(`  ✓ _meta/config.json → config.json`);
+  console.log(`  ✓ config.json`);
 }
 
 async function buildBureauData() {
@@ -259,12 +302,15 @@ async function buildBureauData() {
     fs.mkdirSync(config.outputDir, { recursive: true });
   }
 
+  // Load agents once to use in per-persona profiles
+  const allAgents = loadCSV('agents.csv');
+
   // Build Global
   buildGlobal();
 
   // Build Personas
   for (const persona of config.personas) {
-    buildPersona(persona);
+    buildPersona(persona, allAgents);
   }
 
   // Build Segwang

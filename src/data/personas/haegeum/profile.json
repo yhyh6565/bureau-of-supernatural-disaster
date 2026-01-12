@@ -1,8 +1,19 @@
 {
-  "personaId": "haegeum",
+  "id": "",
+  "name": "해금",
+  "personaKey": "haegeum",
+  "codename": "",
+  "department": "hyunmu",
+  "team": "3팀",
+  "rank": "팀장",
+  "extension": "2301",
+  "status": "active",
+  "contamination": 0,
+  "grade": 6,
+  "totalIncidents": 116,
+  "specialCases": 10,
+  "funeralPreference": "화장",
+  "purificationHistory": [],
   "profileImage": "/avatars/haegeum.png",
-  "bio": "냉철한 팀장",
-  "specialAbility": "결계술",
-  "joinDate": "2020-05-01",
-  "currentStatus": "재직"
+  "rentals": []
 }

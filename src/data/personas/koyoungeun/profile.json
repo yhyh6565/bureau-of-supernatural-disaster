@@ -1,8 +1,22 @@
 {
-  "personaId": "koyoungeun",
+  "id": "",
+  "name": "고영은",
+  "personaKey": "koyoungeun",
+  "codename": "",
+  "department": "baekho",
+  "team": "2팀",
+  "rank": "요원",
+  "extension": "4201",
+  "status": "active",
+  "contamination": 0,
+  "grade": 9,
+  "totalIncidents": 130,
+  "specialCases": 17,
+  "funeralPreference": "화장",
+  "purificationHistory": [
+    "2024-04-21",
+    "2024-08-16"
+  ],
   "profileImage": "/avatars/koyoungeun.png",
-  "bio": "신규 조사 담당",
-  "specialAbility": "염력",
-  "joinDate": "2022-01-15",
-  "currentStatus": "재직"
+  "rentals": []
 }

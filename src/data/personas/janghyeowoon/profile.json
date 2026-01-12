@@ -1,8 +1,22 @@
 {
-  "personaId": "janghyeowoon",
+  "id": "",
+  "name": "장허운",
+  "personaKey": "janghyeowoon",
+  "codename": "",
+  "department": "jujak",
+  "team": "2팀",
+  "rank": "요원",
+  "extension": "3201",
+  "status": "active",
+  "contamination": 5,
+  "grade": 9,
+  "totalIncidents": 72,
+  "specialCases": 1,
+  "funeralPreference": "화장",
+  "purificationHistory": [
+    "2024-07-31",
+    "2024-08-12"
+  ],
   "profileImage": "/avatars/janghyeowoon.png",
-  "bio": "현장 정리 전문가",
-  "specialAbility": "없음",
-  "joinDate": "2021-08-10",
-  "currentStatus": "재직"
+  "rentals": []
 }

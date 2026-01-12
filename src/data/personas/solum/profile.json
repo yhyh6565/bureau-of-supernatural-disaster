@@ -1,8 +1,22 @@
 {
-  "personaId": "solum",
+  "id": "",
+  "name": "김솔음",
+  "personaKey": "solum",
+  "codename": "",
+  "department": "hyunmu",
+  "team": "3팀",
+  "rank": "요원",
+  "extension": "2303",
+  "status": "resigned",
+  "contamination": 0,
+  "grade": 9,
+  "totalIncidents": 176,
+  "specialCases": 5,
+  "funeralPreference": "화장",
+  "purificationHistory": [
+    "2024-05-16",
+    "2024-08-26"
+  ],
   "profileImage": "/avatars/solum.png",
-  "bio": "전설의 요원",
-  "specialAbility": "순간이동",
-  "joinDate": "2018-02-01",
-  "currentStatus": "퇴사"
+  "rentals": []
 }

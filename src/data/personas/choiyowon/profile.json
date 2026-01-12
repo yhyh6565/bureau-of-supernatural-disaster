@@ -1,8 +1,23 @@
 {
-  "personaId": "choiyowon",
+  "id": "",
+  "name": "최요원",
+  "personaKey": "choiyowon",
+  "codename": "",
+  "department": "hyunmu",
+  "team": "1팀",
+  "rank": "요원",
+  "extension": "2101",
+  "status": "active",
+  "contamination": 15,
+  "grade": 9,
+  "totalIncidents": 180,
+  "specialCases": 15,
+  "funeralPreference": "화장",
+  "purificationHistory": [
+    "2024-04-13",
+    "2024-11-13",
+    "2025-05-26"
+  ],
   "profileImage": "/avatars/choiyowon.png",
-  "bio": "사고뭉치 신입",
-  "specialAbility": "없음",
-  "joinDate": "2024-03-15",
-  "currentStatus": "재직"
+  "rentals": []
 }

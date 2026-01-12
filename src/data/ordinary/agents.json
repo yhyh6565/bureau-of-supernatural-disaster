@@ -9,7 +9,12 @@
     "extension": "4101",
     "contamination": "3",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "118",
+    "specialCases": "4",
+    "purificationHistory": "2024-06-11|2024-07-24|2025-05-18"
   },
   {
     "id": "agent002",
@@ -21,7 +26,12 @@
     "extension": "4102",
     "contamination": "2",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "183",
+    "specialCases": "12",
+    "purificationHistory": "2024-10-26|2025-01-17|2025-10-02"
   },
   {
     "id": "agent003",
@@ -33,7 +43,12 @@
     "extension": "4103",
     "contamination": "1",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "182",
+    "specialCases": "12",
+    "purificationHistory": ""
   },
   {
     "id": "agent004",
@@ -45,7 +60,12 @@
     "extension": "3102",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "63",
+    "specialCases": "10",
+    "purificationHistory": "2025-03-03|2025-12-30"
   },
   {
     "id": "agent005",
@@ -57,7 +77,12 @@
     "extension": "2501",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "86",
+    "specialCases": "9",
+    "purificationHistory": "2024-09-05|2024-11-02|2025-12-28"
   },
   {
     "id": "agent006",
@@ -69,7 +94,12 @@
     "extension": "2701",
     "contamination": "5",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "108",
+    "specialCases": "8",
+    "purificationHistory": "2024-02-07|2024-06-11"
   },
   {
     "id": "agent007",
@@ -81,7 +111,12 @@
     "extension": "3103",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "124",
+    "specialCases": "4",
+    "purificationHistory": ""
   },
   {
     "id": "system",
@@ -93,7 +128,12 @@
     "extension": "9999",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "197",
+    "specialCases": "12",
+    "purificationHistory": "2024-02-25"
   },
   {
     "id": "agent-admin-002",
@@ -105,7 +145,12 @@
     "extension": "1002",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "91",
+    "specialCases": "10",
+    "purificationHistory": "2024-12-11|2025-12-06"
   },
   {
     "id": "agent-admin-equip",
@@ -117,7 +162,12 @@
     "extension": "1003",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "91",
+    "specialCases": "20",
+    "purificationHistory": "2024-01-21|2024-11-10"
   },
   {
     "id": "agent-admin-hr",
@@ -129,7 +179,12 @@
     "extension": "1004",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "60",
+    "specialCases": "20",
+    "purificationHistory": ""
   },
   {
     "id": "agent-admin-security",
@@ -141,7 +196,12 @@
     "extension": "1005",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "130",
+    "specialCases": "9",
+    "purificationHistory": "2024-01-28"
   },
   {
     "id": "agent-admin-finance",
@@ -153,7 +213,12 @@
     "extension": "1006",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "149",
+    "specialCases": "2",
+    "purificationHistory": ""
   },
   {
     "id": "agent-admin-099",
@@ -165,7 +230,12 @@
     "extension": "1099",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "57",
+    "specialCases": "19",
+    "purificationHistory": "2024-04-30"
   },
   {
     "id": "agent-hm3-002",
@@ -177,7 +247,12 @@
     "extension": "2302",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "83",
+    "specialCases": "4",
+    "purificationHistory": "2024-05-13|2025-04-15|2025-05-14"
   },
   {
     "id": "agent-hm3-003",
@@ -189,7 +264,12 @@
     "extension": "2303",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "192",
+    "specialCases": "12",
+    "purificationHistory": ""
   },
   {
     "id": "agent-hm3-004",
@@ -201,7 +281,12 @@
     "extension": "2304",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "184",
+    "specialCases": "4",
+    "purificationHistory": "2024-01-30"
   },
   {
     "id": "agent-hm3-005",
@@ -213,7 +298,12 @@
     "extension": "2305",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "193",
+    "specialCases": "16",
+    "purificationHistory": "2024-12-02|2025-03-06|2025-09-05"
   },
   {
     "id": "agent-hm-009",
@@ -225,7 +315,12 @@
     "extension": "2901",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "135",
+    "specialCases": "14",
+    "purificationHistory": "2024-04-04|2024-07-31|2024-11-28"
   },
   {
     "id": "agent-baekho-001",
@@ -237,7 +332,12 @@
     "extension": "4001",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "97",
+    "specialCases": "17",
+    "purificationHistory": ""
   },
   {
     "id": "agent-baekho-002",
@@ -249,7 +349,12 @@
     "extension": "4002",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "195",
+    "specialCases": "1",
+    "purificationHistory": "2024-01-17|2024-03-05"
   },
   {
     "id": "agent-bh-005",
@@ -261,7 +366,12 @@
     "extension": "4501",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "81",
+    "specialCases": "6",
+    "purificationHistory": "2025-05-06|2025-05-07"
   },
   {
     "id": "agent-bh-102",
@@ -273,7 +383,12 @@
     "extension": "4102",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "53",
+    "specialCases": "1",
+    "purificationHistory": "2025-12-19"
   },
   {
     "id": "agent-jj-002",
@@ -285,7 +400,12 @@
     "extension": "3202",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "157",
+    "specialCases": "3",
+    "purificationHistory": "2024-03-02|2025-05-28"
   },
   {
     "id": "agent-jj-005",
@@ -297,7 +417,12 @@
     "extension": "3501",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "50",
+    "specialCases": "5",
+    "purificationHistory": ""
   },
   {
     "id": "agent-support-001",
@@ -309,7 +434,12 @@
     "extension": "6001",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "188",
+    "specialCases": "11",
+    "purificationHistory": "2024-07-16|2024-12-03|2024-12-16"
   },
   {
     "id": "agent-unknown",
@@ -321,6 +451,11 @@
     "extension": "0",
     "contamination": "0",
     "codename": "",
-    "type": "ordinary"
+    "type": "ordinary",
+    "grade": "9",
+    "funeralPreference": "화장",
+    "totalIncidents": "170",
+    "specialCases": "14",
+    "purificationHistory": ""
   }
 ]

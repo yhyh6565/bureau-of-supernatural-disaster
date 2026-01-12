@@ -1,22 +1,4 @@
 {
-  "personas": [
-    "choiyowon",
-    "haegeum",
-    "janghyeowoon",
-    "koyoungeun",
-    "parkhonglim",
-    "ryujaegwan",
-    "solum"
-  ],
-  "departments": {
-    "hyunmu": "현무반",
-    "baekho": "백호반",
-    "jujak": "주작반",
-    "hyeonmu": "현무반"
-  },
-  "status": {
-    "active": "재직",
-    "resigned": "퇴사",
-    "missing": "실종"
-  }
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-12T06:54:27.025Z"
 }

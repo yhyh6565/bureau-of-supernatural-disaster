@@ -1,8 +1,23 @@
 {
-  "personaId": "parkhonglim",
+  "id": "",
+  "name": "박홍림",
+  "personaKey": "parkhonglim",
+  "codename": "",
+  "department": "hyunmu",
+  "team": "1팀",
+  "rank": "팀장",
+  "extension": "5001",
+  "status": "active",
+  "contamination": 0,
+  "grade": 6,
+  "totalIncidents": 133,
+  "specialCases": 19,
+  "funeralPreference": "화장",
+  "purificationHistory": [
+    "2025-04-02",
+    "2025-06-27",
+    "2025-12-17"
+  ],
   "profileImage": "/avatars/parkhonglim.png",
-  "bio": "자재 관리의 신",
-  "specialAbility": "없음",
-  "joinDate": "2019-11-20",
-  "currentStatus": "재직"
+  "rentals": []
 }
