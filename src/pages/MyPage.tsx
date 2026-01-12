@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useGameStore } from '@/store/gameStore';
 import { useResourceStore } from '@/store/resourceStore';
 import { useBureauStore } from '@/store/bureauStore';
-import { DEPARTMENT_INFO } from '@/constants/haetae';
+import { DEPARTMENT_INFO, STATUS_MAP } from '@/constants/haetae';
 import { FUNERAL_OPTIONS } from '@/constants/haetae';
 import { User, Phone, Shield, Heart, AlertTriangle, Package, Calendar, Brain, Hash } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
@@ -48,7 +48,7 @@ export function MyPage() {
   const displayDeptName = isSegwang ? redact(deptInfo.name) : deptInfo.name;
   const displayDeptFullName = isSegwang ? redact(deptInfo.fullName) : deptInfo.fullName;
 
-  const displayStatus = isSegwang ? '■■' : agent.status;
+  const displayStatus = isSegwang ? '■■' : (STATUS_MAP[agent.status] || agent.status);
   const displayContamination = isSegwang ? 100 : Math.round(contamination);
 
   const handleFuneralSave = () => {

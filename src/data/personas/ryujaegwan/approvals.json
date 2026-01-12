@@ -10,7 +10,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-01T09:30:00",
     "processedAt": "",
-    "relatedIncidentId": "inc-003"
+    "relatedIncidentId": "inc-003",
+    "createdByName": "류재관",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "ryujaegwan",
@@ -23,7 +25,9 @@
     "approver": "agent-admin-002",
     "createdAt": "2026-01-09T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "류재관",
+    "approverName": "임재현"
   },
   {
     "ownerId": "ryujaegwan",
@@ -36,7 +40,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-01T08:00:00",
     "processedAt": "",
-    "relatedIncidentId": "inc-007"
+    "relatedIncidentId": "inc-007",
+    "createdByName": "류재관",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "ryujaegwan",
@@ -49,6 +55,8 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-08-11T09:00:00",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "류재관",
+    "approverName": "agent-team-lead"
   }
 ]

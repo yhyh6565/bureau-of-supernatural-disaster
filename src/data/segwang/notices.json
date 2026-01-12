@@ -6,11 +6,11 @@
     "fullContent": "마지막 메시지를 남긴다. 서울 본부는 응답이 없다. 외부 지원은 오지 않는다.\n우리는 할 수 있는 모든 것을 했다. 15,000명의 시민을 지하철로 대피시켰다.\n하지만 역들이 변하고 있다. 대피소가 재난이 되고 있다.\n이 기록을 보는 누군가에게, 우리는 끝까지 싸웠다. 세광특별시를 기억해달라.",
     "author": "지부장",
     "createdAt": "2024-05-04T23:47:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "공지",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -20,11 +20,11 @@
     "fullContent": "전체 데이터 백업 완료. 서버실 환경 이상 감지. 비상 전원 가동 중 (배터리 3%).",
     "author": "시스템",
     "createdAt": "2024-05-04T23:46:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "전산팀",
     "category": "시스템",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "hyunmu"
   },
   {
@@ -34,11 +34,11 @@
     "fullContent": "즉시 지하철역에서 철수하라. 반복한다. 즉시 철수하라.\n역들을 봉쇄한다. 더 이상 대피소가 아니다.",
     "author": "지부장",
     "createdAt": "2024-05-04T23:42:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -48,11 +48,11 @@
     "fullContent": "서울 본부 연결 실패 (15회 연속). 내부망만 사용 가능.",
     "author": "시스템",
     "createdAt": "2024-05-04T23:35:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "전산팀",
     "category": "시스템",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "hyunmu"
   },
   {
@@ -62,11 +62,11 @@
     "fullContent": "각 역 담당 요원 긴급 보고: 자정역 카지노 시설 변이, 한밤역 도서관 이상현상,\n오후역 방송 설비 무단 작동, 한낮역 주거지역 공간 왜곡.\n시민 대피는 계속하되 최대한 경계하라.",
     "author": "지부장",
     "createdAt": "2024-05-04T23:31:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -76,11 +76,11 @@
     "fullContent": "전 요원에게 명령한다. 지상을 보지 마라. 하늘을 보지 마라.\n이미 여러 요원이 정신 오염을 보고했다. 지하로만 이동하라.",
     "author": "지부장",
     "createdAt": "2024-05-04T23:15:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "보안팀",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -90,11 +90,11 @@
     "fullContent": "본부 연결 실패. 강원도 지부 연결 실패. 인천 지부 연결 실패.\n자체 대응 모드로 전환.",
     "author": "시스템",
     "createdAt": "2024-05-04T22:58:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "전산팀",
     "category": "시스템",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "hyunmu"
   },
   {
@@ -104,11 +104,11 @@
     "fullContent": "모든 지상 경로가 차단되었다. 도로, 건물, 모든 것이 변했다.\n지하철이 유일한 대피 경로다. 순환선 7개 역으로 시민을 집중시켜라.",
     "author": "지부장",
     "createdAt": "2024-05-04T22:47:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -118,11 +118,11 @@
     "fullContent": "세광역, 자정역, 한밤역, 황혼역, 오후역, 한낮역, 아침역.\n각 역에 담당 요원 배치 완료. 시민 수용 최대한 진행하라.",
     "author": "지부장",
     "createdAt": "2024-05-04T22:34:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -132,11 +132,11 @@
     "fullContent": "피해 규모 추산 불가. 전 지역 단위 이상현상 확인.\n자동으로 강원도 지부에 지원 요청 발송됨.",
     "author": "시스템",
     "createdAt": "2024-05-04T22:15:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "전산팀",
     "category": "시스템",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "hyunmu"
   },
   {
@@ -146,11 +146,11 @@
     "fullContent": "세광역 주변 지형이 변하고 있습니다. 도로가 사라지고 건물이 뒤틀립니다.\n미확인 개체 다수 포착. 즉시 지원 요청합니다.",
     "author": "백호 1팀",
     "createdAt": "2024-05-04T22:01:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "필독",
     "sourceDepartment": "백호반",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -160,11 +160,11 @@
     "fullContent": "최초 발생지로부터 반경 5km 확산 확인. 확산 속도 가속 중.\n30분 내 전 시 단위 확산 예상.",
     "author": "백호 2팀",
     "createdAt": "2024-05-04T21:43:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "백호반",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -174,11 +174,11 @@
     "fullContent": "전 요원 즉시 집결. 비상 대응 프로토콜 발동.\n시민 대피 작전 개시. 지하철 순환선을 대피 경로로 지정.",
     "author": "지부장",
     "createdAt": "2024-05-04T21:30:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "본부",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -188,11 +188,11 @@
     "fullContent": "20:47~21:00 사이 시내 전역에서 47건의 이상현상 신고 접수.\n자동 분류 실패. 수동 대응 필요.",
     "author": "시스템",
     "createdAt": "2024-05-04T21:05:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "전산팀",
     "category": "시스템",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "hyunmu"
   },
   {
@@ -202,11 +202,11 @@
     "fullContent": "구시가지 ██번지 일대에서 시작된 것으로 추정.\n하늘이 이상합니다. 무언가가 내려오고 있습니다.",
     "author": "백호 1팀",
     "createdAt": "2024-05-04T20:47:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "백호반",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "baekho"
   },
   {
@@ -216,11 +216,11 @@
     "fullContent": "19:50부터 구시가지 일대 신고 급증. 현재 47건 신고 접수. 백호팀 출동 요청.",
     "author": "당직실",
     "createdAt": "2024-05-04T20:22:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "필독",
     "sourceDepartment": "총무팀",
     "category": "안전",
-    "isUrgent": "false",
+    "isUrgent": false,
     "department": "jujak"
   },
   {
@@ -230,11 +230,11 @@
     "fullContent": "5월 8일(목) 14:00, 세광지부 대회의실에서 정기 안전교육을 실시합니다.\n전 요원 필참. - 장비관리반",
     "author": "장비관리반",
     "createdAt": "2024-05-04T19:55:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "일반",
     "sourceDepartment": "인사팀",
     "category": "교육",
-    "isUrgent": "false",
+    "isUrgent": false,
     "department": "jujak"
   },
   {
@@ -244,11 +244,11 @@
     "fullContent": "구시가지 골목 일대에서 미확인 이상현상 최초 식별.\n순찰팀 즉시 확인 요망. 시민 접근 통제 바람.",
     "author": "당직실",
     "createdAt": "2024-05-04T19:47:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "긴급",
     "sourceDepartment": "총무팀",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "department": "jujak"
   },
   {
@@ -258,11 +258,11 @@
     "fullContent": "5/5(월) 현무2팀, 5/6(화) 백호1팀, 5/7(수) 주작1팀... - 당직실",
     "author": "당직실",
     "createdAt": "2024-05-04T19:30:00",
-    "isRead": "false",
+    "isRead": false,
     "priority": "일반",
     "sourceDepartment": "총무팀",
     "category": "공지",
-    "isUrgent": "false",
+    "isUrgent": false,
     "department": "jujak"
   }
 ]

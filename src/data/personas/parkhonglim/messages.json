@@ -7,8 +7,10 @@
     "title": "홍 언니",
     "content": "언니. 잘 자나? 갑자기 생각나서.",
     "createdAt": "2025-04-12T23:30",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -18,8 +20,10 @@
     "title": "홍 언니",
     "content": "보고 싶네.",
     "createdAt": "2025-06-25T01:15",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -29,8 +33,10 @@
     "title": "홍 언니",
     "content": "오늘 달이 참 밝다. 같이 봤으면 좋았을 텐데.",
     "createdAt": "2025-08-15T22:45",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -40,8 +46,10 @@
     "title": "홍 언니",
     "content": "별일 없지?",
     "createdAt": "2025-10-02T00:10",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -51,8 +59,10 @@
     "title": "홍 언니",
     "content": "홍 언니. 꿈에 나왔어. 얼굴 보니까 좋더라.",
     "createdAt": "2025-11-20T23:55",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "해금",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -62,8 +72,10 @@
     "title": "",
     "content": "",
     "createdAt": "2025-05-30T10:00",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "최요원",
+    "senderDepartment": "출동구조반"
   },
   {
     "ownerId": "parkhonglim",
@@ -73,7 +85,9 @@
     "title": "",
     "content": "",
     "createdAt": "2025-09-10T14:30",
-    "isRead": "false",
-    "readAt": ""
+    "isRead": false,
+    "readAt": "",
+    "senderName": "최요원",
+    "senderDepartment": "출동구조반"
   }
 ]

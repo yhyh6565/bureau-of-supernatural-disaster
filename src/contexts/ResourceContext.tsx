@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { RentalRecord, Equipment } from '@/types/haetae';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import * as resourceService from '@/services/resourceService';
 
 interface ResourceContextType {
@@ -12,7 +12,7 @@ interface ResourceContextType {
 const ResourceContext = createContext<ResourceContextType | undefined>(undefined);
 
 export function ResourceProvider({ children }: { children: ReactNode }) {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const [rentals, setRentals] = useState<RentalRecord[]>([]);
 
     // 초기화: 로그인 시 agent의 rentals 로드

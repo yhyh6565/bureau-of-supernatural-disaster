@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useGameStore } from '@/store/gameStore';
 import { useResourceStore } from '@/store/resourceStore';
 import { useBureauStore } from '@/store/bureauStore';
-import { DEPARTMENT_INFO } from '@/constants/haetae';
+import { DEPARTMENT_INFO, STATUS_MAP } from '@/constants/haetae';
 import { User, Brain, Briefcase, Package } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
@@ -64,7 +64,7 @@ export function PersonalInfoWidget() {
                     </div>
                     <div className="space-y-0.5">
                         <span className="text-[10px] text-muted-foreground uppercase">근무상태</span>
-                        <p className="text-sm">{censorText(agent.status)}</p>
+                        <p className="text-sm">{censorText(STATUS_MAP[agent.status] || agent.status)}</p>
                     </div>
                 </div>
 

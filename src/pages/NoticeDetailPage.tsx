@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useBureauStore } from '@/store/bureauStore';
 import segwangNotices from '@/data/segwang/notices.json';
@@ -18,7 +18,7 @@ import { formatSegwangDate } from '@/utils/dateUtils';
 export function NoticeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { agent } = useAuth();
+  const { agent } = useAuthStore();
   const { markAsRead } = useInteraction();
   const { mode } = useBureauStore();
 
@@ -123,7 +123,7 @@ export function NoticeDetailPage() {
           {/* 본문 내용 */}
           <div className="prose prose-sm max-w-none">
             <div className="text-base leading-relaxed whitespace-pre-wrap">
-              {notice.fullContent}
+              {notice.fullContent.replace(/\\n/g, '\n').replace(/\\r/g, '')}
             </div>
           </div>
 

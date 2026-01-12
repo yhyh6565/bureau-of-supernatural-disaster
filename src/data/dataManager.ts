@@ -13,16 +13,9 @@ import GLOBAL_SCHEDULES_JSON from '@/data/global/schedules.json';
 import SHARED_INCIDENTS_JSON from '@/data/incidents.json';
 
 // Import Segwang Data
-import SEGWANG_MESSAGES_JSON from '@/data/segwang/messages.json'; // messages.json might not exist if source csv handled differently, verify logic. Script generates if CSV exists.
-// Wait, step 2036 output said "Ordinary_messages.csv -> messages.json".
-// Did Segwang have messages? No, step 2036 only listed "Segwang_approvals.csv -> approvals.json", "Segwang_schedules.csv -> schedules.json".
-// Segwang messages might not exist. I should check existence or use empty array if import fails? No, static import will fail.
-// I will assume only existing files should be imported.
-// Segwang messages are NOT in build script output (step 2024 buildSegwang function).
-// So no SEGWANG_MESSAGES.
-
 import SEGWANG_APPROVALS_JSON from '@/data/segwang/approvals.json';
 import SEGWANG_SCHEDULES_JSON from '@/data/segwang/schedules.json';
+import SEGWANG_NOTICES_JSON from '@/data/segwang/notices.json'; // Added for checking
 
 // Import Ordinary Data
 import ORDINARY_MESSAGES_JSON from '@/data/ordinary/messages.json';
@@ -30,26 +23,20 @@ import ORDINARY_APPROVALS_JSON from '@/data/ordinary/approvals.json';
 import ORDINARY_SCHEDULES_JSON from '@/data/ordinary/schedules.json';
 import ORDINARY_INSPECTIONS_JSON from '@/data/ordinary/inspections.json';
 
-
 import { parseDateValue } from '@/utils/dateUtils';
 
 // Helper to parse dates in JSON data
 function parseDates<T>(item: any): any {
     if (!item) return item;
 
-    // Recursively handle arrays
     if (Array.isArray(item)) {
         return item.map(sub => parseDates(sub));
     }
 
-    // Recursively handle objects
     if (typeof item === 'object' && item !== null) {
-        // If it's already a Date object, return it (though parseDateValue handles it too)
         if (item instanceof Date) return item;
 
         const newItem = { ...item };
-
-        // Explicitly handle date fields
         const DATE_FIELDS = ['createdAt', 'updatedAt', 'resolvedAt', 'startDate', 'endDate', 'date', 'rentalDate', 'dueDate', 'processedAt', 'lastUpdated', 'assignedAt', 'completedAt', 'scheduledDate'];
 
         Object.keys(newItem).forEach(key => {
@@ -65,40 +52,68 @@ function parseDates<T>(item: any): any {
     return item;
 }
 
+// ---------------------------------------------------------------------------
+// Dynamic Import of Persona Data (Vite Feature)
+// ---------------------------------------------------------------------------
+const personaMessagesModules = import.meta.glob('@/data/personas/*/messages.json', { eager: true });
+const personaApprovalsModules = import.meta.glob('@/data/personas/*/approvals.json', { eager: true });
+const personaSchedulesModules = import.meta.glob('@/data/personas/*/schedules.json', { eager: true });
+const personaNotificationsModules = import.meta.glob('@/data/personas/*/notifications.json', { eager: true });
+const personaInspectionsModules = import.meta.glob('@/data/personas/*/inspections.json', { eager: true });
+
+// Extract Persona Data
+const PERSONA_MESSAGES = Object.values(personaMessagesModules).flatMap((mod: any) => parseDates<Message>(mod.default || mod));
+const PERSONA_APPROVALS = Object.values(personaApprovalsModules).flatMap((mod: any) => parseDates<ApprovalDocument>(mod.default || mod));
+const PERSONA_SCHEDULES = Object.values(personaSchedulesModules).flatMap((mod: any) => parseDates<Schedule>(mod.default || mod));
+const PERSONA_INSPECTIONS = Object.values(personaInspectionsModules).flatMap((mod: any) => parseDates<InspectionRequest>(mod.default || mod));
+
+// Special handling for Notifications to attach target persona info (deduced from path)
+const PERSONA_NOTIFICATIONS = Object.entries(personaNotificationsModules).flatMap(([path, mod]: [string, any]) => {
+    // Path example: /src/data/personas/solum/notifications.json
+    const parts = path.split('/');
+    const personaIndex = parts.indexOf('personas') + 1;
+    const personaKey = parts[personaIndex]; // 'solum'
+
+    const data = mod.default || mod;
+    return parseDates<Notification[]>(data).map((n: any) => ({
+        ...n,
+        _targetPersona: personaKey // Internal tag for filtering
+    }));
+});
+// ---------------------------------------------------------------------------
+
 const ALL_INCIDENTS = parseDates<Incident>(SHARED_INCIDENTS_JSON);
-const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
 const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
 const GLOBAL_MANUALS = parseDates<Manual>(GLOBAL_MANUALS_JSON);
 
-// Aggregate Messages
+// Aggregate All Data
 const ALL_MESSAGES = [
     ...parseDates<Message>(GLOBAL_MESSAGES_JSON),
-    ...parseDates<Message>(ORDINARY_MESSAGES_JSON || [])
+    ...parseDates<Message>(ORDINARY_MESSAGES_JSON || []),
+    ...PERSONA_MESSAGES
 ];
 
-// Aggregate Approvals
 const ALL_APPROVALS = [
     ...parseDates<ApprovalDocument>(GLOBAL_APPROVALS_JSON),
     ...parseDates<ApprovalDocument>(SEGWANG_APPROVALS_JSON),
-    ...parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON || [])
+    ...parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON || []),
+    ...PERSONA_APPROVALS
 ];
 
-// Aggregate Schedules
 const ALL_SCHEDULES = [
     ...parseDates<Schedule>(GLOBAL_SCHEDULES_JSON),
     ...parseDates<Schedule>(SEGWANG_SCHEDULES_JSON),
-    ...parseDates<Schedule>(ORDINARY_SCHEDULES_JSON || [])
+    ...parseDates<Schedule>(ORDINARY_SCHEDULES_JSON || []),
+    ...PERSONA_SCHEDULES
 ];
 
-// Aggregate Inspections (Global + Ordinary) - Global/inspections.json didn't exist in script?
-// Step 2024 buildGlobal list: approvals, messages, notifications, schedules, manuals. No inspections.
-// So GLOBAL_INSPECTIONS_JSON from original code is invalid if not generated?
-// Original: import GLOBAL_INSPECTIONS_JSON from '@/data/global/inspections.json';
-// Script 2024: No Global_inspections.csv processing.
-// So inspections only valid for Ordinary or Persona.
-const ALL_INSPECTIONS = parseDates<InspectionRequest>(ORDINARY_INSPECTIONS_JSON || []);
+const ALL_INSPECTIONS = [
+    ...parseDates<InspectionRequest>(ORDINARY_INSPECTIONS_JSON || []),
+    ...PERSONA_INSPECTIONS
+];
 
+const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
 
 export const DataManager = {
     // Incidents: Unified
@@ -108,26 +123,33 @@ export const DataManager = {
 
     // Messages: Centralized with Filtering
     getMessages: (agent: Agent | null) => {
-        if (!agent) return ALL_MESSAGES.filter((m: any) => !m.receiverId || m.receiverId === 'all'); // Fallback for no agent
+        if (!agent) return ALL_MESSAGES.filter((m: any) => !m.receiverId || m.receiverId === 'all');
 
-        // Get messages where I am the receiver OR I am the sender
         return ALL_MESSAGES.filter((msg: Message) =>
-            msg.receiverId === agent.id ||
-            msg.receiverId === agent.personaKey ||
+            msg.receiverId === agent.id || // Exact ID match
+            msg.receiverId === agent.personaKey || // Key match (e.g. 'solum')
+            msg.receiverId === agent.codename || // Codename match
             msg.senderId === agent.id ||
             msg.senderId === agent.personaKey
         ).sort((a: Message, b: Message) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     },
 
-    // Notifications: Global + Personal filtering (if we add targetId to notifications later)
+    // Notifications: Global + Personal
     getNotifications: (agent: Agent | null) => {
-        return GLOBAL_NOTIFICATIONS;
+        if (!agent) return GLOBAL_NOTIFICATIONS;
+
+        const myPersonaNotices = PERSONA_NOTIFICATIONS.filter((n: any) =>
+            n._targetPersona === agent.personaKey || n._targetPersona === agent.id
+        );
+
+        // Remove duplicates if any (though unlikely between global and persona)
+        return [...GLOBAL_NOTIFICATIONS, ...myPersonaNotices]
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     },
 
     // Approvals: Centralized with Filtering
     getApprovals: (agent: Agent | null) => {
         if (!agent) return [];
-        // Show approvals created by me OR approvals where I am the approver
         return ALL_APPROVALS.filter((doc: ApprovalDocument) =>
             doc.createdBy === agent.id ||
             doc.createdBy === agent.personaKey ||
@@ -139,14 +161,17 @@ export const DataManager = {
     // Schedules: Centralized with Filtering
     getSchedules: (agent: Agent | null) => {
         if (!agent) return [];
-        // Filter schedules for this agent
-        return ALL_SCHEDULES.filter((s: Schedule) => !s.agentId || s.agentId === agent.id || s.agentId === agent.personaKey);
+        return ALL_SCHEDULES.filter((s: Schedule) =>
+            !s.agentId ||
+            s.agentId === agent.id ||
+            s.agentId === agent.personaKey
+        );
     },
 
-    // Equipment: Global only (same for everyone)
+    // Equipment: Global only
     getEquipment: () => GLOBAL_EQUIPMENT,
 
-    // Locations: Global only (same for everyone)
+    // Locations: Global only
     getLocations: () => GLOBAL_LOCATIONS,
 
     // Manuals: Global only
@@ -154,27 +179,21 @@ export const DataManager = {
 
     getManual: (id: string) => GLOBAL_MANUALS.find((m: Manual) => m.id === id),
 
-    // 캐싱된 통계 데이터
     _statsCache: null as ReturnType<typeof DataManager.getStats> | null,
     _statsCacheTime: 0,
 
     getStats: () => {
         const now = Date.now();
-        const CACHE_DURATION = 60000; // 1분 캐싱
+        const CACHE_DURATION = 60000;
 
-        // 캐시가 유효하면 반환
         if (DataManager._statsCache && (now - DataManager._statsCacheTime) < CACHE_DURATION) {
             return DataManager._statsCache;
         }
 
-        // Use ALL_INCIDENTS for consistent stats
         const allIncidents = ALL_INCIDENTS;
-
-        // Get current month start date
         const currentDate = new Date();
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
-        // Filter incidents created this month
         const thisMonthIncidents = allIncidents.filter((inc: any) =>
             new Date(inc.createdAt) >= monthStart
         );
@@ -205,14 +224,12 @@ export const DataManager = {
             },
         };
 
-        // 캐시 저장
         DataManager._statsCache = stats;
         DataManager._statsCacheTime = now;
 
         return stats;
     },
 
-    // Inspection Requests
     getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
         if (!agent) return [];
         return ALL_INSPECTIONS.filter((req: InspectionRequest) => req.agentId === agent.id || req.agentId === agent.personaKey);

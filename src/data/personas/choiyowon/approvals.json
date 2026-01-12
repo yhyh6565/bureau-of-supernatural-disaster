@@ -10,7 +10,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-01T09:30:00",
     "processedAt": "",
-    "relatedIncidentId": "inc-003"
+    "relatedIncidentId": "inc-003",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -23,7 +25,9 @@
     "approver": "agent-admin-002",
     "createdAt": "2026-01-09T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "임재현"
   },
   {
     "ownerId": "choiyowon",
@@ -36,7 +40,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-01T08:00:00",
     "processedAt": "",
-    "relatedIncidentId": "inc-007"
+    "relatedIncidentId": "inc-007",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -49,7 +55,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-08T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -62,7 +70,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-04-11T09:00:00",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -75,7 +85,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-08-11T09:00:00",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -88,7 +100,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-10-14T09:00:00",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -101,7 +115,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2026-01-01T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -114,7 +130,9 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-12-22T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   },
   {
     "ownerId": "choiyowon",
@@ -127,6 +145,8 @@
     "approver": "agent-team-lead",
     "createdAt": "2025-12-12T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "최요원",
+    "approverName": "agent-team-lead"
   }
 ]

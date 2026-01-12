@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useUser } from '@/contexts/UserContext';
 import { cn } from '@/lib/utils';
 
@@ -24,7 +24,7 @@ const FORBIDDEN_CONFIG = {
 } as const;
 
 export function ForbiddenExecutionSequence() {
-    const { logout } = useAuth();
+    const { logout } = useAuthStore();
     const { isGameOver, gameOverType } = useUser();
 
     // State

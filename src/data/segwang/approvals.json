@@ -6,7 +6,9 @@
     "status": "승인",
     "requestDate": "2024-05-04T20:15:00",
     "content": "백호1팀 구시가지 출동을 위한 A급 방호복 2벌 긴급 대여 요청",
-    "createdAt": "2024-05-04T20:15:00"
+    "createdAt": "2024-05-04T20:15:00",
+    "createdByName": "",
+    "approverName": ""
   },
   {
     "id": "appr-segwang-002",
@@ -15,7 +17,9 @@
     "status": "승인",
     "requestDate": "2024-05-04T21:30:00",
     "content": "전 요원 비상 소집 및 대응 체제 전환",
-    "createdAt": "2024-05-04T21:30:00"
+    "createdAt": "2024-05-04T21:30:00",
+    "createdByName": "",
+    "approverName": ""
   },
   {
     "id": "appr-segwang-003",
@@ -24,6 +28,8 @@
     "status": "승인",
     "requestDate": "2024-05-04T22:30:00",
     "content": "7개 역 임시 대피소 지정 및 시민 수용 작전",
-    "createdAt": "2024-05-04T22:30:00"
+    "createdAt": "2024-05-04T22:30:00",
+    "createdByName": "",
+    "approverName": ""
   }
 ]

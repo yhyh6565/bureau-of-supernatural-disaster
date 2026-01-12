@@ -10,7 +10,9 @@
     "approver": "agent-chief-001",
     "createdAt": "2026-01-06T03:20:10.512Z",
     "processedAt": "2026-01-06T03:20:10.512Z",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "해금",
+    "approverName": "agent-chief-001"
   },
   {
     "ownerId": "haegeum",
@@ -23,7 +25,9 @@
     "approver": "haegeum",
     "createdAt": "2026-01-10T03:20:10.512Z",
     "processedAt": "2026-01-10T03:20:10.512Z",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "현무3팀원2",
+    "approverName": "해금"
   },
   {
     "ownerId": "haegeum",
@@ -36,7 +40,9 @@
     "approver": "haegeum",
     "createdAt": "2026-01-08T03:20:10.512Z",
     "processedAt": "2026-01-08T03:20:10.512Z",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "현무3팀원3",
+    "approverName": "해금"
   },
   {
     "ownerId": "haegeum",
@@ -49,7 +55,9 @@
     "approver": "haegeum",
     "createdAt": "2026-01-05T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "현무3팀원4",
+    "approverName": "해금"
   },
   {
     "ownerId": "haegeum",
@@ -62,6 +70,8 @@
     "approver": "haegeum",
     "createdAt": "2026-01-09T03:20:10.512Z",
     "processedAt": "",
-    "relatedIncidentId": ""
+    "relatedIncidentId": "",
+    "createdByName": "현무3팀원5",
+    "approverName": "해금"
   }
 ]

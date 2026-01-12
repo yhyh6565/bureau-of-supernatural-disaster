@@ -8,7 +8,7 @@ import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { AlertTriangle, MapPin, Clock, Shield, Ban } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -37,7 +37,7 @@ function StatusBadge({ status }: { status: Incident['status'] }) {
 }
 
 export function IncidentList() {
-  const { agent } = useAuth();
+  const { agent } = useAuthStore();
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const incidents = DataManager.getIncidents(agent);

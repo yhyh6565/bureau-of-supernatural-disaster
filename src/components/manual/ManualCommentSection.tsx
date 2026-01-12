@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { type ManualComment, DEFAULT_MANUAL_COMMENTS } from '@/constants/manualComments';
 import { ManualStorage } from '@/utils/manualStorage';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,7 +13,7 @@ interface ManualCommentSectionProps {
 }
 
 export const ManualCommentSection: React.FC<ManualCommentSectionProps> = ({ manualId }) => {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const [comments, setComments] = useState<ManualComment[]>([]);
     const [newCommentText, setNewCommentText] = useState('');
     const [replyingTo, setReplyingTo] = useState<string | null>(null);

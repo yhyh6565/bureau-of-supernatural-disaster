@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, ReactNode, useEffect } from 'react';
 import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useBureauStore } from '@/store/bureauStore';
 import { DataManager } from '@/data/dataManager';
@@ -71,7 +71,7 @@ const parseInspections = (data: any[]): InspectionRequest[] => {
 };
 
 export function WorkProvider({ children }: { children: ReactNode }) {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const { triggeredIds } = useInteraction();
     const { mode } = useBureauStore();
 

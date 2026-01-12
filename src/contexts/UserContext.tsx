@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useBureauStore } from '@/store/bureauStore';
 
 export type GameOverType = 'none' | 'contamination' | 'forbidden_login';
@@ -16,7 +16,7 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const { mode } = useBureauStore();
     const SESSION_CONTAMINATION_KEY = 'haetae_contamination';
 

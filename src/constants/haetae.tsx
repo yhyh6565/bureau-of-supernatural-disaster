@@ -166,6 +166,17 @@ export const STATUS_STYLE: Record<IncidentStatus, { bgClass: string; textClass: 
     '관찰중': { bgClass: 'bg-yellow-100', textClass: 'text-yellow-700', borderClass: 'border-yellow-500' },
 };
 
+// 근무 상태 한글 매핑
+export const STATUS_MAP: Record<string, string> = {
+    'active': '정상',
+    'resigned': '퇴사',
+    'missing': '실종',
+    'injured': '부상',
+    'contaminated': '오염',
+    'deceased': '사망',
+    'leave': '휴직',
+};
+
 // 공지사항 긴급도별 스타일
 export const NOTICE_PRIORITY_STYLE: Record<NoticePriority, {
     bgClass: string;

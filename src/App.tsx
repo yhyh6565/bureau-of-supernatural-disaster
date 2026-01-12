@@ -163,6 +163,8 @@ function BureauThemeWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { InteractionProvider } from "@/contexts/InteractionContext";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -170,8 +172,10 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <BureauThemeWrapper>
-          <ContaminationGameOver />
-          <AppRoutes />
+          <InteractionProvider>
+            <ContaminationGameOver />
+            <AppRoutes />
+          </InteractionProvider>
         </BureauThemeWrapper>
       </HashRouter>
     </TooltipProvider>

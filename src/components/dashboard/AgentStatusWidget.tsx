@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useUser } from '@/contexts/UserContext';
 import { Activity, Brain, ShieldAlert } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { STATUS_MAP } from '@/constants/haetae';
 
 export function AgentStatusWidget() {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const { contamination } = useUser();
 
     if (!agent) return null;
@@ -63,7 +64,7 @@ export function AgentStatusWidget() {
                         신체 상태
                     </span>
                     <span className="text-xs font-medium px-2 py-0.5 bg-accent rounded text-foreground">
-                        {agent.status}
+                        {STATUS_MAP[agent.status] || agent.status}
                     </span>
                 </div>
             </CardContent>

@@ -3,7 +3,7 @@ import { DataManager } from '@/data/dataManager';
 import { Calendar, Clock, MapPin, FileCheck, UserCheck, Dumbbell } from 'lucide-react';
 import { format, isToday, isTomorrow, addDays, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 const SCHEDULE_ICONS: Record<string, React.ElementType> = {
@@ -23,7 +23,7 @@ const SCHEDULE_COLORS: Record<string, string> = {
 };
 
 export function WeeklySchedule() {
-  const { agent } = useAuth();
+  const { agent } = useAuthStore();
   const navigate = useNavigate();
   const schedules = DataManager.getSchedules(agent);
   const today = new Date();
@@ -80,8 +80,8 @@ export function WeeklySchedule() {
                 key={idx}
                 className={`
                   flex gap-3 p-2 rounded-sm border
-                  ${isCurrentDay 
-                    ? 'bg-accent border-primary/30' 
+                  ${isCurrentDay
+                    ? 'bg-accent border-primary/30'
                     : 'bg-card border-border'
                   }
                 `}

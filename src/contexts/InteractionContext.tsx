@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useAuth } from './AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { DataManager } from '@/data/dataManager';
 import { Incident, Notification, TriggerType, Message } from '@/types/haetae';
 import { useToast } from '@/hooks/use-toast';
@@ -20,7 +20,7 @@ interface InteractionContextType {
 const InteractionContext = createContext<InteractionContextType | undefined>(undefined);
 
 export function InteractionProvider({ children }: { children: React.ReactNode }) {
-    const { agent, isAuthenticated } = useAuth();
+    const { agent, isAuthenticated } = useAuthStore();
     const { toast } = useToast();
 
     const TRIGGERED_IDS_KEY = 'haetae_triggered_ids';

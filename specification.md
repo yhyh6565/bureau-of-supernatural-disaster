@@ -15,7 +15,7 @@
 | **빌드 도구** | Vite |
 | **UI 컴포넌트** | shadcn/ui + Radix UI |
 | **스타일링** | Tailwind CSS |
-| **상태 관리** | React Context API, TanStack Query |
+| **상태 관리** | Zustand, TanStack Query |
 | **라우팅** | React Router DOM v6 |
 | **차트** | Recharts |
 | **폼** | React Hook Form + Zod |
@@ -153,16 +153,16 @@ getNotifications: (agent) => {
 
 시스템은 로그인 세션 동안 발생하는 사용자의 활동을 유지하기 위해 **`sessionStorage`**와 **`Context API`**를 적극 활용합니다.
 
-| 데이터 영역 | 관리 주체 (Context) | 저장소 Key | 지속 범위 | 동기화 방식 |
+| 데이터 영역 | 관리 주체 (Store) | 저장소 Key | 지속 범위 | 동기화 방식 |
 |-------------|---------------------|------------|-----------|-------------|
-| **이스터에그 상태** | `InteractionContext` | `haetae_triggered_ids` | 세션 | 모든 페이지 연동 (트리거 시 즉시 반영) |
-| **정신 오염도** | `UserContext` | `haetae_contamination` | 세션 | 새로고침 시 유지, 로그아웃 시 초기화 |
-| **업무 내역 (세션)** | `WorkContext` | `haetae_session_schedules` 등 | 세션 | 대시보드 및 업무 페이지 실시간 동기화 |
-| **재난 상태 (수락)** | `WorkContext` | `haetae_session_accepted_tasks` | 세션 | `processedIncidents`를 통해 전역 반영 |
+| **이스터에그 상태** | `interactionStore` | `haetae_triggered_ids` | 세션 | 모든 페이지 연동 (트리거 시 즉시 반영) |
+| **정신 오염도** | `gameStore` | `haetae_contamination` | 세션 | 새로고침 시 유지, 로그아웃 시 초기화 |
+| **업무 내역 (세션)** | `workStore` | `haetae_session_schedules` 등 | 세션 | 대시보드 및 업무 페이지 실시간 동기화 |
+| **재난 상태 (수락)** | `workStore` | `haetae_session_accepted_tasks` | 세션 | `processedIncidents`를 통해 전역 반영 |
 
 **핵심 아키텍처 (Single Source of Truth)**:
-*   `WorkContext`가 재난 및 업무 데이터의 **단일 진실 공급원** 역할을 수행합니다.
-*   **글로벌 가시성 필터링**: `InteractionContext`의 트리거 목록(`triggeredIds`)을 참조하여, 아직 발동조건(예: 30초 대기)을 충족하지 못한 숨겨진 재난/공지는 **앱 전체에서 원천적으로 차단**합니다.
+*   `workStore`가 재난 및 업무 데이터의 **단일 진실 공급원** 역할을 수행합니다.
+*   **글로벌 가시성 필터링**: `interactionStore`의 트리거 목록(`triggeredIds`)을 참조하여, 아직 발동조건(예: 30초 대기)을 충족하지 못한 숨겨진 재난/공지는 **앱 전체에서 원천적으로 차단**합니다.
 *   이를 통해 대시보드, 상황판, 담당 업무 등 모든 페이지에서 **동일한 재난 목록과 상태**를 보장합니다.
 
 ```
@@ -261,6 +261,11 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 ---
 
 ## ⚠️ 재난(어둠) 관리
+
+### 재난(Bureau)과 어둠(Dream Corp)의 구분
+*   **재난 (Incidents)**: 초자연재난관리국(Bureau)에서 공식적으로 인지하고 관리/봉인하려는 대상. `incidents.csv`에 등록된 항목들입니다.
+*   **어둠 (Darkness)**: 백일몽(Dream Corp)에서 관리하는 개념. '괴담'이라는 본질은 같으나 관리 주체와 방식이 다릅니다. (예: 삐에로, 헝그리 행맨 등)
+*   **교집합**: 룩키마트, 탐라행 고속열차, 반짝반짝 용궁 등은 두 기관 모두에서 관리하거나 인지하고 있는 중첩된 개체입니다.
 
 ### 위험 등급 체계 (형刑 시스템)
 
@@ -797,6 +802,8 @@ getLocations: () => GLOBAL_LOCATIONS;  // 모든 사용자에게 동일
 초자연재난관리국 인트라넷 시스템은 **데이터의 성격(Nature)**에 따라 3계층 구조로 설계되었습니다.
 
 #### 계층 1: 전사 공통 데이터 (Global Data)
+**소스(SSOT)**: `initial_data/*.csv`
+**빌드 결과**: `src/data/global/*.json`
 **위치**: `src/data/global/`
 **특징**: 모든 사용자에게 동일하게 표시되는 기반 데이터
 

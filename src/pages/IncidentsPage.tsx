@@ -231,7 +231,7 @@ export default function IncidentsPage() {
                             재난 상세 정보
                             {selectedIncident && (
                                 <>
-                                    <Badge className={`${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].bgClass} ${DANGER_LEVEL_STYLE[selectedIncident.dangerLevel].textClass}`}>
+                                    <Badge className={`${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] || DANGER_LEVEL_STYLE['등급불명']).bgClass} ${(DANGER_LEVEL_STYLE[selectedIncident.dangerLevel] || DANGER_LEVEL_STYLE['등급불명']).textClass}`}>
                                         {selectedIncident.dangerLevel}
                                     </Badge>
                                     <Badge className={`${STATUS_STYLE[selectedIncident.status].bgClass} ${STATUS_STYLE[selectedIncident.status].textClass}`}>

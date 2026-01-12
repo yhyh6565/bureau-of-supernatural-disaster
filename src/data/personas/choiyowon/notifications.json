@@ -8,9 +8,9 @@
     "priority": "필독",
     "sourceDepartment": "출동구조반반",
     "category": "안전",
-    "isUrgent": "true",
+    "isUrgent": true,
     "createdAt": "2025-12-29T10:00:00",
-    "isRead": "false"
+    "isRead": false
   },
   {
     "ownerId": "choiyowon",
@@ -21,8 +21,8 @@
     "priority": "일반",
     "sourceDepartment": "의료팀",
     "category": "복지",
-    "isUrgent": "false",
+    "isUrgent": false,
     "createdAt": "2025-12-20T09:00:00",
-    "isRead": "true"
+    "isRead": true
   }
 ]

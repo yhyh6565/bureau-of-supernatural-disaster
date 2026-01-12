@@ -8,8 +8,8 @@
     "priority": "일반",
     "sourceDepartment": "총무팀",
     "category": "장비",
-    "isUrgent": "false",
+    "isUrgent": false,
     "createdAt": "2025-12-20T14:00:00",
-    "isRead": "true"
+    "isRead": true
   }
 ]

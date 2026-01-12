@@ -4,11 +4,11 @@ import { DataManager } from '@/data/dataManager';
 import { Bell, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 export function NoticeWidget() {
-  const { agent } = useAuth();
+  const { agent } = useAuthStore();
   const navigate = useNavigate();
   const notifications = DataManager.getNotifications(agent);
   const recentNotices = notifications.slice(0, 4);

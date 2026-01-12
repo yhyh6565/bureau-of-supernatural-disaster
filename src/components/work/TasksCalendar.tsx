@@ -29,7 +29,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useWork } from '@/contexts/WorkContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { useResource } from '@/contexts/ResourceContext';
 import { DataManager } from '@/data/dataManager';
 import { STATUS_STYLE } from '@/constants/haetae';
@@ -45,7 +45,7 @@ export interface CalendarEvent {
 }
 
 export function TasksCalendar() {
-    const { agent } = useAuth();
+    const { agent } = useAuthStore();
     const { rentals } = useResource();
     const { schedules, approvals, inspectionRequests, acceptedIncidentIds } = useWork();
 

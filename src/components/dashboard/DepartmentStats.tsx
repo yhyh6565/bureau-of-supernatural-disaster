@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataManager } from '@/data/dataManager';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/store/authStore';
 import { DEPARTMENT_INFO } from '@/constants/haetae';
 import { TrendingUp, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -30,7 +30,7 @@ function StatCard({ label, value, icon: Icon, variant = 'default' }: StatCardPro
 }
 
 export function DepartmentStats() {
-  const { agent } = useAuth();
+  const { agent } = useAuthStore();
 
   if (!agent) return null;
 

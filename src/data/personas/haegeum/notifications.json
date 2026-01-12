@@ -8,8 +8,8 @@
     "priority": "필독",
     "sourceDepartment": "현장구조팀",
     "category": "행사",
-    "isUrgent": "false",
+    "isUrgent": false,
     "createdAt": "2025-12-30T10:00:00",
-    "isRead": "false"
+    "isRead": false
   }
 ]
