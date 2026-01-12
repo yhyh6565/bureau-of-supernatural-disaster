@@ -1,132 +1,132 @@
 [
   {
+    "ownerId": "choiyowon",
     "id": "appr-005",
     "type": "조사보고서",
     "title": "망원동 놀이터 현장 조사 계획서",
     "content": "민원인 접촉 및 야간 잠복 조사 계획입니다.",
     "status": "결재대기",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
     "createdAt": "2026-01-01T09:30:00",
+    "processedAt": "",
     "relatedIncidentId": "inc-003"
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-006",
     "type": "장비품의서",
     "title": "손전등 교체 요청",
     "content": "기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-admin-002",
-    "approverName": "총무팀",
     "createdAt": "2026-01-09T03:20:10.512Z",
-    "processedAt": "2026-01-09T03:20:10.512Z"
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-007",
     "type": "현장정리보고서",
     "title": "자작나무숲 결계 설치 결과",
     "content": "1차 결계 설치 완료. 특이사항 없음.",
     "status": "작성중",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반장 부서장",
     "createdAt": "2026-01-01T08:00:00",
+    "processedAt": "",
     "relatedIncidentId": "inc-007"
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-008",
     "type": "시말서",
     "title": "관용차 접촉 사고 시말서",
     "content": "현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.",
     "status": "반려",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
     "createdAt": "2026-01-08T03:20:10.512Z",
-    "rejectReason": "운전 연수 다시 받고 오세요."
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-009",
     "type": "휴가신청서",
     "title": "휴가(1일) 신청서",
     "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
-    "createdAt": "2025-04-11T09:00",
-    "processedAt": "2025-04-11T09:00"
+    "createdAt": "2025-04-11T09:00:00",
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-010",
     "type": "휴가신청서",
     "title": "휴가(1일) 신청서",
     "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
-    "createdAt": "2025-08-11T09:00",
-    "processedAt": "2025-08-11T09:00"
+    "createdAt": "2025-08-11T09:00:00",
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-011",
     "type": "휴가신청서",
     "title": "휴가(1일) 신청서",
     "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
-    "createdAt": "2025-10-14T09:00",
-    "processedAt": "2025-10-14T09:00"
+    "createdAt": "2025-10-14T09:00:00",
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-012",
     "type": "시말서",
     "title": "복장 규정 위반 시말서",
     "content": "현장 출동 시 유니폼 착용을 준수하지 못했습니다. 급한 출동으로 인해 사복 상태로 현장에 도착하였으며, 향후에는 규정을 철저히 준수하겠습니다.",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
     "createdAt": "2026-01-01T03:20:10.512Z",
-    "processedAt": "2026-01-01T03:20:10.512Z"
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-013",
     "type": "시말서",
     "title": "보고 누락 시말서",
     "content": "지난주 금요일 야간 순찰 결과를 구두로만 보고하고 서면 보고를 누락하였습니다. 재발 방지를 위해 체크리스트를 활용하겠습니다.",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
     "createdAt": "2025-12-22T03:20:10.512Z",
-    "processedAt": "2025-12-22T03:20:10.512Z"
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "choiyowon",
     "id": "appr-014",
     "type": "시말서",
     "title": "공용 비품 파손 시말서",
     "content": "사무실 내 커피 머신 사용 중 부주의로 인해 물통을 깨뜨렸습니다. 동일한 제품으로 배상 조치 완료하였으며, 물품 사용에 더욱 주의하겠습니다.",
     "status": "승인",
     "createdBy": "choiyowon",
-    "createdByName": "choiyowon",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
     "createdAt": "2025-12-12T03:20:10.512Z",
-    "processedAt": "2025-12-12T03:20:10.512Z"
+    "processedAt": "",
+    "relatedIncidentId": ""
   }
 ]

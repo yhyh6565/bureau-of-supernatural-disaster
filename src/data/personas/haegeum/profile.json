@@ -1,37 +1,8 @@
 {
-  "id": "HMU-301",
-  "name": "해금",
-  "personaKey": "haegeum",
-  "codename": "해금",
-  "department": "hyunmu",
-  "team": "3팀",
-  "rank": "팀장",
-  "extension": "2301",
-  "status": "정상",
-  "contamination": 12,
-  "totalIncidents": 48,
-  "specialCases": 18,
-  "rentals": [
-    {
-      "id": "rent-haegeum-001",
-      "equipmentName": "사인검",
-      "category": "지급",
-      "rentalDate": "2025-01-01T00:00:00.000Z",
-      "status": "정상",
-      "quantity": 1
-    },
-    {
-      "id": "rent-haegeum-002",
-      "equipmentName": "옥패",
-      "category": "지급",
-      "rentalDate": "2025-01-01T00:00:00.000Z",
-      "status": "정상",
-      "quantity": 7
-    }
-  ],
-  "purificationHistory": [
-    "2025-12-01"
-  ],
-  "funeralPreference": "데이터 소각",
-  "grade": 6
+  "personaId": "haegeum",
+  "profileImage": "/avatars/haegeum.png",
+  "bio": "냉철한 팀장",
+  "specialAbility": "결계술",
+  "joinDate": "2020-05-01",
+  "currentStatus": "재직"
 }

@@ -1,27 +1,30 @@
 [
   {
+    "ownerId": "ryujaegwan",
     "id": "sch-010",
     "title": "신년 시무식",
     "type": "행사",
     "date": "2026-01-02T10:00:00"
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "sch-011",
     "title": "부서 전체 회식",
     "type": "작전",
     "date": "2026-01-03T18:30:00"
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "sch-012",
     "title": "정기 주간 당직",
     "type": "당직",
     "date": "2026-01-05T18:00:00"
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "sch-015",
     "title": "이정 책방 방문",
     "type": "방문예약",
-    "date": "2025-10-21T14:00",
-    "relatedId": "loc-003"
+    "date": "2025-10-21T14:00"
   }
 ]

@@ -10,7 +10,7 @@ import { DataManager } from '@/data/dataManager';
 import { useAuthStore } from '@/store/authStore';
 import { useInteractionStore } from '@/store/interactionStore';
 import { useBureauStore } from '@/store/bureauStore';
-import { segwangNotices } from '@/data/segwang/notices';
+import segwangNotices from '@/data/segwang/notices.json';
 import { parseNotificationDate, safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
   Notification,

@@ -1,7 +1,6 @@
 import { Agent, Incident, Message, Notification, ApprovalDocument, Schedule, Equipment, VisitLocation, Manual, InspectionRequest } from '@/types/haetae';
 
 // Import Global Data (Centralized)
-import GLOBAL_INCIDENTS_JSON from '@/data/global/incidents.json';
 import GLOBAL_NOTIFICATIONS_JSON from '@/data/global/notifications.json';
 import GLOBAL_EQUIPMENT_JSON from '@/data/global/equipment.json';
 import GLOBAL_LOCATIONS_JSON from '@/data/global/locations.json';
@@ -9,7 +8,28 @@ import GLOBAL_MANUALS_JSON from '@/data/global/manuals.json';
 import GLOBAL_MESSAGES_JSON from '@/data/global/messages.json';
 import GLOBAL_APPROVALS_JSON from '@/data/global/approvals.json';
 import GLOBAL_SCHEDULES_JSON from '@/data/global/schedules.json';
-import GLOBAL_INSPECTIONS_JSON from '@/data/global/inspections.json';
+
+// Import Shared Data
+import SHARED_INCIDENTS_JSON from '@/data/incidents.json';
+
+// Import Segwang Data
+import SEGWANG_MESSAGES_JSON from '@/data/segwang/messages.json'; // messages.json might not exist if source csv handled differently, verify logic. Script generates if CSV exists.
+// Wait, step 2036 output said "Ordinary_messages.csv -> messages.json".
+// Did Segwang have messages? No, step 2036 only listed "Segwang_approvals.csv -> approvals.json", "Segwang_schedules.csv -> schedules.json".
+// Segwang messages might not exist. I should check existence or use empty array if import fails? No, static import will fail.
+// I will assume only existing files should be imported.
+// Segwang messages are NOT in build script output (step 2024 buildSegwang function).
+// So no SEGWANG_MESSAGES.
+
+import SEGWANG_APPROVALS_JSON from '@/data/segwang/approvals.json';
+import SEGWANG_SCHEDULES_JSON from '@/data/segwang/schedules.json';
+
+// Import Ordinary Data
+import ORDINARY_MESSAGES_JSON from '@/data/ordinary/messages.json';
+import ORDINARY_APPROVALS_JSON from '@/data/ordinary/approvals.json';
+import ORDINARY_SCHEDULES_JSON from '@/data/ordinary/schedules.json';
+import ORDINARY_INSPECTIONS_JSON from '@/data/ordinary/inspections.json';
+
 
 import { parseDateValue } from '@/utils/dateUtils';
 
@@ -45,29 +65,53 @@ function parseDates<T>(item: any): any {
     return item;
 }
 
-const GLOBAL_INCIDENTS = parseDates<Incident>(GLOBAL_INCIDENTS_JSON);
+const ALL_INCIDENTS = parseDates<Incident>(SHARED_INCIDENTS_JSON);
 const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON);
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
 const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
 const GLOBAL_MANUALS = parseDates<Manual>(GLOBAL_MANUALS_JSON);
-const GLOBAL_MESSAGES = parseDates<Message>(GLOBAL_MESSAGES_JSON);
-const GLOBAL_APPROVALS = parseDates<ApprovalDocument>(GLOBAL_APPROVALS_JSON);
-const GLOBAL_SCHEDULES = parseDates<Schedule>(GLOBAL_SCHEDULES_JSON);
-const GLOBAL_INSPECTIONS = parseDates<InspectionRequest>(GLOBAL_INSPECTIONS_JSON);
+
+// Aggregate Messages
+const ALL_MESSAGES = [
+    ...parseDates<Message>(GLOBAL_MESSAGES_JSON),
+    ...parseDates<Message>(ORDINARY_MESSAGES_JSON || [])
+];
+
+// Aggregate Approvals
+const ALL_APPROVALS = [
+    ...parseDates<ApprovalDocument>(GLOBAL_APPROVALS_JSON),
+    ...parseDates<ApprovalDocument>(SEGWANG_APPROVALS_JSON),
+    ...parseDates<ApprovalDocument>(ORDINARY_APPROVALS_JSON || [])
+];
+
+// Aggregate Schedules
+const ALL_SCHEDULES = [
+    ...parseDates<Schedule>(GLOBAL_SCHEDULES_JSON),
+    ...parseDates<Schedule>(SEGWANG_SCHEDULES_JSON),
+    ...parseDates<Schedule>(ORDINARY_SCHEDULES_JSON || [])
+];
+
+// Aggregate Inspections (Global + Ordinary) - Global/inspections.json didn't exist in script?
+// Step 2024 buildGlobal list: approvals, messages, notifications, schedules, manuals. No inspections.
+// So GLOBAL_INSPECTIONS_JSON from original code is invalid if not generated?
+// Original: import GLOBAL_INSPECTIONS_JSON from '@/data/global/inspections.json';
+// Script 2024: No Global_inspections.csv processing.
+// So inspections only valid for Ordinary or Persona.
+const ALL_INSPECTIONS = parseDates<InspectionRequest>(ORDINARY_INSPECTIONS_JSON || []);
 
 
 export const DataManager = {
-    // Incidents: Global only (Unified)
+    // Incidents: Unified
     getIncidents: (agent: Agent | null) => {
-        return GLOBAL_INCIDENTS;
+        return ALL_INCIDENTS;
     },
 
     // Messages: Centralized with Filtering
     getMessages: (agent: Agent | null) => {
-        if (!agent) return GLOBAL_MESSAGES.filter((m: any) => !m.receiverId || m.receiverId === 'all'); // Fallback for no agent
+        if (!agent) return ALL_MESSAGES.filter((m: any) => !m.receiverId || m.receiverId === 'all'); // Fallback for no agent
 
         // Get messages where I am the receiver OR I am the sender
-        return GLOBAL_MESSAGES.filter((msg: Message) =>
+        return ALL_MESSAGES.filter((msg: Message) =>
             msg.receiverId === agent.id ||
             msg.receiverId === agent.personaKey ||
             msg.senderId === agent.id ||
@@ -77,9 +121,6 @@ export const DataManager = {
 
     // Notifications: Global + Personal filtering (if we add targetId to notifications later)
     getNotifications: (agent: Agent | null) => {
-        // Currently notifications are global or mixed. 
-        // If we want personal, we should add 'targetAgentId' to Notification type.
-        // For now, return all global notifications + any filtered by logic if needed.
         return GLOBAL_NOTIFICATIONS;
     },
 
@@ -87,7 +128,7 @@ export const DataManager = {
     getApprovals: (agent: Agent | null) => {
         if (!agent) return [];
         // Show approvals created by me OR approvals where I am the approver
-        return GLOBAL_APPROVALS.filter((doc: ApprovalDocument) =>
+        return ALL_APPROVALS.filter((doc: ApprovalDocument) =>
             doc.createdBy === agent.id ||
             doc.createdBy === agent.personaKey ||
             doc.approver === agent.id ||
@@ -99,7 +140,7 @@ export const DataManager = {
     getSchedules: (agent: Agent | null) => {
         if (!agent) return [];
         // Filter schedules for this agent
-        return GLOBAL_SCHEDULES.filter((s: Schedule) => !s.agentId || s.agentId === agent.id || s.agentId === agent.personaKey);
+        return ALL_SCHEDULES.filter((s: Schedule) => !s.agentId || s.agentId === agent.id || s.agentId === agent.personaKey);
     },
 
     // Equipment: Global only (same for everyone)
@@ -126,41 +167,41 @@ export const DataManager = {
             return DataManager._statsCache;
         }
 
-        // Use only GLOBAL_INCIDENTS for consistent stats
-        const allIncidents = GLOBAL_INCIDENTS;
+        // Use ALL_INCIDENTS for consistent stats
+        const allIncidents = ALL_INCIDENTS;
 
         // Get current month start date
         const currentDate = new Date();
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
         // Filter incidents created this month
-        const thisMonthIncidents = allIncidents.filter(inc =>
+        const thisMonthIncidents = allIncidents.filter((inc: any) =>
             new Date(inc.createdAt) >= monthStart
         );
 
         const stats = {
             baekho: {
-                received: thisMonthIncidents.filter(inc => inc.status === '접수').length,
-                investigating: allIncidents.filter(inc => inc.status === '조사중').length,
-                completed: allIncidents.filter(inc =>
+                received: thisMonthIncidents.filter((inc: any) => inc.status === '접수').length,
+                investigating: allIncidents.filter((inc: any) => inc.status === '조사중').length,
+                completed: allIncidents.filter((inc: any) =>
                     inc.status !== '접수' && inc.status !== '조사중'
                 ).length,
             },
             hyunmu: {
-                requests: thisMonthIncidents.filter(inc =>
+                requests: thisMonthIncidents.filter((inc: any) =>
                     inc.status === '구조대기' || inc.status === '구조중'
                 ).length,
-                rescuing: allIncidents.filter(inc => inc.status === '구조중').length,
-                completed: allIncidents.filter(inc =>
+                rescuing: allIncidents.filter((inc: any) => inc.status === '구조중').length,
+                completed: allIncidents.filter((inc: any) =>
                     inc.status === '정리대기' || inc.status === '정리중' || inc.status === '종결' || inc.status === '봉인'
                 ).length,
             },
             jujak: {
-                requests: thisMonthIncidents.filter(inc =>
+                requests: thisMonthIncidents.filter((inc: any) =>
                     inc.status === '정리대기' || inc.status === '정리중'
                 ).length,
-                cleaning: allIncidents.filter(inc => inc.status === '정리중').length,
-                completed: allIncidents.filter(inc => inc.status === '종결' || inc.status === '봉인').length,
+                cleaning: allIncidents.filter((inc: any) => inc.status === '정리중').length,
+                completed: allIncidents.filter((inc: any) => inc.status === '종결' || inc.status === '봉인').length,
             },
         };
 
@@ -174,6 +215,6 @@ export const DataManager = {
     // Inspection Requests
     getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
         if (!agent) return [];
-        return GLOBAL_INSPECTIONS.filter((req: InspectionRequest) => req.agentId === agent.id || req.agentId === agent.personaKey);
+        return ALL_INSPECTIONS.filter((req: InspectionRequest) => req.agentId === agent.id || req.agentId === agent.personaKey);
     }
 };

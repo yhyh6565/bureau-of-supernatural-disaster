@@ -1,54 +1,54 @@
 [
   {
+    "ownerId": "ryujaegwan",
     "id": "appr-005",
     "type": "조사보고서",
     "title": "망원동 놀이터 현장 조사 계획서",
     "content": "민원인 접촉 및 야간 잠복 조사 계획입니다.",
     "status": "결재대기",
     "createdBy": "ryujaegwan",
-    "createdByName": "ryujaegwan",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
     "createdAt": "2026-01-01T09:30:00",
+    "processedAt": "",
     "relatedIncidentId": "inc-003"
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "appr-006",
     "type": "장비품의서",
     "title": "손전등 교체 요청",
     "content": "기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.",
     "status": "승인",
     "createdBy": "ryujaegwan",
-    "createdByName": "ryujaegwan",
     "approver": "agent-admin-002",
-    "approverName": "총무",
     "createdAt": "2026-01-09T03:20:10.512Z",
-    "processedAt": "2026-01-09T03:20:10.512Z"
+    "processedAt": "",
+    "relatedIncidentId": ""
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "appr-007",
     "type": "현장정리보고서",
     "title": "자작나무숲 결계 설치 결과",
     "content": "1차 결계 설치 완료. 특이사항 없음.",
     "status": "작성중",
     "createdBy": "ryujaegwan",
-    "createdByName": "ryujaegwan",
     "approver": "agent-team-lead",
-    "approverName": "팀장",
     "createdAt": "2026-01-01T08:00:00",
+    "processedAt": "",
     "relatedIncidentId": "inc-007"
   },
   {
+    "ownerId": "ryujaegwan",
     "id": "appr-010",
     "type": "휴가신청서",
     "title": "휴가(1일) 신청서",
     "content": "개인 사정으로 인한 연차 신청",
     "status": "승인",
     "createdBy": "ryujaegwan",
-    "createdByName": "ryujaegwan",
     "approver": "agent-team-lead",
-    "approverName": "출동구조반 부서장",
-    "createdAt": "2025-08-11T09:00",
-    "processedAt": "2025-08-11T09:00"
+    "createdAt": "2025-08-11T09:00:00",
+    "processedAt": "",
+    "relatedIncidentId": ""
   }
 ]

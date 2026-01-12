@@ -1,0 +1,43 @@
+id,name,department,team,rank,status,extension,contamination,codename,type
+choiyowon,최요원,출동구조반,1팀,요원,active,2101,15,,persona
+haegeum,해금,출동구조반,3팀,팀장,active,2301,0,,persona
+janghyeowoon,장허운,현장정리반,2팀,요원,active,3201,5,,persona
+koyoungeun,고영은,신규조사반,2팀,요원,active,4201,0,,persona
+parkhonglim,박홍림,자재과,,요원,active,5001,0,,persona
+ryujaegwan,류재관,출동구조반,1팀,요원,active,2102,0,,persona
+solum,김솔음,출동구조반,3팀,요원,resigned,2303,0,,persona
+agent001,김민수,신규조사반,1팀,요원,active,4101,3,,ordinary
+agent002,이진아,신규조사반,1팀,요원,active,4102,2,,ordinary
+agent003,박민준,신규조사반,1팀,요원,active,4103,1,,ordinary
+agent004,이서연,현장정리반,1팀,요원,active,3102,0,,ordinary
+agent005,김철수,출동구조반,5팀,요원,active,2501,0,,ordinary
+agent006,정우성,출동구조반,7팀,요원,active,2701,5,,ordinary
+agent007,최마리,현장정리반,1팀,요원,active,3103,0,,ordinary
+system,시스템,본부,,시스템,active,9999,0,,ordinary
+agent-admin-002,행정직원2,행정팀,,직원,active,1002,0,,ordinary
+agent-admin-equip,장비담당,행정팀,,직원,active,1003,0,,ordinary
+agent-admin-hr,인사담당,행정팀,,직원,active,1004,0,,ordinary
+agent-admin-security,보안담당,행정팀,,직원,active,1005,0,,ordinary
+agent-admin-finance,재무담당,행정팀,,직원,active,1006,0,,ordinary
+agent-admin-099,행정직원99,행정팀,,직원,active,1099,0,,ordinary
+agent-hm3-002,현무3팀원2,출동구조반,3팀,요원,active,2302,0,,ordinary
+agent-hm3-003,현무3팀원3,출동구조반,3팀,요원,active,2303,0,,ordinary
+agent-hm3-004,현무3팀원4,출동구조반,3팀,요원,active,2304,0,,ordinary
+agent-hm3-005,현무3팀원5,출동구조반,3팀,요원,active,2305,0,,ordinary
+agent-hm-009,현무팀원9,출동구조반,9팀,요원,active,2901,0,,ordinary
+agent-baekho-001,백호팀원1,신규조사반,1팀,요원,active,4001,0,,ordinary
+agent-baekho-002,백호팀원2,신규조사반,1팀,요원,active,4002,0,,ordinary
+agent-bh-005,백호팀원5,신규조사반,5팀,요원,active,4501,0,,ordinary
+agent-bh-102,백호팀원102,신규조사반,2팀,요원,active,4102,0,,ordinary
+agent-jj-002,정리팀원2,현장정리반,2팀,요원,active,3202,0,,ordinary
+agent-jj-005,정리팀원5,현장정리반,5팀,요원,active,3501,0,,ordinary
+agent-support-001,지원팀원1,지원팀,,직원,active,6001,0,,ordinary
+agent-unknown,미확인,미확인,,미확인,inactive,0,0,,ordinary
+seg_hm1_1,■■ ■■,현무반,1팀,팀장,missing,■■■■,0,■■■■,segwang
+seg_hm1_2,■■ ■■,현무반,1팀,요원,missing,■■■■,0,■■■■,segwang
+seg_bh1_1,■■ ■■,백호반,1팀,팀장,missing,■■■■,0,■■■■,segwang
+seg_bh1_2,■■ ■■,백호반,1팀,요원,missing,■■■■,0,■■■■,segwang
+seg_ja1_1,■■ ■■,주작반,1팀,팀장,missing,■■■■,0,■■■■,segwang
+seg_ja1_2,■■ ■■,주작반,1팀,요원,missing,■■■■,0,■■■■,segwang
+seg_hm2_1,■■ ■■,현무반,2팀,팀장,missing,■■■■,0,■■■■,segwang
+seg_hm2_2,■■ ■■,현무반,2팀,요원,missing,■■■■,0,■■■■,segwang

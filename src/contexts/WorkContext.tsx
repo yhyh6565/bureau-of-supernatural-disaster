@@ -9,9 +9,9 @@ import * as scheduleService from '@/services/scheduleService';
 import { usePersistentState } from '@/hooks/usePersistentState';
 
 // Import Saekwang data
-import { segwangIncidents } from '@/data/segwang/incidents';
-import { segwangInbox } from '@/data/segwang/messages';
-import { segwangNotices } from '@/data/segwang/notices';
+// Import Saekwang data (generated JSONs)
+import segwangInbox from '@/data/segwang/messages.json';
+import segwangNotices from '@/data/segwang/notices.json';
 import segwangSchedules from '@/data/segwang/schedules.json';
 import segwangApprovals from '@/data/segwang/approvals.json';
 
@@ -115,7 +115,7 @@ export function WorkProvider({ children }: { children: ReactNode }) {
 
         // Use Saekwang data if in Saekwang mode
         const baseIncidents = mode === 'segwang'
-            ? segwangIncidents
+            ? DataManager.getIncidents(agent)
             : DataManager.getIncidents(agent);
 
         return baseIncidents

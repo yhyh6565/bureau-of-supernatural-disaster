@@ -28,8 +28,7 @@ import {
 } from '@/components/ui/dialog';
 
 // Import Saekwang messages
-// Import Saekwang messages
-import { segwangInbox, segwangSent } from '@/data/segwang/messages';
+import segwangMessages from '@/data/segwang/messages.json';
 
 
 export function MessagesPage() {
@@ -39,6 +38,19 @@ export function MessagesPage() {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [newMessage, setNewMessage] = useState({ recipient: '', title: '', content: '' });
+
+  // Filter Segwang messages and parse dates
+  const segwangInbox = (segwangMessages as any[]).filter(m => m.receiverId === 'user').map(m => ({
+    ...m,
+    createdAt: new Date(m.createdAt),
+    isRead: m.isRead === 'true' || m.isRead === true
+  })) as Message[];
+
+  const segwangSent = (segwangMessages as any[]).filter(m => m.senderId === 'user').map(m => ({
+    ...m,
+    createdAt: new Date(m.createdAt),
+    isRead: m.isRead === 'true' || m.isRead === true
+  })) as Message[];
 
   // DataManager를 통해 메시지 로드 (또는 세광 데이터) + 세션 메시지 병합
   const baseMessages = mode === 'segwang'

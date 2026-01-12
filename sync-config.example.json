@@ -1,0 +1,40 @@
+{
+    "_comment": "Global Data",
+    "global/manuals": "",
+    "global/incidents": "",
+    "global/equipment": "",
+    "global/locations": "",
+    "global/notifications": "",
+    "global/schedules": "",
+    "_comment": "Persona Data (Partitioned)",
+    "persona_messages": {
+        "url": "",
+        "partitionBy": "owner_persona",
+        "targetDir": "src/data/personas/{partition}/messages.json"
+    },
+    "persona_approvals": {
+        "url": "",
+        "partitionBy": "owner_persona",
+        "targetDir": "src/data/personas/{partition}/approvals.json"
+    },
+    "persona_schedules": {
+        "url": "",
+        "partitionBy": "owner_persona",
+        "targetDir": "src/data/personas/{partition}/schedules.json"
+    },
+    "persona_inspections": {
+        "url": "",
+        "partitionBy": "owner_persona",
+        "targetDir": "src/data/personas/{partition}/inspections.json"
+    },
+    "persona_notifications": {
+        "url": "",
+        "partitionBy": "owner_persona",
+        "targetDir": "src/data/personas/{partition}/notifications.json"
+    },
+    "_comment": "Segwang Branch Data",
+    "segwang/messages": "",
+    "segwang/approvals": "",
+    "segwang/schedules": "",
+    "segwang/inspections": ""
+}

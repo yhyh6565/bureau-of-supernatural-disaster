@@ -1,5 +1,6 @@
 [
   {
+    "ownerId": "choiyowon",
     "id": "insp-002",
     "type": "정밀검사",
     "status": "완료",
@@ -9,10 +10,13 @@
     "createdAt": "2024-12-10T00:00:00"
   },
   {
+    "ownerId": "choiyowon",
     "id": "insp-003",
     "type": "정기검사",
     "status": "접수",
     "scheduledDate": "2025-01-05T09:00:00",
+    "symptoms": "",
+    "result": "",
     "createdAt": "2024-12-28T00:00:00"
   }
 ]

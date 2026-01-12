@@ -8,7 +8,7 @@ import { DataManager } from '@/data/dataManager';
 import { useAuth } from '@/contexts/AuthContext';
 import { useInteraction } from '@/contexts/InteractionContext';
 import { useBureau } from '@/contexts/BureauContext';
-import { segwangNotices } from '@/data/segwang/notices';
+import segwangNotices from '@/data/segwang/notices.json';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
 import { ArrowLeft, Calendar, Building2, User, Pin } from 'lucide-react';
 import { format } from 'date-fns';

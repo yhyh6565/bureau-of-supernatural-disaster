@@ -1,0 +1,151 @@
+
+> vite_react_shadcn_ts@0.0.0 prebuild
+> npm run data:rebuild
+
+
+> vite_react_shadcn_ts@0.0.0 data:rebuild
+> npm run data:clean && npm run data:validate && npm run data:build
+
+
+> vite_react_shadcn_ts@0.0.0 data:clean
+> rm -rf src/data/global src/data/personas src/data/segwang src/data/ordinary src/data/agents.json src/data/incidents.json src/data/config.json
+
+
+> vite_react_shadcn_ts@0.0.0 data:validate
+> tsx scripts/validate-data.ts
+
+🔍 Validating Bureau data...
+
+📄 Validating agents.csv...
+  ✓ All validations passed (42 rows)
+
+📄 Validating incidents.csv...
+  ✓ All validations passed (5 rows)
+
+📄 Validating Persona_approvals.csv...
+  ✓ All validations passed (25 rows)
+
+📄 Validating Persona_messages.csv...
+  ✓ All validations passed (44 rows)
+
+📄 Validating Persona_schedules.csv...
+  ✓ All validations passed (42 rows)
+
+📄 Validating Persona_notifications.csv...
+  ✓ All validations passed (4 rows)
+
+📄 Validating Persona_inspections.csv...
+  ✓ All validations passed (2 rows)
+
+✅ All Bureau data validations passed successfully!
+
+> vite_react_shadcn_ts@0.0.0 data:build
+> tsx scripts/build-data.ts
+
+🚀 Building Bureau data from CSV to JSON...
+
+
+📝 Building Global data...
+  ✓ Global_approvals.csv → global/approvals.json
+  ✓ Global_messages.csv → global/messages.json
+  ✓ Global_notifications.csv → global/notifications.json
+  ✓ Global_schedules.csv → global/schedules.json
+  ✓ Global_manuals.csv → global/manuals.json
+  ✓ Global_equipment.csv → global/equipment.json
+  ✓ Global_locations.csv → global/locations.json
+
+👤 Building Persona: choiyowon...
+  ✓ 10 approvals
+  ✓ 5 messages
+  ✓ 11 schedules
+  ✓ 2 notifications
+  ✓ 2 inspections
+  ✓ profile
+
+👤 Building Persona: haegeum...
+  ✓ 5 approvals
+  ✓ 6 messages
+  ✓ 4 schedules
+  ✓ 1 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+👤 Building Persona: janghyeowoon...
+  ✓ 3 approvals
+  ✓ 3 messages
+  ✓ 14 schedules
+  ✓ 0 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+👤 Building Persona: koyoungeun...
+  ✓ 3 approvals
+  ✓ 3 messages
+  ✓ 3 schedules
+  ✓ 0 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+👤 Building Persona: parkhonglim...
+  ✓ 0 approvals
+  ✓ 7 messages
+  ✓ 3 schedules
+  ✓ 0 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+👤 Building Persona: ryujaegwan...
+  ✓ 4 approvals
+  ✓ 5 messages
+  ✓ 4 schedules
+  ✓ 1 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+👤 Building Persona: solum...
+  ✓ 0 approvals
+  ✓ 15 messages
+  ✓ 3 schedules
+  ✓ 0 notifications
+  ✓ 0 inspections
+  ✓ profile
+
+🚨 Building Segwang data...
+  ✓ 8 agents
+  ✓ Segwang_approvals.csv → approvals.json
+  ✓ Segwang_schedules.csv → schedules.json
+  ✓ Segwang_notices.csv → notices.json
+  ✓ Segwang_messages.csv → messages.json
+
+👥 Building Ordinary agents data...
+  ✓ 27 agents
+  ✓ Ordinary_approvals.csv → approvals.json
+  ✓ Ordinary_messages.csv → messages.json
+  ✓ Ordinary_schedules.csv → schedules.json
+  ✓ Ordinary_inspections.csv → inspections.json
+
+📚 Building Shared data...
+  ✓ agents.csv → agents.json (42 agents)
+  ✓ incidents.csv → incidents.json (5 incidents)
+  ✓ _meta/config.json → config.json
+
+✅ Bureau data build completed successfully!
+
+> vite_react_shadcn_ts@0.0.0 build
+> vite build
+
+vite v5.4.19 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 1663 modules transformed.
+x Build failed in 1.73s
+error during build:
+[vite:load-fallback] Could not load /Users/yeonheedo/Desktop/개인 프로젝트/gottawork/bureau-of-supernatural-disaster/src/data/segwang/incidents (imported by src/pages/IncidentsPage.tsx): ENOENT: no such file or directory, open '/Users/yeonheedo/Desktop/개인 프로젝트/gottawork/bureau-of-supernatural-disaster/src/data/segwang/incidents'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1277:14)
+    at async Object.load (file:///Users/yeonheedo/Desktop/%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3/gottawork/bureau-of-supernatural-disaster/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65341:25)
+    at async PluginDriver.hookFirstAndGetPlugin (file:///Users/yeonheedo/Desktop/%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3/gottawork/bureau-of-supernatural-disaster/node_modules/rollup/dist/es/shared/node-entry.js:20630:28)
+    at async file:///Users/yeonheedo/Desktop/%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3/gottawork/bureau-of-supernatural-disaster/node_modules/rollup/dist/es/shared/node-entry.js:19750:33
+    at async Queue.work (file:///Users/yeonheedo/Desktop/%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3/gottawork/bureau-of-supernatural-disaster/node_modules/rollup/dist/es/shared/node-entry.js:20840:32)

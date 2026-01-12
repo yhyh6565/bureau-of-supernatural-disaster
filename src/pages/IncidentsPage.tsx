@@ -35,7 +35,7 @@ import { Button } from '@/components/ui/button';
 import { useInteractionStore } from '@/store/interactionStore';
 import { useWorkData } from '@/hooks/useWorkData';
 import { useBureauStore } from '@/store/bureauStore';
-import { segwangIncidents } from '@/data/segwang/incidents';
+import { DataManager } from '@/data/dataManager';
 
 type GroupBy = 'status' | 'dangerLevel';
 
@@ -78,7 +78,7 @@ export default function IncidentsPage() {
     }, [mode]);
 
     const baseIncidents = mode === 'segwang'
-        ? segwangIncidents
+        ? DataManager.getIncidents(null)
         : processedIncidents;
 
     const incidents = baseIncidents

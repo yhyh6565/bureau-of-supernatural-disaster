@@ -1,21 +1,8 @@
 {
-  "id": "JJK-201",
-  "name": "장허운",
-  "personaKey": "janghyeowoon",
-  "codename": "화각",
-  "department": "jujak",
-  "team": "2팀",
-  "rank": "실무관",
-  "extension": "4201",
-  "status": "오염",
-  "contamination": 28,
-  "totalIncidents": 26,
-  "specialCases": 4,
-  "rentals": [],
-  "purificationHistory": [
-    "2025-12-18",
-    "2025-11-25"
-  ],
-  "funeralPreference": "기억 소거 후 방생",
-  "grade": 7
+  "personaId": "janghyeowoon",
+  "profileImage": "/avatars/janghyeowoon.png",
+  "bio": "현장 정리 전문가",
+  "specialAbility": "없음",
+  "joinDate": "2021-08-10",
+  "currentStatus": "재직"
 }

@@ -4,7 +4,7 @@ import { Schedule, ApprovalDocument, InspectionRequest, Incident, Agent, VisitLo
 import { DataManager } from '@/data/dataManager';
 import * as approvalService from '@/services/approvalService';
 import * as scheduleService from '@/services/scheduleService';
-import { segwangIncidents } from '@/data/segwang/incidents';
+
 import segwangSchedules from '@/data/segwang/schedules.json';
 import segwangApprovals from '@/data/segwang/approvals.json';
 
@@ -166,7 +166,7 @@ export const getProcessedIncidents = (
 ): Incident[] => {
     if (!agent) return [];
 
-    const baseIncidents = mode === 'segwang' ? segwangIncidents : DataManager.getIncidents(agent);
+    const baseIncidents = DataManager.getIncidents(agent);
 
     return baseIncidents
         .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // trigger가 있으면 triggeredIds에 있어야 보임

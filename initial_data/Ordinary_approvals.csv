@@ -1,0 +1,6 @@
+id,type,title,content,status,createdBy,createdByName,approver,approverName,createdAt,relatedIncidentId
+appr-005,조사보고서,망원동 놀이터 현장 조사 계획서,민원인 접촉 및 야간 잠복 조사 계획입니다.,결재대기,me,me,agent-team-lead,팀장,2026-01-01T09:30:00,inc-003
+appr-006,장비품의서,손전등 교체 요청,기존 지급된 손전등(일반) 고장으로 인한 교체 신청. 특수 장비 아님.,승인,me,me,agent-admin-002,총무,2026-01-09T03:20:10.512Z,
+appr-007,현장정리보고서,자작나무숲 결계 설치 결과,1차 결계 설치 완료. 특이사항 없음.,작성중,me,me,agent-team-lead,팀장,2026-01-01T08:00:00,inc-007
+appr-008,시말서,관용차 접촉 사고 시말서,현장 출동 중 주차 기둥과 경미한 접촉 사고 발생... 죄송합니다.,반려,me,me,agent-admin-003,경영지원,2026-01-08T03:20:10.512Z,
+appr-009,휴가신청서,1월 연차 사용 신청,개인 사정으로 인한 연차 신청 (1/15),승인,me,me,agent-team-lead,팀장,2026-01-06T03:20:10.512Z,

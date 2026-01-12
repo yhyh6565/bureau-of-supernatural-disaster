@@ -1,20 +1,8 @@
 {
-  "id": "HMU-004",
-  "name": "김솔음",
-  "personaKey": "solum",
-  "codename": "포도",
-  "department": "hyunmu",
-  "team": "1팀",
-  "rank": "실무관",
-  "extension": "2104",
-  "status": "휴직",
-  "contamination": 22,
-  "totalIncidents": 24,
-  "specialCases": 7,
-  "rentals": [],
-  "purificationHistory": [
-    "2025-11-28"
-  ],
-  "funeralPreference": "수목장",
-  "grade": 7
+  "personaId": "solum",
+  "profileImage": "/avatars/solum.png",
+  "bio": "전설의 요원",
+  "specialAbility": "순간이동",
+  "joinDate": "2018-02-01",
+  "currentStatus": "퇴사"
 }

@@ -26,24 +26,17 @@ dist-ssr
 # QA Reports (local only)
 QA_reports/
 
-# Generated data (from templates)
-# Strategy: Explicitly list auto-generated files instead of using broad patterns
-# This prevents accidentally ignoring files that should be tracked
+# Generated data (from CSV via build-data.ts)
+# All JSON files are build artifacts generated from initial_data/*.csv
+# Only CSV files in initial_data/ are the source of truth
 
-# Auto-generated global data (except manuals.json which is version controlled)
-# src/data/global/equipment.json
-# src/data/global/incidents.json
-# src/data/global/locations.json
-# src/data/global/notifications.json
+# Auto-generated data directories
+src/data/global/
+src/data/personas/
+src/data/segwang/
+src/data/ordinary/
 
-# Auto-generated ordinary data (all files)
-# src/data/ordinary/*.json
-
-# Auto-generated persona data (all files in all persona directories)
-# src/data/personas/*/*.json
-
-# Keep these tracked:
-# - src/data/dataManager.ts (static TypeScript file)
-# - src/data/global/manuals.json (manual content, frequently updated)
-# - src/data/segwang/* (static Segwang easter egg data)
-# - src/data/interactions/* (static interaction data)
+# Auto-generated root data files
+src/data/agents.json
+src/data/incidents.json
+src/data/config.json

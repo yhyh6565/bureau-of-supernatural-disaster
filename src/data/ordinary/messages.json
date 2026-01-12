@@ -8,7 +8,7 @@
     "title": "오염도 정기 검사 안내",
     "content": "me님, 금월 정기 오염도 검사 기한 내 의료실 방문 바랍니다.",
     "createdAt": "2026-01-01T09:00:00",
-    "isRead": false
+    "isRead": "false"
   },
   {
     "id": "msg-011",
@@ -19,7 +19,7 @@
     "title": "Re: 구내식당 메뉴 관련",
     "content": "뭔진 모르겠는데 우리 팀 선배님들도 다 출근하신거 보면 맛있을 듯? 점심 업무 끝나면 전화 ㄱㄱ",
     "createdAt": "2026-01-01T11:20:00",
-    "isRead": false
+    "isRead": "false"
   },
   {
     "id": "msg-012",
@@ -30,7 +30,7 @@
     "title": "재난 진입 관련",
     "content": "파괴왕 신입 살아있다던데 뭐 들어본 거 없음?",
     "createdAt": "2026-01-01T08:45:00",
-    "isRead": true
+    "isRead": "true"
   },
   {
     "id": "msg-013",
@@ -41,7 +41,7 @@
     "title": "장비 반납 확인 부탁드립니다",
     "content": "me님, 빌려가신 포승줄 반납 처리가 아직 안 된 것 같습니다. 확인 부탁드립니다!",
     "createdAt": "2026-01-09T03:20:10.512Z",
-    "isRead": true
+    "isRead": "true"
   },
   {
     "id": "msg-014",
@@ -52,6 +52,6 @@
     "title": "연말정산 안내",
     "content": "안녕하세요 총무과입니다. me 님 연말정산 서류 미비된 부분이 있어 연락드립니다. 말일까지 필히 제출 부탁드립니다. ",
     "createdAt": "2026-01-06T03:20:10.512Z",
-    "isRead": true
+    "isRead": "true"
   }
 ]
