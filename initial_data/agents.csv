@@ -1,53 +1,53 @@
-id,name,department,team,rank,status,extension,contamination,codename,type,grade,funeralPreference,totalIncidents,specialCases,purificationHistory
-choiyowon,최요원,출동구조반,1팀,요원,active,2101,15,,persona,9,화장,180,15,2024-04-13|2024-11-13|2025-05-26
-haegeum,해금,출동구조반,3팀,팀장,active,2301,0,해금,persona,6,화장,116,10,
-janghyeowoon,장허운,현장정리반,2팀,요원,active,3201,5,화각,persona,9,화장,72,1,2024-07-31|2024-08-12
-koyoungeun,고영은,신규조사반,2팀,요원,active,4201,0,박하,persona,9,화장,130,17,2024-04-21|2024-08-16
-parkhonglim,박홍림,출동구조반,1팀,팀장,active,5001,0,홍화,persona,6,화장,133,19,2025-04-02|2025-06-27|2025-12-17
-ryujaegwan,류재관,출동구조반,1팀,요원,active,2102,0,청동,persona,9,화장,67,8,2024-03-11|2024-06-11|2025-07-04
-solum,김솔음,출동구조반,3팀,요원,resigned,2303,0,포도,persona,9,화장,176,5,2024-05-16|2024-08-26
-agent001,김민수,신규조사반,1팀,요원,active,4101,3,,ordinary,9,화장,118,4,2024-06-11|2024-07-24|2025-05-18
-agent002,이진아,신규조사반,1팀,요원,active,4102,2,,ordinary,9,화장,183,12,2024-10-26|2025-01-17|2025-10-02
-agent003,박민준,신규조사반,1팀,요원,active,4103,1,,ordinary,9,화장,182,12,
-agent004,이서연,현장정리반,1팀,요원,active,3102,0,,ordinary,9,화장,63,10,2025-03-03|2025-12-30
-agent005,김철수,출동구조반,5팀,요원,active,2501,0,,ordinary,9,화장,86,9,2024-09-05|2024-11-02|2025-12-28
-agent006,정우성,출동구조반,7팀,요원,active,2701,5,,ordinary,9,화장,108,8,2024-02-07|2024-06-11
-agent007,최마리,현장정리반,1팀,요원,active,3103,0,,ordinary,9,화장,124,4,
-system,시스템,본부,,시스템,active,9999,0,,ordinary,9,화장,197,12,2024-02-25
-agent-admin-002,임재현,행정팀,,직원,active,1002,0,,ordinary,9,화장,91,10,2024-12-11|2025-12-06
-agent-admin-equip,강동현,행정팀,,직원,active,1003,0,,ordinary,9,화장,91,20,2024-01-21|2024-11-10
-agent-admin-hr,오지민,인사팀,,직원,active,1004,0,,ordinary,9,화장,60,20,
-agent-admin-security,서준영,보안팀,,직원,active,1005,0,,ordinary,9,화장,130,9,2024-01-28
-agent-admin-finance,윤서아,행정팀,,직원,active,1006,0,,ordinary,9,화장,149,2,
-agent-admin-099,한예림,행정팀,,직원,active,1099,0,,ordinary,9,화장,57,19,2024-04-30
-agent-hm3-002,안병진,출동구조반,3팀,요원,active,2302,0,,ordinary,9,화장,83,4,2024-05-13|2025-04-15|2025-05-14
-agent-hm3-003,신진기,출동구조반,3팀,요원,active,2303,0,,ordinary,9,화장,192,12,
-agent-hm3-004,한수아,출동구조반,3팀,요원,active,2304,0,,ordinary,9,화장,184,4,2024-01-30
-agent-hm3-005,김기현,출동구조반,3팀,요원,active,2305,0,,ordinary,9,화장,193,16,2024-12-02|2025-03-06|2025-09-05
-agent-hm-009,김하진,출동구조반,9팀,요원,active,2901,0,,ordinary,9,화장,135,14,2024-04-04|2024-07-31|2024-11-28
-agent-baekho-001,이영희,신규조사반,1팀,요원,active,4001,0,,ordinary,9,화장,97,17,
-agent-baekho-002,김은하,신규조사반,1팀,요원,active,4002,0,,ordinary,9,화장,195,1,2024-01-17|2024-03-05
-agent-bh-005,최동욱,신규조사반,5팀,요원,active,4501,0,,ordinary,9,화장,81,6,2025-05-06|2025-05-07
-agent-bh-102,강민호,신규조사반,2팀,요원,active,4102,0,,ordinary,9,화장,53,1,2025-12-19
-agent-jj-002,정수민,현장정리반,2팀,요원,active,3202,0,,ordinary,9,화장,157,3,2024-03-02|2025-05-28
-agent-jj-005,이진우,현장정리반,5팀,요원,active,3501,0,,ordinary,9,화장,50,5,
-agent-support-001,김지은,지원팀,,직원,active,6001,0,,ordinary,9,화장,188,11,2024-07-16|2024-12-03|2024-12-16
-agent-unknown,미확인,미확인,,미확인,inactive,0,0,,ordinary,9,화장,170,14,
-seg_hm1_1,■■ ■■,출동구조반,1팀,팀장,missing,■■■■,0,■■■■,segwang,6,화장,187,7,2024-02-24|2024-11-02
-seg_hm1_2,■■ ■■,출동구조반,1팀,실무관,missing,■■■■,0,■■■■,segwang,9,화장,189,2,
-seg_bh1_1,■■ ■■,신규조사반,1팀,팀장,missing,■■■■,0,■■■■,segwang,6,화장,109,8,2024-03-28|2024-09-12
-seg_bh1_2,■■ ■■,신규조사반,1팀,실무관,missing,■■■■,0,■■■■,segwang,9,화장,166,9,2025-02-24
-seg_ja1_1,■■ ■■,현장정리반,1팀,팀장,missing,■■■■,0,■■■■,segwang,6,화장,180,4,
-seg_ja1_2,■■ ■■,현장정리반,1팀,실무관,missing,■■■■,0,■■■■,segwang,9,화장,52,6,
-seg_hm2_1,■■ ■■,출동구조반,2팀,팀장,missing,■■■■,0,■■■■,segwang,6,화장,78,14,2024-06-03|2024-10-06
-seg_hm2_2,■■ ■■,출동구조반,2팀,실무관,missing,■■■■,0,■■■■,segwang,9,화장,137,10,2024-05-23|2024-07-11|2024-09-07
-agent-admin-101,박수아,행정팀,,직원,active,1101,0,,ordinary,8,화장,72,15,
-agent-admin-102,신기우,행정팀,,직원,active,1102,0,,ordinary,8,화장,80,10,
-agent-admin-103,채현준,행정팀,,직원,active,1103,0,,ordinary,8,화장,65,20,
-agent-admin-hr1,김현기,인사팀,,팀장,active,1201,0,,ordinary,6,화장,150,5,
-agent-team-lead,박지원,인사팀,,팀장,active,8888,0,,ordinary,6,화장,0,0,
-agent-chief-001,김한수,본부,,국장,active,9900,0,,ordinary,3,화장,0,0,
-agent-admin-sec1,한경환,보안팀,,팀장,active,1301,0,,ordinary,6,화장,140,8,
-agent-bh-2-leader,강준호,신규조사반,2팀,팀장,active,4101,0,,ordinary,8,화장,150,5,
-agent-jj-leader,박정훈,현장정리반,1팀,팀장,active,3101,0,,ordinary,8,화장,160,8,
-admin,시스템 관리자,시스템 관리팀,,관리자,active,9999,0,,system,1,화장,0,0,
+id,name,department,team,rank,status,extension,contamination,isImmuneToContamination,codename,type,grade,funeralPreference
+choiyowon,최요원,출동구조반,1팀,요원,active,2101,15,false,false,persona,9,화장
+haegeum,해금,출동구조반,3팀,팀장,active,2301,24,false,해금,persona,6,화장
+janghyeowoon,장허운,현장정리반,2팀,요원,active,3201,80,true,화각,persona,9,화장
+koyoungeun,고영은,신규조사반,2팀,요원,active,4201,20,false,박하,persona,9,화장
+parkhonglim,박홍림,출동구조반,1팀,팀장,active,5001,98,true,홍화,persona,6,화장
+ryujaegwan,류재관,출동구조반,1팀,요원,active,2102,13,false,청동,persona,9,화장
+solum,김솔음,출동구조반,3팀,요원,resigned,2303,30,false,포도,persona,9,화장
+agent001,김민수,신규조사반,1팀,요원,active,4101,15,false,,ordinary,9,화장
+agent002,이진아,신규조사반,1팀,요원,active,4102,3,false,,ordinary,9,화장
+agent003,박민준,신규조사반,1팀,요원,active,4103,9,false,,ordinary,9,화장
+agent004,이서연,현장정리반,1팀,요원,active,3102,14,false,,ordinary,9,화장
+agent005,김철수,출동구조반,5팀,요원,active,2501,13,false,,ordinary,9,화장
+agent006,정우성,출동구조반,7팀,요원,active,2701,12,false,,ordinary,9,화장
+agent007,최마리,현장정리반,1팀,요원,active,3103,11,false,,ordinary,9,화장
+system,시스템,본부,,시스템,active,9999,17,false,,ordinary,9,화장
+agent-admin-002,임재현,행정팀,,직원,active,1002,20,false,,ordinary,9,화장
+agent-admin-equip,강동현,행정팀,,직원,active,1003,19,false,,ordinary,9,화장
+agent-admin-hr,오지민,인사팀,,직원,active,1004,17,false,,ordinary,9,화장
+agent-admin-security,서준영,보안팀,,직원,active,1005,15,false,,ordinary,9,화장
+agent-admin-finance,윤서아,행정팀,,직원,active,1006,11,false,,ordinary,9,화장
+agent-admin-099,한예림,행정팀,,직원,active,1099,6,false,,ordinary,9,화장
+agent-hm3-002,안병진,출동구조반,3팀,요원,active,2302,18,false,,ordinary,9,화장
+agent-hm3-003,신진기,출동구조반,3팀,요원,active,2303,6,false,,ordinary,9,화장
+agent-hm3-004,한수아,출동구조반,3팀,요원,active,2304,16,false,,ordinary,9,화장
+agent-hm3-005,김기현,출동구조반,3팀,요원,active,2305,10,false,,ordinary,9,화장
+agent-hm-009,김하진,출동구조반,9팀,요원,active,2901,4,false,,ordinary,9,화장
+agent-baekho-001,이영희,신규조사반,1팀,요원,active,4001,11,false,,ordinary,9,화장
+agent-baekho-002,김은하,신규조사반,1팀,요원,active,4002,17,false,,ordinary,9,화장
+agent-bh-005,최동욱,신규조사반,5팀,요원,active,4501,19,false,,ordinary,9,화장
+agent-bh-102,강민호,신규조사반,2팀,요원,active,4102,18,false,,ordinary,9,화장
+agent-jj-002,정수민,현장정리반,2팀,요원,active,3202,2,false,,ordinary,9,화장
+agent-jj-005,이진우,현장정리반,5팀,요원,active,3501,7,false,,ordinary,9,화장
+agent-support-001,김지은,지원팀,,직원,active,6001,18,false,,ordinary,9,화장
+agent-unknown,미확인,미확인,,미확인,inactive,0,5,false,,ordinary,9,화장
+seg_hm1_1,■■ ■■,출동구조반,1팀,팀장,missing,■■■■,100,false,■■■■,segwang,6,화장
+seg_hm1_2,■■ ■■,출동구조반,1팀,실무관,missing,■■■■,100,false,■■■■,segwang,9,화장
+seg_bh1_1,■■ ■■,신규조사반,1팀,팀장,missing,■■■■,100,false,■■■■,segwang,6,화장
+seg_bh1_2,■■ ■■,신규조사반,1팀,실무관,missing,■■■■,100,false,■■■■,segwang,9,화장
+seg_ja1_1,■■ ■■,현장정리반,1팀,팀장,missing,■■■■,100,false,■■■■,segwang,6,화장
+seg_ja1_2,■■ ■■,현장정리반,1팀,실무관,missing,■■■■,100,false,■■■■,segwang,9,화장
+seg_hm2_1,■■ ■■,출동구조반,2팀,팀장,missing,■■■■,100,false,■■■■,segwang,6,화장
+seg_hm2_2,■■ ■■,출동구조반,2팀,실무관,missing,■■■■,100,false,■■■■,segwang,9,화장
+agent-admin-101,박수아,행정팀,,직원,active,1101,8,false,,ordinary,8,화장
+agent-admin-102,신기우,행정팀,,직원,active,1102,5,false,,ordinary,8,화장
+agent-admin-103,채현준,행정팀,,직원,active,1103,19,false,,ordinary,8,화장
+agent-admin-hr1,김현기,인사팀,,팀장,active,1201,16,false,,ordinary,6,화장
+agent-team-lead,박지원,인사팀,,팀장,active,8888,17,false,,ordinary,6,화장
+agent-chief-001,김한수,본부,,국장,active,9900,9,false,,ordinary,3,화장
+agent-admin-sec1,한경환,보안팀,,팀장,active,1301,2,false,,ordinary,6,화장
+agent-bh-2-leader,강준호,신규조사반,2팀,팀장,active,4101,15,false,,ordinary,8,화장
+agent-jj-leader,박정훈,현장정리반,1팀,팀장,active,3101,2,false,,ordinary,8,화장
+admin,시스템 관리자,시스템 관리팀,,관리자,active,9999,6,false,,system,1,화장

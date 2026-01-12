@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Agent, Department } from '@/types/haetae';
 import { AGENT_PROFILES, RANDOM_CODENAMES } from '@/constants/haetae';
+import { useGameStore } from './gameStore';
 
 // Map by name for easy lookup
 const AGENT_NAME_MAP: Record<string, Agent> = Object.values(AGENT_PROFILES).reduce((acc, agent) => {
@@ -35,10 +36,7 @@ const createRandomAgent = (name: string): Agent => {
         extension: `${Math.floor(Math.random() * 8999) + 1000}`,
         status: '정상',
         contamination: Math.floor(Math.random() * 40),
-        totalIncidents: Math.floor(Math.random() * 50),
-        specialCases: Math.floor(Math.random() * 5),
         rentals: [],
-        purificationHistory: [],
     };
 };
 
@@ -77,9 +75,8 @@ export const useAuthStore = create<AuthState>()(
             logout: () => {
                 set({ agent: null, isAuthenticated: false });
 
-                // Clear session storage for other stores (manual cleanup if needed, 
-                // but usually better to let other stores handle their own reset via listeners or actions)
-                // For now, we'll implement reset logic in other stores subscribing to auth changes if needed.
+                // Reset game store to clear contamination and game over state
+                useGameStore.getState().reset();
             },
         }),
         {
@@ -94,10 +91,19 @@ export const useAuthStore = create<AuthState>()(
             // If strict Date objects are needed, we might need a transformer.
             onRehydrateStorage: () => (state) => {
                 if (state && state.agent) {
-                    // Revive Dates if necessary (e.g. rentals, history)
-                    if (state.agent.purificationHistory) {
-                        state.agent.purificationHistory = state.agent.purificationHistory.map((d: any) => new Date(d));
+                    // Sync with latest AGENT_PROFILES to reflect code changes
+                    if (state.agent.personaKey && AGENT_PROFILES[state.agent.personaKey]) {
+                        const freshProfile = AGENT_PROFILES[state.agent.personaKey];
+                        // Merge static properties that might have changed in code
+                        state.agent = {
+                            ...state.agent,
+                            // Ensure these fields are up-to-date with code
+                            isImmuneToContamination: freshProfile.isImmuneToContamination,
+                            // We don't overwrite contamination or rentals as those are user state
+                        };
                     }
+
+                    // Revive Dates if necessary
                     if (state.agent.rentals) {
                         state.agent.rentals = state.agent.rentals.map((r: any) => ({
                             ...r,

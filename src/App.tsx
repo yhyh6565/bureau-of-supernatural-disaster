@@ -19,6 +19,10 @@ import IncidentsPage from "@/pages/IncidentsPage";
 import ManualsPage from "@/pages/ManualsPage";
 import NotFound from "./pages/NotFound";
 import { ContaminationGameOver } from "@/components/common/ContaminationGameOver";
+import { EggManager } from "@/components/common/EggManager";
+import { ResourceProvider } from "@/contexts/ResourceContext";
+import { WorkProvider } from "@/contexts/WorkContext";
+import { UserProvider } from "@/contexts/UserContext";
 
 const queryClient = new QueryClient();
 
@@ -163,7 +167,7 @@ function BureauThemeWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-import { InteractionProvider } from "@/contexts/InteractionContext";
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -172,10 +176,15 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <BureauThemeWrapper>
-          <InteractionProvider>
-            <ContaminationGameOver />
-            <AppRoutes />
-          </InteractionProvider>
+          <UserProvider>
+            <WorkProvider>
+              <ResourceProvider>
+                <ContaminationGameOver />
+                <EggManager />
+                <AppRoutes />
+              </ResourceProvider>
+            </WorkProvider>
+          </UserProvider>
         </BureauThemeWrapper>
       </HashRouter>
     </TooltipProvider>

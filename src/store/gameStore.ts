@@ -9,6 +9,7 @@ interface GameState {
     contamination: number;
     gameOverType: GameOverType;
     isGameLoopRunning: boolean;
+    currentAgentId: string | null;
 
     // Actions
     updateContamination: (val: number, agent: Agent) => void;
@@ -17,6 +18,8 @@ interface GameState {
     startGameLoop: (agent: Agent) => void;
     stopGameLoop: () => void;
     restoreFromSession: (agent: Agent) => void;
+    reset: () => void;
+    initializeForAgent: (agent: Agent) => void;
 }
 
 let gameInterval: NodeJS.Timeout | null = null;
@@ -27,16 +30,12 @@ export const useGameStore = create<GameState>()(
             contamination: 0,
             gameOverType: 'none',
             isGameLoopRunning: false,
+            currentAgentId: null,
 
             restoreFromSession: (agent) => {
                 set(state => {
-                    // Check if agent logic needs to apply immediate exceptions
-                    if (['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) {
-                        // They might have fixed logic, but assume session value is correct for now
-                    }
-
-                    // Park Honglim exeption: Never trigger contamination game over even if 100
-                    if (state.contamination >= 100 && agent.personaKey !== 'parkhonglim') {
+                    // Park Honglim exeption or immune agents: Never trigger contamination game over
+                    if (state.contamination >= 100 && !agent.isImmuneToContamination) {
                         return { gameOverType: 'contamination' };
                     }
                     if (state.gameOverType === 'contamination' && state.contamination < 100) {
@@ -53,7 +52,7 @@ export const useGameStore = create<GameState>()(
                 set(state => {
                     let newGameOverType = state.gameOverType;
 
-                    if (clamped >= 100 && agent?.personaKey !== 'parkhonglim' && mode !== 'segwang') {
+                    if (clamped >= 100 && !agent?.isImmuneToContamination && mode !== 'segwang') {
                         newGameOverType = 'contamination';
                     }
 
@@ -70,7 +69,7 @@ export const useGameStore = create<GameState>()(
             startGameLoop: (agent) => {
                 if (get().isGameLoopRunning) return;
 
-                if (['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) return;
+                if (agent.isImmuneToContamination) return;
 
                 set({ isGameLoopRunning: true });
 
@@ -84,7 +83,7 @@ export const useGameStore = create<GameState>()(
                     const next = contamination + 1;
 
                     if (next >= 100) {
-                        if (!['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) {
+                        if (!agent.isImmuneToContamination) {
                             if (mode !== 'segwang') {
                                 set({ contamination: 100, gameOverType: 'contamination' });
                             } else {
@@ -106,6 +105,28 @@ export const useGameStore = create<GameState>()(
                     clearInterval(gameInterval);
                     gameInterval = null;
                 }
+            },
+
+            reset: () => {
+                if (gameInterval) {
+                    clearInterval(gameInterval);
+                    gameInterval = null;
+                }
+                set({
+                    contamination: 0,
+                    gameOverType: 'none',
+                    isGameLoopRunning: false,
+                    currentAgentId: null
+                });
+            },
+
+            initializeForAgent: (agent) => {
+                const initialContamination = agent.contamination ?? 0;
+                set({
+                    contamination: initialContamination,
+                    gameOverType: 'none',
+                    currentAgentId: agent.id
+                });
             }
         }),
         {

@@ -8,12 +8,10 @@
   "rank": "팀장",
   "extension": "2301",
   "status": "active",
-  "contamination": 0,
+  "contamination": 24,
+  "isImmuneToContamination": false,
   "grade": 6,
-  "totalIncidents": 116,
-  "specialCases": 10,
   "funeralPreference": "화장",
-  "purificationHistory": [],
   "profileImage": "/avatars/haegeum.png",
   "rentals": []
 }

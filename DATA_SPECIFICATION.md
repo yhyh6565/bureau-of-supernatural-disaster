@@ -545,58 +545,7 @@ const pendingForMe = approvals.filter(a =>
 ]
 ```
 
-## 7. 데이터 템플릿 및 상속 (Data Templates & Inheritance)
 
-빌드 시점에 동적으로 데이터를 생성하는 시스템(v1.4, 2026-01-02 업데이트)에 대한 명세입니다.
-
-### 7.1 개요
-- **소스 위치**: `data-templates/`
-- **목적**: 중복되는 데이터를 `_base` 템플릿으로 관리하여 유지보수 효율성 증대
-- **작동 시점**: `npm run dev` 또는 `npm run build` 실행 시
-
-### 7.2 폴더 구조
-```
-data-templates/
-├── global/          # 전사 공통 원본
-├── ordinary/        # 일반 요원 원본
-└── personas/
-    ├── _base/       # [NEW] 페르소나 공통 데이터 (부모)
-    │   ├── schedules.json
-    │   └── ...
-    ├── choiyowon/   # 개별 페르소나 데이터 (자식)
-    │   └── schedules.json
-    └── ...
-```
-
-### 7.3 상속 로직 (Inheritance Rules)
-스크립트(`scripts/generateDynamicData.cjs`)는 다음과 같은 로직으로 데이터를 병합하여 최종 `src/data`를 생성합니다.
-
-1. **매칭**: `personas/{name}/{file}.json` 처리 시, `personas/_base/{file}.json` 존재 여부 확인
-2. **병합 (Merge)**:
-   - **배열(Array)**: `_base` 배열 항목 뒤에 `specific` 배열 항목 추가 (Base 1, 2, 3 + Specific 4, 5)
-   - **객체(Object)**: `_base` 속성을 `specific` 속성이 덮어씀 (Override)
-3. **날짜 규칙 적용**: `fixed:MM-DD`, `relative:+3d` 등의 규칙을 실제 날짜로 변환
-
-### 7.4 작성 예시
-**data-templates/personas/_base/schedules.json** (공통):
-```json
-[{"title": "신년 행사", "date": "fixed:01-02"}]
-```
-
-**data-templates/personas/choiyowon/schedules.json** (개별):
-```json
-[{"title": "개인 휴가", "date": "fixed:01-10"}]
-```
-
-**결과 (src/data/personas/choiyowon/schedules.json)**:
-```json
-[
-  {"title": "신년 행사", "date": "2025-01-02..."},
-  {"title": "개인 휴가", "date": "2025-01-10..."}
-]
-```
-
----
 
 ## 9. 부서 표시명 (Department Display Names) 
 

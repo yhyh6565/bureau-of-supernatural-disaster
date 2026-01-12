@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useBureauStore } from '@/store/bureauStore';
+import { useGameStore } from '@/store/gameStore';
 
 export type GameOverType = 'none' | 'contamination' | 'forbidden_login';
 
@@ -18,88 +19,47 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuthStore();
     const { mode } = useBureauStore();
-    const SESSION_CONTAMINATION_KEY = 'haetae_contamination';
+    const SESSION_CONTAMINATION_KEY = 'haetae_agent_session'; // Not used directly, managed by stores
 
-    // Initialize from storage or agent default
-    const [contamination, setContamination] = useState(() => {
-        if (!agent) return 0;
-        const stored = sessionStorage.getItem(SESSION_CONTAMINATION_KEY);
-        return stored ? parseInt(stored, 10) : agent.contamination;
-    });
-    const [gameOverType, setGameOverType] = useState<GameOverType>('none');
+    // Use GameStore for single source of truth
+    const {
+        contamination,
+        gameOverType,
+        currentAgentId,
+        updateContamination: storeUpdateContamination,
+        decreaseContamination,
+        triggerGameOver,
+        startGameLoop,
+        stopGameLoop,
+        restoreFromSession,
+        initializeForAgent
+    } = useGameStore();
 
-    // Derived state for backward compatibility and general checks
     const isGameOver = gameOverType !== 'none';
 
+    // Sync UserContext lifecycle with GameStore
     useEffect(() => {
         if (agent) {
-            const stored = sessionStorage.getItem(SESSION_CONTAMINATION_KEY);
-            if (stored) {
-                const storedVal = parseInt(stored, 10);
-                setContamination(storedVal);
-                // Restore game over state if needed? For now, we only restore contamination.
-                // Park Honglim exeption: Never trigger contamination game over
-                if (storedVal >= 100 && agent.personaKey !== 'parkhonglim') setGameOverType('contamination');
-                else setGameOverType('none');
+            // Check if this is a different agent (new login or agent switch)
+            if (currentAgentId !== agent.id) {
+                // Different agent - initialize with their default contamination
+                initializeForAgent(agent);
             } else {
-                setContamination(agent.contamination);
-                setGameOverType('none'); // Reset on new login
+                // Same agent (e.g., page refresh) - restore and validate
+                restoreFromSession(agent);
             }
+
+            startGameLoop(agent);
         } else {
-            setContamination(0);
-            setGameOverType('none');
-            sessionStorage.removeItem(SESSION_CONTAMINATION_KEY);
+            stopGameLoop();
         }
-    }, [agent?.id]);
+    }, [agent?.id]); // Only re-run if agent changes
 
-    // Sync to Storage
-    useEffect(() => {
-        if (agent) {
-            sessionStorage.setItem(SESSION_CONTAMINATION_KEY, contamination.toString());
-        }
-    }, [contamination, agent]);
-
-    // Auto-increase contamination
-    useEffect(() => {
-        if (!agent || isGameOver) return;
-        // Exceptions: Fixed contamination for Park Honglim and Jang Hyeowoon
-        if (['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) return;
-
-        const interval = setInterval(() => {
-            setContamination(prev => {
-                const next = prev + 1;
-                // Storage sync is handled by the effect above
-                if (next >= 100) {
-                    // Exceptions check
-                    if (!['parkhonglim', 'janghyeowoon'].includes(agent.personaKey)) {
-                        // Prevent Game Over if in Segwang mode
-                        if (mode !== 'segwang') {
-                            setGameOverType('contamination');
-                        }
-                    }
-                    return 100;
-                }
-                return next;
-            });
-        }, 10000); // Increase by 1 every 10 seconds
-
-        return () => clearInterval(interval);
-    }, [agent, isGameOver, mode]);
-
+    // Wrapper to include agent in update
     const updateContamination = (val: number) => {
-        const clamped = Math.max(0, Math.min(100, val));
-        setContamination(clamped);
-        if (clamped >= 100 && agent?.personaKey !== 'parkhonglim' && mode !== 'segwang') {
-            setGameOverType('contamination');
+        if (agent) {
+            storeUpdateContamination(val, agent);
         }
-    };
-
-    const decreaseContamination = (amount: number) => {
-        setContamination(prev => Math.max(0, prev - amount));
-    };
-
-    const triggerGameOver = (type: GameOverType) => {
-        setGameOverType(type);
     };
 
     return (

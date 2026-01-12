@@ -9,15 +9,9 @@
   "extension": "2101",
   "status": "active",
   "contamination": 15,
+  "isImmuneToContamination": false,
   "grade": 9,
-  "totalIncidents": 180,
-  "specialCases": 15,
   "funeralPreference": "화장",
-  "purificationHistory": [
-    "2024-04-13",
-    "2024-11-13",
-    "2025-05-26"
-  ],
   "profileImage": "/avatars/choiyowon.png",
   "rentals": []
 }

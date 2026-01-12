@@ -8,15 +8,10 @@
   "rank": "요원",
   "extension": "2303",
   "status": "resigned",
-  "contamination": 0,
+  "contamination": 30,
+  "isImmuneToContamination": false,
   "grade": 9,
-  "totalIncidents": 176,
-  "specialCases": 5,
   "funeralPreference": "화장",
-  "purificationHistory": [
-    "2024-05-16",
-    "2024-08-26"
-  ],
   "profileImage": "/avatars/solum.png",
   "rentals": []
 }

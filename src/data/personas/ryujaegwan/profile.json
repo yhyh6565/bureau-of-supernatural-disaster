@@ -8,16 +8,10 @@
   "rank": "요원",
   "extension": "2102",
   "status": "active",
-  "contamination": 0,
+  "contamination": 13,
+  "isImmuneToContamination": false,
   "grade": 9,
-  "totalIncidents": 67,
-  "specialCases": 8,
   "funeralPreference": "화장",
-  "purificationHistory": [
-    "2024-03-11",
-    "2024-06-11",
-    "2025-07-04"
-  ],
   "profileImage": "/avatars/ryujaegwan.png",
   "rentals": []
 }

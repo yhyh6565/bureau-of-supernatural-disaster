@@ -163,11 +163,9 @@ function buildPersona(personaId: string, allAgents: any[]) {
       extension: agentData.extension,
       status: agentData.status,
       contamination: parseInt(agentData.contamination || '0', 10),
+      isImmuneToContamination: agentData.isImmuneToContamination === 'true' || agentData.isImmuneToContamination === true,
       grade: parseInt(agentData.grade || '0', 10),
-      totalIncidents: parseInt(agentData.totalIncidents || '0', 10),
-      specialCases: parseInt(agentData.specialCases || '0', 10),
       funeralPreference: agentData.funeralPreference || "",
-      purificationHistory: agentData.purificationHistory ? agentData.purificationHistory.split('|') : [],
       profileImage: `/avatars/${personaId}.png`,
       rentals: []
     };

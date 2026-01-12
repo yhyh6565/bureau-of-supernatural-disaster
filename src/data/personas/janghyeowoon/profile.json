@@ -8,15 +8,10 @@
   "rank": "요원",
   "extension": "3201",
   "status": "active",
-  "contamination": 5,
+  "contamination": 80,
+  "isImmuneToContamination": true,
   "grade": 9,
-  "totalIncidents": 72,
-  "specialCases": 1,
   "funeralPreference": "화장",
-  "purificationHistory": [
-    "2024-07-31",
-    "2024-08-12"
-  ],
   "profileImage": "/avatars/janghyeowoon.png",
   "rentals": []
 }

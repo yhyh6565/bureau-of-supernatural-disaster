@@ -8,15 +8,10 @@
   "rank": "요원",
   "extension": "4201",
   "status": "active",
-  "contamination": 0,
+  "contamination": 20,
+  "isImmuneToContamination": false,
   "grade": 9,
-  "totalIncidents": 130,
-  "specialCases": 17,
   "funeralPreference": "화장",
-  "purificationHistory": [
-    "2024-04-21",
-    "2024-08-16"
-  ],
   "profileImage": "/avatars/koyoungeun.png",
   "rentals": []
 }

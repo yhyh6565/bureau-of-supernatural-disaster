@@ -7,14 +7,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "187",
-    "specialCases": "7",
-    "purificationHistory": "2024-02-24|2024-11-02"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm1_2",
@@ -24,14 +22,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "189",
-    "specialCases": "2",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_bh1_1",
@@ -41,14 +37,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "109",
-    "specialCases": "8",
-    "purificationHistory": "2024-03-28|2024-09-12"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_bh1_2",
@@ -58,14 +52,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "166",
-    "specialCases": "9",
-    "purificationHistory": "2025-02-24"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_ja1_1",
@@ -75,14 +67,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "180",
-    "specialCases": "4",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_ja1_2",
@@ -92,14 +82,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "52",
-    "specialCases": "6",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm2_1",
@@ -109,14 +97,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "78",
-    "specialCases": "14",
-    "purificationHistory": "2024-06-03|2024-10-06"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm2_2",
@@ -126,13 +112,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "137",
-    "specialCases": "10",
-    "purificationHistory": "2024-05-23|2024-07-11|2024-09-07"
+    "funeralPreference": "화장"
   }
 ]

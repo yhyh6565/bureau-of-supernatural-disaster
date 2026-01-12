@@ -8,13 +8,11 @@
     "status": "active",
     "extension": "2101",
     "contamination": "15",
-    "codename": "",
+    "isImmuneToContamination": false,
+    "codename": false,
     "type": "persona",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "180",
-    "specialCases": "15",
-    "purificationHistory": "2024-04-13|2024-11-13|2025-05-26"
+    "funeralPreference": "화장"
   },
   {
     "id": "haegeum",
@@ -24,14 +22,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "2301",
-    "contamination": "0",
+    "contamination": "24",
+    "isImmuneToContamination": false,
     "codename": "해금",
     "type": "persona",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "116",
-    "specialCases": "10",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "janghyeowoon",
@@ -41,14 +37,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "3201",
-    "contamination": "5",
+    "contamination": "80",
+    "isImmuneToContamination": true,
     "codename": "화각",
     "type": "persona",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "72",
-    "specialCases": "1",
-    "purificationHistory": "2024-07-31|2024-08-12"
+    "funeralPreference": "화장"
   },
   {
     "id": "koyoungeun",
@@ -58,14 +52,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4201",
-    "contamination": "0",
+    "contamination": "20",
+    "isImmuneToContamination": false,
     "codename": "박하",
     "type": "persona",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "130",
-    "specialCases": "17",
-    "purificationHistory": "2024-04-21|2024-08-16"
+    "funeralPreference": "화장"
   },
   {
     "id": "parkhonglim",
@@ -75,14 +67,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "5001",
-    "contamination": "0",
+    "contamination": "98",
+    "isImmuneToContamination": true,
     "codename": "홍화",
     "type": "persona",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "133",
-    "specialCases": "19",
-    "purificationHistory": "2025-04-02|2025-06-27|2025-12-17"
+    "funeralPreference": "화장"
   },
   {
     "id": "ryujaegwan",
@@ -92,14 +82,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2102",
-    "contamination": "0",
+    "contamination": "13",
+    "isImmuneToContamination": false,
     "codename": "청동",
     "type": "persona",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "67",
-    "specialCases": "8",
-    "purificationHistory": "2024-03-11|2024-06-11|2025-07-04"
+    "funeralPreference": "화장"
   },
   {
     "id": "solum",
@@ -109,14 +97,12 @@
     "rank": "요원",
     "status": "resigned",
     "extension": "2303",
-    "contamination": "0",
+    "contamination": "30",
+    "isImmuneToContamination": false,
     "codename": "포도",
     "type": "persona",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "176",
-    "specialCases": "5",
-    "purificationHistory": "2024-05-16|2024-08-26"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent001",
@@ -126,14 +112,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4101",
-    "contamination": "3",
+    "contamination": "15",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "118",
-    "specialCases": "4",
-    "purificationHistory": "2024-06-11|2024-07-24|2025-05-18"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent002",
@@ -143,14 +127,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4102",
-    "contamination": "2",
+    "contamination": "3",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "183",
-    "specialCases": "12",
-    "purificationHistory": "2024-10-26|2025-01-17|2025-10-02"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent003",
@@ -160,14 +142,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4103",
-    "contamination": "1",
+    "contamination": "9",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "182",
-    "specialCases": "12",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent004",
@@ -177,14 +157,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "3102",
-    "contamination": "0",
+    "contamination": "14",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "63",
-    "specialCases": "10",
-    "purificationHistory": "2025-03-03|2025-12-30"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent005",
@@ -194,14 +172,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2501",
-    "contamination": "0",
+    "contamination": "13",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "86",
-    "specialCases": "9",
-    "purificationHistory": "2024-09-05|2024-11-02|2025-12-28"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent006",
@@ -211,14 +187,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2701",
-    "contamination": "5",
+    "contamination": "12",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "108",
-    "specialCases": "8",
-    "purificationHistory": "2024-02-07|2024-06-11"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent007",
@@ -228,14 +202,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "3103",
-    "contamination": "0",
+    "contamination": "11",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "124",
-    "specialCases": "4",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "system",
@@ -245,14 +217,12 @@
     "rank": "시스템",
     "status": "active",
     "extension": "9999",
-    "contamination": "0",
+    "contamination": "17",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "197",
-    "specialCases": "12",
-    "purificationHistory": "2024-02-25"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-002",
@@ -262,14 +232,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1002",
-    "contamination": "0",
+    "contamination": "20",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "91",
-    "specialCases": "10",
-    "purificationHistory": "2024-12-11|2025-12-06"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-equip",
@@ -279,14 +247,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1003",
-    "contamination": "0",
+    "contamination": "19",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "91",
-    "specialCases": "20",
-    "purificationHistory": "2024-01-21|2024-11-10"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-hr",
@@ -296,14 +262,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1004",
-    "contamination": "0",
+    "contamination": "17",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "60",
-    "specialCases": "20",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-security",
@@ -313,14 +277,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1005",
-    "contamination": "0",
+    "contamination": "15",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "130",
-    "specialCases": "9",
-    "purificationHistory": "2024-01-28"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-finance",
@@ -330,14 +292,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1006",
-    "contamination": "0",
+    "contamination": "11",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "149",
-    "specialCases": "2",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-099",
@@ -347,14 +307,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1099",
-    "contamination": "0",
+    "contamination": "6",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "57",
-    "specialCases": "19",
-    "purificationHistory": "2024-04-30"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-hm3-002",
@@ -364,14 +322,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2302",
-    "contamination": "0",
+    "contamination": "18",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "83",
-    "specialCases": "4",
-    "purificationHistory": "2024-05-13|2025-04-15|2025-05-14"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-hm3-003",
@@ -381,14 +337,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2303",
-    "contamination": "0",
+    "contamination": "6",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "192",
-    "specialCases": "12",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-hm3-004",
@@ -398,14 +352,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2304",
-    "contamination": "0",
+    "contamination": "16",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "184",
-    "specialCases": "4",
-    "purificationHistory": "2024-01-30"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-hm3-005",
@@ -415,14 +367,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2305",
-    "contamination": "0",
+    "contamination": "10",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "193",
-    "specialCases": "16",
-    "purificationHistory": "2024-12-02|2025-03-06|2025-09-05"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-hm-009",
@@ -432,14 +382,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "2901",
-    "contamination": "0",
+    "contamination": "4",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "135",
-    "specialCases": "14",
-    "purificationHistory": "2024-04-04|2024-07-31|2024-11-28"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-baekho-001",
@@ -449,14 +397,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4001",
-    "contamination": "0",
+    "contamination": "11",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "97",
-    "specialCases": "17",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-baekho-002",
@@ -466,14 +412,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4002",
-    "contamination": "0",
+    "contamination": "17",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "195",
-    "specialCases": "1",
-    "purificationHistory": "2024-01-17|2024-03-05"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-bh-005",
@@ -483,14 +427,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4501",
-    "contamination": "0",
+    "contamination": "19",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "81",
-    "specialCases": "6",
-    "purificationHistory": "2025-05-06|2025-05-07"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-bh-102",
@@ -500,14 +442,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "4102",
-    "contamination": "0",
+    "contamination": "18",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "53",
-    "specialCases": "1",
-    "purificationHistory": "2025-12-19"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-jj-002",
@@ -517,14 +457,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "3202",
-    "contamination": "0",
+    "contamination": "2",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "157",
-    "specialCases": "3",
-    "purificationHistory": "2024-03-02|2025-05-28"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-jj-005",
@@ -534,14 +472,12 @@
     "rank": "요원",
     "status": "active",
     "extension": "3501",
-    "contamination": "0",
+    "contamination": "7",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "50",
-    "specialCases": "5",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-support-001",
@@ -551,14 +487,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "6001",
-    "contamination": "0",
+    "contamination": "18",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "188",
-    "specialCases": "11",
-    "purificationHistory": "2024-07-16|2024-12-03|2024-12-16"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-unknown",
@@ -568,14 +502,12 @@
     "rank": "미확인",
     "status": "inactive",
     "extension": "0",
-    "contamination": "0",
+    "contamination": "5",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "170",
-    "specialCases": "14",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm1_1",
@@ -585,14 +517,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "187",
-    "specialCases": "7",
-    "purificationHistory": "2024-02-24|2024-11-02"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm1_2",
@@ -602,14 +532,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "189",
-    "specialCases": "2",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_bh1_1",
@@ -619,14 +547,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "109",
-    "specialCases": "8",
-    "purificationHistory": "2024-03-28|2024-09-12"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_bh1_2",
@@ -636,14 +562,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "166",
-    "specialCases": "9",
-    "purificationHistory": "2025-02-24"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_ja1_1",
@@ -653,14 +577,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "180",
-    "specialCases": "4",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_ja1_2",
@@ -670,14 +592,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "52",
-    "specialCases": "6",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm2_1",
@@ -687,14 +607,12 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "78",
-    "specialCases": "14",
-    "purificationHistory": "2024-06-03|2024-10-06"
+    "funeralPreference": "화장"
   },
   {
     "id": "seg_hm2_2",
@@ -704,14 +622,12 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "0",
+    "contamination": "100",
+    "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
     "grade": "9",
-    "funeralPreference": "화장",
-    "totalIncidents": "137",
-    "specialCases": "10",
-    "purificationHistory": "2024-05-23|2024-07-11|2024-09-07"
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-101",
@@ -721,14 +637,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1101",
-    "contamination": "0",
+    "contamination": "8",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "8",
-    "funeralPreference": "화장",
-    "totalIncidents": "72",
-    "specialCases": "15",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-102",
@@ -738,14 +652,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1102",
-    "contamination": "0",
+    "contamination": "5",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "8",
-    "funeralPreference": "화장",
-    "totalIncidents": "80",
-    "specialCases": "10",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-103",
@@ -755,14 +667,12 @@
     "rank": "직원",
     "status": "active",
     "extension": "1103",
-    "contamination": "0",
+    "contamination": "19",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "8",
-    "funeralPreference": "화장",
-    "totalIncidents": "65",
-    "specialCases": "20",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-hr1",
@@ -772,14 +682,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "1201",
-    "contamination": "0",
+    "contamination": "16",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "150",
-    "specialCases": "5",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-team-lead",
@@ -789,14 +697,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "8888",
-    "contamination": "0",
+    "contamination": "17",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "0",
-    "specialCases": "0",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-chief-001",
@@ -806,14 +712,12 @@
     "rank": "국장",
     "status": "active",
     "extension": "9900",
-    "contamination": "0",
+    "contamination": "9",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "3",
-    "funeralPreference": "화장",
-    "totalIncidents": "0",
-    "specialCases": "0",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-admin-sec1",
@@ -823,14 +727,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "1301",
-    "contamination": "0",
+    "contamination": "2",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "6",
-    "funeralPreference": "화장",
-    "totalIncidents": "140",
-    "specialCases": "8",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-bh-2-leader",
@@ -840,14 +742,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "4101",
-    "contamination": "0",
+    "contamination": "15",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "8",
-    "funeralPreference": "화장",
-    "totalIncidents": "150",
-    "specialCases": "5",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "agent-jj-leader",
@@ -857,14 +757,12 @@
     "rank": "팀장",
     "status": "active",
     "extension": "3101",
-    "contamination": "0",
+    "contamination": "2",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
     "grade": "8",
-    "funeralPreference": "화장",
-    "totalIncidents": "160",
-    "specialCases": "8",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   },
   {
     "id": "admin",
@@ -874,13 +772,11 @@
     "rank": "관리자",
     "status": "active",
     "extension": "9999",
-    "contamination": "0",
+    "contamination": "6",
+    "isImmuneToContamination": false,
     "codename": "",
     "type": "system",
     "grade": "1",
-    "funeralPreference": "화장",
-    "totalIncidents": "0",
-    "specialCases": "0",
-    "purificationHistory": ""
+    "funeralPreference": "화장"
   }
 ]

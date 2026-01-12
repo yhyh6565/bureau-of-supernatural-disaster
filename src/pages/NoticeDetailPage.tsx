@@ -48,19 +48,68 @@ export function NoticeDetailPage() {
   const priorityStyle = NOTICE_PRIORITY_STYLE[notice.priority];
   const categoryStyle = NOTICE_CATEGORY_STYLE[notice.category];
 
+  // 정렬 로직 (NoticesPage와 동일하게 유지)
+  const sortedNotices = [...notifications].sort((a, b) => {
+    // 상단 고정 우선
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    // 날짜 역순
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
+  const currentIndex = sortedNotices.findIndex(n => n.id === id);
+  const prevNotice = currentIndex > 0 ? sortedNotices[currentIndex - 1] : null;
+  const nextNotice = currentIndex < sortedNotices.length - 1 ? sortedNotices[currentIndex + 1] : null;
+
   return (
     <MainLayout>
-      {/* 상단 네비게이션 */}
-      <div className="mb-6">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate('/notices')}
-          className="mb-4"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          목록으로
-        </Button>
+      {/* 상단 네비게이션 및 이전/다음 버튼 */}
+      <div className="max-w-4xl mx-auto mb-6 space-y-4">
+        <div className="flex justify-between items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/notices')}
+            className="hover:bg-transparent p-0"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            목록으로
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Button
+            variant="outline"
+            className="justify-start h-auto py-3 px-4 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/50"
+            disabled={!prevNotice}
+            onClick={() => prevNotice && navigate(`/notices/${prevNotice.id}`)}
+          >
+            <div className="flex flex-col items-start gap-1 w-full truncate">
+              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <ArrowLeft className="w-3 h-3" /> 이전 글
+              </span>
+              <span className="text-sm font-medium truncate w-full text-left">
+                {prevNotice ? prevNotice.title : '이전 글이 없습니다'}
+              </span>
+            </div>
+          </Button>
+
+          <Button
+            variant="outline"
+            className="justify-end h-auto py-3 px-4 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/50"
+            disabled={!nextNotice}
+            onClick={() => nextNotice && navigate(`/notices/${nextNotice.id}`)}
+          >
+            <div className="flex flex-col items-end gap-1 w-full truncate">
+              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                다음 글 <ArrowLeft className="w-3 h-3 rotate-180" />
+              </span>
+              <span className="text-sm font-medium truncate w-full text-right">
+                {nextNotice ? nextNotice.title : '다음 글이 없습니다'}
+              </span>
+            </div>
+          </Button>
+        </div>
       </div>
 
       {/* 공지사항 본문 */}
@@ -139,16 +188,8 @@ export function NoticeDetailPage() {
             )}
           </div>
 
-          {/* 하단 버튼 */}
-          <div className="mt-8 flex justify-between items-center">
-            <Button
-              variant="outline"
-              onClick={() => navigate('/notices')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              목록으로
-            </Button>
-
+          {/* 읽음 안내 메세지 */}
+          <div className="mt-8 flex justify-end">
             {!notice.isRead && (
               <span className="text-xs text-muted-foreground">
                 ※ 확인 시 자동으로 읽음 처리됩니다

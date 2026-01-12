@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo, ReactNode, useEffect } from 'react';
 import { Schedule, ApprovalDocument, VisitLocation, InspectionRequest, Incident } from '@/types/haetae';
 import { useAuthStore } from '@/store/authStore';
-import { useInteraction } from '@/contexts/InteractionContext';
+import { useInteractionStore } from '@/store/interactionStore';
 import { useBureauStore } from '@/store/bureauStore';
 import { DataManager } from '@/data/dataManager';
 import * as approvalService from '@/services/approvalService';
@@ -72,7 +72,7 @@ const parseInspections = (data: any[]): InspectionRequest[] => {
 
 export function WorkProvider({ children }: { children: ReactNode }) {
     const { agent } = useAuthStore();
-    const { triggeredIds } = useInteraction();
+    const { triggeredIds } = useInteractionStore();
     const { mode } = useBureauStore();
 
     // Persistent Session State (New items added during session)
