@@ -9,6 +9,7 @@ import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Incident } from '@/types/haetae';
+import { useBureauStore } from '@/store/bureauStore';
 import { toast } from '@/hooks/use-toast';
 import {
   Dialog,
@@ -21,6 +22,7 @@ import {
 
 export function MyAssignments() {
   const { agent } = useAuthStore();
+  const { mode } = useBureauStore(); // Use global mode state
   const { processedIncidents, acceptIncident } = useWorkData();
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
@@ -33,6 +35,13 @@ export function MyAssignments() {
 
   // 부서별 대기 업무 필터링 (내가 배정한 건 자동으로 상태가 바뀌어 제외됨)
   const getMyIncidents = () => {
+    // Segwang Mode Special Handling
+    if (mode === 'segwang') {
+      // In Segwang mode, regardless of department, show 'Rescue Standby' from Segwang incidents
+      const segwangIncidents = DataManager.getIncidents(agent, 'segwang');
+      return segwangIncidents.filter(inc => inc.status === '구조대기').slice(0, 3);
+    }
+
     switch (department) {
       case 'baekho':
         return processedIncidents.filter(inc => inc.status === '접수').slice(0, 3);

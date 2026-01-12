@@ -57,10 +57,10 @@ const agentsRules: BureauValidationRule[] = [
   {
     name: 'Valid agent types',
     validate: (agents) => {
-      const validTypes = ['persona', 'ordinary', 'segwang'];
+      const AGENT_TYPES = ['persona', 'ordinary', 'system', 'segwang'];
       return agents
         .map((a, i) => ({ agent: a, row: i + 2 }))
-        .filter(({ agent }) => !validTypes.includes(agent.type))
+        .filter(({ agent }) => !AGENT_TYPES.includes(agent.type))
         .map(({ agent, row }) => ({
           file: 'agents.csv',
           row,

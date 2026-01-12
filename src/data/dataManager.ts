@@ -16,6 +16,7 @@ import SHARED_INCIDENTS_JSON from '@/data/incidents.json';
 import SEGWANG_APPROVALS_JSON from '@/data/segwang/approvals.json';
 import SEGWANG_SCHEDULES_JSON from '@/data/segwang/schedules.json';
 import SEGWANG_NOTICES_JSON from '@/data/segwang/notices.json'; // Added for checking
+import SEGWANG_INCIDENTS_JSON from '@/data/segwang/incidents.json';
 
 // Import Ordinary Data
 import ORDINARY_MESSAGES_JSON from '@/data/ordinary/messages.json';
@@ -117,7 +118,10 @@ const GLOBAL_NOTIFICATIONS = parseDates<Notification>(GLOBAL_NOTIFICATIONS_JSON)
 
 export const DataManager = {
     // Incidents: Unified
-    getIncidents: (agent: Agent | null) => {
+    getIncidents: (agent: Agent | null, context?: 'segwang') => {
+        if (context === 'segwang') {
+            return parseDates<Incident>(SEGWANG_INCIDENTS_JSON);
+        }
         return ALL_INCIDENTS;
     },
 
@@ -131,6 +135,8 @@ export const DataManager = {
             msg.receiverId === agent.codename || // Codename match
             msg.senderId === agent.id ||
             msg.senderId === agent.personaKey
+        ).filter((msg, index, self) =>
+            index === self.findIndex((t) => t.id === msg.id)
         ).sort((a: Message, b: Message) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     },
 

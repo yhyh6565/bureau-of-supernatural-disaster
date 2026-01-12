@@ -1,4 +1,4 @@
 id,senderId,senderName,senderDepartment,receiverId,title,content,createdAt,isRead
 msg_001,admin,관리자,전산팀,koyoungeun,[공지] 시스템 통합 안내,초자연재난관리국 인트라넷 시스템이 통합되었습니다. 이제 모든 메시지는 중앙 서버에 저장됩니다.,2025-05-01T09:00:00.000Z,false
 msg_002,koyoungeun,고영은,현무반,parkhonglim,장비 대여 요청,금일 오후 작전을 위해 탐지 장비 대여를 요청합니다.,2025-05-01T10:30:00.000Z,true
-msg_003,parkhonglim,박홍림,자재과,koyoungeun,RE: 장비 대여 요청,승인되었습니다. 자재과로 방문해주세요.,2025-05-01T10:45:00.000Z,false
+msg_003,parkhonglim,박홍림,출동구조반,koyoungeun,RE: 장비 대여 요청,승인되었습니다. 자재과로 방문해주세요.,2025-05-01T10:45:00.000Z,false

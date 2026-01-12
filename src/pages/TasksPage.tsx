@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/store/authStore';
+import { useBureauStore } from '@/store/bureauStore';
+import { DataManager } from '@/data/dataManager';
 import { useWorkData } from '@/hooks/useWorkData';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
@@ -29,6 +31,7 @@ import { useSearchParams } from 'react-router-dom';
 export function TasksPage() {
   const { agent } = useAuthStore();
   const { processedIncidents, acceptIncident } = useWorkData();
+  const { mode } = useBureauStore();
   const { triggeredIds } = useInteractionStore();
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
@@ -45,8 +48,12 @@ export function TasksPage() {
 
   const department = agent.department;
 
-  // Filter incidents
-  const incidents = processedIncidents.filter(inc => {
+  // Filter incidents based on mode
+  const baseIncidents = mode === 'segwang'
+    ? DataManager.getIncidents(agent, 'segwang')
+    : processedIncidents;
+
+  const incidents = baseIncidents.filter(inc => {
     if (inc.id === 'inc-sinkhole-001') {
       return triggeredIds.includes(inc.id);
     }
@@ -54,6 +61,16 @@ export function TasksPage() {
   });
 
   const getTasksByDepartment = () => {
+    // Segwang Mode: All agents see Segwang tasks
+    if (mode === 'segwang') {
+      return {
+        list: incidents.filter(inc => inc.status === '구조대기'),
+        assigned: incidents.filter(inc => inc.status === '조사중'), // Only show 'investigating' tasks
+        listLabel: '세광 구조 요청',
+        assignedLabel: '진행 중인 업무',
+      };
+    }
+
     switch (department) {
       case 'baekho':
         return {

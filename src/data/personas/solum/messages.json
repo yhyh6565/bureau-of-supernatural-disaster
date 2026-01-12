@@ -8,7 +8,7 @@
     "content": "솔음씨, 백일몽 스파이라는 소문 들었습니다. 사실이든 아니든 상관없습니다. 솔음씨가 재난 현장에서 그 누구보다 열심히 민간인 구조에 임했다는 사실은 변하지 않으니까요. 꼭 돌아오세요.",
     "createdAt": "2025-05-15T10:30",
     "isRead": "",
-    "senderName": "백호팀원5",
+    "senderName": "최동욱",
     "senderDepartment": "신규조사반"
   },
   {
@@ -20,7 +20,7 @@
     "content": "덕분에 제 동생을 찾았습니다. 스파이라서 우리 정보를 빼돌렸네 어쩌네 해도, 저한테 솔음씨는 은인입니다. 감사합니다.",
     "createdAt": "2025-06-02T14:20",
     "isRead": "",
-    "senderName": "정리팀원2",
+    "senderName": "정수민",
     "senderDepartment": "현장정리반"
   },
   {
@@ -46,7 +46,7 @@
     "createdAt": "2025-09-10T16:45",
     "isRead": false,
     "readAt": "",
-    "senderName": "현무팀원9",
+    "senderName": "김하진",
     "senderDepartment": "출동구조반"
   },
   {
@@ -59,7 +59,7 @@
     "createdAt": "2025-11-05T19:30",
     "isRead": false,
     "readAt": "",
-    "senderName": "정리팀원5",
+    "senderName": "이진우",
     "senderDepartment": "현장정리반"
   },
   {
@@ -72,7 +72,7 @@
     "createdAt": "2025-07-12T11:15",
     "isRead": false,
     "readAt": "",
-    "senderName": "백호팀원102",
+    "senderName": "강민호",
     "senderDepartment": "신규조사반"
   },
   {
@@ -85,7 +85,7 @@
     "createdAt": "2025-10-25T13:00",
     "isRead": false,
     "readAt": "",
-    "senderName": "지원팀원1",
+    "senderName": "김지은",
     "senderDepartment": "지원팀"
   },
   {
@@ -168,7 +168,7 @@
   },
   {
     "ownerId": "solum",
-    "id": "msg-034",
+    "id": "msg-022",
     "senderId": "solum",
     "receiverId": "koyoungeun",
     "title": "점심 식사 제안",
@@ -180,7 +180,7 @@
   },
   {
     "ownerId": "solum",
-    "id": "msg-035",
+    "id": "msg-042",
     "senderId": "solum",
     "receiverId": "janghyeowoon",
     "title": "점심 식사 제안",

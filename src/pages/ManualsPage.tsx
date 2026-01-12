@@ -57,23 +57,6 @@ export default function ManualsPage() {
     const allManuals = DataManager.getManuals ? DataManager.getManuals() : [];
     const incidents = DataManager.getIncidents ? DataManager.getIncidents(null) : []; // Fetch global incidents
 
-    // Helper to get first registration date from related incidents
-    const getFirstRegistrationDate = (manualId: string) => {
-        // 1. Find incident with manualId
-        const linkedIncident = incidents.find(inc => inc.manualId === manualId);
-        if (linkedIncident) return linkedIncident.createdAt;
-
-        // 2. Or check if manual has relatedIncidentIds (reverse lookup)
-        const manual = allManuals.find(m => m.id === manualId);
-        if (manual?.relatedIncidentIds && manual.relatedIncidentIds.length > 0) {
-            // Find earliest incident among related ones
-            const relatedIncidents = incidents.filter(inc => manual.relatedIncidentIds?.includes(inc.id));
-            if (relatedIncidents.length > 0) {
-                return relatedIncidents.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())[0].createdAt;
-            }
-        }
-        return null;
-    };
 
     // Filter
     const filteredManuals = allManuals.filter(m =>
@@ -103,7 +86,7 @@ export default function ManualsPage() {
                                         {selectedManual.title}
                                     </CardTitle>
                                     <p className="text-xs md:text-sm text-muted-foreground mt-1 font-mono whitespace-nowrap">
-                                        최초 등록일: {getFirstRegistrationDate(selectedManual.id) ? new Date(getFirstRegistrationDate(selectedManual.id)!).toLocaleDateString() : '-'} | 최종개정: {new Date(selectedManual.lastUpdated).toLocaleDateString()}
+                                        최초 등록일: {selectedManual.initialRegisteredAt ? new Date(selectedManual.initialRegisteredAt).toLocaleDateString() : '-'} | 최종개정: {new Date(selectedManual.lastUpdated).toLocaleDateString()}
                                     </p>
                                 </div>
                                 <Book className="w-8 h-8 text-muted-foreground/30" />
@@ -167,7 +150,6 @@ export default function ManualsPage() {
                             <tbody className="divide-y divide-gray-100">
                                 {filteredManuals.length > 0 ? (
                                     filteredManuals.map((manual) => {
-                                        const firstRegDate = getFirstRegistrationDate(manual.id);
                                         const dangerStyle = DANGER_LEVEL_STYLE[manual.severity];
 
                                         return (
@@ -186,10 +168,10 @@ export default function ManualsPage() {
                                                 </td>
                                                 <td className="px-2 md:px-6 py-4 text-center text-gray-500 font-mono text-xs">
                                                     <span className="hidden md:inline">
-                                                        {firstRegDate ? new Date(firstRegDate).toLocaleDateString() : '-'}
+                                                        {manual.initialRegisteredAt ? new Date(manual.initialRegisteredAt).toLocaleDateString() : '-'}
                                                     </span>
                                                     <span className="md:hidden">
-                                                        {firstRegDate ? `${new Date(firstRegDate).getFullYear()}..` : '-'}
+                                                        {manual.initialRegisteredAt ? `${new Date(manual.initialRegisteredAt).getFullYear()}..` : '-'}
                                                     </span>
                                                 </td>
                                                 <td className="px-2 md:px-6 py-4 text-center text-gray-500 font-mono text-xs">

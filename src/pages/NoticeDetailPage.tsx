@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
 import { useAuthStore } from '@/store/authStore';
-import { useInteraction } from '@/contexts/InteractionContext';
+import { useInteractionStore } from '@/store/interactionStore';
 import { useBureauStore } from '@/store/bureauStore';
 import segwangNotices from '@/data/segwang/notices.json';
 import { NOTICE_PRIORITY_STYLE, NOTICE_CATEGORY_STYLE } from '@/constants/haetae';
@@ -19,7 +19,7 @@ export function NoticeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { agent } = useAuthStore();
-  const { markAsRead } = useInteraction();
+  const { markAsRead } = useInteractionStore();
   const { mode } = useBureauStore();
 
   const notifications = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);

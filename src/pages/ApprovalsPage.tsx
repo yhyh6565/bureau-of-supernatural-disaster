@@ -185,7 +185,7 @@ export function ApprovalsPage() {
                                     {doc.status}
                                   </Badge>
                                 </div>
-                                <h3 className="font-medium text-foreground">{doc.title}</h3>
+                                <h3 className="text-sm font-medium text-foreground">{doc.title}</h3>
                               </div>
                             </div>
                             <div className="flex justify-between text-xs text-muted-foreground pt-1">
@@ -199,7 +199,7 @@ export function ApprovalsPage() {
                             <div className="text-center">
                               <Badge variant="outline" className="text-xs font-normal text-muted-foreground bg-white border-border/60">{doc.type}</Badge>
                             </div>
-                            <div className="font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
+                            <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
                             <div className="text-center text-sm text-foreground/70">
                               {doc.approverName}
                             </div>
@@ -263,7 +263,7 @@ export function ApprovalsPage() {
                                 <Badge variant="outline" className="text-xs bg-white">{doc.type}</Badge>
                                 <Badge className={`${style.bg} ${style.text} border-none text-[10px]`}>{doc.status}</Badge>
                               </div>
-                              <h3 className="font-medium">{doc.title}</h3>
+                              <h3 className="text-sm font-medium">{doc.title}</h3>
                               <div className="flex justify-between text-xs text-muted-foreground">
                                 <span>기안자: {getPersonaName(doc.createdByName) || doc.createdByName}</span>
                                 <span>{format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</span>
@@ -273,7 +273,7 @@ export function ApprovalsPage() {
                             {/* Desktop */}
                             <div className="hidden md:grid grid-cols-[1.5fr_5fr_1.5fr_1.5fr_1.5fr] gap-4 p-4 items-center">
                               <div className="text-center"><Badge variant="outline" className="text-xs font-normal text-muted-foreground bg-white">{doc.type}</Badge></div>
-                              <div className="font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
+                              <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
                               <div className="text-center text-sm text-foreground/70">{getPersonaName(doc.createdByName) || doc.createdByName}</div>
                               <div className="text-center text-sm text-muted-foreground font-mono">{format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</div>
                               <div className="text-center"><Badge className={`${style.bg} ${style.text} text-xs border-none rounded-[4px] px-2 h-6 justify-center`}>{doc.status}</Badge></div>
@@ -327,7 +327,7 @@ export function ApprovalsPage() {
                                 <Badge variant="outline" className="text-xs bg-white">{doc.type}</Badge>
                                 <Badge className={`${style.bg} ${style.text} border-none text-[10px]`}>{doc.status}</Badge>
                               </div>
-                              <h3 className="font-medium text-foreground/80">{doc.title}</h3>
+                              <h3 className="text-sm font-medium text-foreground/80">{doc.title}</h3>
                               <div className="flex justify-between text-xs text-muted-foreground">
                                 <span>기안자: {getPersonaName(doc.createdByName) || doc.createdByName}</span>
                                 <span>{doc.processedAt ? format(new Date(doc.processedAt), 'yyyy.MM.dd', { locale: ko }) : '-'}</span>
@@ -337,7 +337,7 @@ export function ApprovalsPage() {
                             {/* Desktop */}
                             <div className="hidden md:grid grid-cols-[1.5fr_5fr_1.5fr_1.5fr_1.5fr] gap-4 p-4 items-center">
                               <div className="text-center"><Badge variant="outline" className="text-xs font-normal text-muted-foreground bg-white">{doc.type}</Badge></div>
-                              <div className="font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
+                              <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
                               <div className="text-center text-sm text-foreground/70">{getPersonaName(doc.createdByName) || doc.createdByName}</div>
                               <div className="text-center text-sm text-muted-foreground font-mono">{doc.processedAt ? format(new Date(doc.processedAt), 'yyyy.MM.dd', { locale: ko }) : '-'}</div>
                               <div className="text-center"><Badge className={`${style.bg} ${style.text} text-xs border-none rounded-[4px] px-2 h-6 justify-center`}>{doc.status}</Badge></div>

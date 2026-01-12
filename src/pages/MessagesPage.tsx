@@ -42,12 +42,16 @@ export function MessagesPage() {
   // Filter Segwang messages and parse dates
   const segwangInbox = (segwangMessages as any[]).filter(m => m.receiverId === 'user').map(m => ({
     ...m,
+    senderName: '■■■',
+    senderDepartment: '■■■■■',
     createdAt: new Date(m.createdAt),
     isRead: m.isRead === 'true' || m.isRead === true
   })) as Message[];
 
   const segwangSent = (segwangMessages as any[]).filter(m => m.senderId === 'user').map(m => ({
     ...m,
+    senderName: '나',
+    senderDepartment: '■■■■■',
     createdAt: new Date(m.createdAt),
     isRead: m.isRead === 'true' || m.isRead === true
   })) as Message[];

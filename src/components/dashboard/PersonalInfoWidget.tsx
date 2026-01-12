@@ -24,7 +24,9 @@ export function PersonalInfoWidget() {
         return 'text-success';
     };
 
-    const contaminationColor = getContaminationColor(contamination);
+    // Segwang Mode: Contamination is always displayed as 100%
+    const displayContamination = mode === 'segwang' ? 100 : contamination;
+    const contaminationColor = getContaminationColor(displayContamination);
 
     const censorText = (text: string | number) => {
         if (mode !== 'segwang') return text;
@@ -76,13 +78,13 @@ export function PersonalInfoWidget() {
                             정신오염도
                         </span>
                         <span className={`text-sm font-mono font-bold ${contaminationColor}`}>
-                            {censorText(`${contamination}%`)}
+                            {censorText(`${displayContamination}%`)}
                         </span>
                     </div>
-                    <Progress value={contamination} className="h-1.5"
+                    <Progress value={displayContamination} className="h-1.5"
                         indicatorClassName={
-                            contamination >= 80 ? 'bg-destructive' :
-                                contamination >= 50 ? 'bg-warning' : 'bg-success'
+                            displayContamination >= 80 ? 'bg-destructive' :
+                                displayContamination >= 50 ? 'bg-warning' : 'bg-success'
                         }
                     />
                 </div>

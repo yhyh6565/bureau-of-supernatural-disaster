@@ -12,7 +12,7 @@
     "processedAt": "",
     "relatedIncidentId": "inc-003",
     "createdByName": "류재관",
-    "approverName": "agent-team-lead"
+    "approverName": "박지원"
   },
   {
     "ownerId": "ryujaegwan",
@@ -42,7 +42,7 @@
     "processedAt": "",
     "relatedIncidentId": "inc-007",
     "createdByName": "류재관",
-    "approverName": "agent-team-lead"
+    "approverName": "박지원"
   },
   {
     "ownerId": "ryujaegwan",
@@ -57,6 +57,6 @@
     "processedAt": "",
     "relatedIncidentId": "",
     "createdByName": "류재관",
-    "approverName": "agent-team-lead"
+    "approverName": "박지원"
   }
 ]

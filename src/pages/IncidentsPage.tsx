@@ -78,7 +78,7 @@ export default function IncidentsPage() {
     }, [mode]);
 
     const baseIncidents = mode === 'segwang'
-        ? DataManager.getIncidents(null)
+        ? DataManager.getIncidents(agent, 'segwang')
         : processedIncidents;
 
     const incidents = baseIncidents

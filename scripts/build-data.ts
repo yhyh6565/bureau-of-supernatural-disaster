@@ -85,16 +85,16 @@ function getAgentDepartment(id: string): string {
 function enrichApprovals(approvals: any[]): any[] {
   return approvals.map(doc => ({
     ...doc,
-    createdByName: doc.createdByName || getAgentName(doc.createdBy),
-    approverName: doc.approverName || getAgentName(doc.approver)
+    createdByName: getAgentName(doc.createdBy),
+    approverName: getAgentName(doc.approver)
   }));
 }
 
 function enrichMessages(messages: any[]): any[] {
   return messages.map(msg => ({
     ...msg,
-    senderName: msg.senderName || getAgentName(msg.senderId),
-    senderDepartment: msg.senderDepartment || getAgentDepartment(msg.senderId)
+    senderName: getAgentName(msg.senderId),
+    senderDepartment: getAgentDepartment(msg.senderId)
   }));
 }
 // ---------------------------------------------------------------------------
@@ -158,6 +158,7 @@ function buildPersona(personaId: string, allAgents: any[]) {
           agentData.department === '신규조사반' ? 'baekho' :
             agentData.department === '자재과' ? 'materials' : agentData.department,
       team: agentData.team,
+      organization: agentData.organization, // [NEW] Map organization field
       rank: agentData.rank,
       extension: agentData.extension,
       status: agentData.status,
@@ -238,6 +239,11 @@ function buildSegwang() {
   const enrichedMessages = enrichMessages(messages);
   fs.writeFileSync(path.join(segwangDir, 'messages.json'), JSON.stringify(enrichedMessages, null, 2));
   console.log(`  ✓ Segwang_messages.csv → messages.json`);
+
+  // Incidents (NEW)
+  const incidents = loadCSV('Segwang_incidents.csv');
+  fs.writeFileSync(path.join(segwangDir, 'incidents.json'), JSON.stringify(incidents, null, 2));
+  console.log(`  ✓ Segwang_incidents.csv → incidents.json`);
 }
 
 function buildOrdinary() {

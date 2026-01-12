@@ -239,7 +239,7 @@
   },
   {
     "id": "agent-hm3-002",
-    "name": "현무3팀원2",
+    "name": "안병진",
     "department": "출동구조반",
     "team": "3팀",
     "rank": "요원",
@@ -256,7 +256,7 @@
   },
   {
     "id": "agent-hm3-003",
-    "name": "현무3팀원3",
+    "name": "신진기",
     "department": "출동구조반",
     "team": "3팀",
     "rank": "요원",
@@ -273,7 +273,7 @@
   },
   {
     "id": "agent-hm3-004",
-    "name": "현무3팀원4",
+    "name": "한수아",
     "department": "출동구조반",
     "team": "3팀",
     "rank": "요원",
@@ -290,7 +290,7 @@
   },
   {
     "id": "agent-hm3-005",
-    "name": "현무3팀원5",
+    "name": "김기현",
     "department": "출동구조반",
     "team": "3팀",
     "rank": "요원",
@@ -307,7 +307,7 @@
   },
   {
     "id": "agent-hm-009",
-    "name": "현무팀원9",
+    "name": "김하진",
     "department": "출동구조반",
     "team": "9팀",
     "rank": "요원",
@@ -324,7 +324,7 @@
   },
   {
     "id": "agent-baekho-001",
-    "name": "백호팀원1",
+    "name": "이영희",
     "department": "신규조사반",
     "team": "1팀",
     "rank": "요원",
@@ -341,7 +341,7 @@
   },
   {
     "id": "agent-baekho-002",
-    "name": "백호팀원2",
+    "name": "김은하",
     "department": "신규조사반",
     "team": "1팀",
     "rank": "요원",
@@ -358,7 +358,7 @@
   },
   {
     "id": "agent-bh-005",
-    "name": "백호팀원5",
+    "name": "최동욱",
     "department": "신규조사반",
     "team": "5팀",
     "rank": "요원",
@@ -375,7 +375,7 @@
   },
   {
     "id": "agent-bh-102",
-    "name": "백호팀원102",
+    "name": "강민호",
     "department": "신규조사반",
     "team": "2팀",
     "rank": "요원",
@@ -392,7 +392,7 @@
   },
   {
     "id": "agent-jj-002",
-    "name": "정리팀원2",
+    "name": "정수민",
     "department": "현장정리반",
     "team": "2팀",
     "rank": "요원",
@@ -409,7 +409,7 @@
   },
   {
     "id": "agent-jj-005",
-    "name": "정리팀원5",
+    "name": "이진우",
     "department": "현장정리반",
     "team": "5팀",
     "rank": "요원",
@@ -426,7 +426,7 @@
   },
   {
     "id": "agent-support-001",
-    "name": "지원팀원1",
+    "name": "김지은",
     "department": "지원팀",
     "team": "",
     "rank": "직원",
@@ -527,6 +527,40 @@
     "purificationHistory": ""
   },
   {
+    "id": "agent-team-lead",
+    "name": "박지원",
+    "department": "인사팀",
+    "team": "",
+    "rank": "팀장",
+    "status": "active",
+    "extension": "8888",
+    "contamination": "0",
+    "codename": "",
+    "type": "ordinary",
+    "grade": "6",
+    "funeralPreference": "화장",
+    "totalIncidents": "0",
+    "specialCases": "0",
+    "purificationHistory": ""
+  },
+  {
+    "id": "agent-chief-001",
+    "name": "김한수",
+    "department": "본부",
+    "team": "",
+    "rank": "국장",
+    "status": "active",
+    "extension": "9900",
+    "contamination": "0",
+    "codename": "",
+    "type": "ordinary",
+    "grade": "3",
+    "funeralPreference": "화장",
+    "totalIncidents": "0",
+    "specialCases": "0",
+    "purificationHistory": ""
+  },
+  {
     "id": "agent-admin-sec1",
     "name": "한경환",
     "department": "보안팀",
@@ -540,6 +574,40 @@
     "grade": "6",
     "funeralPreference": "화장",
     "totalIncidents": "140",
+    "specialCases": "8",
+    "purificationHistory": ""
+  },
+  {
+    "id": "agent-bh-2-leader",
+    "name": "강준호",
+    "department": "신규조사반",
+    "team": "2팀",
+    "rank": "팀장",
+    "status": "active",
+    "extension": "4101",
+    "contamination": "0",
+    "codename": "",
+    "type": "ordinary",
+    "grade": "8",
+    "funeralPreference": "화장",
+    "totalIncidents": "150",
+    "specialCases": "5",
+    "purificationHistory": ""
+  },
+  {
+    "id": "agent-jj-leader",
+    "name": "박정훈",
+    "department": "현장정리반",
+    "team": "1팀",
+    "rank": "팀장",
+    "status": "active",
+    "extension": "3101",
+    "contamination": "0",
+    "codename": "",
+    "type": "ordinary",
+    "grade": "8",
+    "funeralPreference": "화장",
+    "totalIncidents": "160",
     "specialCases": "8",
     "purificationHistory": ""
   }

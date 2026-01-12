@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useAuthStore } from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
+import { useBureauStore } from '@/store/bureauStore';
 import {
   Dialog,
   DialogContent,
@@ -38,9 +39,13 @@ function StatusBadge({ status }: { status: Incident['status'] }) {
 
 export function IncidentList() {
   const { agent } = useAuthStore();
+  const { mode } = useBureauStore(); // Use global mode state
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
-  const incidents = DataManager.getIncidents(agent);
+
+  // Fetch incidents based on mode
+  const incidents = DataManager.getIncidents(agent, mode === 'segwang' ? 'segwang' : undefined);
+
   // 종결되지 않은 사건만 표시
   const activeIncidents = incidents.filter(inc => inc.status !== '종결');
 
