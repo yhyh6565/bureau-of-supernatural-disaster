@@ -1,11 +1,11 @@
 id,name,department,team,rank,status,extension,contamination,isImmuneToContamination,codename,type,grade,funeralPreference
 choiyowon,최요원,출동구조반,1팀,요원,active,2101,15,false,false,persona,9,화장
 haegeum,해금,출동구조반,3팀,팀장,active,2301,24,false,해금,persona,6,화장
-janghyeowoon,장허운,현장정리반,2팀,요원,active,3201,80,true,화각,persona,9,화장
-koyoungeun,고영은,신규조사반,2팀,요원,active,4201,20,false,박하,persona,9,화장
-parkhonglim,박홍림,출동구조반,1팀,팀장,active,5001,98,true,홍화,persona,6,화장
+janghyeowoon,장허운,현장정리반,2팀,요원,leave,3201,80,true,화각,persona,9,화장
+koyoungeun,고영은,신규조사반,2팀,요원,resigned,4201,20,false,박하,persona,9,화장
+parkhonglim,박홍림,출동구조반,1팀,팀장,leave,5001,98,true,홍화,persona,6,화장
 ryujaegwan,류재관,출동구조반,1팀,요원,active,2102,13,false,청동,persona,9,화장
-solum,김솔음,출동구조반,3팀,요원,resigned,2303,30,false,포도,persona,9,화장
+solum,김솔음,출동구조반,3팀,요원,leave,2303,30,false,포도,persona,9,화장
 agent001,김민수,신규조사반,1팀,요원,active,4101,15,false,,ordinary,9,화장
 agent002,이진아,신규조사반,1팀,요원,active,4102,3,false,,ordinary,9,화장
 agent003,박민준,신규조사반,1팀,요원,active,4103,9,false,,ordinary,9,화장

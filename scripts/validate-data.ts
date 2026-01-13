@@ -72,7 +72,7 @@ const agentsRules: BureauValidationRule[] = [
   {
     name: 'Valid agent status',
     validate: (agents) => {
-      const validStatuses = ['active', 'inactive', 'missing', 'retired', 'deceased', 'resigned'];
+      const validStatuses = ['active', 'inactive', 'missing', 'retired', 'deceased', 'resigned', 'leave'];
       return agents
         .map((a, i) => ({ agent: a, row: i + 2 }))
         .filter(({ agent }) => agent.status && !validStatuses.includes(agent.status))

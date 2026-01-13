@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { useInteractionStore } from '@/store/interactionStore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/store/authStore';
 import { useBureauStore } from '@/store/bureauStore';
-import { DataManager } from '@/data/dataManager';
 import { useWorkData } from '@/hooks/useWorkData';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
@@ -32,7 +30,6 @@ export function TasksPage() {
   const { agent } = useAuthStore();
   const { processedIncidents, acceptIncident } = useWorkData();
   const { mode } = useBureauStore();
-  const { triggeredIds } = useInteractionStore();
   const [searchParams] = useSearchParams();
   const defaultTab = searchParams.get('view') === 'calendar' ? 'calendar' : 'list';
 
@@ -48,13 +45,8 @@ export function TasksPage() {
 
   const department = agent.department;
 
-  // Filter incidents based on mode
-  const baseIncidents = mode === 'segwang'
-    ? DataManager.getIncidents(agent, 'segwang')
-        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
-    : processedIncidents;
-
-  const incidents = baseIncidents;
+  // processedIncidents already handles both mode selection and trigger filtering
+  const incidents = processedIncidents;
 
   const getTasksByDepartment = () => {
     // Segwang Mode: All agents see Segwang tasks

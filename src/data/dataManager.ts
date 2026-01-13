@@ -11,6 +11,7 @@ import GLOBAL_SCHEDULES_JSON from '@/data/global/schedules.json';
 
 // Import Shared Data
 import SHARED_INCIDENTS_JSON from '@/data/incidents.json';
+import SHARED_AGENTS_JSON from '@/data/agents.json';
 
 // Import Segwang Data
 import SEGWANG_APPROVALS_JSON from '@/data/segwang/approvals.json';
@@ -84,6 +85,7 @@ const PERSONA_NOTIFICATIONS = Object.entries(personaNotificationsModules).flatMa
 // ---------------------------------------------------------------------------
 
 const ALL_INCIDENTS = parseDates<Incident>(SHARED_INCIDENTS_JSON);
+const ALL_AGENTS = SHARED_AGENTS_JSON as any[]; // Raw agent data from CSV
 const GLOBAL_EQUIPMENT = GLOBAL_EQUIPMENT_JSON as Equipment[];
 const GLOBAL_LOCATIONS = GLOBAL_LOCATIONS_JSON as VisitLocation[];
 const GLOBAL_MANUALS = parseDates<Manual>(GLOBAL_MANUALS_JSON);
@@ -239,5 +241,30 @@ export const DataManager = {
     getInspectionRequests: (agent: Agent | null): InspectionRequest[] => {
         if (!agent) return [];
         return ALL_INSPECTIONS.filter((req: InspectionRequest) => req.agentId === agent.id || req.agentId === agent.personaKey);
+    },
+
+    // Agent Information Utilities
+    /**
+     * Get agent information by ID (personaKey)
+     * @param id - Agent's personaKey (e.g., 'choiyowon', 'haegeum')
+     * @returns Agent data or null if not found
+     */
+    getAgentInfo: (id: string): any | null => {
+        if (!id) return null;
+        return ALL_AGENTS.find((agent: any) => agent.id === id) || null;
+    },
+
+    /**
+     * Get formatted display name for an agent
+     * @param id - Agent's personaKey (e.g., 'choiyowon', 'haegeum')
+     * @returns Formatted name with department (e.g., '최요원 (출동구조반)') or the ID itself if not found
+     */
+    getAgentDisplayName: (id: string): string => {
+        if (!id) return '';
+        const agent = DataManager.getAgentInfo(id);
+        if (!agent) return id;
+
+        // Return name with department in parentheses
+        return agent.department ? `${agent.name} (${agent.department})` : agent.name;
     }
 };

@@ -2,16 +2,13 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataManager } from '@/data/dataManager';
 import { Incident } from '@/types/haetae';
 import { DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
 import { AlertTriangle, MapPin, Clock, Shield, Ban } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useAuthStore } from '@/store/authStore';
 import { useNavigate } from 'react-router-dom';
-import { useBureauStore } from '@/store/bureauStore';
-import { useInteractionStore } from '@/store/interactionStore';
+import { useWorkData } from '@/hooks/useWorkData';
 import {
   Dialog,
   DialogContent,
@@ -39,18 +36,13 @@ function StatusBadge({ status }: { status: Incident['status'] }) {
 }
 
 export function IncidentList() {
-  const { agent } = useAuthStore();
-  const { mode } = useBureauStore(); // Use global mode state
-  const { triggeredIds } = useInteractionStore();
+  const { processedIncidents } = useWorkData();
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
 
-  // Fetch incidents based on mode
-  const incidents = DataManager.getIncidents(agent, mode === 'segwang' ? 'segwang' : undefined)
-    .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)); // Only show triggered incidents
-
+  // processedIncidents already handles mode selection and trigger filtering
   // 종결되지 않은 사건만 표시
-  const activeIncidents = incidents.filter(inc => inc.status !== '종결');
+  const activeIncidents = processedIncidents.filter(inc => inc.status !== '종결');
 
   return (
     <Card className="card-gov">

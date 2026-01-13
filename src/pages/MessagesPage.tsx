@@ -15,7 +15,6 @@ import { Mail, Send, Inbox, ArrowLeft, Reply, User, MoreHorizontal, PenLine } fr
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from '@/hooks/use-toast';
-import { getPersonaName } from '@/constants/haetae';
 import { useInteractionStore } from '@/store/interactionStore';
 import { safeFormatDate, formatSegwangDate } from '@/utils/dateUtils';
 import {
@@ -325,47 +324,53 @@ export function MessagesPage() {
 
                 <div className="divide-y divide-border/40">
                   {sentMessages.length > 0 ? (
-                    sentMessages.map((message) => (
-                      <div
-                        key={message.id}
-                        className="group hover:bg-muted/30 transition-colors cursor-pointer"
-                        onClick={() => setSelectedMessage(message)}
-                      >
-                        {/* Mobile Card Layout */}
-                        <div className="md:hidden p-4 space-y-3">
-                          <div className="flex justify-between items-start gap-3">
-                            <div className="space-y-1 flex-1">
-                              <span className="font-medium text-foreground line-clamp-1 block">
+                    sentMessages.map((message) => {
+                      const receiverAgent = DataManager.getAgentInfo(message.receiverId);
+                      const receiverName = receiverAgent ? receiverAgent.name : message.receiverId;
+                      const receiverDept = receiverAgent ? receiverAgent.department : '';
+
+                      return (
+                        <div
+                          key={message.id}
+                          className="group hover:bg-muted/30 transition-colors cursor-pointer"
+                          onClick={() => setSelectedMessage(message)}
+                        >
+                          {/* Mobile Card Layout */}
+                          <div className="md:hidden p-4 space-y-3">
+                            <div className="flex justify-between items-start gap-3">
+                              <div className="space-y-1 flex-1">
+                                <span className="font-medium text-foreground line-clamp-1 block">
+                                  {message.title}
+                                </span>
+                                <div className="text-sm text-muted-foreground">
+                                  {receiverName} {receiverDept && <span className="text-xs opacity-70">({receiverDept})</span>}
+                                </div>
+                              </div>
+                              <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
+                                {formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Desktop Row Layout */}
+                          <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 items-center">
+                            <div className="text-sm font-medium text-foreground/90 truncate">
+                              {receiverName} {receiverDept && <span className="text-muted-foreground text-xs font-normal">({receiverDept})</span>}
+                            </div>
+
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-sm text-foreground/80 truncate group-hover:text-primary transition-colors">
                                 {message.title}
                               </span>
-                              <div className="text-sm text-muted-foreground">
-                                {getPersonaName(message.receiverId)}
-                              </div>
                             </div>
-                            <span className="text-xs text-muted-foreground whitespace-nowrap pt-1">
+
+                            <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
                               {formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
-                            </span>
+                            </div>
                           </div>
                         </div>
-
-                        {/* Desktop Row Layout */}
-                        <div className="hidden md:grid grid-cols-[3fr_6fr_2fr] gap-4 p-4 items-center">
-                          <div className="text-sm font-medium text-foreground/90 truncate">
-                            {getPersonaName(message.receiverId)}
-                          </div>
-
-                          <div className="flex items-center gap-2 min-w-0">
-                            <span className="text-sm text-foreground/80 truncate group-hover:text-primary transition-colors">
-                              {message.title}
-                            </span>
-                          </div>
-
-                          <div className="text-right pr-4 text-sm text-muted-foreground font-mono">
-                            {formatSegwangDate(message.createdAt, 'yyyy.MM.dd', mode === 'segwang')}
-                          </div>
-                        </div>
-                      </div>
-                    ))
+                      );
+                    })
                   ) : (
                     <div className="p-12 text-center text-muted-foreground text-sm">
                       보낸 쪽지가 없습니다.

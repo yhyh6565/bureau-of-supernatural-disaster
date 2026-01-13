@@ -5,13 +5,11 @@ import { Badge } from '@/components/ui/badge';
 import { useAuthStore } from '@/store/authStore';
 import { useWorkData } from '@/hooks/useWorkData';
 import { DEPARTMENT_INFO, DANGER_LEVEL_STYLE, STATUS_STYLE } from '@/constants/haetae';
-import { DataManager } from '@/data/dataManager';
 import { ClipboardList, ArrowRight, FileSearch, Truck, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Incident } from '@/types/haetae';
 import { useBureauStore } from '@/store/bureauStore';
 import { toast } from '@/hooks/use-toast';
-import { useInteractionStore } from '@/store/interactionStore';
 import {
   Dialog,
   DialogContent,
@@ -28,7 +26,6 @@ export function MyAssignments() {
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
-  const { triggeredIds } = useInteractionStore();
 
   if (!agent) return null;
 
@@ -39,10 +36,9 @@ export function MyAssignments() {
   const getMyIncidents = () => {
     // Segwang Mode Special Handling
     if (mode === 'segwang') {
-      // In Segwang mode, regardless of department, show 'Rescue Standby' from Segwang incidents
-      const segwangIncidents = DataManager.getIncidents(agent, 'segwang');
-      return segwangIncidents
-        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
+      // In Segwang mode, regardless of department, show 'Rescue Standby' from processed incidents
+      // processedIncidents already handles trigger filtering and mode selection
+      return processedIncidents
         .filter(inc => inc.status === '구조대기')
         .slice(0, 3);
     }

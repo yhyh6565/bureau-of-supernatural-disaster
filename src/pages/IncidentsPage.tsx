@@ -35,14 +35,14 @@ import { Button } from '@/components/ui/button';
 import { useInteractionStore } from '@/store/interactionStore';
 import { useWorkData } from '@/hooks/useWorkData';
 import { useBureauStore } from '@/store/bureauStore';
-import { DataManager } from '@/data/dataManager';
+import { EGG_SEARCH_KEYWORDS } from '@/constants/specialEvents';
 
 type GroupBy = 'status' | 'dangerLevel';
 
 export default function IncidentsPage() {
     const { agent } = useAuthStore();
     const { mode } = useBureauStore();
-    const { triggeredIds, newlyTriggeredId, clearNewTrigger } = useInteractionStore();
+    const { newlyTriggeredId, clearNewTrigger } = useInteractionStore();
     const { processedIncidents } = useWorkData();
     const navigate = useNavigate();
 
@@ -58,13 +58,8 @@ export default function IncidentsPage() {
     const [showDeletedRecordModal, setShowDeletedRecordModal] = useState(false);
 
     const handleSearch = (query: string) => {
-        const triggerKeywords = [
-            '세광', '세광특별시', '특별시',
-            '0000PSYA.2024.세00', '0000PSYA.20██.세00',
-            '삭제된 지역', '기억 소각', '5월 4일', '멸형급 552'
-        ];
-
-        if (triggerKeywords.some(keyword => query.includes(keyword))) {
+        // Check if query contains any Segwang-related keywords
+        if (EGG_SEARCH_KEYWORDS.SEGWANG.some(keyword => query.includes(keyword))) {
             setShowDeletedRecordModal(true);
         }
     };
@@ -77,12 +72,8 @@ export default function IncidentsPage() {
         }
     }, [mode]);
 
-    const baseIncidents = mode === 'segwang'
-        ? DataManager.getIncidents(agent, 'segwang')
-            .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
-        : processedIncidents;
-
-    const incidents = baseIncidents
+    // processedIncidents already handles both mode selection and trigger filtering
+    const incidents = processedIncidents
         .filter(inc => {
             if (!searchQuery) return true;
             const query = searchQuery.toLowerCase();

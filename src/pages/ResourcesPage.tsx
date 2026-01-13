@@ -131,7 +131,7 @@ export function ResourcesPage() {
                 status: '결재대기',
                 createdBy: agent?.id || 'unknown',
                 createdByName: agent?.name || '알 수 없음',
-                approver: 'HMU-301',
+                approver: 'agent-admin-equip',
             }, agent!);
 
             toast({
@@ -176,7 +176,7 @@ export function ResourcesPage() {
                 status: '결재대기',
                 createdBy: agent?.id || 'unknown',
                 createdByName: agent?.name || '알 수 없음',
-                approver: 'HMU-301',
+                approver: 'agent-admin-sec1',
             }, agent!);
             if (selectedLocation.name === '용천 선녀탕') decreaseContamination(30);
             toast({ title: '결재 상신 완료', description: `"${selectedLocation.name}" 방문 신청 결재 상신됨.` });

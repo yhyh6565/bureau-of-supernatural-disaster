@@ -167,10 +167,13 @@ export const getProcessedIncidents = (
 ): Incident[] => {
     if (!agent) return [];
 
-    const baseIncidents = DataManager.getIncidents(agent);
+    // Get incidents based on mode (Segwang or Ordinary)
+    const baseIncidents = mode === 'segwang'
+        ? DataManager.getIncidents(agent, 'segwang')
+        : DataManager.getIncidents(agent);
 
     return baseIncidents
-        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // trigger가 있으면 triggeredIds에 있어야 보임
+        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // 트리거 필터링: trigger가 없거나 이미 발동된 것만
         .map(inc => {
             let updatedInc = { ...inc };
 

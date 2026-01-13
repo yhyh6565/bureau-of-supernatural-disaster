@@ -3,6 +3,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useInteractionStore } from '@/store/interactionStore';
 import { useToast } from '@/hooks/use-toast';
 import { EASTER_EGGS } from '@/constants/easterEggs';
+import { SPECIAL_INCIDENTS } from '@/constants/specialEvents';
 import { Message } from '@/types/haetae';
 
 export function EggManager() {
@@ -14,13 +15,13 @@ export function EggManager() {
     useEffect(() => {
         if (!isAuthenticated || !agent) return;
 
-        const sinkholeId = 'inc-sinkhole-001';
+        const sinkholeId = SPECIAL_INCIDENTS.SINKHOLE;
         // If already triggered, do nothing
         if (triggeredIds.includes(sinkholeId)) return;
 
         const timer = setTimeout(() => {
             // 1. Trigger BOTH incident and notification IDs (timestamps are saved automatically in triggerEvent)
-            triggerEvent(sinkholeId); // Triggers 'inc-sinkhole-001' for incident list
+            triggerEvent(sinkholeId); // Triggers the sinkhole incident for incident list
             triggerEvent('noti-sinkhole-alert'); // Triggers notification for badge
 
             // 2. Show Toast
