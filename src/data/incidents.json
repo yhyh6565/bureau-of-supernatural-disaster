@@ -359,6 +359,7 @@
     "status": "구조대기",
     "reportContent": "[긴급] 도심 한복판에 지름 20m 싱크홀 발생. 단순 붕괴가 아닌 거대한 '입' 형태의 생체 조직 확인. 행인 및 차량 다수 추락. 사상자 50명 이상 추정. 주변 건물 지반 침하 중. 즉시 출동 바람.",
     "requiresPatrol": true,
+    "trigger": true,
     "createdAt": "2026-01-03T20:00:00",
     "updatedAt": "2026-01-03T20:00:00",
     "manualId": ""
