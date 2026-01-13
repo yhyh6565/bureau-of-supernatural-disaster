@@ -18,12 +18,12 @@ export function useWorkData() {
         addInspectionRequest,
         acceptIncident
     } = useWorkStore();
-    const { triggeredIds } = useInteractionStore();
+    const { triggeredIds, triggeredTimestamps } = useInteractionStore();
 
     const processedIncidents = useMemo(() => {
         if (!agent) return [];
-        return getProcessedIncidents(agent, mode, acceptedIncidentIds, triggeredIds);
-    }, [agent, mode, acceptedIncidentIds, triggeredIds]);
+        return getProcessedIncidents(agent, mode, acceptedIncidentIds, triggeredIds, triggeredTimestamps);
+    }, [agent, mode, acceptedIncidentIds, triggeredIds, triggeredTimestamps]);
 
     const schedules = useMemo(() => {
         if (!agent) return [];

@@ -19,10 +19,17 @@ export function NoticeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { agent } = useAuthStore();
-  const { markAsRead } = useInteractionStore();
+  const { markAsRead, triggeredTimestamps } = useInteractionStore();
   const { mode } = useBureauStore();
 
-  const notifications = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
+  const baseNotifications = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
+  const notifications = baseNotifications.map(n => {
+    // If this notification was dynamically triggered, override its createdAt with the trigger timestamp
+    if (n.trigger && triggeredTimestamps && triggeredTimestamps[n.id]) {
+      return { ...n, createdAt: triggeredTimestamps[n.id] };
+    }
+    return n;
+  });
   const notice = notifications.find(n => n.id === id);
 
   useEffect(() => {

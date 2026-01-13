@@ -79,15 +79,10 @@ export default function IncidentsPage() {
 
     const baseIncidents = mode === 'segwang'
         ? DataManager.getIncidents(agent, 'segwang')
+            .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
         : processedIncidents;
 
     const incidents = baseIncidents
-        .filter(inc => {
-            if (inc.id === 'inc-sinkhole-001') {
-                return triggeredIds.includes(inc.id);
-            }
-            return true;
-        })
         .filter(inc => {
             if (!searchQuery) return true;
             const query = searchQuery.toLowerCase();

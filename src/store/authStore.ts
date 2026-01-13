@@ -3,6 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { Agent, Department } from '@/types/haetae';
 import { AGENT_PROFILES, RANDOM_CODENAMES } from '@/constants/haetae';
 import { useGameStore } from './gameStore';
+import { useInteractionStore } from './interactionStore';
+import { useWorkStore } from './workStore';
 
 // Map by name for easy lookup
 const AGENT_NAME_MAP: Record<string, Agent> = Object.values(AGENT_PROFILES).reduce((acc, agent) => {
@@ -77,6 +79,12 @@ export const useAuthStore = create<AuthState>()(
 
                 // Reset game store to clear contamination and game over state
                 useGameStore.getState().reset();
+
+                // Reset interaction store to clear triggered events and session data
+                useInteractionStore.getState().resetInteractions();
+
+                // Reset work store to clear session schedules, approvals, and accepted incidents
+                useWorkStore.getState().resetSession();
             },
         }),
         {
@@ -94,12 +102,14 @@ export const useAuthStore = create<AuthState>()(
                     // Sync with latest AGENT_PROFILES to reflect code changes
                     if (state.agent.personaKey && AGENT_PROFILES[state.agent.personaKey]) {
                         const freshProfile = AGENT_PROFILES[state.agent.personaKey];
-                        // Merge static properties that might have changed in code
+                        // Preserve user state (contamination, rentals) but update all static fields
+                        const userContamination = state.agent.contamination;
+                        const userRentals = state.agent.rentals;
+
                         state.agent = {
-                            ...state.agent,
-                            // Ensure these fields are up-to-date with code
-                            isImmuneToContamination: freshProfile.isImmuneToContamination,
-                            // We don't overwrite contamination or rentals as those are user state
+                            ...freshProfile, // Use fresh profile as base
+                            contamination: userContamination, // Preserve user's contamination
+                            rentals: userRentals, // Preserve user's rentals
                         };
                     }
 

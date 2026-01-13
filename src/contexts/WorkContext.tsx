@@ -115,7 +115,7 @@ export function WorkProvider({ children }: { children: ReactNode }) {
 
         // Use Saekwang data if in Saekwang mode
         const baseIncidents = mode === 'segwang'
-            ? DataManager.getIncidents(agent)
+            ? DataManager.getIncidents(agent, 'segwang')
             : DataManager.getIncidents(agent);
 
         return baseIncidents

@@ -162,7 +162,8 @@ export const getProcessedIncidents = (
     agent: Agent,
     mode: 'ordinary' | 'segwang',
     acceptedIds: string[],
-    triggeredIds: string[]
+    triggeredIds: string[],
+    triggeredTimestamps?: Record<string, Date>
 ): Incident[] => {
     if (!agent) return [];
 
@@ -171,14 +172,21 @@ export const getProcessedIncidents = (
     return baseIncidents
         .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // trigger가 있으면 triggeredIds에 있어야 보임
         .map(inc => {
+            let updatedInc = { ...inc };
+
+            // If this incident was dynamically triggered, override its createdAt with the trigger timestamp
+            if (inc.trigger && triggeredTimestamps && triggeredTimestamps[inc.id]) {
+                updatedInc.createdAt = triggeredTimestamps[inc.id];
+            }
+
             if (acceptedIds.includes(inc.id)) {
-                let newStatus = inc.status;
+                let newStatus = updatedInc.status;
                 if (agent.department === 'baekho') newStatus = '조사중';
                 else if (agent.department === 'hyunmu') newStatus = '구조중';
                 else if (agent.department === 'jujak') newStatus = '정리중';
-                return { ...inc, status: newStatus as any };
+                return { ...updatedInc, status: newStatus as any };
             }
-            return inc;
+            return updatedInc;
         })
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 };

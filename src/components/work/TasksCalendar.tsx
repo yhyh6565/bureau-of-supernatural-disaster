@@ -28,10 +28,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { useWork } from '@/contexts/WorkContext';
+import { useWorkData } from '@/hooks/useWorkData';
 import { useAuthStore } from '@/store/authStore';
 import { useResource } from '@/contexts/ResourceContext';
-import { DataManager } from '@/data/dataManager';
 import { STATUS_STYLE } from '@/constants/haetae';
 
 // Unified Event Type
@@ -47,7 +46,7 @@ export interface CalendarEvent {
 export function TasksCalendar() {
     const { agent } = useAuthStore();
     const { rentals } = useResource();
-    const { schedules, approvals, inspectionRequests, acceptedIncidentIds } = useWork();
+    const { schedules, approvals, inspectionRequests, processedIncidents, acceptedIncidentIds } = useWorkData();
 
     const [currentDate, setCurrentDate] = useState(new Date());
     const [viewMode, setViewMode] = useState<'month' | 'week'>('week');
@@ -74,9 +73,8 @@ export function TasksCalendar() {
     const events = useMemo(() => {
         const allEvents: CalendarEvent[] = [];
 
-        // 1. Incidents
-        const allIncidents = DataManager.getIncidents(agent);
-        const myIncidents = allIncidents.filter(inc => {
+        // 1. Incidents - Use processedIncidents which already has trigger filtering applied
+        const myIncidents = processedIncidents.filter(inc => {
             if (acceptedIncidentIds.includes(inc.id)) return true;
             if (agent.department === 'baekho' && inc.status === '접수') return true;
             if (agent.department === 'hyunmu' && inc.status === '구조대기') return true;
@@ -146,7 +144,7 @@ export function TasksCalendar() {
         });
 
         return allEvents;
-    }, [agent, rentals, schedules, approvals, inspectionRequests, acceptedIncidentIds]);
+    }, [agent, rentals, schedules, approvals, inspectionRequests, acceptedIncidentIds, processedIncidents]);
 
     // Calendar Logic
     const calendarDays = (() => {

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useInteractionStore } from '@/store/interactionStore';
 import { useToast } from '@/hooks/use-toast';
-import { DataManager } from '@/data/dataManager';
 import { EASTER_EGGS } from '@/constants/easterEggs';
 import { Message } from '@/types/haetae';
 
@@ -20,7 +19,7 @@ export function EggManager() {
         if (triggeredIds.includes(sinkholeId)) return;
 
         const timer = setTimeout(() => {
-            // 1. Trigger BOTH incident and notification IDs
+            // 1. Trigger BOTH incident and notification IDs (timestamps are saved automatically in triggerEvent)
             triggerEvent(sinkholeId); // Triggers 'inc-sinkhole-001' for incident list
             triggerEvent('noti-sinkhole-alert'); // Triggers notification for badge
 
@@ -32,18 +31,10 @@ export function EggManager() {
                 duration: 5000,
             });
 
-            // 3. Update the DataManager resource to appear 'fresh'
-            const allNotices = DataManager.getNotifications(agent);
-            const sinkholeNotice = allNotices.find(n => n.id === 'noti-sinkhole-alert');
-            if (sinkholeNotice) {
-                sinkholeNotice.createdAt = new Date();
-                sinkholeNotice.isRead = false;
-            }
-
         }, 30000); // 30 seconds delay
 
         return () => clearTimeout(timer);
-    }, [isAuthenticated, agent?.id, triggeredIds]);
+    }, [isAuthenticated, agent?.id]);
 
     // Haunted Message Logic
     useEffect(() => {

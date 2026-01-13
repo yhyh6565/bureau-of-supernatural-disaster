@@ -51,14 +51,10 @@ export function TasksPage() {
   // Filter incidents based on mode
   const baseIncidents = mode === 'segwang'
     ? DataManager.getIncidents(agent, 'segwang')
+        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
     : processedIncidents;
 
-  const incidents = baseIncidents.filter(inc => {
-    if (inc.id === 'inc-sinkhole-001') {
-      return triggeredIds.includes(inc.id);
-    }
-    return true;
-  });
+  const incidents = baseIncidents;
 
   const getTasksByDepartment = () => {
     // Segwang Mode: All agents see Segwang tasks

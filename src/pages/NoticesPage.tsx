@@ -32,7 +32,7 @@ import {
 
 export function NoticesPage() {
   const { agent } = useAuthStore();
-  const { triggeredIds } = useInteractionStore();
+  const { triggeredIds, triggeredTimestamps } = useInteractionStore();
   const { mode } = useBureauStore();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,7 +43,14 @@ export function NoticesPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // 공지사항 데이터
-  const allNotices = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
+  const baseNotices = mode === 'segwang' ? segwangNotices : DataManager.getNotifications(agent);
+  const allNotices = baseNotices.map(n => {
+    // If this notification was dynamically triggered, override its createdAt with the trigger timestamp
+    if (n.trigger && triggeredTimestamps && triggeredTimestamps[n.id]) {
+      return { ...n, createdAt: triggeredTimestamps[n.id] };
+    }
+    return n;
+  });
 
   // 초기 로딩 시뮬레이션
   useEffect(() => {

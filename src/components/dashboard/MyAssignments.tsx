@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Incident } from '@/types/haetae';
 import { useBureauStore } from '@/store/bureauStore';
 import { toast } from '@/hooks/use-toast';
+import { useInteractionStore } from '@/store/interactionStore';
 import {
   Dialog,
   DialogContent,
@@ -27,6 +28,7 @@ export function MyAssignments() {
   const navigate = useNavigate();
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [showAcceptDialog, setShowAcceptDialog] = useState(false);
+  const { triggeredIds } = useInteractionStore();
 
   if (!agent) return null;
 
@@ -39,7 +41,10 @@ export function MyAssignments() {
     if (mode === 'segwang') {
       // In Segwang mode, regardless of department, show 'Rescue Standby' from Segwang incidents
       const segwangIncidents = DataManager.getIncidents(agent, 'segwang');
-      return segwangIncidents.filter(inc => inc.status === '구조대기').slice(0, 3);
+      return segwangIncidents
+        .filter(inc => !inc.trigger || triggeredIds.includes(inc.id)) // Only show triggered incidents
+        .filter(inc => inc.status === '구조대기')
+        .slice(0, 3);
     }
 
     switch (department) {

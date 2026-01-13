@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { DataManager } from '@/data/dataManager';
+import { useInteractionStore } from '@/store/interactionStore';
 import { Bell, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -9,8 +10,17 @@ import { useNavigate } from 'react-router-dom';
 
 export function NoticeWidget() {
   const { agent } = useAuthStore();
+  const { triggeredIds, triggeredTimestamps } = useInteractionStore();
   const navigate = useNavigate();
-  const notifications = DataManager.getNotifications(agent);
+  const notifications = DataManager.getNotifications(agent)
+    .filter(n => !n.trigger || triggeredIds.includes(n.id))
+    .map(n => {
+      // If this notification was dynamically triggered, override its createdAt with the trigger timestamp
+      if (n.trigger && triggeredTimestamps && triggeredTimestamps[n.id]) {
+        return { ...n, createdAt: triggeredTimestamps[n.id] };
+      }
+      return n;
+    });
   const recentNotices = notifications.slice(0, 4);
   const unreadCount = notifications.filter(n => !n.isRead).length;
 

@@ -149,7 +149,7 @@ function buildPersona(personaId: string, allAgents: any[]) {
 
   if (agentData) {
     const profile = {
-      id: agentData.employeeId || "",
+      id: agentData.id, // Use agents.csv 'id' column (personaKey)
       name: agentData.name,
       personaKey: agentData.id,
       codename: agentData.codename || "",

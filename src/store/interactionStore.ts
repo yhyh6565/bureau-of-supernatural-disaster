@@ -5,6 +5,7 @@ import { DataManager } from '@/data/dataManager';
 
 interface InteractionState {
     triggeredIds: string[];
+    triggeredTimestamps: Record<string, Date>; // Track when each event was triggered
     readIds: string[];
     newlyTriggeredId: string | null;
     sessionMessages: Message[];
@@ -22,6 +23,7 @@ export const useInteractionStore = create<InteractionState>()(
     persist(
         (set, get) => ({
             triggeredIds: [],
+            triggeredTimestamps: {},
             readIds: [],
             newlyTriggeredId: null,
             sessionMessages: [],
@@ -30,14 +32,14 @@ export const useInteractionStore = create<InteractionState>()(
                 set(state => {
                     if (state.triggeredIds.includes(id)) return state;
 
-                    // Update item timestamp if provided (mutable reference pattern from DataManager)
-                    if (item && typeof item === 'object' && 'createdAt' in item) {
-                        item.createdAt = new Date();
-                        if ('updatedAt' in item) item.updatedAt = new Date();
-                    }
+                    const now = new Date();
 
                     return {
                         triggeredIds: [...state.triggeredIds, id],
+                        triggeredTimestamps: {
+                            ...state.triggeredTimestamps,
+                            [id]: now
+                        },
                         newlyTriggeredId: id
                     };
                 });
@@ -101,6 +103,7 @@ export const useInteractionStore = create<InteractionState>()(
             resetInteractions: () => {
                 set({
                     triggeredIds: [],
+                    triggeredTimestamps: {},
                     readIds: [],
                     newlyTriggeredId: null,
                     sessionMessages: []
@@ -117,6 +120,13 @@ export const useInteractionStore = create<InteractionState>()(
                             ...m,
                             createdAt: new Date(m.createdAt)
                         }));
+                    }
+                    if (state.triggeredTimestamps) {
+                        // Convert timestamp strings back to Date objects
+                        state.triggeredTimestamps = Object.entries(state.triggeredTimestamps).reduce((acc, [id, timestamp]) => {
+                            acc[id] = new Date(timestamp as any);
+                            return acc;
+                        }, {} as Record<string, Date>);
                     }
                 }
             }
