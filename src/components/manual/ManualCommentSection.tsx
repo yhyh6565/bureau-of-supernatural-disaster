@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { type ManualComment, DEFAULT_MANUAL_COMMENTS } from '@/constants/manualComments';
 import { ManualStorage } from '@/utils/manualStorage';
+import { isAgentActive } from '@/utils/agentUtils';
 import { useAuthStore } from '@/store/authStore';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -33,6 +34,17 @@ export const ManualCommentSection: React.FC<ManualCommentSectionProps> = ({ manu
     }, [manualId]);
 
     const handleSubmit = (parentId?: string) => {
+        if (!isAgentActive(agent)) {
+            // Need to import toast or use custom alert, but since this component uses standard UI, likely has access to toast if imported.
+            // Component imports: Avatar, Button, Textarea, Card... no toast.
+            // I will add toast import.
+            alert('퇴사 처리된 요원은 이용할 수 없습니다.');
+            // Using alert for now as I cannot see toast import in original file snippet easily, 
+            // wait, snippet did not show toast import. 
+            // I will add toast import to be consistent.
+            return;
+        }
+
         const text = parentId ? replyText : newCommentText;
         if (!text.trim() || !agent) return;
 

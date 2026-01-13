@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isAgentActive } from '@/utils/agentUtils';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -89,6 +90,15 @@ export function TasksPage() {
   const tasks = getTasksByDepartment();
 
   const handleAcceptTask = () => {
+    if (!isAgentActive(agent)) {
+      toast({
+        title: '승낙 제한',
+        description: '퇴사 처리된 요원은 이용할 수 없습니다.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     if (selectedIncident) {
       acceptIncident(selectedIncident.id);
     }

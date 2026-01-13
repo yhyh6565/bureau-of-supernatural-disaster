@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isAgentActive } from '@/utils/agentUtils';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -184,6 +185,14 @@ export function MessagesPage() {
             <Button
               className="gap-1.5 bg-blue-900 hover:bg-blue-800 text-white h-[calc(1.75rem+2px)] px-3 text-xs shrink-0"
               onClick={() => {
+                if (!isAgentActive(agent)) {
+                  toast({
+                    title: '작성 제한',
+                    description: '퇴사 처리된 요원은 이용할 수 없습니다.',
+                    variant: 'destructive',
+                  });
+                  return;
+                }
                 if (mode === 'segwang') {
                   toast({
                     title: '전송 실패',

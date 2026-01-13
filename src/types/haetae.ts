@@ -9,23 +9,24 @@ export type IncidentStatus = '접수' | '조사중' | '구조대기' | '구조�
 // 재난 등급 체계 (형刑 시스템)
 export type DangerLevel = '멸형' | '파형' | '뇌형' | '고형' | '소형' | '등급불명';
 
-id: string;
-name: string;
-personaKey ?: string; // 페르소나 고유 키 (메시지, 일정 등에서 사용)
-codename: string; // 작전명 (코드명)
-department: Department;
-team ?: string; // 소속 팀 (예: "1팀", "3팀")
-organization ?: string; // [NEW] 소속 조직 (ordinary, segwang, system)
-rank: string;
-grade ?: number; // 급수 (1~9)
-extension: string;
-status: AgentStatus;
-contamination: number; // 오염도 (0~100)
-totalIncidents: number; // 총 처리 재난 수
-specialCases: number; // 특수 케이스 수
-rentals: RentalRecord[]; // 현재 대여/지급 장비 목록
-purificationHistory: Date[]; // 용천 선녀탕 방문 기록
-funeralPreference ?: string;
+export interface Agent {
+  id: string;
+  name: string;
+  personaKey?: string; // 페르소나 고유 키 (메시지, 일정 등에서 사용)
+  codename: string; // 작전명 (코드명)
+  department: Department;
+  team?: string; // 소속 팀 (예: "1팀", "3팀")
+  organization?: string; // [NEW] 소속 조직 (ordinary, segwang, system)
+  rank: string;
+  grade?: number; // 급수 (1~9)
+  extension: string;
+  status: AgentStatus;
+  contamination: number; // 오염도 (0~100)
+  totalIncidents: number; // 총 처리 재난 수
+  specialCases: number; // 특수 케이스 수
+  rentals: RentalRecord[]; // 현재 대여/지급 장비 목록
+  purificationHistory: Date[]; // 용천 선녀탕 방문 기록
+  funeralPreference?: string;
 }
 
 // 트리거 시스템 타입

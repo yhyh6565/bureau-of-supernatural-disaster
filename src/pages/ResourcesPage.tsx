@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isAgentActive } from '@/utils/agentUtils';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -114,6 +115,15 @@ export function ResourcesPage() {
     const supplyItems = filteredEquipment.filter(item => item.category === '지급');
 
     const handleEquipmentRequest = () => {
+        if (!isAgentActive(agent)) {
+            toast({
+                title: '신청 제한',
+                description: '퇴사 처리된 요원은 이용할 수 없습니다.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
         if (!equipmentReason.trim()) {
             toast({ title: '입력 오류', description: '사유를 입력해주세요.', variant: 'destructive' });
             return;
@@ -162,6 +172,15 @@ export function ResourcesPage() {
 
     // Visit Logic & Other handlers (Kept same logic, re-ordered UI)
     const handleVisitSubmit = () => {
+        if (!isAgentActive(agent)) {
+            toast({
+                title: '예약 제한',
+                description: '퇴사 처리된 요원은 이용할 수 없습니다.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
         if (!visitDate || !visitTime || !visitReason.trim()) {
             toast({ title: '입력 오류', description: '모든 정보를 입력해주세요.', variant: 'destructive' });
             return;
@@ -498,7 +517,17 @@ export function ResourcesPage() {
                                 <h2 className="text-lg font-bold tracking-tight text-foreground">오염 검사 내역</h2>
                                 <p className="text-sm text-muted-foreground">정기 및 현장 복귀 후 필수 오염도 검사 기록을 확인 & 관리</p>
                             </div>
-                            <Dialog open={isInspectionOpen} onOpenChange={setIsInspectionOpen}>
+                            <Dialog open={isInspectionOpen} onOpenChange={(open) => {
+                                if (open && !isAgentActive(agent)) {
+                                    toast({
+                                        title: '신청 제한',
+                                        description: '퇴사 처리된 요원은 이용할 수 없습니다.',
+                                        variant: 'destructive',
+                                    });
+                                    return;
+                                }
+                                setIsInspectionOpen(open);
+                            }}>
                                 <DialogTrigger asChild>
                                     <Button className="bg-blue-900 hover:bg-blue-800 text-white shadow-sm w-full sm:w-auto h-9">
                                         + 검사 신청
