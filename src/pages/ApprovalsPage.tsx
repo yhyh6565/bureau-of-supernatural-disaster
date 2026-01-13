@@ -12,6 +12,28 @@ import { ClipboardCheck, FileText, Clock, CheckCircle, XCircle, ArrowLeft, PenLi
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { getPersonaName } from '@/constants/haetae';
+import ALL_AGENTS_DATA from '@/data/agents.json';
+
+const getAgentDisplayName = (identifier: string): string => {
+  if (!identifier) return '';
+
+  // 1. Try to find by ID or Name in full agent list
+  const agent = ALL_AGENTS_DATA.find(a => a.id === identifier || a.name === identifier || a.codename === identifier);
+
+  if (agent) {
+    const dept = agent.department;
+    const team = agent.team ? ` ${agent.team}` : '';
+    return `${agent.name} (${dept}${team})`;
+  }
+
+  // 2. Fallback to Persona Name Map if available
+  const personaName = getPersonaName(identifier);
+  if (personaName && personaName !== identifier) {
+    return personaName; // Should rarely hit if agents.json is complete
+  }
+
+  return identifier;
+};
 
 type ApprovalStatus = '작성중' | '결재대기' | '승인' | '반려';
 
@@ -32,7 +54,7 @@ export function ApprovalsPage() {
   const pendingCount = myDocuments.filter(a => a.status === '결재대기').length;
 
   if (selectedApproval) {
-    const style = STATUS_STYLE[selectedApproval.status];
+    const style = STATUS_STYLE[selectedApproval.status as ApprovalStatus] || STATUS_STYLE['작성중'];
     const StatusIcon = style.icon;
 
     return (
@@ -61,11 +83,11 @@ export function ApprovalsPage() {
               <CardTitle className="text-xl font-bold">{selectedApproval.title}</CardTitle>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
-                  <span className="font-medium text-foreground/80">기안자:</span> {getPersonaName(selectedApproval.createdByName) || selectedApproval.createdByName}
+                  <span className="font-medium text-foreground/80">기안자:</span> {getAgentDisplayName(selectedApproval.createdBy) || selectedApproval.createdByName}
                 </div>
                 <div className="w-px h-3 bg-border" />
                 <div className="flex items-center gap-1">
-                  <span className="font-medium text-foreground/80">결재자:</span> {selectedApproval.approverName}
+                  <span className="font-medium text-foreground/80">결재자:</span> {getAgentDisplayName(selectedApproval.approver) || selectedApproval.approverName}
                 </div>
                 <div className="w-px h-3 bg-border" />
                 <div>{format(new Date(selectedApproval.createdAt), 'yyyy.MM.dd HH:mm', { locale: ko })}</div>
@@ -189,7 +211,7 @@ export function ApprovalsPage() {
                               </div>
                             </div>
                             <div className="flex justify-between text-xs text-muted-foreground pt-1">
-                              <span>결재자: {doc.approverName}</span>
+                              <span>결재자: {getAgentDisplayName(doc.approver) || doc.approverName}</span>
                               <span>{format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</span>
                             </div>
                           </div>
@@ -201,7 +223,7 @@ export function ApprovalsPage() {
                             </div>
                             <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
                             <div className="text-center text-sm text-foreground/70">
-                              {doc.approverName}
+                              {getAgentDisplayName(doc.approver) || doc.approverName}
                             </div>
                             <div className="text-center text-sm text-muted-foreground font-mono">
                               {format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}
@@ -265,7 +287,7 @@ export function ApprovalsPage() {
                               </div>
                               <h3 className="text-sm font-medium">{doc.title}</h3>
                               <div className="flex justify-between text-xs text-muted-foreground">
-                                <span>기안자: {getPersonaName(doc.createdByName) || doc.createdByName}</span>
+                                <span>기안자: {getAgentDisplayName(doc.createdBy) || doc.createdByName}</span>
                                 <span>{format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</span>
                               </div>
                             </div>
@@ -274,7 +296,7 @@ export function ApprovalsPage() {
                             <div className="hidden md:grid grid-cols-[1.5fr_5fr_1.5fr_1.5fr_1.5fr] gap-4 p-4 items-center">
                               <div className="text-center"><Badge variant="outline" className="text-xs font-normal text-muted-foreground bg-white">{doc.type}</Badge></div>
                               <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
-                              <div className="text-center text-sm text-foreground/70">{getPersonaName(doc.createdByName) || doc.createdByName}</div>
+                              <div className="text-center text-sm text-foreground/70">{getAgentDisplayName(doc.createdBy) || doc.createdByName}</div>
                               <div className="text-center text-sm text-muted-foreground font-mono">{format(new Date(doc.createdAt), 'yyyy.MM.dd', { locale: ko })}</div>
                               <div className="text-center"><Badge className={`${style.bg} ${style.text} text-xs border-none rounded-[4px] px-2 h-6 justify-center`}>{doc.status}</Badge></div>
                             </div>
@@ -329,7 +351,7 @@ export function ApprovalsPage() {
                               </div>
                               <h3 className="text-sm font-medium text-foreground/80">{doc.title}</h3>
                               <div className="flex justify-between text-xs text-muted-foreground">
-                                <span>기안자: {getPersonaName(doc.createdByName) || doc.createdByName}</span>
+                                <span>기안자: {getAgentDisplayName(doc.createdBy) || doc.createdByName}</span>
                                 <span>{doc.processedAt ? format(new Date(doc.processedAt), 'yyyy.MM.dd', { locale: ko }) : '-'}</span>
                               </div>
                             </div>
@@ -338,7 +360,7 @@ export function ApprovalsPage() {
                             <div className="hidden md:grid grid-cols-[1.5fr_5fr_1.5fr_1.5fr_1.5fr] gap-4 p-4 items-center">
                               <div className="text-center"><Badge variant="outline" className="text-xs font-normal text-muted-foreground bg-white">{doc.type}</Badge></div>
                               <div className="text-sm font-medium text-foreground/90 truncate group-hover:text-primary transition-colors">{doc.title}</div>
-                              <div className="text-center text-sm text-foreground/70">{getPersonaName(doc.createdByName) || doc.createdByName}</div>
+                              <div className="text-center text-sm text-foreground/70">{getAgentDisplayName(doc.createdBy) || doc.createdByName}</div>
                               <div className="text-center text-sm text-muted-foreground font-mono">{doc.processedAt ? format(new Date(doc.processedAt), 'yyyy.MM.dd', { locale: ko }) : '-'}</div>
                               <div className="text-center"><Badge className={`${style.bg} ${style.text} text-xs border-none rounded-[4px] px-2 h-6 justify-center`}>{doc.status}</Badge></div>
                             </div>
