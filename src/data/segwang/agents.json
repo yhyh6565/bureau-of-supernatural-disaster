@@ -7,11 +7,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -22,11 +22,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -37,11 +37,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -52,11 +52,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -67,11 +67,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -82,11 +82,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -97,11 +97,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -112,11 +112,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   }
 ]

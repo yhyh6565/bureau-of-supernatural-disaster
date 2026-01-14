@@ -1,4 +1,4 @@
-import { Schedule, VisitLocation } from '@/types/haetae';
+import { Schedule, VisitLocation, InspectionRequest } from '@/types/haetae';
 
 // 일정(스케줄) 생성
 export const createSchedule = (
@@ -27,12 +27,13 @@ export const createVisitSchedule = (
 
 
 // 오염 검사 요청 생성
+// 오염 검사 요청 생성
 export const createInspectionRequest = (
     type: '정기검사' | '정밀검사' | '긴급검사',
     date: Date,
     symptoms: string,
     agentId: string
-): any => { // InspectionRequest type import required if strictly typed but relying on context to handle it
+): InspectionRequest => {
     return {
         id: `insp-${Date.now()}`,
         agentId,

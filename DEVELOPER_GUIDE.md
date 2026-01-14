@@ -202,6 +202,8 @@ src/
 ├── components/     # 재사용 가능 UI 컴포넌트
 ├── pages/          # 라우트별 페이지 컴포넌트
 ├── contexts/       # React Context (인증 등)
+├── hooks/          # [UPDATED] 커스텀 훅 (비즈니스 로직 분리)
+│   └── work/       # WorkContext 관련 모듈식 훅
 ├── data/           # JSON 데이터 + DataManager
 ├── types/          # TypeScript 타입 정의
 ├── constants/      # 상수 및 스타일 매핑
@@ -210,8 +212,25 @@ src/
 
 ---
 
+## 9. WorkContext 아키텍처 (v2.3)
+
+`WorkContext`는 비즈니스 로직의 복잡도를 줄이기 위해 4개의 **모듈식 훅(Modular Hooks)**으로 분리되었습니다.
+
+### 구조
+- **`useWorkIncidents`**: 재난 데이터 처리, 세션 수락 상태 관리
+- **`useWorkSchedules`**: 일정 데이터 병합, 재난 기반 일정 자동 생성 (`processedIncidents` 의존)
+- **`useWorkApprovals`**: 결재 문서 처리
+- **`useWorkInspections`**: 오염 검사 요청 처리
+
+### 오케스트레이션 규칙
+`WorkContext.tsx`는 상태를 직접 관리하지 않고, 위 훅들을 조합(Compose)하여 `Provider`를 통해 내려주는 역할만 수행합니다.
+훅 간의 의존성(예: 오염 검사 신청 시 일정 자동 생성)은 `WorkContext` 내부의 **Composite Action** 함수에서 처리합니다.
+
+---
+
 ## 변경 이력
 
 | 날짜 | 내용 |
 |------|------|
+| 2026-01-14 | **v2.3 업데이트**: WorkContext 리팩토링 (Hooks 분리), 문서 구조 업데이트 |
 | 2026-01-02 | 초안 작성 (STATUS_STYLE 동기화 이슈 기반) |

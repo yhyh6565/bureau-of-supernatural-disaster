@@ -21,23 +21,27 @@ function loadCSV(filename: string): any[] {
     return [];
   }
   const csvContent = fs.readFileSync(csvPath, 'utf-8');
-  /* Existing code */
+
   const parsed = Papa.parse(csvContent, {
     header: true,
     skipEmptyLines: true,
+    transform: (value, header) => {
+      // Common boolean conversion
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+
+      // Specific number conversion
+      const NUMBER_FIELDS = ['contamination', 'grade', 'totalStock', 'quantity', 'delay', 'probability'];
+      if (typeof header === 'string' && NUMBER_FIELDS.includes(header)) {
+        const num = Number(value);
+        return isNaN(num) ? value : num;
+      }
+
+      return value;
+    }
   });
 
-  // Convert boolean strings to actual booleans
-  const fixedData = parsed.data.map((item: any) => {
-    const newItem = { ...item };
-    Object.keys(newItem).forEach(key => {
-      if (newItem[key] === 'true') newItem[key] = true;
-      if (newItem[key] === 'false') newItem[key] = false;
-    });
-    return newItem;
-  });
-
-  return fixedData;
+  return parsed.data;
 }
 
 function loadConfig(): any {
@@ -162,9 +166,9 @@ function buildPersona(personaId: string, allAgents: any[]) {
       rank: agentData.rank,
       extension: agentData.extension,
       status: agentData.status,
-      contamination: parseInt(agentData.contamination || '0', 10),
-      isImmuneToContamination: agentData.isImmuneToContamination === 'true' || agentData.isImmuneToContamination === true,
-      grade: parseInt(agentData.grade || '0', 10),
+      contamination: agentData.contamination || 0,
+      isImmuneToContamination: agentData.isImmuneToContamination,
+      grade: agentData.grade || 0,
       funeralPreference: agentData.funeralPreference || "",
       profileImage: `/avatars/${personaId}.png`,
       rentals: []

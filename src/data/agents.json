@@ -7,11 +7,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2101",
-    "contamination": "15",
+    "contamination": 15,
     "isImmuneToContamination": false,
     "codename": false,
     "type": "persona",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -22,11 +22,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "2301",
-    "contamination": "24",
+    "contamination": 24,
     "isImmuneToContamination": false,
     "codename": "해금",
     "type": "persona",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -37,11 +37,11 @@
     "rank": "요원",
     "status": "leave",
     "extension": "3201",
-    "contamination": "80",
+    "contamination": 80,
     "isImmuneToContamination": true,
     "codename": "화각",
     "type": "persona",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -52,11 +52,11 @@
     "rank": "요원",
     "status": "resigned",
     "extension": "4201",
-    "contamination": "20",
+    "contamination": 20,
     "isImmuneToContamination": false,
     "codename": "박하",
     "type": "persona",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -67,11 +67,11 @@
     "rank": "팀장",
     "status": "leave",
     "extension": "5001",
-    "contamination": "98",
+    "contamination": 98,
     "isImmuneToContamination": true,
     "codename": "홍화",
     "type": "persona",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -82,11 +82,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2102",
-    "contamination": "13",
+    "contamination": 13,
     "isImmuneToContamination": false,
     "codename": "청동",
     "type": "persona",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -97,11 +97,11 @@
     "rank": "요원",
     "status": "leave",
     "extension": "2303",
-    "contamination": "30",
+    "contamination": 30,
     "isImmuneToContamination": false,
     "codename": "포도",
     "type": "persona",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -112,11 +112,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4101",
-    "contamination": "15",
+    "contamination": 15,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -127,11 +127,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4102",
-    "contamination": "3",
+    "contamination": 3,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -142,11 +142,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4103",
-    "contamination": "9",
+    "contamination": 9,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -157,11 +157,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "3102",
-    "contamination": "14",
+    "contamination": 14,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -172,11 +172,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2501",
-    "contamination": "13",
+    "contamination": 13,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -187,11 +187,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2701",
-    "contamination": "12",
+    "contamination": 12,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -202,11 +202,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "3103",
-    "contamination": "11",
+    "contamination": 11,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -217,11 +217,11 @@
     "rank": "시스템",
     "status": "active",
     "extension": "9999",
-    "contamination": "17",
+    "contamination": 17,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -232,11 +232,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1002",
-    "contamination": "20",
+    "contamination": 20,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -247,11 +247,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1003",
-    "contamination": "19",
+    "contamination": 19,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -262,11 +262,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1004",
-    "contamination": "17",
+    "contamination": 17,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -277,11 +277,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1005",
-    "contamination": "15",
+    "contamination": 15,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -292,11 +292,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1006",
-    "contamination": "11",
+    "contamination": 11,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -307,11 +307,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1099",
-    "contamination": "6",
+    "contamination": 6,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -322,11 +322,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2302",
-    "contamination": "18",
+    "contamination": 18,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -337,11 +337,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2303",
-    "contamination": "6",
+    "contamination": 6,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -352,11 +352,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2304",
-    "contamination": "16",
+    "contamination": 16,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -367,11 +367,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2305",
-    "contamination": "10",
+    "contamination": 10,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -382,11 +382,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "2901",
-    "contamination": "4",
+    "contamination": 4,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -397,11 +397,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4001",
-    "contamination": "11",
+    "contamination": 11,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -412,11 +412,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4002",
-    "contamination": "17",
+    "contamination": 17,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -427,11 +427,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4501",
-    "contamination": "19",
+    "contamination": 19,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -442,11 +442,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "4102",
-    "contamination": "18",
+    "contamination": 18,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -457,11 +457,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "3202",
-    "contamination": "2",
+    "contamination": 2,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -472,11 +472,11 @@
     "rank": "요원",
     "status": "active",
     "extension": "3501",
-    "contamination": "7",
+    "contamination": 7,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -487,11 +487,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "6001",
-    "contamination": "18",
+    "contamination": 18,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -502,11 +502,11 @@
     "rank": "미확인",
     "status": "inactive",
     "extension": "0",
-    "contamination": "5",
+    "contamination": 5,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -517,11 +517,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -532,11 +532,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -547,11 +547,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -562,11 +562,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -577,11 +577,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -592,11 +592,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -607,11 +607,11 @@
     "rank": "팀장",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -622,11 +622,11 @@
     "rank": "실무관",
     "status": "missing",
     "extension": "■■■■",
-    "contamination": "100",
+    "contamination": 100,
     "isImmuneToContamination": false,
     "codename": "■■■■",
     "type": "segwang",
-    "grade": "9",
+    "grade": 9,
     "funeralPreference": "화장"
   },
   {
@@ -637,11 +637,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1101",
-    "contamination": "8",
+    "contamination": 8,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "8",
+    "grade": 8,
     "funeralPreference": "화장"
   },
   {
@@ -652,11 +652,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1102",
-    "contamination": "5",
+    "contamination": 5,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "8",
+    "grade": 8,
     "funeralPreference": "화장"
   },
   {
@@ -667,11 +667,11 @@
     "rank": "직원",
     "status": "active",
     "extension": "1103",
-    "contamination": "19",
+    "contamination": 19,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "8",
+    "grade": 8,
     "funeralPreference": "화장"
   },
   {
@@ -682,11 +682,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "1201",
-    "contamination": "16",
+    "contamination": 16,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -697,11 +697,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "8888",
-    "contamination": "17",
+    "contamination": 17,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -712,11 +712,11 @@
     "rank": "국장",
     "status": "active",
     "extension": "9900",
-    "contamination": "9",
+    "contamination": 9,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "3",
+    "grade": 3,
     "funeralPreference": "화장"
   },
   {
@@ -727,11 +727,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "1301",
-    "contamination": "2",
+    "contamination": 2,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "6",
+    "grade": 6,
     "funeralPreference": "화장"
   },
   {
@@ -742,11 +742,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "4101",
-    "contamination": "15",
+    "contamination": 15,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "8",
+    "grade": 8,
     "funeralPreference": "화장"
   },
   {
@@ -757,11 +757,11 @@
     "rank": "팀장",
     "status": "active",
     "extension": "3101",
-    "contamination": "2",
+    "contamination": 2,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "ordinary",
-    "grade": "8",
+    "grade": 8,
     "funeralPreference": "화장"
   },
   {
@@ -772,11 +772,11 @@
     "rank": "관리자",
     "status": "active",
     "extension": "9999",
-    "contamination": "6",
+    "contamination": 6,
     "isImmuneToContamination": false,
     "codename": "",
     "type": "system",
-    "grade": "1",
+    "grade": 1,
     "funeralPreference": "화장"
   }
 ]
